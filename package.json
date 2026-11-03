@@ -8,13 +8,16 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "npm run build && wrangler dev",
+    "build": "astro check && tsc -p worker && astro build",
+    "preview": "npm run build && npm run db:migrate:local && wrangler dev",
+    "db:migrate:local": "wrangler d1 migrations apply afrotech --local",
+    "db:migrate:remote": "wrangler d1 migrations apply afrotech --remote",
     "deploy": "npm run build && wrangler deploy",
     "astro": "astro"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@cloudflare/workers-types": "5.20261019.1",
     "@types/node": "^22.20.5",
     "astro": "^7.4.5",
     "typescript": "^6.0.3",
