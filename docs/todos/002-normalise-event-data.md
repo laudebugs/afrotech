@@ -31,7 +31,9 @@ Four changes from the plan's type:
    `marriott`, `outdoor`, `offsite` or `unplaced`.
 
 `data/venues.json` is partly hand-maintained. The script adds new places and
-never removes fields such as `areaId` or `lat`, which todos 007 and 009 add.
+never removes fields such as `areaId` or `lat`, which todos 007 and 009 add. Venues are keyed by
+name; two places that share a name but not a street address (house number and
+street) get separate keys.
 
 Building the events exposed three events that afrotech.guide lists twice, so
 `update_side_events.py` now collapses exact repeats within each source.
