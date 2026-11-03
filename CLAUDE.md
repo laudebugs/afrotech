@@ -65,8 +65,8 @@ Site commands (`npm run dev | build | preview | deploy`) arrive with todo 001.
   44 px touch targets, works with `localStorage` blocked, respects
   `prefers-reduced-motion`.
 - **Site stack:** Astro 7 static output on Cloudflare (Workers static assets),
-  deployed by GitHub Actions (`.github/workflows/deploy.yml`) with the
-  `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets. Live at
+  deployed by Cloudflare Workers Builds on every push (`main` is production;
+  other branches get preview URLs). Live at
   https://afrotech26.laudebugs.me.
   Plain Astro components + small client scripts; ask before adding a UI framework.
 - **No sign-in.** Per-user state (My plan, note drafts) lives in `localStorage`.
