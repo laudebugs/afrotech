@@ -4,6 +4,7 @@
 // so back, forward and offline work as for any page.
 interface Props {
   label: string;
+  /** `count` names a data attribute (e.g. "plan-count") a script fills with a number. */
   tabs: { href: string; label: string; current: boolean; count?: string }[];
 }
 const { label, tabs } = Astro.props;
@@ -14,7 +15,7 @@ const { label, tabs } = Astro.props;
     tabs.map((t) => (
       <a href={t.href} aria-current={t.current ? "page" : undefined}>
         {t.label}
-        {t.count && <span class="count" data-tab-count={t.count} hidden />}
+        {t.count && <span class="count" {...{ [`data-${t.count}`]: "" }} hidden />}
       </a>
     ))
   }

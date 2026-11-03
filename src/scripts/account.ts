@@ -2,7 +2,7 @@
 // Sign out and Delete my data. Google's script loads only here, only when needed.
 import { clearLocalNotes, readNoteChanges } from "../lib/notes";
 import { clearPhotos } from "../lib/photos";
-import { SIGNED_IN, setItem as store } from "../lib/storage";
+import { SIGNED_IN, getItem, setItem as store } from "../lib/storage";
 import { api } from "./api";
 import { forgetNotesAccount, notesSyncProblem, stopNotesSync, syncNotesNow } from "./notes-sync";
 
@@ -76,6 +76,11 @@ async function init() {
   if (!root) return;
   const allowed = (root.dataset.hosts ?? "").split(" ");
   if (!allowed.includes(location.hostname)) return show("unavailable");
+
+  // Signed-out visitors send no API requests: only a browser that signed in
+  // here asks the server who it is. (If storage lost the hint, the visitor
+  // just sees the sign-in button and signs in again.)
+  if (!getItem(SIGNED_IN)) return showSignIn();
 
   let me: { signedIn: boolean; name?: string | null; pictureUrl?: string | null } = { signedIn: false };
   try {

@@ -4,6 +4,12 @@
 import { adoptOldDrafts, listNotes, watchOtherTabsNotes } from "../lib/notes";
 
 function fill(root: ParentNode = document) {
+  // The Notes tab's count (plan 0007).
+  document.querySelectorAll<HTMLElement>("[data-notes-count]").forEach((badge) => {
+    const n = listNotes().length;
+    badge.textContent = String(n);
+    badge.hidden = n === 0;
+  });
   root.querySelectorAll<HTMLElement>("[data-my-notes]").forEach((section) => {
     const notes = listNotes(section.dataset.myNotes!);
     section.hidden = notes.length === 0;

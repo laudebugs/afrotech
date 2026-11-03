@@ -8,13 +8,13 @@ interface Props {
 }
 const { active } = Astro.props;
 
-// Now and My plan render every event (~750 KB), so they prefetch on tap like
+// Now and Saved (My plan) render every event (~750 KB), so they prefetch on tap like
 // other links; the small tabs prefetch as soon as they're visible.
 const items = [
   { id: "now", href: "/", label: "Now", icon: "now", prefetch: "tap" },
   { id: "schedule", href: "/schedule/", label: "Schedule", icon: "schedule", prefetch: "viewport" },
   { id: "map", href: "/map/", label: "Map", icon: "map", prefetch: "viewport" },
-  { id: "plan", href: "/plan/", label: "My plan", icon: "star", prefetch: "tap" },
+  { id: "plan", href: "/plan/", label: "Saved", icon: "star", prefetch: "tap" },
 ] as const;
 ---
 

@@ -7,9 +7,9 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import NoteEventLookup from "../../../components/NoteEventLookup.astro";
 ---
 
-<BaseLayout title="Note · AfroTech 2026 Planner" active="none">
+<BaseLayout title="Note · AfroTech 2026 Planner" active="plan">
   <div class="notes-page">
-    <p class="back sticky-head"><a href="/notes/">← My notes</a></p>
+    <p class="back sticky-head"><a href="/notes/">← Notes</a></p>
     <article class="note" data-note hidden>
       <header>
         <h1 data-title></h1>
@@ -27,7 +27,7 @@ import NoteEventLookup from "../../../components/NoteEventLookup.astro";
     </article>
     <div data-missing hidden>
       <h1>Note not found</h1>
-      <p>This note isn't on this device. If you wrote it on another device, sign in on <a href="/plan/">My plan</a> to sync your notes.</p>
+      <p>This note isn't on this device. If you wrote it on another device, sign in on <a href="/notes/">Saved</a> to sync your notes.</p>
     </div>
   </div>
   <NoteEventLookup />

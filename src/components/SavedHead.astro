@@ -1,0 +1,27 @@
+---
+// The top of the Saved section (plan 0007): its heading and the Plan and
+// Notes tabs. plan-ui.ts and notes-ui.ts fill in the counts.
+import PageTabs from "./PageTabs.astro";
+
+interface Props {
+  current: "plan" | "notes";
+}
+const { current } = Astro.props;
+---
+
+<h1>Saved</h1>
+<PageTabs
+  label="Saved"
+  tabs={[
+    { href: "/plan/", label: "Plan", current: current === "plan", count: "plan-count" },
+    { href: "/notes/", label: "Notes", current: current === "notes", count: "notes-count" },
+  ]}
+/>
+<slot />
+
+<style>
+  h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+</style>

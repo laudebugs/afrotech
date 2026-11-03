@@ -1,6 +1,6 @@
 # Plan 0007: A "Saved" tab holds your plan and your notes
 
-**Status:** approved 2026-11-03: named **Saved**, with the account panel on both tabs · **Created:** 2026-11-03
+**Status:** built 2026-11-03 (todos 030, 031): named **Saved**, with the account panel on both tabs · **Created:** 2026-11-03
 
 Your notes have no place in the tab bar. Today you reach My notes only from a
 link in the page footer or from a session, while My plan has its own tab.
