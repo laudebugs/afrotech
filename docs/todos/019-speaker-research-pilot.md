@@ -20,7 +20,7 @@ Follows the [research report](../../reports/Speaker%20profile%20research%20sourc
 
 Built on November 3:
 
-- **Pilot results:** 20 speakers, 17 with something to review: 33 facts, 41
+- **Pilot results:** 20 speakers, 17 with something to review: 33 facts, 40
   articles or talks and 1 website, all drafts. Findings and the review table
   are in [`docs/research/speaker-research-pilot.md`](../research/speaker-research-pilot.md).
 - **Tools:** `scripts/merge_research.py` merges a batch as drafts (rejecting
@@ -31,3 +31,6 @@ Built on November 3:
 - **Waiting on you:** approving rows. Nothing appears on the site until a row is
   `approved`. Todo 020 (the remaining speakers) should wait until you've
   reviewed this batch and decided it's worth it.
+- **Privacy pass:** the research file is public in the repo, so researchers'
+  notes describe skipped material only in general terms ("personal-background
+  details", "legal coverage"), never the details themselves.

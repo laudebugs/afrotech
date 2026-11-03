@@ -70,7 +70,7 @@
       ],
       "notThisPerson": [],
       "researchedAt": "2026-11-03",
-      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. The search summary said the Black Enterprise page's title spells her name 'Debraun'; check it before relying on that identity quote. The Fortune and Earn Your Leisure identity quotes come from the URL slug and the episode title only. No dorm origin story was found. Wikipedia credits the 'black + gravity' lunch-table name story, but I found no fetchable editorial source for it, so it's left out. Website candidates that are unconfirmed and not linked from LinkedIn: morgandebaun.substack.com (her newsletter) and worksmartprogram.com/about. Both were left null. Skipped thebump.com (pregnancy/family)."
+      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. The search summary said the Black Enterprise page's title spells her name 'Debraun'; check it before relying on that identity quote. The Fortune and Earn Your Leisure identity quotes come from the URL slug and the episode title only. No dorm origin story was found. Wikipedia credits the 'black + gravity' lunch-table name story, but I found no fetchable editorial source for it, so it's left out. Website candidates that are unconfirmed and not linked from LinkedIn: morgandebaun.substack.com (her newsletter) and worksmartprogram.com/about. Both were left null. Skipped one personal-life source."
     },
     "07311775-dd72-4e02-8df3-9c5bfd571ed0": {
       "name": "Dr. Timnit Gebru",
@@ -127,21 +127,11 @@
           "identity_quote": "How a Black Woman is Making AI a Force for Equity",
           "quote_seen_in": "search-snippet",
           "status": "draft"
-        },
-        {
-          "title": "Ethiopian-born computer scientist Timnit Gebru's debut book Deep Unlearning is now available for preorder",
-          "url": "https://brittlepaper.com/2026/08/ethiopian-born-computer-scientist-timnit-gebrus-debut-book-deep-unlearning-is-now-available-for-preorder/",
-          "publisher": "Brittle Paper",
-          "date": "2026-08",
-          "kind": "article",
-          "identity_quote": "Timnit Gebru's debut book Deep Unlearning",
-          "quote_seen_in": "search-snippet",
-          "status": "draft"
         }
       ],
       "notThisPerson": [],
       "researchedAt": "2026-11-03",
-      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. The NBC 'Gender Shades' row has an unknown date and a weak claim quote (only the paper title). Wikipedia and Ars Electronica also support it. RWJF identity rests on the page title alone; confirm it names her. Her TIME100 (2022) recognition appears only in secondary or aggregator sources, so it's left out until a time.com page confirms it. The book's publication date and subtitle conflict between listings (Atria/S&S, Feb 16, 2027 vs Verso, Feb 3, 2027), so no date is stated. I skipped birthplace, refugee background and the Carnegie 'Great Immigrants' honour as personal. The DAIR team page (dair-institute.org) is the organisation's site, not a personal one; website left null."
+      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. The NBC 'Gender Shades' row has an unknown date and a weak claim quote (only the paper title). Wikipedia and Ars Electronica also support it. RWJF identity rests on the page title alone; confirm it names her. Her TIME100 (2022) recognition appears only in secondary or aggregator sources, so it's left out until a time.com page confirms it. The book's publication date and subtitle conflict between listings (Atria/S&S, Feb 16, 2027 vs Verso, Feb 3, 2027), so no date is stated. Skipped personal-background details, as the rules require. The DAIR team page (dair-institute.org) is the organisation's site, not a personal one; website left null. One article was removed because its title stated a personal detail."
     },
     "d9c8b9cc-2cff-4cb0-b5b1-dda9f019120e": {
       "name": "X Eyee",
@@ -538,7 +528,7 @@
       ],
       "notThisPerson": [],
       "researchedAt": "2026-11-03",
-      "notes": "Page fetches were blocked by the session network; quotes are from search-tool result text and must be verified verbatim. The bestseller row's identity_quote is the author credit as shown in search listings, not confirmed on the Profile Books page itself; penguinrandomhouse.com/books/741593/ is an alternative source. Book release dates conflict across listings, so the fact avoids a year. Vibe article title is reconstructed from its URL slug and I did not see his name in its snippet: confirm the title and that he is named, or drop it. The Perspektives episode is undated. Skipped the 2023 Invest Fest $1M check from Sean Combs given the controversy around him."
+      "notes": "Page fetches were blocked by the session network; quotes are from search-tool result text and must be verified verbatim. The bestseller row's identity_quote is the author credit as shown in search listings, not confirmed on the Profile Books page itself; penguinrandomhouse.com/books/741593/ is an alternative source. Book release dates conflict across listings, so the fact avoids a year. Vibe article title is reconstructed from its URL slug and I did not see his name in its snippet: confirm the title and that he is named, or drop it. The Perspektives episode is undated. Skipped one item tied to a third party's controversy."
     },
     "61fe31ae-7445-4497-bdcd-deaa73324637": {
       "name": "Rashad Bilal",
@@ -600,7 +590,7 @@
       ],
       "notThisPerson": [],
       "researchedAt": "2026-11-03",
-      "notes": "Page fetches were blocked; quotes are from search-tool result text and need verbatim checks. Book facts are shared with Troy Millings (co-authors). The Money Mondays episode is on podcastrex.com (an aggregator); the original show page would be a better URL if the reviewer finds it. Skipped: Atlanta Black Star 2026-08-03 piece on his Breakfast Club comments about Atlanta and its mayor (involves a dispute with a politician; reviewer may add it); net-worth/height sites (blocked category); the 2023 Sean Combs $1M check. No source mentioned The Bilal Group."
+      "notes": "Page fetches were blocked; quotes are from search-tool result text and need verbatim checks. Book facts are shared with Troy Millings (co-authors). The Money Mondays episode is on podcastrex.com (an aggregator); the original show page would be a better URL if the reviewer finds it. Skipped: coverage of a public political dispute (politics rule); net-worth/height sites (blocked category); one item tied to a third party's controversy. No source mentioned The Bilal Group."
     },
     "594a570a-5ff2-4221-bf52-5e121416b457": {
       "name": "TK Petersen",
@@ -641,7 +631,7 @@
       ],
       "notThisPerson": [],
       "researchedAt": "2026-11-03",
-      "notes": "Thin results and fetches blocked. The Consortium headline also calls him a St. Croix native; I left hometown out of the fact text (home-location guardrail), and the reviewer can decide whether birthplace is fine. The claim quote 'over 3,000 events' is a short phrase from the search excerpt; verify on page (the article is c. 2019, undated in results). AJC article title is from the URL slug; the search tool said it presents him as a co-founder but I did not see a verbatim phrase naming him, so its identity_quote is weak: confirm he is named before publishing. Deliberately skipped: a People of Color in Tech item alleging he was fired and Greenwood lawsuit coverage (undated, contested, employment-dispute content); a 'USVI ambassador' video whose meaning I couldn't confirm; a search-excerpt claim that he was a former Fannie Mae portfolio manager (could not tie to a specific URL)."
+      "notes": "Thin results and fetches blocked. The source mentions a hometown, left out under the home-location rule. The claim quote 'over 3,000 events' is a short phrase from the search excerpt; verify on page (the article is c. 2019, undated in results). AJC article title is from the URL slug; the search tool said it presents him as a co-founder but I did not see a verbatim phrase naming him, so its identity_quote is weak: confirm he is named before publishing. Deliberately skipped unverified employment-dispute and legal coverage; a 'USVI ambassador' video whose meaning I couldn't confirm; a search-excerpt claim that he was a former Fannie Mae portfolio manager (could not tie to a specific URL)."
     },
     "6c70d75f-7b27-447b-8b57-9fc739473584": {
       "name": "Ryan Wilson",
@@ -726,7 +716,7 @@
         "https://www.naag.org/person/ryan-wilson"
       ],
       "researchedAt": "2026-11-03",
-      "notes": "Common name; fetches blocked, so quotes come from search-tool result text and need verbatim checks. The $30M row and all three articles have weak identity_quotes (company name only, or his name with no company); confirm Ryan Wilson + The Gathering Spot appear on each page, or drop the row. AfroTech is a Blavity property and Blavity is reported as TGS's sales/activation partner, so the $30M source is not fully independent (Black Enterprise covers the same round). Revolt article title from URL slug, undated. Georgetown Board of Regents may be dated; check the speaker page year. NAAG 'Ryan Wilson' is a different person (attorney general association) and was not used. Skipped LA-location closure, Greenwood dispute and lawsuit coverage."
+      "notes": "Common name; fetches blocked, so quotes come from search-tool result text and need verbatim checks. The $30M row and all three articles have weak identity_quotes (company name only, or his name with no company); confirm Ryan Wilson + The Gathering Spot appear on each page, or drop the row. AfroTech is a Blavity property and Blavity is reported as TGS's sales/activation partner, so the $30M source is not fully independent (Black Enterprise covers the same round). Revolt article title from URL slug, undated. Georgetown Board of Regents may be dated; check the speaker page year. NAAG 'Ryan Wilson' is a different person (attorney general association) and was not used. Skipped business-dispute and legal coverage."
     },
     "3647b5d2-3a6b-40e9-ba1a-fa741b22a0a4": {
       "name": "Arielle Clay Poteau",

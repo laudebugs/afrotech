@@ -14,7 +14,7 @@ draft until a person approves it.
 | Speakers researched | 20 (Rep. Ayanna Pressley skipped: her career is politics, which the rules keep off profiles) |
 | Identity confidence | 13 high, 4 medium, 3 low |
 | Speakers with something to review | 17 |
-| Rows to review | 75: 33 facts, 41 articles or talks, 1 website |
+| Rows to review | 74: 33 facts, 40 articles or talks, 1 website (one article removed for stating a personal detail) |
 | Speakers with nothing | Jonathan Yeldell (AWS), Olukunle Owolabi (Meta), Nicole Murray (NVIDIA) |
 
 **Every quote still needs checking.** This session's network blocked the
@@ -62,7 +62,6 @@ allowed.
 | Dr. Timnit Gebru | high | Fact | Co-wrote 'Gender Shades' (2018) with Joy Buolamwini, the study that exposed skin-tone and gender bias in face-analysis software. | [NBC News](https://www.nbcnews.com/news/amp/rcna13339) | 1 | search-snippet | draft |
 | Dr. Timnit Gebru | high | Talk | Timnit Gebru interview | [Democracy Now!](https://democracynow.org/2026/8/13/timnit_gebru) | | search-snippet | draft |
 | Dr. Timnit Gebru | high | Article | How a Black Woman is Making AI a Force for Equity | [Robert Wood Johnson Foundation](https://www.rwjf.org/en/grants/grantee-stories/2025/09/how-a-black-woman-is-making-ai-a-force-for-equity.html) | | search-snippet | draft |
-| Dr. Timnit Gebru | high | Article | Ethiopian-born computer scientist Timnit Gebru's debut book Deep Unlearning is now available for preorder | [Brittle Paper](https://brittlepaper.com/2026/08/ethiopian-born-computer-scientist-timnit-gebrus-debut-book-deep-unlearning-is-now-available-for-preorder/) | | search-snippet | draft |
 | X Eyee | medium | Fact | Founded Google's Skin Tone research team, which built new techniques to reduce bias in AI systems. | [San Diego Community College District](https://www.sdccd.edu/departments/communications/newscenter/articles/2026/ai-day-event.aspx) | 1 | search-snippet | draft |
 | X Eyee | medium | Fact | A California community college alum, she returned to keynote San Diego's 2026 InnovAItion Day on AI. | [San Diego Community College District](https://www.sdccd.edu/departments/communications/newscenter/articles/2026/ai-day-event.aspx) | 1 | search-snippet | draft |
 | X Eyee | medium | Talk | Community college alumna, award-winning AI expert to headline second annual InnovAItion Day | [San Diego Community College District](https://www.sdccd.edu/departments/communications/newscenter/articles/2026/ai-day-event.aspx) | | search-snippet | draft |
