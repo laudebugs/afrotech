@@ -31,6 +31,6 @@ short note on anything that changed from the plan.
 | [008](008-interactive-floor-map.md) | Interactive floor map component | 2 | todo |
 | [009](009-city-map.md) | Geocode side events + city map | 2 | todo |
 | [010](010-near-me.md) | Near me (geolocation + "I'm at…") | 3 | todo |
-| [011](011-notes-on-site.md) | Render shared notes on the site | 3 | todo |
+| [011](011-notes-on-site.md) | Public notes: write in the browser, publish through GitHub | 1 | todo |
 | [012](012-auto-refresh-data.md) | Scheduled data refresh | 3 | todo |
 | [013](013-offline-pwa.md) | Offline support (PWA) | 3 | todo |

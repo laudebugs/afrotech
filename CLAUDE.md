@@ -66,4 +66,6 @@ Site commands (`npm run dev | build | preview | deploy`) arrive with todo 001.
   `prefers-reduced-motion`.
 - **Site stack:** Astro 7 static output on Cloudflare (Workers static assets).
   Plain Astro components + small client scripts; ask before adding a UI framework.
+- **No sign-in.** Per-user state (My plan, note drafts) lives in `localStorage`.
+  Notes are public and publish by committing Markdown to `notes/` through GitHub.
 - **Location** data stays on the device; ask for it only on a user action.

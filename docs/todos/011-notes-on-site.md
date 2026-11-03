@@ -1,17 +1,24 @@
-# 011 — Render shared notes on the site
+# 011 — Public notes: write in the browser, publish through GitHub
 
-**Status:** todo · **Plan:** [Plan 0001](../plans/0001-events-site.md) · **Depends on:** 004
+**Status:** todo · **Plan:** [Plan 0001](../plans/0001-events-site.md#notes-publish-through-github-so-the-site-needs-no-sign-in) · **Depends on:** 004
 
 ## Goal
 
-Make the notes in `notes/` readable on the site, linked to their events.
+Let you write a note on any session from your phone and publish it to a public
+`/notes` page, with GitHub's login deciding who can publish.
 
 ## Done when
 
-- [ ] Astro content collection for `notes/*.md` with frontmatter `eventId`, `author`
-- [ ] `/notes` index and note pages; event detail links to its notes
-- [ ] `notes/_template.md` updated with the frontmatter
+- [ ] Astro content collection for `notes/*.md`, with frontmatter `eventId`, `title`, `author` and `published`
+- [ ] `/notes` lists published notes, newest first; each note has its own page
+- [ ] Each event page links to its notes
+- [ ] "Write a note" on every session opens `/notes/new?event=<id>`, prefilled with the session's title, time and room
+- [ ] The editor saves drafts to `localStorage` as you type and still works when storage is blocked
+- [ ] "Publish" opens GitHub's new-file page with the file name and content filled in; long notes fall back to copy-and-paste
+- [ ] `notes/_template.md` gains the frontmatter
+- [ ] Publishing a test note from a phone shows it on the live site after the rebuild
 
 ## Notes
 
-Depends on open question 3 (public or not).
+Moved from Phase 3 to Phase 1 on November 3, because notes are most useful
+during the conference.
