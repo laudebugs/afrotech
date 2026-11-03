@@ -19,7 +19,7 @@ short note on anything that changed from the plan.
 
 ## Index
 
-Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plan 0005 (notes in your account).
+Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plans 0005 (notes in your account) and 0006 (the notes editor).
 
 | # | Task | Phase | Status |
 |---|------|-------|--------|
@@ -49,3 +49,6 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plan 000
 | [024](024-notes-on-device.md) | Notes on the device; GitHub publishing removed | 5 | done |
 | [025](025-notes-api.md) | Notes table and API | 5 | done |
 | [026](026-notes-sync.md) | Sync notes across devices | 5 | done |
+| [027](027-tiptap-editor.md) | Tiptap editor with Markdown in and out (plan 0006) | 5 | done |
+| [028](028-phone-toolbar-insert.md) | Phone toolbar and Insert menu | 5 | todo |
+| [029](029-note-photos.md) | Photos in notes | 5 | todo |

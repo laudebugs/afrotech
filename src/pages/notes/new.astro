@@ -1,8 +1,10 @@
 ---
 // Write or edit a note (plan 0005). /notes/new/?event=<id> starts a note on a
 // session; /notes/new/?id=<note> edits one. Notes save on the device as you
-// type, and sync to your account when you're signed in.
+// type, and sync to your account when you're signed in. The editor is Tiptap
+// (plan 0006), reading and writing Markdown; "Markdown" shows the raw text.
 import "../../styles/notes.css";
+import "../../styles/note-prose.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NoteEventLookup from "../../components/NoteEventLookup.astro";
 import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
@@ -21,11 +23,23 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
         <span>Title</span>
         <input name="title" maxlength={MAX_TITLE} data-title />
       </label>
-      <label>
-        <span>Note (Markdown)</span>
-        <textarea name="body" rows="16" maxlength={MAX_BODY} data-body></textarea>
-      </label>
-      <p class="muted small" aria-live="polite" data-saved></p>
+      <div class="field">
+        <div class="field-head">
+          <span id="note-label">Note</span>
+          <button type="button" class="mode" aria-pressed="false" data-source-toggle>Markdown</button>
+        </div>
+        <div class="body-editor" data-body-editor></div>
+        <textarea
+          class="source"
+          rows="16"
+          maxlength={MAX_BODY}
+          aria-labelledby="note-label"
+          spellcheck="false"
+          data-source
+          hidden></textarea>
+      </div>
+      <p class="muted small" data-saved></p>
+      <p class="small warn" role="alert" data-save-problem hidden></p>
       <div class="buttons">
         <button type="submit" class="button primary">Done</button>
         <button type="button" class="button" data-delete hidden>Delete note</button>
@@ -40,8 +54,10 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
 </BaseLayout>
 
 <script>
-  import { NOTE_TEMPLATE, deleteNote, getNote, notesPersist, saveNote } from "../../lib/notes";
+  import { MAX_BODY, NOTE_TEMPLATE, deleteNote, getNote, notesPersist, saveNote } from "../../lib/notes";
   import { noteEvent } from "../../lib/note-events";
+  import { formatTime } from "../../lib/time";
+  import { countWords, createNoteEditor } from "../../scripts/note-editor";
 
   const params = new URLSearchParams(location.search);
   const editing = getNote(params.get("id") ?? "");
@@ -52,8 +68,10 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
 
   const form = document.querySelector<HTMLFormElement>("[data-editor]")!;
   const titleInput = document.querySelector<HTMLInputElement>("[data-title]")!;
-  const bodyInput = document.querySelector<HTMLTextAreaElement>("[data-body]")!;
+  const source = document.querySelector<HTMLTextAreaElement>("[data-source]")!;
+  const sourceToggle = document.querySelector<HTMLButtonElement>("[data-source-toggle]")!;
   const saved = document.querySelector<HTMLElement>("[data-saved]")!;
+  const problem = document.querySelector<HTMLElement>("[data-save-problem]")!;
   const removeButton = document.querySelector<HTMLButtonElement>("[data-delete]")!;
 
   if (info) document.querySelector("[data-about]")!.textContent = `${info.title} · ${info.when} · ${info.place}`;
@@ -66,8 +84,37 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   // creates nothing.
   let noteId = editing?.id;
   titleInput.value = editing?.title ?? (info ? `Takeaways: ${info.title}` : "");
-  bodyInput.value = editing?.body ?? NOTE_TEMPLATE;
   removeButton.hidden = !noteId;
+
+  const editorBox = document.querySelector<HTMLElement>("[data-body-editor]")!;
+  const body = createNoteEditor({
+    element: editorBox,
+    markdown: editing?.body ?? NOTE_TEMPLATE,
+    labelledBy: "note-label",
+    onChange: changed,
+  });
+
+  // The Markdown view edits the raw text. Switching back re-reads it only if
+  // you changed it, so a look at the Markdown never rewrites the note.
+  let showingSource = false;
+  let shownMarkdown = "";
+  const bodyMarkdown = () => (showingSource ? source.value : body.getMarkdown());
+  sourceToggle.addEventListener("click", () => {
+    showingSource = !showingSource;
+    if (showingSource) source.value = shownMarkdown = body.getMarkdown();
+    else if (source.value !== shownMarkdown) body.setMarkdown(source.value);
+    source.hidden = !showingSource;
+    editorBox.hidden = showingSource;
+    sourceToggle.setAttribute("aria-pressed", String(showingSource));
+    if (showingSource) source.focus();
+    else body.focus();
+  });
+
+  // Both views count words in the text without Markdown syntax.
+  const words = () => {
+    const n = countWords(showingSource ? source.value.replace(/[#>*_`~|[\]()-]+/g, " ") : body.getText());
+    return `${n} ${n === 1 ? "word" : "words"}`;
+  };
 
   // Signing out in another tab removes notes from this device; this editor
   // must not write its note back afterwards.
@@ -77,17 +124,26 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       closed = true;
       clearTimeout(timer);
       timer = 0;
+      body.lock();
       form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>("input, textarea, button").forEach(
         (el) => (el.disabled = true),
       );
+      problem.hidden = true;
       saved.textContent = "You signed out in another tab, so this note was removed from this device.";
     }
   });
 
-  function save() {
+  /** Saves the note; false if it's too long to save. */
+  function save(): boolean {
     timer = 0;
-    if (closed) return;
-    const note = saveNote({ id: noteId, eventId, title: titleInput.value, body: bodyInput.value });
+    if (closed) return true;
+    const markdown = bodyMarkdown();
+    problem.hidden = markdown.length <= MAX_BODY;
+    if (markdown.length > MAX_BODY) {
+      problem.textContent = `This note is too long to save (${markdown.length.toLocaleString()} of ${MAX_BODY.toLocaleString()} characters). Shorten it to keep your changes.`;
+      return false;
+    }
+    const note = saveNote({ id: noteId, eventId, title: titleInput.value, body: markdown });
     // A new note, or this one was deleted elsewhere and saved as a new note.
     if (note.id !== noteId) {
       noteId = note.id;
@@ -96,17 +152,22 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       history.replaceState(null, "", `/notes/new/?id=${encodeURIComponent(noteId)}`);
     }
     saved.textContent = notesPersist()
-      ? "Saved on this device."
+      ? `Saved on this device at ${formatTime(new Date())} · ${words()}`
       : "This browser blocks saving; your note lasts only while this page is open.";
+    return true;
   }
 
   let timer = 0;
   let typed = false;
-  form.addEventListener("input", () => {
+  function changed() {
     typed = true;
     clearTimeout(timer);
     timer = window.setTimeout(save, 400);
-  });
+  }
+  // The title and the Markdown view; the editor reports its own changes.
+  titleInput.addEventListener("input", changed);
+  source.addEventListener("input", changed);
+  saved.textContent = words();
   // Leaving the page mid-pause still saves the last few keystrokes.
   window.addEventListener("pagehide", () => {
     if (timer) {
@@ -126,7 +187,8 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       location.href = noteId ? `/notes/view/?id=${encodeURIComponent(noteId)}` : eventId ? `/event/${eventId}/` : "/notes/";
       return;
     }
-    save();
+    // Too long: stay, with the message showing, rather than lose the changes.
+    if (!save()) return;
     location.href = `/notes/view/?id=${encodeURIComponent(noteId!)}`;
   });
 
@@ -152,6 +214,69 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     gap: var(--space-1);
     font-size: var(--text-sm);
     font-weight: 600;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .field-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .mode {
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    cursor: pointer;
+  }
+  .mode[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .body-editor[hidden] {
+    display: none;
+  }
+  .body-editor :global(.note-editor-content) {
+    min-height: 16rem;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    outline: none;
+  }
+  .body-editor :global(.note-editor-content:focus-visible) {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  /* The placeholder shows in an empty first paragraph. */
+  .body-editor :global(p.is-editor-empty:first-child::before) {
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .warn {
+    margin: 0;
+    color: var(--warn);
+    font-weight: 600;
+  }
+  .warn[hidden] {
+    display: none;
+  }
+  .source {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
   }
   input,
   textarea {
