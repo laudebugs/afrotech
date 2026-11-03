@@ -2,26 +2,39 @@
 
 Shared tracker for AfroTech Conference 2026 events and the notes we take at them.
 
-**When:** November 2–6, 2026
-**Where:** George R. Brown Convention Center, Houston, TX
-**Scale:** 300+ speakers, 15 tracks, 11 stages
+**When:** November 2–6, 2026 · **Where:** George R. Brown Convention Center, Houston, TX
 
 ## Layout
 
 | Path | What's in it |
 |------|--------------|
-| `schedule/official.md` | Official conference agenda (afrotechconference.com/schedule) |
-| `schedule/side-events.md` | Side events, parties and meetups (community spreadsheet) |
-| `notes/` | One file per session we attend — copy `notes/_template.md` |
+| [`schedule/official.md`](schedule/official.md) | Full official agenda, by day (259 sessions, Houston time) |
+| [`schedule/side-events.md`](schedule/side-events.md) | Side events, parties and meetups from community lists |
+| [`data/sessions.csv`](data/sessions.csv) / [`.json`](data/sessions.json) | Official agenda as data, with descriptions, ticket levels and calendar links |
+| [`notes/`](notes/) | One file per session we attend — copy [`notes/_template.md`](notes/_template.md) |
+| [`scripts/update_schedule.py`](scripts/update_schedule.py) | Re-pulls the official agenda and rebuilds the files above |
 
 ## Adding notes
 
 1. Copy `notes/_template.md` to `notes/YYYY-MM-DD-short-session-name.md`.
 2. Fill it in during or after the session.
-3. Link it from the session's row in the schedule (the **Notes** column).
+3. Add a link to it in the session list below.
+
+## Refreshing the official schedule
+
+```bash
+python3 scripts/update_schedule.py
+```
+
+No dependencies beyond Python 3.9+.
+
+## Notes so far
+
+_None yet._
 
 ## Sources
 
 - Official schedule: https://afrotechconference.com/schedule
-- Speakers: https://afrotechconference.com/speakers
-- Side-events spreadsheet (OneDrive): https://1drv.ms/x/c/201780541da98428/IQAwneocjcw7RLgXigZPaCX-Afj6iRzSioL8HrnOZ6uMc-Y
+- AfroTech Guide: https://afrotech.guide/
+- Side events (Google Sheet): https://docs.google.com/spreadsheets/d/1PLDLOdFCuwDAy4fe5y09hb4KgYlX3bsgX60U2z2KE_0/edit
+- Side events (OneDrive): https://1drv.ms/x/c/201780541da98428/IQAwneocjcw7RLgXigZPaCX-Afj6iRzSioL8HrnOZ6uMc-Y
