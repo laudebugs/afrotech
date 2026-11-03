@@ -35,7 +35,9 @@ Built on November 3:
 - **Editor:** `/notes/new/?event=<id>` prefills the title and section headings,
   saves drafts per event in `localStorage`, and publishes by opening GitHub's
   new-file page. Notes whose link would exceed about 7,000 characters go by
-  clipboard instead. **Copy Markdown** works anywhere.
+  clipboard, then an **Open GitHub** button (a fresh tap, so phones don't block
+  it). **Copy Markdown** works anywhere. File names carry the publish date and
+  time (`2026-11-04-1530-takeaways-….md`), so two notes never collide.
 - **Author:** `SITE_AUTHOR` (now `laudebugs`) and the target repo live in
   `src/config.ts`.
 - **Untested:** publishing from a phone to the live site needs you. Until the

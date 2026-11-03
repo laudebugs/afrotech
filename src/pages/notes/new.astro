@@ -44,9 +44,10 @@ const lookup = Object.fromEntries(
       <button type="button" class="button" data-discard>Discard draft</button>
     </div>
     <p class="status" role="status" data-status></p>
+    <a class="button primary" href="#" target="_blank" rel="noopener" data-open-github hidden>Open GitHub</a>
     <p class="muted help">
       Publishing opens GitHub with the file filled in. Tap “Commit changes” there, and the note appears
-      on the site about two minutes later.
+      on the site about two minutes later. To change a published note, use “Edit on GitHub” on its page.
     </p>
   </form>
 </BaseLayout>
@@ -78,6 +79,7 @@ const lookup = Object.fromEntries(
   const bodyInput = document.querySelector<HTMLTextAreaElement>("[data-body]")!;
   const saved = document.querySelector<HTMLElement>("[data-saved]")!;
   const status = document.querySelector<HTMLElement>("[data-status]")!;
+  const openGithub = document.querySelector<HTMLAnchorElement>("[data-open-github]")!;
 
   if (info) {
     const about = document.querySelector<HTMLElement>("[data-about]")!;
@@ -175,7 +177,9 @@ const lookup = Object.fromEntries(
       "---",
       "",
     ].join("\n");
-    const name = `${(info?.date ?? published.slice(0, 10))}-${slug(title) || "note"}.md`;
+    // Date and publish time keep two notes with the same title apart.
+    const stamp = `${published.slice(0, 10)}-${published.slice(11, 13)}${published.slice(14, 16)}`;
+    const name = `${stamp}-${slug(title) || "note"}.md`;
     return { path: `${repo.dir}/${name}`, text: `${frontmatter}\n${bodyInput.value.trim()}\n` };
   }
 
@@ -206,11 +210,14 @@ const lookup = Object.fromEntries(
       status.textContent = "Opened GitHub. Tap “Commit changes” there to publish.";
       return;
     }
+    // Too long for a link: copy it, then let the user open GitHub with a fresh
+    // tap (browsers block pop-ups opened after an await).
     const copied = await copy(text);
-    window.open(`${base}?filename=${encodeURIComponent(path)}`, "_blank", "noopener");
+    openGithub.href = `${base}?filename=${encodeURIComponent(path)}`;
+    openGithub.hidden = false;
     status.textContent = copied
-      ? "This note is long, so it's on your clipboard. Paste it into GitHub, then tap “Commit changes”."
-      : "This note is too long for a link. Use “Copy Markdown”, then paste it into the GitHub page that opened.";
+      ? "This note is long, so it's on your clipboard. Tap “Open GitHub”, paste it in, then tap “Commit changes”."
+      : "This note is too long for a link. Tap “Copy Markdown”, then “Open GitHub” and paste it in.";
   });
 
   document.querySelector("[data-copy]")!.addEventListener("click", async () => {
@@ -297,6 +304,9 @@ const lookup = Object.fromEntries(
     color: var(--ink);
     font-weight: 600;
     cursor: pointer;
+  }
+  .button[hidden] {
+    display: none;
   }
   .button.primary {
     border-color: var(--accent);
