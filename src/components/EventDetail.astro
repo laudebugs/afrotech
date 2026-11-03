@@ -23,6 +23,8 @@ const when = event.start
 const venue = event.locationKey ? venues[event.locationKey] : undefined;
 const address = event.address ?? venue?.address ?? null;
 const mapsUrl = address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : null;
+// Places on the convention center map get a link that opens it at their room.
+const mapAreaUrl = venue?.areaId ? `/map/?area=${venue.areaId}` : null;
 const facts = [
   event.kind === "official" ? "Official session" : "Side event",
   event.track,
@@ -43,6 +45,7 @@ const facts = [
 
   <p class="place">
     <strong>{event.locationLabel}</strong>
+    {venue?.note && <><br /><span class="muted">{venue.note}</span></>}
     {address && address !== event.locationLabel && <><br />{address}</>}
   </p>
 
@@ -51,6 +54,7 @@ const facts = [
   <div class="actions">
     {event.rsvpUrl && <a class="button primary" href={event.rsvpUrl} rel="noopener">RSVP</a>}
     {event.start && <a class="button" href={`/event/${event.id}.ics`} download>Add to calendar</a>}
+    {mapAreaUrl && <a class="button" href={mapAreaUrl}>Show on map</a>}
     {mapsUrl && <a class="button" href={mapsUrl} rel="noopener">Directions</a>}
     <a class="button" href={`/notes/new/?event=${event.id}`}>Write a note</a>
   </div>
