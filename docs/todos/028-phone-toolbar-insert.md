@@ -8,11 +8,12 @@ Make writing a note on a phone quick: formats one tap away, and session details 
 
 ## Done when
 
-- [x] A toolbar row sits above the on-screen keyboard while typing (`visualViewport`), and below the editor on desktop
+- [x] A toolbar row sits above the on-screen keyboard while typing (`visualViewport`), and pinned above the editor otherwise
 - [x] Buttons: heading, bold, italic, bulleted list, task list, quote, link, undo, Insert; each shows its state (`aria-pressed`)
 - [x] Insert adds: the session's title, time and room; its speakers linked to their pages; the current Houston time; a link to another session found by search
 - [x] Works with the keyboard and screen readers; 44 px targets; respects `prefers-reduced-motion`
-- [x] Tested on iOS Safari and Android Chrome sizes
+- [x] Tested at phone size in Chrome, with a simulated keyboard
+- [ ] Checked on a real iPhone (Safari) and Android phone (Chrome): needs you
 
 ## Notes
 
