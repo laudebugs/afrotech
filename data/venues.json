@@ -213,6 +213,11 @@
     "level": 1,
     "note": "In the exhibit halls; AfroTech hasn't published where."
   },
+  "eyeconic-studios": {
+    "address": "6115 Skyline Drive, C, Houston, TX 77057, Houston, TX",
+    "kind": "offsite",
+    "label": "Eyeconic Studios"
+  },
   "fairfax": {
     "address": "81 Drew St, Houston TX",
     "kind": "offsite",
@@ -299,6 +304,11 @@
     "kind": "offsite",
     "label": "GRB: Product & Innovation Stage"
   },
+  "haii-keii": {
+    "address": "3300 Kirby Dr Ste 9-A, Houston, TX 77098",
+    "kind": "offsite",
+    "label": "Haii Keii"
+  },
   "harold-s-chicken-sports-bar": {
     "address": "5334 Washington Avenue Houston, TX 77007",
     "kind": "offsite",
@@ -377,6 +387,11 @@
     "kind": "offsite",
     "label": "Houston (shared on approval)"
   },
+  "houston-tx": {
+    "address": "Houston, Texas",
+    "kind": "offsite",
+    "label": "Houston, TX"
+  },
   "houston-venue-not-publicly-listed": {
     "address": "TBA",
     "kind": "offsite",
@@ -422,6 +437,7 @@
     "label": "LIV Houston"
   },
   "location-provided-upon-rsvp": {
+    "address": "Houston, TX, USA",
     "kind": "offsite",
     "label": "Location Provided Upon RSVP"
   },
@@ -519,6 +535,11 @@
   "private-venue-confirmed-guests-only": {
     "kind": "offsite",
     "label": "Private venue — confirmed guests only"
+  },
+  "privilege-rooftop-lounge": {
+    "address": "808 Anita Street, Houston, TX 77006, Houston, TX",
+    "kind": "offsite",
+    "label": "Privilege Rooftop & Lounge"
   },
   "product-innovation-stage-exhibit-hall-c-d-1st-floor": {
     "areaId": "halls-c-d",
@@ -750,6 +771,11 @@
   },
   "the-us-space": {
     "address": "800 Travis Street, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "The Us Space"
+  },
+  "the-us-space-808-travis": {
+    "address": "808 Travis Street, #Suite 400, Houston, TX 77002, Houston, TX",
     "kind": "offsite",
     "label": "The Us Space"
   },

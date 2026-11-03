@@ -1,0 +1,1080 @@
+{
+  "_about": "Read each side event's own page and save what it says about the event.",
+  "pages": {
+    "https://afrotechconference.com/roundtables": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "skipped": "no event block expected on this site"
+    },
+    "https://afrotechconference.com/schedule": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "skipped": "no event block expected on this site"
+    },
+    "https://atlantalifelegacyinmotion.rsvpify.com/": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "lastError": "HTTP Error 403: Forbidden"
+    },
+    "https://careers.ancestry.com/ancestry-at-afrotech": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://events.eventnoire.com/e/black-tech-reunion": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "505 Main Street, Houston, TX 77002",
+        "description": "Black Tech ReunionJoin Charles Beloved Productions for The Black Tech Reunion at Velvet Rail on Wednesday, November 4, from 6–10 PM. Connect with fellow Black tech professionals, catch up with familiar faces, and make new connections during AfroTech week, with music by: Francesca Eva DJ NP3 CJ Williams Sponsored Martell Cognac Discovered on BLK In partnership with: BERG Collective, Eventnoire, JQ Lifestyle, HBCU Made & Cool Dad.This ticket grants you access to the Black Tech Mixer. Download the BLK app before arrival to receive free entry. Find it on BLK and join the event chat to connect with others going.",
+        "organizer": "Charles Beloved Productions",
+        "price": "Free",
+        "start": "2026-11-04T18:00:00-06:00",
+        "title": "The Black Tech Reunion Powered by Martell Cognac",
+        "venue": "Velvet Rail"
+      }
+    },
+    "https://events.eventnoire.com/e/carefreeblackgirl-cookout-afrotech-4": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://events.eventnoire.com/e/offkampuspart2/tickets": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "2301 Main Street, Houston, TX 77002",
+        "description": "Off Kampus Part II | The Official Conference Kickback Featuring a live performance by Roscoe Dash In collaboration with Crown Royal, Casamigos, and Armand de Brignac The best event from last year's conference returns for more high-energy nostalgic hip-hop from our college years, the flyest most popping attendees, and the bottle wars. Start thinking now about what you want to put on your bottle delivery signs lol. Listen, Roscoe Dash is going to get us ALL THE WAY TURNT UP and that's just the beginning. Complimentary Crown Royal and Casamigos cocktails while supplies last. We are bringing you an all-star DJ line up, two of the best hosts in the world, and come ready to move it with NO HANDS! Food and Hookah are also available all night! Roscoe Dash Charles Beloved DJ Mr. Rogers Arrianna Marie DJ R-Tistic DJ Benjamin Walker",
+        "organizer": "Charles Beloved Productions",
+        "price": "$20–$100",
+        "start": "2026-11-05T20:00:00-06:00",
+        "title": "Off Kampus Part II Featuring Roscoe Dash",
+        "venue": "Amara Houston (Inside The Encore)"
+      }
+    },
+    "https://events.eventnoire.com/e/the-conference-afters": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "3300 Kirby Dr Ste 9-A, Houston, TX 77098",
+        "description": "A late night of elegance brought to you by Armand de Brignac. Join us in our exclusive Conference Afters at the immaculate Haii Keii for champagne, food, hookah and bottle service for the créme de la créme of feature events of the week. This will close out the conference with the whose who with a r&b focused musical selection to set the vibes into the late late night. Elevate your after-hours experience with a complimentary tasting of Armand de Brignac ‘Ace of Spades’ Champagne. Limited pours available. This exclusive event is brought to you by Melo the Mayor & Charles Beloved",
+        "organizer": "Charles Beloved Productions",
+        "price": "$75–$150",
+        "start": "2026-11-05T23:59:00-06:00",
+        "title": "The Conference Afters",
+        "venue": "Haii Keii"
+      }
+    },
+    "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR4P7hMknoElFpP5JIB7xifJUQlJVNlUwSzFUM0hZRDc1OEhJNE85RlcxUS4u": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "skipped": "no event block expected on this site"
+    },
+    "https://futureofxyz.propelcenter.org/afrotech": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://info.wsgr.com/EV-2026-11-05-AfrotechHappyHour_Registration.html": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://luma.com/12ioljzb?tk=RqnjBy": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://luma.com/203bktb8": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "The Podium at Porsche River Oaks, Houston, Texas",
+        "description": "Houston, this one is for the builders. 6PM in Houston is a night built for one thing: meeting the people you should already know. Founders, engineers, security pros, creators, operators, and anyone making their next move, all in one room at The Podium at Porsche River Oaks. This is networking first. Your host keeps the night moving from doors to close, we hear one short panel with builders from our community, and then Cultur FM takes over with a private recorded set while you keep connecting. MEET YOUR MATCH We're using ORE to pair you with someone in the room worth knowing: a business match, a partner, a collaborator, or your next hire. Join now so your matches are ready when you arrive: www.orenow.com/invite/6pm-in-houston?c=FQR35 (event code FQR35). It takes about 3 minutes. In town for AfroTech week? This is your Friday night. Live in Houston? This is your chance to meet everyone who just flew in. THE NIGHT 6:00 PM | Doors open and check-in. Finish your ORE questions if you haven't yet 7:00 PM | Early Bird entry closes. Welcome from your host 7:10 PM | Panel, moderated by your host 7:45 PM | ORE Activation: meet your match 8:15 PM | Private recorded set by Cultur FM. Networking until close 9:00 PM | Networking continues THE PANEL Moderated by Anthony Antoine, Main Anchor, KRIV FOX 26 Houston. Dr. Obianuju Okafor, PhD, R&D Software Engineer at Microsoft, where she leads frontend development. She previously worked at IBM, Salesforce, and UT Austin, and builds user-centered AI systems while championing underrepresented groups in tech. Dr. Christine Izuakor, PhD, CISSP, Founder and CEO of Rauk AI and a venture investor. She was the youngest person and first African American woman to earn a Ph.D. in security engineering, and is a former Fortune 100 executive and professor. Prince Crentsil, M.S., Senior AI Solution Advisor at Microsoft, helping enterprises turn AI strategy into business impact. Founder of Jama! Brunch, he brings expertise in event production, brand…",
+        "end": "2026-11-06T21:00:00-06:00",
+        "organizer": "Hacker Proof HQ LLC",
+        "price": "usd 25",
+        "start": "2026-11-06T18:00:00-06:00",
+        "title": "6PM in Houston | Your Exclusive Tech Networking Event - AfroTech",
+        "venue": "The Podium at Porsche River Oaks"
+      }
+    },
+    "https://luma.com/4lr4dge3": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Hotel Saint Augustine, Houston, Texas",
+        "description": "Calling all storytellers, strategists, and culture movers! The Comms + Content Collective is back for Vol. 4, and this time, we’re gathering at Hotel Saint Augustine. Consider it your favorite group chat, IRL. An evening to step away from the deliverables, meet someone new, and spend time with women who understand the work behind the stories, brands, and cultural moments we all so deeply connect with. Whether you’ve been with us from the beginning or this is your first time, there’s a place for you here. Hosted by The Howard Method, a communications consultancy for food and lifestyle brands, this series is designed to bring together women who think creatively, move culture, and understand the power of a well-told story. ✨ Details Monday, Nov. 2 5:00–7:00 p.m. Hotel Saint Augustine, 4110 Loretto St., Houston, TX ✨ What to Expect - A warm, welcoming space to meet and connect - Thoughtful conversations with women across PR, comms, marketing, media, and content - A relaxed, come-as-you-are atmosphere ✨ Perks - Free RSVP - Free street parking, plus a valet option - Access to our exclusive WhatsApp group",
+        "end": "2026-11-02T19:00:00-06:00",
+        "organizer": "Kristal Howard",
+        "price": "Free",
+        "start": "2026-11-02T17:00:00-06:00",
+        "title": "The Comms + Content Collective: An Evening with Storytellers - Vol. 4",
+        "venue": "Hotel Saint Augustine"
+      }
+    },
+    "https://luma.com/5y9cwltb": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Discovery Green, Houston, Texas",
+        "description": "Join Christians Innovate for a prayer walk during AfroTech Week in Houston. Believers that build, praying over the city's founders, builders, and workers. Theme: \"Except the LORD build the house, they labour in vain that build it.\" Psalm 127:1. Meet time is 9:00 AM. Hosted by Christians Innovate, a virtual community of Believers boldly building redemptive enterprises for the next 5, 50, and 500 years. We meet on zoom every Thursday at 12pm to seek the Kingdom and support each other. We also gather alongside major innovation events such as NY Tech Week, ATL Tech Week, Newark Tech Week and Sistas in Sales. Join us here In partnership with Verses (http://versesbibleapp.com/), the Bible quiz game that helps you grow in the Word through Bible trivia and verse recall.",
+        "end": "2026-11-06T10:30:00-06:00",
+        "organizer": "Christians Innovate",
+        "price": "Free",
+        "start": "2026-11-06T09:00:00-06:00",
+        "title": "Prayer Walk @ AfroTech by Christians Innovate",
+        "venue": "Discovery Green"
+      }
+    },
+    "https://luma.com/9by7st34": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Downtown Houston, Houston, Texas",
+        "description": "During AfroTech 2026, Adaptive Foundation is hosting an intimate afternoon for executives, founders and investors who want to work together on Africa's opportunities. We’ll be curating intros so that every conversation matters. What to expect Curated introductions based on what you're building and how you want to contribute A Deal Flow spotlight: three founders, 60 seconds each Drinks and light bites on Adaptive Foundation Who it's for Founders building for African or diaspora markets Angels, VCs and family offices with an Africa, emerging-markets or diaspora thesis Corporate venture, innovation and partnerships leads Executives and operators who want to build with peers around the world for Africa's benefit We're looking for kind, curious, collaborative people with a \"how can I help\" mindset. Your sector doesn't matter. Good to know We review every application to ensure we curate a room where each attendee finds value. Doors open at 2:30 PM, and the program starts at 3:00 PM, right after the morning sessions. You'll be out in time for the Blavity Block Party at Discovery Green. This is an in-person event. The venue address is shared with approved guests. You don't need an AfroTech badge to attend. Everyone who applies gets my guide to 70+ AfroTech week side events. About Adaptive Foundation Adaptives™ is building a high-trust, values-driven community of leaders who collaborate generously to accelerate one another's success. Adaptive Africa brings that community together around Africa's opportunities. Deal Flow Friday, where vetted founders pitch to active investors and partners, is one of its programs. Learn more at adaptives.org. Hosted by Lyncy Nyandoche. Lyncy Nyandoche holds an MBA from The Wharton School and an MA in International Studies from the Lauder Institute, both at the University of Pennsylvania, with a focus on Africa. She has been involved in the startup and venture capital space since 2018. Before Wharton, she worked at Amex Ventures, the corporate…",
+        "end": "2026-11-05T17:00:00-06:00",
+        "organizer": "Lyncy Nyandoche",
+        "price": "Free",
+        "start": "2026-11-05T14:30:00-06:00",
+        "title": "Africa Leaders & Builders Reception · AfroTech Houston",
+        "venue": "Downtown Houston"
+      }
+    },
+    "https://luma.com/bg6isp5z": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "The Ion, Houston, Texas",
+        "description": "The Startup Simulation is an in-person startup simulation that brings founders, investors, mentors and ecosystem partners together to navigate real decisions, tradeoffs and uncertainty, before the stakes are real. Players allocate limited resources, build a team, choose where to focus and respond to uncertainty. Decisions compound over time, surfacing patterns and blind spots through safe failure and reflection. All of the participants encounter fundraising, team building, resource allocation and go-to-market decisions in a shared experience that can make later workshops, mentoring and ecosystem relationships more valuable.",
+        "end": "2026-11-04T12:00:00-06:00",
+        "organizer": "iCUE USA",
+        "price": "Free",
+        "start": "2026-11-04T09:00:00-06:00",
+        "title": "Startup Heat Simulation Room",
+        "venue": "The Ion"
+      }
+    },
+    "https://luma.com/duzhevlr": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "lastError": "HTTP Error 404: Not Found"
+    },
+    "https://luma.com/ey78yb8p": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "1301 Fannin St, Houston, Texas",
+        "description": "Back in Houston. Five CISOs/CIOs. The questions you have always wanted to ask. The Connect: C-Suite Edition returns for its second Houston edition, this time during AfroTech week. Hacker Proof HQ and WiCyS Houston Affiliate are putting five CISOs/CIO in front of the people who rarely get direct access to them: working security professionals and aspiring tech and security talent. This panel runs on your questions. The ones you have thought about on the job, in interviews, and on the way up. The ones you have always wanted to ask a CISO but never had the room to. The Evening A moderated panel with five CISOs/CIOs, built around questions from the community Open Q&A from the floor Structured networking between executives, security professionals, and aspiring security & tech talent Free food, drinks, and music throughout the night Fuel for the Firewall ChopNBlok is feeding the room, and Hacker Proof HQ is pouring three signature cocktails: a Traditional Margarita, Rum Punch, and a Lavender Lemon Drop. Come for the panel, stay for the plate. MEET YOUR MATCH We're using ORE to pair you with someone in the room worth knowing: a business match, a partner, a collaborator, or your next hire. Join now so your matches are ready when you arrive: https://www.orenow.com/invite/the-connect-c-suite?c=DWK95 (event code DWK95). It takes about 3 minutes. Meet the Panelists Five security leaders. One room. Here is who is on stage. Crystal Chatam Grant VP of Cybersecurity and CISO, Speedcast Crystal leads security across 140+ countries at Speedcast. An 18-year veteran of JPMorgan Chase, KPMG, and EY, she chairs AIXP, is a Global Responsible AI Ambassador, and is a 2026 ORBIE finalist. Marc Crudgington VP of IT Infrastructure and Cybersecurity, Crane Worldwide Logistics An Air Force veteran with 25+ years in cybersecurity, Marc is VP of IT Infrastructure and Cybersecurity at Crane Worldwide Logistics and former CISO of Woodforest National Bank. A bestselling author, he is the 2025 ORBIE…",
+        "end": "2026-11-05T21:00:00-06:00",
+        "organizer": "The Connect",
+        "price": "usd 10",
+        "start": "2026-11-05T18:00:00-06:00",
+        "title": "The Connect: C-Suite Edition | Houston - AfroTech",
+        "venue": "1301 Fannin St"
+      }
+    },
+    "https://luma.com/fv86pz6s": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "lastError": "HTTP Error 404: Not Found"
+    },
+    "https://luma.com/gy2jfwij": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://luma.com/hw5zft32": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Houston, Texas",
+        "description": "Join Mogul Millennial for Founder Power Breakfast, an invite-only gathering for Seed to Series A founders during AFROTECH Week in Houston. Start your morning with breakfast bites, cocktails and mocktails (mocktails sponsored by Little Saints & Hiyo), and intentional networking with fellow founders and operators. We’ll also host a candid fireside chat focused on customer acquisition as you grow — from figuring out which channels are worth doubling down on to building a more predictable path to new customers. This is a curated, intimate room designed for founders who are actively building, scaling, and navigating the challenges that come after early traction. Attendance is limited to approved registered guests, and space is limited. The event will be held approximately 10 minutes from the George R. Brown Convention Center, with on-site parking available. Come for breakfast, stay for the conversation, and connect with founders building through the next stage of growth. Special thank you to our friends at Braze for their sponsorship, with additional support from Stripe, Green Arc, and Little Saints. About Mogul Millennial Mogul Millennial is a media and technology company helping underrepresented founders find and access the resources they need to grow. Through its Capital Klub platform, Mogul Millennial connects founders with grants, accelerators, pitch competitions, fellowships, and other funding and growth opportunities. About Braze Braze is a customer engagement platform used by leading brands including Canva and HBO Max to build stronger relationships with customers across email, messaging, in-app experiences, and more. Applications are now open for Braze’s Tech for an Equitable Future program, which gives underestimated founders 12 months of free access to the Braze platform, along with onboarding, customer success support, certifications, and other resources designed to help companies grow and scale. Apply now. Supporting Partners Stripe is a financial…",
+        "end": "2026-11-04T11:30:00-06:00",
+        "organizer": "Mogul Millennial - Events",
+        "price": "Free",
+        "start": "2026-11-04T09:30:00-06:00",
+        "title": "Founder Power Breakfast at AFROTECH",
+        "venue": "Houston, TX"
+      }
+    },
+    "https://luma.com/kma6y95g": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "3100 Fountain View Dr, Houston, Texas",
+        "description": "HuCapital and Black Men in Tech are teaming up to bring HuLane, an AI-powered professional matchmaking mixer, to Houston during AfroTech Week! Meet your next co-founder, collaborator, or business partner while enjoying interactive activations, great energy, and a few more surprises. Event Breakdown Nostalgia: Remember those \"Traffic Light Parties\" from college, the ones we all attended at least once? Of course, you do! Well, here’s some exciting news: HuCapital & BLK Men In Tech are bringing a fresh, professional spin to this iconic theme, turning nostalgia into meaningful connections and opportunities. Rules 💚 Green - Business & Tech 💛 Yellow - Media & Entertainment ❤️ Red - Healthcare & Social Impact **Disclaimer: Attendees do NOT have to dress up in these colors. Wristbands & name tags will be provided.** What to Expect: ✅ Huey IRL: Our on-site AI professional matchmaker connecting you with 10 to 20 people in the room who share your interests. ✅ Career Corner: Sit down with real recruiters in an intimate roundtable setting to get honest, tactical advice on navigating today's job market. ✅ ALL DAY HAPPY HOUR: Enjoy discounted drinks and food all evening long Bring Your: Business cards Positive energy Provided to You: Color-coded name tags & wristbands Other Details: Dress code: Casual Career Corner Facilitators: Coming Soon What is HuCapital? HuCapital is an AI-powered community platform uniting entrepreneurial creatives and professionals through 1:1, peer group and prompted matches; powered by our Al Engine Huey. What is BLK Men In Tech? BLK Men in Tech is an organization dedicated to advancing Black men in technology while fostering an inclusive ecosystem where innovation, leadership, and opportunity are accessible to all who believe in our mission. Interested in becoming a sponsor/ vendor for this event? Fill out this form to apply. We are seeking innovative AI tools for business development / productivity, as well as, wellness brands! Disclaimer: By attending…",
+        "end": "2026-11-05T22:00:00-06:00",
+        "organizer": "HuCapital",
+        "price": "Free",
+        "start": "2026-11-05T18:00:00-06:00",
+        "title": "HuLane: Houston Edition",
+        "venue": "3100 Fountain View Dr"
+      }
+    },
+    "https://luma.com/ldlgfyea": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Houston, Texas",
+        "description": "Join us for Beauty in Tech, an intimate, invite-only networking brunch bringing together women across technology, STEM, entrepreneurship, and creative careers during AfroTech! ✨ Taking place the morning of November 3rd in Houston, Texas, this brunch is the perfect way to connect, build community, and meet new women before heading into the AfroTech conference and expo hall. Come ready for good food, meaningful conversations, and new connections. 💕 A few things to know: 1️⃣ Wear Pink! 🎀 Come dressed in your favorite shade of pink. 2️⃣ Everyone pays for their own meal. Guests can order anything they’d like directly from the restaurant’s menu. 3️⃣ 20% gratuity applies. A 20% gratuity, plus applicable taxes and fees, will be added to each individual tab. Additional event details will be shared with confirmed guests. We can't wait to see you in Houston and kick off AfroTech together! ✨",
+        "end": "2026-11-03T11:30:00-06:00",
+        "organizer": "Abigail Akyea",
+        "price": "Free",
+        "start": "2026-11-03T09:30:00-06:00",
+        "title": "Beauty In Tech - Afrotech Brunch",
+        "venue": "Houston, TX"
+      }
+    },
+    "https://luma.com/mly1psj6": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Reset, Houston, Texas",
+        "description": "Tech and opportunity are heading south. Welcome to Houston for AfroTech week. Southbound is the JetQuest welcome to the city: a rooftop party and networking night at Reset, with the Houston skyline behind you. The night: 6 PM: Doors, drinks and the JetQuest departures board photo moment Networking with founders, investors, creators and engineers in town for the week 7:45 PM: The Southbound Welcome, a quick 10 minutes. Why Southbound, why Houston, toasts from Houston founders and investors, and a hello from JetQuest Then the DJ takes over until 11 PM. The after party runs from 11 PM to 2 AM, also at Reset. Why come: AfroTech is in Houston for the third year running, and the city is building its Black tech community on purpose. Southbound is where you meet the people building here, on the first big night of the week. Space is limited and every guest is approved, so request your spot early. Up to 200 approved guests. Hosted by JetQuest, the members club for hosted group trips. Not an official AfroTech event. Sponsors welcome:",
+        "end": "2026-11-03T23:00:00-06:00",
+        "organizer": "Jonathon Lewis",
+        "price": "Free",
+        "start": "2026-11-03T18:00:00-06:00",
+        "title": "Welcome to Houston: Southbound",
+        "venue": "Reset"
+      }
+    },
+    "https://luma.com/mps5mni8": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Houston, Texas",
+        "description": "Join Build in Tulsa for an Afternoon of drinks, conversation, and community during AfroTech 2026 in Houston. Build in Tulsa is hosting a networking happy hour to connect Build in Tulsa, prospective founders, AfroTech attendees, and members of the entrepreneurial community. Come meet the Build in Tulsa team, connect with founders and entrepreneurs, and learn more about opportunities to get involved with ARCH, our accelerator for high-growth technology startups. This will be a relaxed, networking-focused event with opportunities for meaningful conversations, new connections, and recruitment conversations around Build in Tulsa’s programs. Hors d’oeuvres, alcoholic, and non-alcoholic drinks will be available. Come for a drink. Stay for the conversation. Meet the Build in Tulsa team and learn more about ARCH our new accelerator. Hosted by Build in Tulsa during AfroTech 2026.",
+        "end": "2026-11-03T18:00:00-06:00",
+        "organizer": "Build in Tulsa",
+        "price": "Free",
+        "start": "2026-11-03T16:00:00-06:00",
+        "title": "Build in Tulsa Happy Hour",
+        "venue": "Houston, TX"
+      }
+    },
+    "https://luma.com/msf5z9zp": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Heights House Hotel, Houston Heights- Downtown, Ascend Hotel Collection, Houston, Texas",
+        "description": "Tickets: First 75 free. Next 25 are $10. After the first 100, tickets are $20. The price does not include food and drinks. The morning: 10:00 Check in 10:30 Mat Pilates for any level 11:15 Ice baths in small groups (optional) 12:00 Poolside talk on burnout and wellness 12:15 Pool time and brunch to order 1:45 A toast to the week 2:00 Wrap up Brunch is available to order poolside: smoothies, avocado toast, healthy wraps, and French toast with bacon. Bring activewear, a swimsuit and a towel. An ice bath waiver is signed at check in. A JetQuest event during AfroTech week. Not an official AfroTech event.",
+        "end": "2026-11-07T14:00:00-06:00",
+        "organizer": "Jonathon Lewis",
+        "price": "Free",
+        "start": "2026-11-07T10:00:00-06:00",
+        "title": "JetQuest Altitude: AfroTech Edition",
+        "venue": "Heights House Hotel, Houston Heights- Downtown, Ascend Hotel Collection"
+      }
+    },
+    "https://luma.com/n7gwilh0": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Houston, Texas",
+        "description": "🌍 2026 Theme: Beyond Borders — Building Global Careers, Capital & Community AfroTech 2026 | Houston, TX Tuesday, November 3, 2026 5:30 PM – 7:30 PM CT AfroTech week is here! We're bringing the Afro Adventurer community together for a casual diaspora dinner pop-up in Houston. Take a break from the conference, grab a bite, and connect with fellow Black and Brown technologists, founders, entrepreneurs, travelers and globally minded professionals. Whether you're building across borders, exploring opportunities abroad, working remotely, investing in Africa, or simply looking to meet your people, come share a meal, swap travel or remote work setup notes, and make a few new global connections The vision is to bring together people who are interested in: 🌍Global careers, remote work and professional mobility. 🌍Diaspora entrepreneurship, investment and ownership. 🌍Travel, relocation and opportunities across Africa and the diaspora. 🌍 Building meaningful relationships with other globally minded professionals. Expect: Global menu to choose from and global conversations Diaspora connections across tech, entrepreneurship and travel Stories, ideas and opportunities that cross borders A relaxed, come-as-you-are atmosphere A few things to know: This is a casual, self-pay dinner. Everyone covers their own food and drinks. Space is limited. Please RSVP only if you genuinely intend to attend. Restaurant and meeting details will be shared with confirmed attendees. Come hungry. Bring your stories, good energy and curiosity. Meet your people. 🌍 Keep the connections going beyond the table 🍽 Join the Afro Adventurer Career Compass Founding Circle: for ad hoc referrals, daily human vetted remote jobs, founder funding opportunities, an ongoing global diaspora network in your corner, and accountability as you navigate your next career move. 🗺 Explore the community: https://gamma.app/docs/Afro-Adventurer-Career-Compass-Founding-Circle-7v6a4f409s2teqj Build Anywhere. Scale Everywhere. Afro…",
+        "end": "2026-11-03T19:30:00-06:00",
+        "organizer": "Afro Adventurer™ Official Event Calendar",
+        "price": "Free",
+        "start": "2026-11-03T17:30:00-06:00",
+        "title": "Afro Adventurer's Diaspora Dinner Pop-Up @ AfroTech 🌍🥂",
+        "venue": "Houston, TX"
+      }
+    },
+    "https://luma.com/o6qauyr6": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Houston, Texas",
+        "description": "An Intimate Dinner Experience for Faith-Driven Founders, Community Builders & Innovation Leaders Join One99 Labs during AfroTech Week for an intimate, curated dinner bringing together faith-driven founders, community builders, investors, and innovation leaders to explore what becomes possible when technology and community intersect. As emerging technologies reshape how we connect, build, and scale, we'll explore opportunities to collaborate, support faith-driven entrepreneurs, and leverage our collective networks, expertise, and resources to expand Kingdom impact. From technology founders developing solutions to real world challenges to community leaders leveraging digital platforms to expand Kingdom impact, this gathering explores what becomes possible when those building technology connect with those building communities. Together, we'll examine how our collective expertise, networks, influence, and resources can accelerate entrepreneurship, create new economic opportunities, and strengthen the ecosystems supporting faith driven founders. To preserve the intimacy of the experience, seating is limited. Approved guests will receive location and additional event details upon confirmation. We invite you to request a seat at the table.",
+        "end": "2026-11-06T20:30:00-06:00",
+        "organizer": "One99 Labs",
+        "price": "Free",
+        "start": "2026-11-06T18:30:00-06:00",
+        "title": "Faith at the Frontier: Building the Future of Technology & Community",
+        "venue": "Houston, TX"
+      }
+    },
+    "https://luma.com/rbsdhlcn": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Industrious, Houston, Texas",
+        "description": "AfroTech edition of Evening rounds. What would it take to simulate a patient well enough to change how we train, test, research and deliver care? This edition of Evening Rounds explores digital twin technology in healthcare: how it is being used today, where it could meaningfully improve patient outcomes, and what would have to be true for virtual representations of patients to become useful in real-world care. What if we could test a treatment on a virtual version of you before treating you? Across healthcare, researchers are building increasingly sophisticated digital representations of patients — models that can potentially simulate physiology, disease progression, treatment response, and other aspects of health and care. They’re often called digital twins. But the ambition behind the idea is much bigger than simply creating a digital model of a person. Could we use these models to compare treatments before choosing one? Anticipate how disease might progress? Test medical devices and care pathways? Train clinicians against realistic patient scenarios? Or explore interventions before exposing real patients to them? And if so, how accurate does a virtual patient need to be before we should trust what it tells us? How much of a human being can we actually simulate — and how good would that simulation need to be before anyone should make decisions with it? For this special AfroTech Week edition of Evening Rounds, we're asking: Can We Build the Next Virtual Patient? We’ll explore where digital twins in healthcare are real today, where the field may be headed, and what would have to be true for virtual patients to become genuinely useful in research, product development, clinical training, and care. What to expect. Expect a short framing, provocative examples, structured conversation, and an opportunity to help us collectively sketch what the next generation of virtual patients might actually require. Who should come Clinicians, health tech and med-tech builders, AI…",
+        "end": "2026-11-04T20:00:00-06:00",
+        "organizer": "Stitium 37 | Health Innovators",
+        "price": "Free",
+        "start": "2026-11-04T18:00:00-06:00",
+        "title": "Can We Build the Next Virtual Patient?",
+        "venue": "Industrious"
+      }
+    },
+    "https://luma.com/techwalk-co9k": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "The Ion, Houston, Texas",
+        "description": "About TechWalk We're building a different sort of networking event for members of the Tech and SaaS communities to get outside, meet new people, and enjoy some fresh air, while practicing mindful movement. Every week, we'll gather at an easy-to-find meeting spot and then take a leisurely stroll through the park, appreciating the scenery and forging new connections in a friendly and inclusive setting. This is a chance to network, share ideas, and build relationships in a healthy and refreshing alternative to the average happy hour. Whether you're looking for a new role or just need a break from the daily grind, all are welcome. We look forward to seeing you there! For real-time updates on special events and new Co-Hosts follow us sign up for our newsletter www.techwalk.co Welcome to the TechWalk community. Every journey begins with a first step, and we're genuinely delighted to get acquainted. By registering for TechWalk events, you agree to our Terms of Participation, which include our media and marketing consent, newsletter consent, assumption of risk, and community guidelines. You may unsubscribe from TechWalk communications at any time. Check our Code of Conduct, Community Guidelines, and Privacy Policy. We're thrilled to have you with us.",
+        "end": "2026-11-06T13:00:00-06:00",
+        "organizer": "TechWalk",
+        "price": "Free",
+        "start": "2026-11-06T11:30:00-06:00",
+        "title": "AfroTech TechWalk | Houston, 11/6",
+        "venue": "The Ion"
+      }
+    },
+    "https://posh.vip/e/2026-afrotech-5k-presented-by-behr-health": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/a-mad-nice-afrotech": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/activated-by-ajani-official-afrotech-partner-event": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/afro-lituation-afrotech-weekend-1": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/afrotech-conference-blavity-in-black": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/afrotech-conference-out-of-office-lounge": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/afrotech-conference-rb-edition-part-ii": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/afrotech-conference-the-blavity-house-party-block-party": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/afrotech-policy-breakfast": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/afroworld-2": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/afrozen-afrobeats-yoga-experience-2026-9-26-16-0": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/ai-audit-stewardship-in-the-age-of-tech?u=bobbiejohnson126&_t=mvzcw6jb&os=web&src=event_page": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/aimatched-dinners-at-afrotech": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/aimatched-dinners-at-afrotech-general-edition-1": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/aimatched-dinners-general-edition-nov-4th": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/aimatched-dinners-healthcare-edition-1": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/an-official-afrotech-speed-networking-mix-mingle-for-wlw": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/black-women-in-tech-film-creative-industries-brunch": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/blk-grvty-franchise-nova-cocktail-mixer-copy": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/carefreeblackgirl-cookout-afrotech-1": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/choosy-tech-afro-tech-special-edition?u=whoswhopublicrelations&_t=mvf5b4b0&os=ios&src=event_page": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/ctrl-alt-align-a-founder-reset-experience": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/culture-code-afrotech-edition": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/denim-nights?u=almightysule&_t=muy6pcno&os=ios&src=event_page": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/digital-frequencies-art-exhibition": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/first-day-out-22": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/firstwedance-houston-afrotech-114?t=spreadsheet": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/frnds-only-official-afrotech-10-year-anniversary-kickoff-113": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/gbedu-galore-117-afro-tech-weekend-houston-copy?t=sheet": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/glow-on-the-row": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/glow-up-lead": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/high-notes-by-fine-wine-series-houston?t=eventlist": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/jazz-night-at-the-gallery-2026-11-5-4-0?u=ccstudioshtx&_t=mvqmy102&os=ios&src=event_page": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/jollof-festival-afrotech-26": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/morning-miles-with-jo-x-afrotech-walk-connect-elevate": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/motionspaces-houston-unplugged": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/off-the-critical-path-the-pm-community-mixer": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/off-the-grid-afrotech": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/official-afrotech-event-0830-in-the-mix-karaoke-wine": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/oxtail-x-jollof-houston": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/piano-n-chill-chocolate-edition-afrotech-weekend": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/rnbrew-the-sendoff": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/soleties-run-club-end-of-week-shakeout-run": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/solidcore-x-afrotech-popup-at-discovery-green": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/test-1572": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/th3-mixer-presented-by-the-3ngine--1?u=3ngine&_t=mv6nd8pd&os=ios&src=event_page": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/the-brain-breaka-mental-reset-experience": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/the-changemakers-table-afrotech-edition": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/the-daytrading-blueprint-tech-trades-create": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/the-future-is-queer-an-official-afrotech-dining-experience": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/the-green-room-23": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/the-morning-run-reset": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/the-swade-room-by-thecutapp": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/the-tee-tech-golf-clinic-social": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/third-ward-walking-tour-1": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/vibe-coder-builders-coding-the-rite-way": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/e/yearning-for-your-lovenrnb": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/e52af?a=sophiaederaine183": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/ea909?t=afrotech-sheet": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/ec223?t=afrotechexcel": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/ecbde": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/ed825": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/ee2fc": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/ef1e3?t=excel": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/f1644": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/f170b?t=afrotech-tago-sheet": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/f20b9?t=akt": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/f2189?t=afrotech": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/f4da5": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://posh.vip/f/f4fe6": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://the300.community/register": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://thegoodlounge.org/bnb": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://web.cvent.com/event/fad8e1d5-dcf9-4c46-93a4-2efbee9c8d43/register": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "lastError": "HTTP Error 302: The HTTP server returned a redirect error that would lead to an infinite loop.\nThe last 30x error message was:\nFound"
+    },
+    "https://wl.eventim.us/event/battle-of-the-djs/706360?afflky=warehouselive&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaAVHZVBleHRuA2FlbQIxMQBwZG9mAmZkaWQWUQxINn3FL4k6ap3oXgRM8pLtphzlAXNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp8u5vOQ-O1PbBmrO6nu7hDf3ChPTOp_wQIFkpXQFU89AF-HcZem1wSMaRDL3_aem_pQf1-TvVY6yxlWhp1RbW7A&utm_id=97760_v0_s00_e0_tv3_a1denngqmjurys": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://www.ctlystudios.com/event-details/originality-influence-vs-imagination-art-exhibition-2026-11-04-19-00": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "3536 Navigation Blvd, Houston, TX 77003",
+        "description": "Join Catalyst Studios and Westborn Collectives for a night appreciating the relationship between art and culture. With special guest curation by Mueni Loko and installation from Senegalese Native, Moussa Ndiaye - this gallery will display a myriad of art mediums with the theme of 'Originality'.",
+        "end": "2026-11-04T21:00:00-06:00",
+        "price": "$22.19–$49.93",
+        "start": "2026-11-04T17:00:00-06:00",
+        "title": "ORIGINALITY: Influence vs Imagination Art Exhibition",
+        "venue": "Sharespace Navigation"
+      }
+    },
+    "https://www.ctlystudios.com/events-1": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://www.eventbrite.com/e/2001588707706?aff=oddtdtcreator": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "5334 Washington Avenue, Houston, TX 77007, Houston, TX",
+        "description": "Grab the mic! Drop The Mic Karaoke night at Harold's Houston on Tue, Nov 3",
+        "end": "2026-11-04T00:00:00-06:00",
+        "organizer": "Nightlife Functions",
+        "price": "Free–$108.55",
+        "start": "2026-11-03T18:00:00-06:00",
+        "title": "DROP THE MIC KARAOKE SOCIAL",
+        "venue": "Harold's Chicken & Sports Bar"
+      }
+    },
+    "https://www.eventbrite.com/e/2026-houston-afrifest-tickets-1998793601468?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=wsa&aff=ebdsshwebmobile": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://www.eventbrite.com/e/a-night-of-amapiano-afrotech-weekend-tickets-2003090816554": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "2701 Fannin Street, Houston, TX 77002, Houston, TX",
+        "description": "Alternative Sessions × Amapiano DMV bring Houston & the DMV together for a global reunion! the biggest Amapiano night of AfroTech week.",
+        "organizer": "Alternative Sessions",
+        "price": "Free–$215.26",
+        "start": "2026-11-05T21:00:00-06:00",
+        "title": "A NIGHT OF AMAPIANO - AFROTECH WEEKEND",
+        "venue": "AFER HTX"
+      }
+    },
+    "https://www.eventbrite.com/e/adults-only-presents-afro-tech-week-kickoff-mixer-tickets-2001587596382?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=wsa&aff=ebdsshwebmobile#organizer-card": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "606 Dennis Street, #Suite 200, Houston, TX 77006, Houston, TX",
+        "description": "Kick off Afro Tech 2k26 week with an adults-only evening at Reset in Houston",
+        "end": "2026-11-02T21:30:00-06:00",
+        "organizer": "Nightlife Functions",
+        "start": "2026-11-02T16:00:00-06:00",
+        "title": "ADULTS ONLY PRESENTS: AFRO TECH WEEK KICKOFF MIXER",
+        "venue": "Reset"
+      }
+    },
+    "https://www.eventbrite.com/e/afro-tech-2k26-finale-party-tickets-2001592634451": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "5015 Almeda Road, Houston, TX 77004, Houston, TX",
+        "description": "The grand Finale Party of Afro Tech 2k26 week!",
+        "end": "2026-11-07T02:00:00-06:00",
+        "organizer": "Nightlife Functions",
+        "price": "Free–$44.52",
+        "start": "2026-11-06T21:00:00-06:00",
+        "title": "Afro Tech 2k26: Finale Party",
+        "venue": "5015 Almeda Rd"
+      }
+    },
+    "https://www.eventbrite.com/e/afrobeats-happy-hour-tickets-2003712623395?utm_experiment=test_share_listing&aff=ebdsshios&sg=460242fe612d810696301778c6f0dcb734caf80f1f784fec6add96c301af91886d4d3844aace19922cfa5eebb6c25d46bd19a84cd9f6e376badf258ba820a960679038bb2f8e8a579382397d": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "505 Main Street, Houston, TX 77002, Houston, TX",
+        "description": "Our tech week edition. Afrobeats Happy Hour at Velvet Rail. Tuesday November 3. 5-10 PM.",
+        "end": "2026-11-03T22:00:00-06:00",
+        "organizer": "Afrobeats Happy Hour",
+        "price": "Free–$23.18",
+        "start": "2026-11-03T17:00:00-06:00",
+        "title": "Afrobeats Happy Hour",
+        "venue": "Velvet Rail"
+      }
+    },
+    "https://www.eventbrite.com/e/afrocentrik-afrotech-afro-caribbean-fest-noto-tickets-2003042987496": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "3215 McKinney Street, Houston, TX 77003, Houston, TX",
+        "description": "Welcome to the Afro-Caribbean explosion of the Afrotech: where Afrobeats meets Dancehall, Jerk chicken meets Jollof, & the diaspora turns up",
+        "end": "2026-11-05T02:00:00-06:00",
+        "organizer": "KING ENT GLOBAL",
+        "price": "Free–$25.09",
+        "start": "2026-11-04T21:00:00-06:00",
+        "title": "Afrocentrik - Afrotech Afro-Caribbean Fest @ NOTO",
+        "venue": "NOTO Houston"
+      }
+    },
+    "https://www.eventbrite.com/e/afrotech-htx-finale-tickets-1996655822313": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "702 West Dallas Street, Houston, TX 77019, Houston, TX",
+        "description": "#1 AfroTech Party in Houston!",
+        "end": "2026-11-07T02:00:00-06:00",
+        "organizer": "@HallofFameUSA",
+        "price": "Free–$348.52",
+        "start": "2026-11-06T22:00:00-06:00",
+        "status": "postponed",
+        "title": "AFROTECH HTX FINALE",
+        "venue": "Seaside Lounge"
+      }
+    },
+    "https://www.eventbrite.com/e/afrotech-pickleball-clinic-tickets-2000637223792": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "411 Smith Street, Houston, TX 77002, Houston, TX",
+        "description": "Clinic",
+        "end": "2026-11-02T16:00:00-06:00",
+        "organizer": "Pickleballin’ Lifestyle Club",
+        "start": "2026-11-02T14:00:00-06:00",
+        "title": "AfroTech Pickleball Clinic",
+        "venue": "Pickle Mania"
+      }
+    },
+    "https://www.eventbrite.com/e/afrotech-weekend-events-1104-1107-hip-hop-afrobeats-soca-konpa-tickets-2003038561257": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Address in info section, Houston, TX 77003, Houston, TX",
+        "description": "KING ENT GLOBAL & Friends hack the city of HTX for Afrotech Weekend w/ non stop soldout events (Nov 4 - Nov 7) Hip Hop; Afrobeats; Soca",
+        "end": "2026-11-08T02:00:00-06:00",
+        "organizer": "KING ENT GLOBAL",
+        "price": "Free–$175.26",
+        "start": "2026-11-04T21:00:00-06:00",
+        "title": "Afrotech Weekend Events - 11/04-11/07 {Hip Hop; Afrobeats; Soca; Konpa}",
+        "venue": "Houston"
+      }
+    },
+    "https://www.eventbrite.com/e/black-health-connect-bridging-healthcare-communities-houston-q4-mixer-tickets-1999620483695": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "5102 Washington Avenue, Houston, TX 77007, Houston, TX",
+        "description": "A curated healthcare networking mixer bringing professionals together to connect, amplify, represent & engage RSVP at Blackhealthconnect.com",
+        "end": "2026-11-06T22:00:00-06:00",
+        "organizer": "Black Health Connect",
+        "price": "$17.85–$28.52",
+        "start": "2026-11-06T17:00:00-06:00",
+        "title": "Black Health Connect | Bridging Healthcare Communities: HOUSTON Q4 Mixer",
+        "venue": "Provaré"
+      }
+    },
+    "https://www.eventbrite.com/e/black-tech-social-tech-quila-social-dayparty-2-9-fri-nov-6t-privilege-tickets-1980207783787": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "808 Anita Street, Houston, TX 77006, Houston, TX",
+        "description": "The Best Daytime Party for AFROTECH Weekend! The UltimateTEQUILA Day Party on FRIDAY NOV 6TH TEXT \"TECH\" TO FOR VIP",
+        "end": "2026-11-06T22:00:00-06:00",
+        "organizer": "The Connect Group",
+        "price": "Free–$53.74",
+        "start": "2026-11-06T14:00:00-06:00",
+        "title": "BLACK TECH SOCIAL| TECH-QUILA SOCIAL DAYPARTY | 2-9 FRI NOV 6T @ PRIVILEGE",
+        "venue": "Privilege Rooftop & Lounge"
+      }
+    },
+    "https://www.eventbrite.com/e/black-wall-st-legacy-weekend-2026-houston-tx-registration-1969625677422": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "6115 Skyline Drive, C, Houston, TX 77057, Houston, TX",
+        "description": "Three days of networking, panels, awards, live music & family fun for Black entrepreneurs and builders. Houston, Nov 6–8.",
+        "end": "2026-11-08T17:30:00-06:00",
+        "organizer": "The New Black Wall St",
+        "price": "Free–$213.09",
+        "start": "2026-11-06T18:30:00-06:00",
+        "title": "Black Wall St. Legacy Weekend 2026 – Houston, TX",
+        "venue": "Eyeconic Studios"
+      }
+    },
+    "https://www.eventbrite.com/e/blkout-houston-puttery-afrotech-edition-tickets-2003796173295?aff=ebdsoporgprofile": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "1818 Washington Avenue, #Suite 180, Houston, TX 77007, Houston, TX",
+        "description": "Real Connections, Real Vibes, Real Value",
+        "end": "2026-11-04T21:00:00-06:00",
+        "organizer": "BLK Men in Tech",
+        "price": "Free",
+        "start": "2026-11-04T18:00:00-06:00",
+        "title": "BLKOUT Houston @ Puttery | AfroTech Edition",
+        "venue": "Puttery"
+      }
+    },
+    "https://www.eventbrite.com/e/bosses-in-bloom-presents-the-afrotech-bloom-tickets-2003137843212": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "3686 Barker Cypress Road, Houston, TX 77084, Houston, TX",
+        "description": "Black Excellence, Tech Baddies, Entrepreneurs, and Women Professionals of faith building something. Guess what? Bosses in Bloom takes Texas!",
+        "end": "2026-11-07T16:45:00-06:00",
+        "organizer": "Bosses in Bloom",
+        "price": "$60.54–$161.90",
+        "start": "2026-11-07T11:45:00-06:00",
+        "title": "Bosses in Bloom Presents The AfroTech Bloom",
+        "venue": "3686 Barker Cypress Rd"
+      }
+    },
+    "https://www.eventbrite.com/e/bosses-in-bloom-presents-the-afrotech-bloom-tickets-2003137843212?aff=ebdssbdestsearch": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "3686 Barker Cypress Road, Houston, TX 77084, Houston, TX",
+        "description": "Black Excellence, Tech Baddies, Entrepreneurs, and Women Professionals of faith building something. Guess what? Bosses in Bloom takes Texas!",
+        "end": "2026-11-07T16:45:00-06:00",
+        "organizer": "Bosses in Bloom",
+        "price": "$60.54–$161.90",
+        "start": "2026-11-07T11:45:00-06:00",
+        "title": "Bosses in Bloom Presents The AfroTech Bloom",
+        "venue": "3686 Barker Cypress Rd"
+      }
+    },
+    "https://www.eventbrite.com/e/culture-tings-presents-tech-tings-caribbeans-in-tech-tickets-2002860157647": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "2119 Leeland Street, Houston, TX 77003, Houston, TX",
+        "description": "Same culture. New conversations. Tech, diaspora and community come together at Leeland House in Houston on November 6.",
+        "end": "2026-11-07T00:00:00-06:00",
+        "organizer": "Culture & Tings",
+        "price": "$13.54–$30.87",
+        "start": "2026-11-06T18:00:00-06:00",
+        "title": "Culture & Tings presents Tech & Tings: Caribbeans in Tech",
+        "venue": "Around the Corner @ Leeland House"
+      }
+    },
+    "https://www.eventbrite.com/e/global-african-diaspora-awards-gada-2026-tickets-1991753121202": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "9151 South Texas 6, Houston, TX 77083, Houston, TX",
+        "description": "An Unforgettable Night of Excellence, Entertainment & Culture One Night. One Stage. One Global Celebration of African Excellence.",
+        "end": "2026-11-07T22:30:00-06:00",
+        "organizer": "Diaspora Glitz Magazine",
+        "price": "$65.87–$1,602.45",
+        "start": "2026-11-07T17:30:00-06:00",
+        "title": "GLOBAL AFRICAN DIASPORA AWARDS (GADA) 2026",
+        "venue": "A Golden Tree Banquet"
+      }
+    },
+    "https://www.eventbrite.com/e/houston-healthtech-medtech-networking-pitch-event-tickets-2002214201575": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "1100 West 23rd Street, #Suite 150, Houston, TX 77008, Houston, TX",
+        "description": "Connect with HealthTech startups, investors, and industry experts for an evening of rapid-fire pitches, conversations and opportunities.",
+        "end": "2026-12-01T21:00:00-06:00",
+        "organizer": "The Founders Club",
+        "price": "$10.66–$36.64",
+        "start": "2026-12-01T19:00:00-06:00",
+        "title": "Houston HealthTech, MedTech Networking & Pitch Event",
+        "venue": "Plume"
+      }
+    },
+    "https://www.eventbrite.com/e/houston-startups-investors-professionals-pitch-networking-event-tickets-2002195505655": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "lastError": "HTTP Error 404: Not Found"
+    },
+    "https://www.eventbrite.com/e/i-rb-monday-afro-tech-edition-tickets-2001587769901#location": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "606 Dennis Street, #Suite 200, Houston, TX 77006, Houston, TX",
+        "description": "Smooth R&B vibes take over Reset Houston on Monday, Nov 2",
+        "end": "2026-11-03T02:00:00-06:00",
+        "organizer": "Nightlife Functions",
+        "start": "2026-11-02T21:00:00-06:00",
+        "title": "I ❤️R&B Monday: Afro Tech Edition",
+        "venue": "Reset"
+      }
+    },
+    "https://www.eventbrite.com/e/konshens-all-white-afro-tech-weekend-tickets-1993719208823": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "2301 Main Street, #400, Houston, TX 77002, Houston, TX",
+        "description": "Jamaican superstar Konshens is bringing one of the biggest Dancehall events of the year to AFRO TECH WKD in H-Town",
+        "end": "2026-11-08T02:00:00-06:00",
+        "organizer": "ENCORE DAY AND NIGHT",
+        "price": "Free–$232.99",
+        "start": "2026-11-07T21:00:00-06:00",
+        "title": "KONSHENS ALL WHITE AFRO TECH WEEKEND",
+        "venue": "THE ENCORE DAY AND NIGHT BEACH CLUB"
+      }
+    },
+    "https://www.eventbrite.com/e/ladies-in-tech-entertainment-happy-hour-mixer-tickets-2001589660556": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "81 Drew Street, Houston, TX 77006, Houston, TX",
+        "description": "Celebrating women in tech & entertainment! Join us Wed, Nov 4 at Fairfax Houston",
+        "end": "2026-11-05T00:00:00-06:00",
+        "organizer": "Nightlife Functions",
+        "price": "Free–$55.20",
+        "start": "2026-11-04T17:00:00-06:00",
+        "title": "LADIES IN TECH & ENTERTAINMENT HAPPY HOUR & MIXER",
+        "venue": "Fairfax"
+      }
+    },
+    "https://www.eventbrite.com/e/lets-talk-about-tech-baby-dinner-party-tickets-2001591257332": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "505 Main Street, Houston, TX 77002, Houston, TX",
+        "description": "An elegant cocktail Party at Velvet Rail Houston on Thu, Nov 5",
+        "end": "2026-11-06T02:00:00-06:00",
+        "organizer": "Nightlife Functions",
+        "price": "Free–$146.39",
+        "start": "2026-11-05T19:00:00-06:00",
+        "title": "Let's Talk About Tech Baby | Cocktail party",
+        "venue": "Velvet Rail"
+      }
+    },
+    "https://www.eventbrite.com/e/meet-singles-afrotech-tickets-1985234061519": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "1001 Avenida De Las Americas, Houston, TX 77010, Houston, TX",
+        "description": "Are You Single and Heading to AfroTech? Experience a fresh new way to meet other singles while enjoying AfroTech!",
+        "end": "2026-11-06T23:30:00-06:00",
+        "organizer": "Marcellous Johnson",
+        "price": "Free–$23.18",
+        "start": "2026-11-02T00:00:00-06:00",
+        "title": "Meet Singles @ AfroTech",
+        "venue": "George R. Brown Convention Center"
+      }
+    },
+    "https://www.eventbrite.com/e/morning-vibes-houston-the-room-before-the-room-afrotech-2026-tickets-2002737095565?utm_experiment=test_share_listing&aff=ebdsshios&sg=b7a5585ce0cd29cb4251180f685fd58ed3c26247526c93ef14afe6550b6da1cf8f9f92ee8790bb683bd0d3e1adac1dd1b6f099ba7cb51ce0bd51e1787c30678136a3b75f57b5d3b07c18e3e7664e": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "1201 Caroline Street, #STE 100, Houston, TX 77002, Houston, TX",
+        "description": "Start your AfroTech mornings with breakfast, music and meaningful conversations with Houston’s executives, leaders and builders.",
+        "end": "2026-11-06T10:30:00-06:00",
+        "organizer": "#GoodTalkPodcast",
+        "price": "$33.85–$60.54",
+        "start": "2026-11-04T08:00:00-06:00",
+        "title": "Morning Vibes Houston: The Room Before the Room | AfroTech 2026",
+        "venue": "Reserve 101"
+      }
+    },
+    "https://www.eventbrite.com/e/propertydna-brew-build-meetup-afrotech-week-2026-tickets-2004124271646?aff=oddtdtcreator": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "808 Travis Street, #Suite 400, Houston, TX 77002, Houston, TX",
+        "description": "Explore smart building technologies. Connect with PropTech, InsurTech, and real estate professionals over breakfast, coffee, matcha, & tea.",
+        "end": "2026-11-03T09:30:00-06:00",
+        "organizer": "Black Meta Agency",
+        "start": "2026-11-03T07:30:00-06:00",
+        "title": "PropertyDNA Brew & Build Meetup | AfroTech Week 2026",
+        "venue": "The Us Space"
+      }
+    },
+    "https://www.eventbrite.com/e/the-company-you-keep-afrotech-week-2026-houston-tickets-2003831489928?utm_experiment=test_share_listing&aff=ebdsshios&sg=af8377887a8c2bf661a8b6468bb0ece3c83eda0c88f5ed625f93f4a82bc915af65b496b29119c2428a328da14da01419b3f5cd06f4a76202873d1263b831d9f7dcc74dde6f555c0a09321120d18e": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "1515 Pease Street, #b, Houston, TX 77002, Houston, TX",
+        "description": "Where Black excellence meets nightlife. Connect with founders, innovators & creatives for an upscale AfroTech after-hours experience.",
+        "end": "2026-11-04T22:00:00-06:00",
+        "organizer": "The Incrowd",
+        "price": "Free–$25.22",
+        "start": "2026-11-04T20:00:00-06:00",
+        "title": "THE COMPANY YOU KEEP | AfroTech Week 2026 | Houston",
+        "venue": "Supreme Houston"
+      }
+    },
+    "https://www.eventbrite.com/e/the-future-of-black-wealth-kick-back-tickets-1997019792959": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "812 Yorkshire Street, Houston, TX 77022, Houston, TX",
+        "description": "Enjoy Tech Week with Like-Minded Professionals for high-level networking and a meaningful discussion around black wealth.",
+        "end": "2026-11-04T21:00:00-06:00",
+        "organizer": "The Anomaly Collective",
+        "price": "Free–$535.38",
+        "start": "2026-11-04T18:00:00-06:00",
+        "title": "The Future of Black Wealth Kick Back- Who Owns The Future?",
+        "venue": "812 Yorkshire St"
+      }
+    },
+    "https://www.eventbrite.com/e/the-session-rb-jam-htx-x-who-all-gon-be-there-tech-edition-nov-5th-tickets-2003092299991": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "2955 Gulf Freeway, Houston, TX 77003, Houston, TX",
+        "description": "The Session x WAGBT: R&B hits from every era, live performances, DJs, drinks, food, and good vibes; all raising funds for BLD PWR.",
+        "end": "2026-11-05T22:30:00-06:00",
+        "organizer": "Soul Sessions Limited Liability Corporation",
+        "price": "$25.09–$261.90",
+        "start": "2026-11-05T20:00:00-06:00",
+        "title": "The Session R&B Jam HTX x Who All Gon’ Be There | TECH EDITION | Nov 5th",
+        "venue": "The Blank Canvas Space"
+      }
+    },
+    "https://www.everydopegirl.com/afrotech": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    },
+    "https://www.monumentalmen.org/event-details/innovation": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": {
+        "address": "Houston, TX, USA",
+        "description": "As the Monumental Men’s Network continues its national expansion, we're bringing our signature Power Circle Dinner experience to Houston for an extraordinary evening celebrating Black leadership, meaningful connection, and collective influence!",
+        "end": "2026-11-04T20:00:00-06:00",
+        "price": "$25.63–$102.50",
+        "start": "2026-11-04T17:00:00-06:00",
+        "title": "The Power Circle Dinner: Health, Wealth, and Innovation",
+        "venue": "Location Provided Upon RSVP"
+      }
+    },
+    "https://www.vipsocio.com/event/afrirock-pres-ndombolo-with-salvador": {
+      "checkedAt": "2026-11-03T23:51:40+00:00",
+      "event": null,
+      "note": "no schema.org Event block on the page"
+    }
+  }
+}

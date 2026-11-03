@@ -421,6 +421,13 @@
     "match": "3215, McKinney Street, Eastwood, Houston, Harris County, Texas, 77003, United States",
     "rules": 3
   },
+  "3300 Kirby Dr Ste 9-A, Houston, TX 77098": {
+    "found": true,
+    "lat": 29.735472,
+    "lng": -95.418788,
+    "match": "3300, Kirby Drive, Greenway / Upper Kirby, Greenway, Houston, Harris County, Texas, 77098, United States",
+    "rules": 3
+  },
   "3501 Harrisburg Blvd, Houston, TX 77003, USA": {
     "found": true,
     "lat": 29.747816,
@@ -586,6 +593,20 @@
     "match": "5015, Almeda Road, Museum District, Houston, Harris County, Texas, 77004, United States",
     "rules": 3
   },
+  "505 Main Street, Houston, TX 77002": {
+    "found": true,
+    "lat": 29.760577,
+    "lng": -95.361959,
+    "match": "505, Main Street, Downtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
+  "505 Main Street, Houston, TX 77002, Houston, TX": {
+    "found": true,
+    "lat": 29.760577,
+    "lng": -95.361959,
+    "match": "505, Main Street, Downtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
   "505 Main st. Houston, TX. 77002": {
     "found": true,
     "lat": 29.760577,
@@ -682,6 +703,11 @@
     "match": "606, Dennis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
     "rules": 3
   },
+  "6115 Skyline Drive, C, Houston, TX 77057, Houston, TX": {
+    "found": false,
+    "why": "no match in the Houston area",
+    "rules": 3
+  },
   "702 West Dallas Street 77019, Houston, TX": {
     "found": true,
     "lat": 29.757935,
@@ -724,6 +750,20 @@
     "match": "Almost Famous, 807, West 19th Street, Houston Heights, Houston, Harris County, Texas, 77008, United States",
     "rules": 3
   },
+  "808 Anita Street, Houston, TX 77006, Houston, TX": {
+    "found": true,
+    "lat": 29.743684,
+    "lng": -95.377745,
+    "match": "808, Anita Street, Midtown, Houston, Harris County, Texas, 77006, United States",
+    "rules": 3
+  },
+  "808 Travis Street, #Suite 400, Houston, TX 77002, Houston, TX": {
+    "found": true,
+    "lat": 29.7588,
+    "lng": -95.365052,
+    "match": "808, Travis Street, Downtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
   "81 Drew St, Houston TX": {
     "found": true,
     "lat": 29.748974,
@@ -764,6 +804,11 @@
     "why": "placeholder, not an address",
     "rules": 3
   },
+  "Address in info section, Houston, TX 77003, Houston, TX": {
+    "found": false,
+    "why": "placeholder, not an address",
+    "rules": 3
+  },
   "Address shared 24 hrs before": {
     "found": false,
     "why": "placeholder, not an address",
@@ -777,6 +822,16 @@
   "Exact address shared with approved guests.": {
     "found": false,
     "why": "placeholder, not an address",
+    "rules": 3
+  },
+  "Houston, TX, USA": {
+    "found": false,
+    "why": "only matched a administrative",
+    "rules": 3
+  },
+  "Houston, Texas": {
+    "found": false,
+    "why": "only matched a administrative",
     "rules": 3
   },
   "Montrose | RSVP for exact address": {
@@ -811,6 +866,18 @@
     "lat": 29.734217,
     "lng": -95.382285,
     "match": "The Ion, 4201, Main Street, Midtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
+  "The Ion, Houston, Texas": {
+    "found": true,
+    "lat": 29.734217,
+    "lng": -95.382285,
+    "match": "The Ion, 4201, Main Street, Midtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
+  "The Podium at Porsche River Oaks, Houston, Texas": {
+    "found": false,
+    "why": "no match in the Houston area",
     "rules": 3
   }
 }
