@@ -1,0 +1,242 @@
+---
+// My plan: starred events by day, with clashes, calendar export and a share link.
+// Every event is rendered; CSS shows only the starred ones once the script runs.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Timeline from "../../components/Timeline.astro";
+import TimelineRow from "../../components/TimelineRow.astro";
+import EventCard from "../../components/EventCard.astro";
+import { eventsOnDay, scheduleDays } from "../../lib/schedule";
+import { formatClock, formatDate } from "../../lib/time";
+---
+
+<BaseLayout title="My plan · AfroTech 2026 Planner" active="plan">
+  <header class="page-head">
+    <h1>My plan</h1>
+    <p class="muted" data-summary>Star events on the schedule to build your plan.</p>
+  </header>
+
+  <section class="shared" data-shared hidden aria-labelledby="shared-title">
+    <h2 id="shared-title" data-shared-title>Shared plan</h2>
+    <ul data-shared-list></ul>
+    <div class="buttons">
+      <button type="button" class="button primary" data-shared-add>Add these to my plan</button>
+      <button type="button" class="button" data-shared-dismiss>Dismiss</button>
+    </div>
+  </section>
+
+  <div class="actions" data-actions hidden>
+    <button type="button" class="button" data-export>Export to calendar</button>
+    <button type="button" class="button" data-share>Share my plan</button>
+    <p class="status muted" role="status" data-status></p>
+  </div>
+
+  <div class="empty" data-empty>
+    <p>Nothing in your plan yet.</p>
+    <a class="button primary" href="/schedule/">Browse the schedule</a>
+  </div>
+
+  {
+    scheduleDays.map((day) => (
+      <section class="day" data-day hidden aria-labelledby={`d-${day}`}>
+        <h2 id={`d-${day}`}>{formatDate(`${day}T12:00:00-06:00`)}</h2>
+        <Timeline label={`My plan on ${day}`}>
+          {eventsOnDay(day).map((event) => (
+            <TimelineRow
+              time={event.start ? formatClock(event.start) : (event.timeLabel ?? "TBA")}
+              datetime={event.start ?? undefined}
+              data-row
+              data-event-id={event.id}
+              data-start={event.start ?? undefined}
+              data-end={event.end ?? undefined}
+              data-has-ics={event.start ? "1" : undefined}
+            >
+              <EventCard event={event} />
+            </TimelineRow>
+          ))}
+        </Timeline>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<script>
+  import { addToPlan, readPlan } from "../../lib/plan";
+
+  const rows = [...document.querySelectorAll<HTMLElement>("[data-row]")];
+  const known = new Map(rows.map((r) => [r.dataset.eventId!, r]));
+  const days = [...document.querySelectorAll<HTMLElement>("[data-day]")];
+  const summary = document.querySelector<HTMLElement>("[data-summary]")!;
+  const empty = document.querySelector<HTMLElement>("[data-empty]")!;
+  const actions = document.querySelector<HTMLElement>("[data-actions]")!;
+  const status = document.querySelector<HTMLElement>("[data-status]")!;
+
+  const titleOf = (id: string) => known.get(id)?.querySelector(".title")?.textContent?.trim() ?? id;
+
+  function render() {
+    const ids = readPlan().filter((id) => known.has(id));
+    days.forEach((d) => (d.hidden = !d.querySelector('[data-row][data-in-plan="true"]')));
+    empty.hidden = ids.length > 0;
+    actions.hidden = ids.length === 0;
+    const clashes = document.querySelectorAll('[data-row][data-in-plan="true"] [data-clash]:not([hidden])').length;
+    summary.textContent = ids.length
+      ? `${ids.length} ${ids.length === 1 ? "event" : "events"}` +
+        (clashes ? ` · ${clashes} clash${clashes === 1 ? "" : "es"}` : "")
+      : "Star events on the schedule to build your plan.";
+  }
+  document.addEventListener("plan-change", () => requestAnimationFrame(render));
+  // plan-ui marks rows on load; render after it.
+  requestAnimationFrame(render);
+
+  // A shared link: /plan/?add=id1,id2
+  const params = new URLSearchParams(location.search);
+  const shared = (params.get("add") ?? "").split(",").filter((id) => known.has(id));
+  const box = document.querySelector<HTMLElement>("[data-shared]")!;
+  if (shared.length) {
+    const fresh = shared.filter((id) => !readPlan().includes(id));
+    document.querySelector("[data-shared-title]")!.textContent =
+      `Shared plan: ${shared.length} ${shared.length === 1 ? "event" : "events"}` +
+      (fresh.length < shared.length ? ` (${shared.length - fresh.length} already in yours)` : "");
+    const list = document.querySelector<HTMLElement>("[data-shared-list]")!;
+    list.replaceChildren(
+      ...shared.map((id) => {
+        const li = document.createElement("li");
+        li.textContent = titleOf(id);
+        return li;
+      }),
+    );
+    box.hidden = false;
+  }
+  const clearShared = () => {
+    box.hidden = true;
+    params.delete("add");
+    history.replaceState(null, "", location.pathname + (params.toString() ? `?${params}` : ""));
+  };
+  document.querySelector("[data-shared-add]")!.addEventListener("click", () => {
+    addToPlan(shared);
+    clearShared();
+    status.textContent = "Added to your plan.";
+  });
+  document.querySelector("[data-shared-dismiss]")!.addEventListener("click", clearShared);
+
+  // Export: merge each event's own .ics file into one calendar.
+  document.querySelector("[data-export]")!.addEventListener("click", async () => {
+    const ids = readPlan().filter((id) => known.get(id)?.dataset.hasIcs);
+    status.textContent = "Preparing your calendar…";
+    try {
+      const files = await Promise.all(
+        ids.map(async (id) => {
+          const res = await fetch(`/event/${id}.ics`);
+          if (!res.ok) throw new Error(id);
+          return res.text();
+        }),
+      );
+      const events = files.map((f) => f.slice(f.indexOf("BEGIN:VEVENT"), f.lastIndexOf("END:VEVENT") + 10));
+      const head = files[0]!.slice(0, files[0]!.indexOf("BEGIN:VEVENT")).replace(/X-WR-CALNAME:[^\r\n]*(\r\n [^\r\n]*)*/, "X-WR-CALNAME:My AfroTech 2026 plan");
+      const ics = `${head}${events.join("\r\n")}\r\nEND:VCALENDAR\r\n`;
+      const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "afrotech-2026-my-plan.ics";
+      a.click();
+      URL.revokeObjectURL(url);
+      status.textContent = `Exported ${ids.length} ${ids.length === 1 ? "event" : "events"}.`;
+    } catch {
+      status.textContent = "Couldn't build the calendar file. Check your connection and try again.";
+    }
+  });
+
+  // Share: a link that adds these events to someone else's plan.
+  document.querySelector("[data-share]")!.addEventListener("click", async () => {
+    const ids = readPlan().filter((id) => known.has(id));
+    const url = `${location.origin}/plan/?add=${ids.join(",")}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "My AfroTech 2026 plan", url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      status.textContent = "Link copied.";
+    } catch (err) {
+      if ((err as DOMException)?.name === "AbortError") return; // closed the share sheet
+      status.textContent = `Copy this link: ${url}`;
+    }
+  });
+</script>
+
+<style>
+  .page-head {
+    padding-top: var(--space-6);
+  }
+  h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+  .page-head p {
+    margin: var(--space-1) 0 0;
+  }
+  .day h2 {
+    margin: var(--space-8) 0 0;
+    font-size: var(--text-lg);
+  }
+  .day[hidden],
+  .shared[hidden],
+  .actions[hidden],
+  .empty[hidden] {
+    display: none;
+  }
+  /* Only starred events show. */
+  .day :global([data-row]:not([data-in-plan="true"])) {
+    display: none;
+  }
+  .actions,
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+  .status {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: var(--text-sm);
+    overflow-wrap: anywhere;
+  }
+  .shared {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+  .shared h2 {
+    margin: 0;
+    font-size: var(--text-md);
+  }
+  .shared ul {
+    margin: var(--space-2) 0 0;
+    padding-left: var(--space-4);
+    font-size: var(--text-sm);
+  }
+  .empty {
+    padding: var(--space-8) 0;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .button.primary {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+</style>

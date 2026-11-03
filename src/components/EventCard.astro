@@ -43,7 +43,7 @@ const people =
         </div>
       )
     }
-    {clash && <p class="clash">{clash}</p>}
+    <p class="clash" data-clash hidden={!clash}>{clash}</p>
   </div>
   <Star eventId={event.id} title={event.title} on={inPlan} />
 </article>
@@ -101,6 +101,9 @@ const people =
     height: 100%;
     border-radius: 2px;
     background: var(--live);
+  }
+  .clash[hidden] {
+    display: none;
   }
   .clash {
     margin: 0;
