@@ -1,6 +1,6 @@
 # Plan 0002: Optional Google sign-in keeps My plan in step across devices
 
-**Status:** draft, awaiting review · **Created:** 2026-11-03
+**Status:** draft, sign-in approved; three decisions open · **Created:** 2026-11-03
 
 My plan lives in one browser's `localStorage`. Star a session on your phone and
 it's missing on your laptop; clear the browser's data and the plan is gone. The
@@ -138,13 +138,18 @@ goes through GitHub.
 | A device's clock is wrong | The latest-change rule could pick the older star. For one person's plan the effect is small; the server can clamp timestamps from the future. |
 | Google changes its sign-in button | The Worker only depends on the ID token format, which Google documents and keeps stable. |
 
-## Four decisions before building starts
+## Decided, and three decisions left
 
-1. **Approve optional sign-in** in place of the "no sign-in" rule?
-2. **Sync note drafts too**, or stars only? I recommend stars only for now.
-3. **Setup:** will you create the Google client and the D1 database, using the
+On November 3 you approved optional Google sign-in in place of the "no sign-in"
+rule. `CLAUDE.md` changes when todo 015 ships sign-in, so it keeps describing
+the site as it is.
+
+Three questions remain before building starts:
+
+1. **Sync note drafts too**, or stars only? I recommend stars only for now.
+2. **Setup:** will you create the Google client and the D1 database, using the
    steps above?
-4. **Timing:** build it this week, or keep it for AfroTech 2027?
+3. **Timing:** build it this week, or keep it for AfroTech 2027?
 
 Once you answer these, todo 014 starts the Worker, and each later todo ships
 on its own.

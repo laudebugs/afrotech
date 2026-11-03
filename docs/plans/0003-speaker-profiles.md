@@ -1,6 +1,6 @@
 # Plan 0003: Speaker profiles with a short bio, sourced fun facts and links
 
-**Status:** draft, awaiting review · **Created:** 2026-11-03
+**Status:** draft, photos decided; three decisions open · **Created:** 2026-11-03
 
 Event pages list speakers by name only, so deciding whether a session is worth
 your time means searching each person yourself. Yet the official schedule
@@ -49,8 +49,10 @@ other data files, it's generated and never edited by hand.
 **Photos** have two options. The site can load them from the schedule's image
 host (Sessionboard), which costs nothing and copies nothing, but breaks if that
 host changes. Or it can copy each photo once, resize it to about 160 px and
-serve it ourselves, which is faster and steadier but republishes the images. I
-recommend loading them from the host, lazily, with initials as the fallback.
+serve it ourselves, which is faster and steadier but republishes the images.
+**Decided on November 3: load them from the schedule's image host**, lazily,
+with initials as the fallback. Headshots usually belong to the photographer, so
+linking keeps us from republishing them.
 
 ## Phase B: fun facts and articles, researched and cited
 
@@ -82,6 +84,11 @@ then everyone else, in batches of about 20. At a few minutes per person, all
 273 is a long job, so the first batch shows whether the result is worth
 finishing.
 
+**Research to build on:** the report
+[Speaker profile research sources](../../reports/Speaker%20profile%20research%20sources.md)
+recommends a pipeline, a source priority, an identity-matching rubric and legal
+guardrails for this phase, and a pilot on 20 speakers before the rest.
+
 **How the research runs:** I search the web from this session for each
 speaker and record what I find with its sources. Fetching full pages may hit
 the same network limits as the maps; where that happens, I keep only facts the
@@ -106,14 +113,16 @@ search results state outright.
 | Photos disappear from the image host | Initials show instead; the plan can switch to self-hosting later. |
 | Research takes longer than the conference lasts | Phase A ships alone and is useful without Phase B. |
 
-## Four decisions before building starts
+## Decided, and three decisions left
 
-1. **Photos:** load from the schedule's image host (recommended), or copy and
-   self-host?
-2. **Fun facts:** are you happy with researched, cited facts that publish only
+On November 3 you chose to load photos from the schedule's image host.
+
+Three questions remain before building starts:
+
+1. **Fun facts:** are you happy with researched, cited facts that publish only
    after review? And will you review each batch, or should I?
-3. **Order:** your plan, then Main Stage, then the rest?
-4. **Side-event hosts:** add profiles for them too, even though the sources give
+2. **Order:** your plan, then Main Stage, then the rest?
+3. **Side-event hosts:** add profiles for them too, even though the sources give
    only their names?
 
 Once you answer these, todo 018 builds the speaker pages from the schedule
