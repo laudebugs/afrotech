@@ -33,7 +33,7 @@ repository**, choose `laudebugs/afrotech` and use these settings:
 
 | Setting | Value |
 |---------|-------|
-| Project name | `afrotech` (must match `name` in `wrangler.jsonc`) |
+| Project name | `afrotech2026` (must match `name` in `wrangler.jsonc`) |
 | Production branch | `main` |
 | Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |

@@ -13,7 +13,7 @@ from datetime import datetime
 from pathlib import Path
 
 import build_events
-from common import TZ, cell, clock, fetch, write_csv, write_text
+from common import ROOT, TZ, cell, clock, fetch, guard_shrink, write_csv, write_text
 
 SITE = "https://afrotechconference.com"
 WRAPPERS = {"ShallowReactive", "Reactive", "Ref", "ShallowRef", "EmptyRef", "EmptyShallowRef"}
@@ -74,6 +74,9 @@ def main():
     sessions = sorted(data["sessions"], key=lambda s: (s["startTime"], s["endTime"] or "", s["title"]))
     if not sessions:
         sys.exit("The schedule payload had no sessions; keeping the existing files.")
+    saved = ROOT / "data/sessions.json"
+    old_count = len(json.loads(saved.read_text(encoding="utf-8"))) if saved.exists() else 0
+    guard_shrink("Official sessions", len(sessions), old_count)
     days = {d["key"]: d for d in data["days"]}
 
     # Trimmed data for spreadsheets / other tools.

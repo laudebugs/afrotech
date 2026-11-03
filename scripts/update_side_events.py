@@ -18,7 +18,7 @@ from collections import defaultdict
 from datetime import date, datetime
 
 import build_events
-from common import ROOT, TZ, cell, clock, fetch, first_time, link, short_date, write_csv, write_text
+from common import ROOT, TZ, cell, clock, fetch, first_time, guard_shrink, link, short_date, write_csv, write_text
 
 GUIDE_API = "https://afrotech.guide/api/events"
 SHEET_ID = "1PLDLOdFCuwDAy4fe5y09hb4KgYlX3bsgX60U2z2KE_0"
@@ -184,10 +184,21 @@ def sort_key(e):
 
 
 def main():
-    sources = [dedupe(rows) for rows in (from_guide(), from_sheet(), from_adaptive())]
+    guide, sheet, adaptive = from_guide(), from_sheet(), from_adaptive()
+    # The two live sources should never come back empty; if one does, it's
+    # broken (an error page, a login wall), not a quiet week.
+    for name, rows in (("afrotech.guide", guide), ("the community sheet", sheet)):
+        if not rows:
+            sys.exit(f"No events from {name}; keeping the existing files.")
+    sources = [dedupe(rows) for rows in (guide, sheet, adaptive)]
     events = sorted(merge(sources), key=sort_key)
     if not events:
         sys.exit("No side events found in any source; keeping the existing files.")
+    saved = ROOT / "data/side-events.csv"
+    if saved.exists():
+        with open(saved, newline="", encoding="utf-8") as f:
+            old_count = sum(1 for _ in csv.DictReader(f))
+        guard_shrink("Side events", len(events), old_count)
 
     # Validate the site's event data first, so a failure writes nothing.
     try:

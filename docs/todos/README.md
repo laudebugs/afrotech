@@ -32,5 +32,5 @@ short note on anything that changed from the plan.
 | [009](009-city-map.md) | Geocode side events + city map | 2 | todo |
 | [010](010-near-me.md) | Near me (geolocation + "I'm at…") | 3 | todo |
 | [011](011-notes-on-site.md) | Public notes: write in the browser, publish through GitHub | 1 | done |
-| [012](012-auto-refresh-data.md) | Scheduled data refresh | 3 | waiting on you |
+| [012](012-auto-refresh-data.md) | Scheduled data refresh | 3 | done |
 | [013](013-offline-pwa.md) | Offline support (PWA) | 3 | todo |
