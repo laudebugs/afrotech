@@ -3,7 +3,7 @@
 
 Reads data/sessions.json (official) and data/side-events.csv (side events) and
 writes data/events/official.json, data/events/side.json and data/venues.json.
-The shape matches the `Event` type in src/lib/types.ts.
+The shape matches the `ScheduleEvent` type in src/lib/types.ts.
 
 data/venues.json is partly hand-maintained: this script only adds places it
 hasn't seen and refreshes their label, kind and address. Fields added later
@@ -26,7 +26,7 @@ VENUE_KINDS = {"grb", "marriott", "outdoor", "offsite", "unplaced"}
 
 
 def slug(text):
-    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:60]
+    return re.sub(r"[^a-z0-9]+", "-", text.lower())[:60].strip("-")
 
 
 def iso(day, clock_text):
@@ -40,7 +40,9 @@ def iso(day, clock_text):
 
 def iso_range(day, start_text, end_text):
     start, end = iso(day, start_text), iso(day, end_text)
-    if start and end and end <= start:
+    if start and end == start:
+        end = None  # a placeholder end, not a 24-hour event
+    elif start and end and end < start:
         # Ends after midnight, e.g. 10:00 PM–2:00 AM.
         nxt = (date.fromisoformat(day) + timedelta(days=1)).isoformat()
         end = iso(nxt, end_text)
@@ -57,8 +59,7 @@ def official_kind(location):
     return "grb"
 
 
-def official_events(venues):
-    sessions = json.loads((ROOT / "data/sessions.json").read_text(encoding="utf-8"))
+def official_events(sessions, venues):
     events = []
     for s in sessions:
         start, end = iso_range(s["date"], s["start"], s["end"])
@@ -95,26 +96,52 @@ def official_events(venues):
     return events
 
 
-def side_events(venues):
-    with open(ROOT / "data/side-events.csv", newline="", encoding="utf-8") as f:
-        rows = list(csv.DictReader(f))
+def side_venue_key(label, address, venues):
+    """Key a side-event venue by name, splitting places that share a name.
+
+    Two venues called "The Lounge" at different street addresses get separate
+    keys, so each keeps its own address for the city map.
+    """
+    key = slug(label)
+    known, here = street(venues.get(key, {}).get("address", "")), street(address)
+    if known and here and known != here:
+        key = slug(f"{label} {here}")
+    return key
+
+
+def street(address):
+    """House number and street name, e.g. "2119-leeland", so "2119 Leeland St"
+    and "2119 Leeland Street 77003" count as one place. None without a number."""
+    m = re.search(r"\b(\d+)\s+([a-z]+)", address.lower())
+    return f"{m[1]}-{m[2]}" if m else None
+
+
+def side_events(rows, venues):
     events = []
+    seen_ids = set()
     for r in rows:
         title = r["event"].strip()
         start, end = iso_range(r["date"], r["start"], r["end"])
-        label = r["venue"].strip() or r["address"].strip()
-        key = slug(label) or None
+        address = r["address"].strip()
+        label = r["venue"].strip() or address
+        key = side_venue_key(label, address, venues) if label else None
         if key:
-            at_grb = "george r. brown" in f"{r['venue']} {r['address']}".lower()
+            at_grb = "george r. brown" in f"{r['venue']} {address}".lower()
             entry = venues.setdefault(key, {})
-            # Official places (Discovery Green, the GRB) keep their own label and kind.
+            # Official places (Discovery Green, the GRB) keep their own label and kind,
+            # and the first address seen for a venue sticks.
             entry.setdefault("label", label)
             entry.setdefault("kind", "grb" if at_grb else "offsite")
-            if r["address"].strip():
-                entry["address"] = r["address"].strip()
-        digest = hashlib.sha1(f"{r['date']}|{slug(title)}".encode()).hexdigest()[:12]
+            if address:
+                entry.setdefault("address", address)
+        # Date + title keeps ids stable across refreshes; the start time only
+        # separates two same-titled events on one day.
+        event_id = "side-" + hashlib.sha1(f"{r['date']}|{slug(title)}".encode()).hexdigest()[:12]
+        if event_id in seen_ids:
+            event_id = "side-" + hashlib.sha1(f"{r['date']}|{slug(title)}|{r['start']}".encode()).hexdigest()[:12]
+        seen_ids.add(event_id)
         events.append({
-            "id": f"side-{digest}",
+            "id": event_id,
             "kind": "side",
             "title": title,
             "start": start,
@@ -122,7 +149,7 @@ def side_events(venues):
             "timeLabel": None if start else "TBA",
             "locationKey": key,
             "locationLabel": label or "TBA",
-            "address": r["address"].strip() or None,
+            "address": address or None,
             "track": None,
             "categories": [c.strip() for c in r["categories"].split(",") if c.strip()],
             "speakers": [],
@@ -139,7 +166,7 @@ def side_events(venues):
 
 
 def validate(events, venues):
-    """Mirror of the Event type in src/lib/types.ts; stop on the first mismatch."""
+    """Mirror of ScheduleEvent in src/lib/types.ts; stop on the first mismatch."""
     ids = set()
     for e in events:
         where = f"{e.get('id')} ({e.get('title', '')[:40]})"
@@ -165,17 +192,30 @@ def sort_key(e):
     return (e["start"] or "9999", e["title"].lower())
 
 
-def main():
+def build(sessions=None, side_rows=None):
+    """Build and validate events. Raises ValueError, before anything is written.
+
+    The update scripts pass their fresh rows in, so a validation failure leaves
+    every generated file untouched. Without arguments, reads the saved files.
+    """
+    if sessions is None:
+        sessions = json.loads((ROOT / "data/sessions.json").read_text(encoding="utf-8"))
+    if side_rows is None:
+        with open(ROOT / "data/side-events.csv", newline="", encoding="utf-8") as f:
+            side_rows = list(csv.DictReader(f))
     venues_path = ROOT / "data/venues.json"
     venues = json.loads(venues_path.read_text(encoding="utf-8")) if venues_path.exists() else {}
 
-    official = sorted(official_events(venues), key=sort_key)
-    side = sorted(side_events(venues), key=sort_key)
+    official = sorted(official_events(sessions, venues), key=sort_key)
+    side = sorted(side_events(side_rows, venues), key=sort_key)
     try:
         validate(official + side, venues)
     except AssertionError as err:
-        sys.exit(f"Event data failed validation: {err}")
+        raise ValueError(f"Event data failed validation: {err}") from err
+    return official, side, venues
 
+
+def write(official, side, venues):
     def dump(obj):
         return json.dumps(obj, indent=2, ensure_ascii=False, sort_keys=isinstance(obj, dict)) + "\n"
 
@@ -183,6 +223,13 @@ def main():
     write_text("data/events/side.json", dump(side))
     write_text("data/venues.json", dump(venues))
     print(f"Wrote {len(official)} official and {len(side)} side events, {len(venues)} venues.")
+
+
+def main():
+    try:
+        write(*build())
+    except ValueError as err:
+        sys.exit(str(err))
 
 
 if __name__ == "__main__":

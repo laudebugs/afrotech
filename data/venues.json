@@ -63,7 +63,7 @@
     "label": "Almost Famous"
   },
   "around-the-corner-leeland-house": {
-    "address": "2119 Leeland Street 77003, Houston, TX",
+    "address": "2119 Leeland St, Houston, TX 77003",
     "kind": "offsite",
     "label": "Around the Corner @ Leeland House"
   },
@@ -111,7 +111,7 @@
     "label": "Blue Tile Coffee Shop"
   },
   "boozers-htx": {
-    "address": "2024 Rusk St, Houston, TX 77003, USA",
+    "address": "2024 Rusk St, Houston, TX 77003",
     "kind": "offsite",
     "label": "Boozers HTX"
   },
@@ -389,7 +389,7 @@
     "label": "Location Provided Upon RSVP"
   },
   "lov3-houston": {
-    "address": "2900 Travis St, Houston, TX 77006, USA",
+    "address": "2900 Travis St, Houston, TX 77006",
     "kind": "offsite",
     "label": "LOV3 HOUSTON"
   },
@@ -430,7 +430,7 @@
     "label": "Netrality Building, 13th Floor"
   },
   "noto-houston": {
-    "address": "3215 McKinney St, Houston, TX 77003, USA",
+    "address": "3215 McKinney St, Houston, TX 77003",
     "kind": "offsite",
     "label": "NOTO Houston"
   },
@@ -459,7 +459,7 @@
     "label": "Plume"
   },
   "post-houston": {
-    "address": "401 Franklin St, Houston, TX 77201, USA",
+    "address": "401 franklin st houston tx 77201",
     "kind": "offsite",
     "label": "POST Houston"
   },
@@ -524,7 +524,7 @@
     "label": "Reserve 101"
   },
   "reset": {
-    "address": "606 Dennis Street, Houston, TX, USA",
+    "address": "606 Dennis Street #Suite 200 Houston, TX 77006",
     "kind": "offsite",
     "label": "Reset"
   },
@@ -534,7 +534,7 @@
     "label": "Reset (rooftop)"
   },
   "rich-s-houston": {
-    "address": "2401 San Jacinto St, Houston, TX",
+    "address": "2401 San Jacinto St",
     "kind": "offsite",
     "label": "Rich’s Houston"
   },
@@ -608,7 +608,7 @@
     "label": "Status Nightclub"
   },
   "studioco": {
-    "address": "1919 N. Main St., Houston, TX 77009",
+    "address": "1919 N Main St, Suite 8-14, Houston, TX 77009",
     "kind": "offsite",
     "label": "Studioco"
   },
@@ -678,7 +678,7 @@
     "label": "The Grove"
   },
   "the-ion": {
-    "address": "4201 Main St Ste 200 Houston, TX 77002 United States",
+    "address": "4201 Main St, Houston, TX 77002",
     "kind": "offsite",
     "label": "The Ion"
   },
@@ -733,6 +733,11 @@
     "label": "Velocity"
   },
   "velvet-rail": {
+    "address": "505 Main st. Houston, TX. 77002",
+    "kind": "offsite",
+    "label": "Velvet Rail"
+  },
+  "velvet-rail-3100-fountain": {
     "address": "3100 fountain view Dr, Houston, TX 77002",
     "kind": "offsite",
     "label": "Velvet Rail"
@@ -747,7 +752,7 @@
     "label": "Virtual"
   },
   "warehouse-live": {
-    "address": "2600 Travis Street Houston, TX, 77006",
+    "address": "2600 Travis St, Houston, TX 77006, USA",
     "kind": "offsite",
     "label": "Warehouse Live"
   }

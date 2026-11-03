@@ -99,8 +99,15 @@ def main():
             "description": s.get("plainDescription") or "",
             "calendar_url": SITE + s["calendarUrl"] if s.get("calendarUrl") else "",
         })
+    # Validate the site's event data first, so a failure writes nothing.
+    try:
+        events = build_events.build(sessions=rows)
+    except ValueError as err:
+        sys.exit(f"{err}; keeping the existing files.")
+
     write_text("data/sessions.json", json.dumps(rows, indent=2, ensure_ascii=False) + "\n")
-    write_csv("data/sessions.csv", rows, FIELDS)
+    # The CSV keeps the joined speakers string, not the structured list.
+    write_csv("data/sessions.csv", [{k: r[k] for k in FIELDS} for r in rows], FIELDS)
 
     by_day = defaultdict(list)
     for r in rows:
@@ -128,7 +135,7 @@ def main():
             )
     write_text("schedule/official.md", "\n".join(out) + "\n")
     print(f"Wrote {len(rows)} sessions across {len(by_day)} days.")
-    build_events.main()
+    build_events.write(*events)
 
 
 if __name__ == "__main__":

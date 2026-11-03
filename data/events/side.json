@@ -838,7 +838,7 @@
     ]
   },
   {
-    "id": "side-4b13c28fd230",
+    "id": "side-df5ae84d0527",
     "kind": "side",
     "title": "FRNDS Only: Official AFROTECH™ 10 Year Anniversary Kickoff (11/3)",
     "start": "2026-11-03T18:00:00-06:00",
@@ -1766,7 +1766,7 @@
     "start": "2026-11-04T18:00:00-06:00",
     "end": "2026-11-04T22:00:00-06:00",
     "timeLabel": null,
-    "locationKey": "velvet-rail",
+    "locationKey": "velvet-rail-3100-fountain",
     "locationLabel": "Velvet Rail",
     "address": "3100 fountain view Dr, Houston, TX 77002",
     "track": null,
@@ -3330,7 +3330,7 @@
     ]
   },
   {
-    "id": "side-a8ebc4a5e2d4",
+    "id": "side-42f2a509b8f1",
     "kind": "side",
     "title": "The Session R&B Jam HTX x Who All Gon’ Be There | TECH EDITION | Nov 5th",
     "start": "2026-11-05T20:00:00-06:00",

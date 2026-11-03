@@ -189,6 +189,12 @@ def main():
     if not events:
         sys.exit("No side events found in any source; keeping the existing files.")
 
+    # Validate the site's event data first, so a failure writes nothing.
+    try:
+        built = build_events.build(side_rows=events)
+    except ValueError as err:
+        sys.exit(f"{err}; keeping the existing files.")
+
     write_csv("data/side-events.csv", events, FIELDS)
 
     by_day = defaultdict(list)
@@ -226,7 +232,7 @@ def main():
                        f"{cell(e['venue'])} | {cell(e['price'])} | {cell(e['registration'])} | {rsvp} |")
     write_text("schedule/side-events.md", "\n".join(out) + "\n")
     print(f"Wrote {len(events)} side events across {len(by_day)} days.")
-    build_events.main()
+    build_events.write(*built)
 
 
 if __name__ == "__main__":
