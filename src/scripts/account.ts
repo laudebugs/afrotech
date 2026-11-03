@@ -2,6 +2,7 @@
 // Sign out and Delete my data. Google's script loads only here, only when needed.
 import { clearLocalNotes, readNoteChanges } from "../lib/notes";
 import { SIGNED_IN, setItem as store } from "../lib/storage";
+import { api } from "./api";
 import { forgetNotesAccount, notesSyncProblem, stopNotesSync, syncNotesNow } from "./notes-sync";
 
 const MERGED = "afrotech:plan-merged";
@@ -11,15 +12,6 @@ const accountNote = root?.querySelector<HTMLElement>("[data-account-status]");
 
 function show(state: "signed-out" | "signed-in" | "unavailable") {
   root?.querySelectorAll<HTMLElement>("[data-state]").forEach((el) => (el.hidden = el.dataset.state !== state));
-}
-
-async function api(method: string, path: string, body?: unknown) {
-  return fetch(path, {
-    method,
-    credentials: "same-origin",
-    headers: { "Content-Type": "application/json" },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
 }
 
 type GoogleId = {
@@ -86,7 +78,7 @@ async function init() {
 
   let me: { signedIn: boolean; name?: string | null; pictureUrl?: string | null } = { signedIn: false };
   try {
-    me = await (await fetch("/api/me", { credentials: "same-origin" })).json();
+    me = await (await api("GET", "/api/me")).json();
   } catch {
     if (accountNote) accountNote.textContent = "You're offline; sign-in and sync resume when you reconnect.";
     return;

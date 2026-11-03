@@ -21,6 +21,10 @@ const CHANGES_KEY = "afrotech:notes-changes";
 /** Drafts from before plan 0005, one per event; moved into notes once. */
 const OLD_DRAFT_PREFIX = "afrotech:note-draft:";
 
+/** Session ids the Worker accepts (worker/sync.ts); anything else becomes "". */
+const EVENT_ID = /^[\w-]{1,64}$/;
+export const cleanEventId = (id: string) => (EVENT_ID.test(id) ? id : "");
+
 /** Limits in characters (JavaScript string length); the Worker checks the same. */
 export const MAX_TITLE = 200;
 export const MAX_BODY = 100_000;
@@ -116,7 +120,7 @@ export function saveNote(fields: { id?: string; eventId: string; title: string; 
   const existing = found && !found.deleted ? found : undefined;
   const note: Note = {
     id: existing?.id ?? (found ? newId() : (fields.id ?? newId())),
-    eventId: existing?.eventId ?? fields.eventId,
+    eventId: cleanEventId(existing?.eventId ?? fields.eventId),
     title: fields.title.slice(0, MAX_TITLE),
     body: fields.body.slice(0, MAX_BODY),
     createdAt: existing?.createdAt ?? now,
@@ -150,8 +154,11 @@ function beats(a: Note, b: Note): boolean {
 /**
  * Takes the server's notes after a sync. A note changed here since the sync
  * started keeps the local version; otherwise the winning version is kept.
+ * `stored` holds the server's copy of notes this device just sent whose
+ * change didn't stick (it lost, or the server clamped a fast clock): those
+ * replace the local copy outright, so the device matches the server again.
  */
-export function applySyncedNotes(server: Note[]): void {
+export function applySyncedNotes(server: Note[], stored: Note[] = []): void {
   const all = readAllNotes();
   const pending = readNoteChanges();
   let changed = false;
@@ -162,6 +169,11 @@ export function applySyncedNotes(server: Note[]): void {
       all[s.id] = s;
       changed = true;
     }
+  }
+  for (const s of stored) {
+    if (pending[s.id] !== undefined) continue;
+    all[s.id] = s;
+    changed = true;
   }
   if (changed) writeAll(all, "sync");
 }
@@ -175,6 +187,18 @@ export function clearLocalNotes(): void {
   memory = null;
   memoryChanges = null;
   document.dispatchEvent(new CustomEvent("notes-change", { detail: { source: "sync" } }));
+}
+
+/**
+ * After a session ends without signing out: removes the notes that already
+ * reached the account, so they don't stay readable on the device. Notes with
+ * changes still waiting stay until the next sign-in sends them.
+ */
+export function clearSyncedNotes(): void {
+  const pending = readNoteChanges();
+  const all = readAllNotes();
+  const keep = Object.fromEntries(Object.entries(all).filter(([id]) => pending[id] !== undefined));
+  if (Object.keys(keep).length !== Object.keys(all).length) writeAll(keep, "sync");
 }
 
 /** Moves drafts saved by the old GitHub editor into notes, once. */

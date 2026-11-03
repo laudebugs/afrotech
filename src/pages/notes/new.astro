@@ -68,7 +68,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
 
   const params = new URLSearchParams(location.search);
   const editing = getNote(params.get("id") ?? "");
-  const eventId = editing?.eventId ?? params.get("event") ?? "";
+  // A new note links to a session only if the link names a real one.
+  const asked = params.get("event") ?? "";
+  const eventId = editing?.eventId ?? (noteEvent(asked) ? asked : "");
   const info = noteEvent(eventId);
 
   const form = document.querySelector<HTMLFormElement>("[data-editor]")!;
@@ -125,9 +127,27 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     return `${n} ${n === 1 ? "word" : "words"}`;
   };
 
+  // Signing out in another tab removes notes from this device; this editor
+  // must not write its note back afterwards.
+  let closed = false;
+  window.addEventListener("storage", (e) => {
+    if ((e.key === "afrotech:notes" || e.key === null) && e.newValue === null && !closed) {
+      closed = true;
+      clearTimeout(timer);
+      timer = 0;
+      body.lock();
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>("input, textarea, button").forEach(
+        (el) => (el.disabled = true),
+      );
+      problem.hidden = true;
+      saved.textContent = "You signed out in another tab, so this note was removed from this device.";
+    }
+  });
+
   /** Saves the note; false if it's too long to save. */
   function save(): boolean {
     timer = 0;
+    if (closed) return true;
     const markdown = bodyMarkdown();
     problem.hidden = markdown.length <= MAX_BODY;
     if (markdown.length > MAX_BODY) {
@@ -172,9 +192,10 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     e.preventDefault();
     clearTimeout(timer);
     timer = 0;
-    // Done on an untouched new note backs out without saving the template.
-    if (!noteId && !typed) {
-      location.href = eventId ? `/event/${eventId}/` : "/notes/";
+    // Done without typing saves nothing: a new note backs out, and an
+    // existing one keeps its time (and stays deleted if that happened elsewhere).
+    if (!typed) {
+      location.href = noteId ? `/notes/view/?id=${encodeURIComponent(noteId)}` : eventId ? `/event/${eventId}/` : "/notes/";
       return;
     }
     // Too long: stay, with the message showing, rather than lose the changes.

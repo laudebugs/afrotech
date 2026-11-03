@@ -17,6 +17,8 @@ export type NoteRow = {
   createdAt: number;
   updatedAt: number;
   deleted: boolean;
+  /** Set when the server moved a fast device clock back; the device's copy then differs. */
+  clamped?: boolean;
 };
 
 const NOTE_ID = /^[\w-]{1,64}$/;
@@ -55,6 +57,7 @@ const toNote = (r: Raw): NoteRow => ({
 const same = (sent: NoteRow | undefined, r: Raw) =>
   Boolean(
     sent &&
+      !sent.clamped &&
       sent.updatedAt === r.updated_at &&
       sent.deleted === (r.deleted === 1) &&
       sent.title === r.title &&
@@ -137,6 +140,7 @@ export function parseNoteChanges(body: unknown): NoteRow[] | string {
       createdAt: created,
       updatedAt: updated,
       deleted: gone,
+      clamped: updated !== Math.floor(updatedAt as number) || undefined,
     });
   }
   return out;
@@ -154,20 +158,25 @@ export function parseNoteChanges(body: unknown): NoteRow[] | string {
 export async function applyNoteChanges(env: Env, user: SignedInUser, changes: NoteRow[]): Promise<boolean> {
   if (!changes.length) return true;
 
-  const stored = await env.DB.prepare("SELECT id, deleted, updated_at FROM notes WHERE user_id = ?1")
-    .bind(user.id)
-    .all<{ id: string; deleted: number; updated_at: number }>();
-  const known = new Map(stored.results.map((r) => [r.id, r]));
-  const live = new Set(stored.results.filter((r) => r.deleted === 0).map((r) => r.id));
-  const before = live.size;
+  // Count live notes, and look up only the notes this request touches.
+  const [count, touched] = await env.DB.batch<{ n?: number; id?: string; deleted?: number; updated_at?: number }>([
+    env.DB.prepare("SELECT COUNT(*) AS n FROM notes WHERE user_id = ?1 AND deleted = 0").bind(user.id),
+    env.DB.prepare(
+      "SELECT id, deleted, updated_at FROM notes WHERE user_id = ?1 AND id IN (SELECT value FROM json_each(?2))",
+    ).bind(user.id, JSON.stringify(changes.map((c) => c.id))),
+  ]);
+  const before = count.results[0]?.n ?? 0;
+  const known = new Map(touched.results.map((r) => [r.id!, r]));
+  let after = before;
   for (const c of changes) {
     const row = known.get(c.id);
     // A tie may or may not apply; counting it as losing is close enough here.
-    if (row && c.updatedAt <= row.updated_at) continue;
-    if (c.deleted) live.delete(c.id);
-    else live.add(c.id);
+    if (row && c.updatedAt <= row.updated_at!) continue;
+    const wasLive = row !== undefined && row.deleted === 0;
+    if (c.deleted && wasLive) after--;
+    if (!c.deleted && !wasLive) after++;
   }
-  if (live.size > MAX_NOTES && live.size > before) return false;
+  if (after > MAX_NOTES && after > before) return false;
 
   const nextSeq = "(SELECT notes_seq FROM users WHERE id = ?1) + ?2";
   const upsert = env.DB.prepare(

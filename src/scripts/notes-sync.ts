@@ -5,14 +5,19 @@
 // session. Each sync sends the notes changed on this device, then reads every
 // note written to the account since this device's cursor, a page at a time.
 import {
+  MAX_BODY,
+  MAX_TITLE,
   applySyncedNotes,
+  cleanEventId,
   clearLocalNotes,
+  clearSyncedNotes,
   forgetSentNoteChanges,
   readAllNotes,
   readNoteChanges,
   type Note,
 } from "../lib/notes";
 import { SIGNED_IN, getItem as get, setItem as set } from "../lib/storage";
+import { api } from "./api";
 import { accountId, forgetAccount } from "./whoami";
 
 /** The account this device's notes were first merged into. */
@@ -49,23 +54,38 @@ let problem: "limit" | null = null;
 
 export const notesSyncProblem = () => problem;
 
-async function call(method: "GET" | "POST", url: string, body?: unknown): Promise<Response> {
-  return fetch(url, {
-    method,
-    credentials: "same-origin",
-    headers: body === undefined ? undefined : { "Content-Type": "application/json" },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
+/** What the server accepts, whatever older code or a stray link left in storage. */
+const payload = (n: Note) => ({
+  id: n.id,
+  eventId: cleanEventId(n.eventId),
+  title: n.deleted ? "" : n.title.slice(0, MAX_TITLE),
+  body: n.deleted ? "" : n.body.slice(0, MAX_BODY),
+  createdAt: n.createdAt,
+  updatedAt: n.updatedAt,
+  deleted: Boolean(n.deleted),
+});
+
+/** The session ended without signing out: hide the account's notes on this device. */
+function sessionEnded() {
+  set(SIGNED_IN, null);
+  forgetAccount();
+  clearSyncedNotes();
 }
 
 /** One full sync. Resolves true when every local change reached the server. */
 async function run(): Promise<boolean> {
-  if (stopped || problem === "limit" || !get(SIGNED_IN)) return false;
+  if (stopped || problem === "limit") return false;
+  if (!get(SIGNED_IN)) {
+    // Signed out, but this device synced with an account and nobody signed
+    // out (an expired session): its synced notes leave the device. No request.
+    if (get(MERGED)) clearSyncedNotes();
+    return false;
+  }
   try {
     const account = await accountId();
     if (stopped) return false;
     if (!account) {
-      set(SIGNED_IN, null);
+      sessionEnded();
       return false;
     }
 
@@ -93,40 +113,40 @@ async function run(): Promise<boolean> {
 
     let cursor = readCursor(account);
     let page: Page | null = null;
-    // Send in chunks; each answer carries the first page of notes since the
-    // cursor, plus the stored version of any note whose change lost.
+    // Send in chunks. Only the last asks for notes since the cursor, so the
+    // same page isn't downloaded once per chunk; every answer carries the
+    // stored version of any sent note whose change didn't stick.
     for (let i = 0; i === 0 || i < ids.length; i += CHUNK) {
       const chunk = ids.slice(i, i + CHUNK);
-      const res = await call("POST", "/api/notes", { since: cursor, changes: chunk.map((id) => all[id]) });
+      const last = i + CHUNK >= ids.length;
+      const body = last ? { since: cursor, changes: chunk.map((id) => payload(all[id])) } : { changes: chunk.map((id) => payload(all[id])) };
+      const res = await api("POST", "/api/notes", body);
       if (stopped) return false;
       if (res.status === 401) {
-        set(SIGNED_IN, null);
-        forgetAccount();
+        sessionEnded();
         return false;
       }
       if (res.status === 409) {
-        problem = "limit"; // stop retrying on this page; sign-out explains
+        problem = "limit"; // wait for a local change (a deletion can make room); sign-out explains
         return false;
       }
       if (!res.ok) return false; // a server error: the log waits for the next try
-      page = (await res.json()) as Page;
+      const answer = (await res.json()) as Page;
       forgetSentNoteChanges(Object.fromEntries(chunk.map((id) => [id, sent[id]])));
-      applySyncedNotes([...page.notes, ...(page.conflicts ?? [])]);
-      if (!page.more) {
-        cursor = page.cursor;
-        set(CURSOR, JSON.stringify({ account, cursor }));
-      }
+      applySyncedNotes(answer.notes, answer.conflicts);
+      if (last) page = answer;
     }
     set(MERGED, account);
 
     // Read on until every page since the cursor is in.
-    while (page?.more) {
-      const res = await call("GET", `/api/notes?since=${page.cursor}`);
+    while (page) {
+      cursor = page.cursor;
+      set(CURSOR, JSON.stringify({ account, cursor }));
+      if (!page.more) break;
+      const res = await api("GET", `/api/notes?since=${cursor}`);
       if (stopped || !res.ok) return false;
       page = (await res.json()) as Page;
       applySyncedNotes(page.notes);
-      cursor = page.cursor;
-      set(CURSOR, JSON.stringify({ account, cursor }));
     }
     return Object.keys(readNoteChanges()).length === 0;
   } catch {
@@ -168,7 +188,9 @@ function soon() {
 }
 
 document.addEventListener("notes-change", (e) => {
-  if ((e as CustomEvent<{ source?: string }>).detail?.source === "local") soon();
+  if ((e as CustomEvent<{ source?: string }>).detail?.source !== "local") return;
+  problem = null; // a new change, perhaps a deletion that makes room: try again
+  soon();
 });
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") void syncNotesNow();
