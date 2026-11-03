@@ -1,6 +1,9 @@
 ---
 import "../styles/global.css";
 import AppNav, { type Section } from "../components/AppNav.astro";
+// The two weights every page uses, preloaded so text doesn't swap fonts mid-load.
+import plexSans400 from "@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url";
+import plexMono500 from "@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-500-normal.woff2?url";
 
 interface Props {
   title: string;
@@ -26,6 +29,8 @@ const {
     <meta name="theme-color" content="#faf6f7" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#161015" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href={plexSans400} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={plexMono500} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
     <!-- Apply a saved theme before first paint, so dark mode never flashes light. -->
     <script is:inline>
