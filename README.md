@@ -4,6 +4,14 @@ Shared tracker for AfroTech Conference 2026 events and the notes we take at them
 
 **When:** November 2–6, 2026 · **Where:** George R. Brown Convention Center, Houston, TX
 
+## Docs
+
+- [Plan: events site](docs/plans/0001-events-site.md) — what we're building and why
+- [To-dos](docs/todos/README.md) — tasks, one file each
+- [Design language](docs/design/design-language.md)
+- [Research: interactive SVG floor plan](docs/research/svg-floor-plan.md)
+- [Sources](docs/sources.md) — where every bit of data comes from
+
 ## Layout
 
 | Path | What's in it |

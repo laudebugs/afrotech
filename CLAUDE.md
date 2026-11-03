@@ -1,0 +1,59 @@
+# CLAUDE.md
+
+Guidance for Claude when working in this repo.
+
+## What this is
+
+A tracker for AfroTech 2026 (Houston, Nov 2–6): the merged official schedule and
+community side events, shared session notes, and (in progress) an Astro site to
+plan your week and find events on a map of the convention center.
+
+Start with [`docs/plans/0001-events-site.md`](docs/plans/0001-events-site.md).
+
+## Layout
+
+| Path | What |
+|------|------|
+| `docs/plans/` | Plans (`NNNN-slug.md`). Read the relevant one before building. |
+| `docs/todos/` | Tasks, one per file (`NNN-slug.md`), indexed in `docs/todos/README.md`. |
+| `docs/design/design-language.md` | Colors, type, spacing, components. Follow it for all UI. |
+| `docs/research/` | Research notes (e.g. the SVG floor-plan approach). |
+| `docs/sources.md` | Every data source and how it's pulled. |
+| `scripts/` | Python (stdlib only) that fetches sources and writes `data/` and `schedule/`. |
+| `data/` | Generated data (committed). `data/sources/` holds hand-exported inputs. |
+| `schedule/` | Generated markdown schedules for reading on GitHub. |
+| `notes/` | Session notes; copy `notes/_template.md`. |
+| `src/`, `public/` | Astro site (from todo 001 onward). |
+
+## Commands
+
+```bash
+python3 scripts/update_schedule.py      # official sessions → data/sessions.*, schedule/official.md
+python3 scripts/update_side_events.py   # side events → data/side-events.csv, schedule/side-events.md
+```
+
+Site commands (`npm run dev | build | preview | deploy`) arrive with todo 001.
+
+## Working on todos
+
+- When asked to "do todo NNN", read the todo, its plan, and anything it depends on.
+- Set its **Status** to `doing` while working and `done` when finished; tick the
+  checklist; update the index table in `docs/todos/README.md`.
+- Note anything that changed from the plan in the todo's **Notes**.
+- New ideas that are out of scope become new todo files, not extra work.
+
+## Conventions
+
+- **Times:** always Houston time (`America/Chicago`, CST `-06:00` this week),
+  formatted `2:30 PM`, dates `Wed, Nov 4`, regardless of the viewer's timezone.
+- **Generated files** (`data/*`, `schedule/*`) are never edited by hand — change
+  the script and re-run it.
+- **Sources:** credit each community list on the site. Don't republish the GRB
+  floor-plan PDFs; we trace our own SVG. Keep organisers' personal contact
+  details out of the site.
+- **UI:** mobile-first, system fonts, design tokens only (no hard-coded colors),
+  44 px touch targets, works with `localStorage` blocked, respects
+  `prefers-reduced-motion`.
+- **Site stack:** Astro 7 static output on Cloudflare (Workers static assets).
+  Plain Astro components + small client scripts; ask before adding a UI framework.
+- **Location** data stays on the device; ask for it only on a user action.
