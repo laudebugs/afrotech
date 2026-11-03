@@ -1,0 +1,314 @@
+---
+// One day's events on the timeline, with filters and search kept in the URL.
+import "../../styles/event-detail.css";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Chip from "../../components/Chip.astro";
+import Timeline from "../../components/Timeline.astro";
+import TimelineRow from "../../components/TimelineRow.astro";
+import TimeHeader from "../../components/TimeHeader.astro";
+import EventCard from "../../components/EventCard.astro";
+import BottomSheet from "../../components/BottomSheet.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+import { dayLabel, eventsOnDay, groupByHour, isFree, scheduleDays, searchText, tracks } from "../../lib/schedule";
+import { formatClock, formatDate } from "../../lib/time";
+
+export function getStaticPaths() {
+  return scheduleDays.map((day) => ({ params: { day } }));
+}
+
+const { day } = Astro.params as { day: string };
+const events = eventsOnDay(day);
+const groups = groupByHour(events);
+// Noon on the day keeps the date label right in Houston.
+const dateLabel = formatDate(`${day}T12:00:00-06:00`);
+const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(\d+)$/, " $1");
+---
+
+<BaseLayout title={`${dateLabel} · Schedule · AfroTech 2026 Planner`} active="schedule">
+  <header class="page-head">
+    <div class="title-row">
+      <h1>{dateLabel}</h1>
+      <span class="muted">{dayLabel(day)}</span>
+    </div>
+
+    <nav class="days" aria-label="Days">
+      {
+        scheduleDays.map((d) => (
+          <a href={`/schedule/${d}/`} aria-current={d === day ? "page" : undefined} data-day-link>
+            {shortDay(d)}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="filters" role="group" aria-label="Filters">
+      <div class="chips">
+        <Chip pressed data-kind-filter="all">Everything</Chip>
+        <Chip data-kind-filter="official">Official</Chip>
+        <Chip data-kind-filter="side">Side events</Chip>
+        <Chip data-flag-filter="free">Free</Chip>
+        <Chip data-flag-filter="picks">Founder picks</Chip>
+      </div>
+      <div class="fields">
+        <label class="field">
+          <span class="visually-hidden">Track</span>
+          <select data-track-filter>
+            <option value="">All tracks</option>
+            {tracks.map((t) => <option value={t}>{t}</option>)}
+          </select>
+        </label>
+        <label class="field search">
+          <span class="visually-hidden">Search titles, speakers and hosts</span>
+          <input type="search" placeholder="Search titles, speakers, hosts" data-search-filter />
+        </label>
+      </div>
+      <p class="count muted" aria-live="polite" data-count>{events.length} events</p>
+    </div>
+  </header>
+
+  <Timeline label={`Events on ${dateLabel}`}>
+    {
+      groups.map((group) => (
+        <section class="group" data-group aria-label={group.label}>
+          <TimeHeader label={group.label} />
+          {group.events.map((event) => (
+            <TimelineRow
+              time={formatClock(event.start!)}
+              datetime={event.start!}
+              data-row
+              data-event-id={event.id}
+              data-kind={event.kind}
+              data-track={event.track ?? ""}
+              data-free={isFree(event) ? "1" : undefined}
+              data-pick={event.founderInvestorPick ? "1" : undefined}
+              data-search={searchText(event)}
+            >
+              <EventCard event={event} />
+            </TimelineRow>
+          ))}
+        </section>
+      ))
+    }
+  </Timeline>
+
+  <div class="empty" data-empty hidden>
+    <p>No events match these filters.</p>
+    <button type="button" class="reset" data-reset>Clear filters</button>
+  </div>
+
+  <BottomSheet id="event-sheet" label="Event details">
+    <div data-sheet-body></div>
+  </BottomSheet>
+
+  <SourcesFooter />
+</BaseLayout>
+
+<script>
+  type Filters = { kind: string; free: boolean; picks: boolean; track: string; q: string };
+
+  const rows = [...document.querySelectorAll<HTMLElement>("[data-row]")];
+  const groups = [...document.querySelectorAll<HTMLElement>("[data-group]")];
+  const kindChips = [...document.querySelectorAll<HTMLButtonElement>("[data-kind-filter]")];
+  const flagChips = [...document.querySelectorAll<HTMLButtonElement>("[data-flag-filter]")];
+  const trackSelect = document.querySelector<HTMLSelectElement>("[data-track-filter]")!;
+  const searchInput = document.querySelector<HTMLInputElement>("[data-search-filter]")!;
+  const count = document.querySelector<HTMLElement>("[data-count]")!;
+  const empty = document.querySelector<HTMLElement>("[data-empty]")!;
+
+  function read(): Filters {
+    const p = new URLSearchParams(location.search);
+    const kind = p.get("kind");
+    return {
+      kind: kind === "official" || kind === "side" ? kind : "all",
+      free: p.get("free") === "1",
+      picks: p.get("picks") === "1",
+      track: p.get("track") ?? "",
+      q: p.get("q") ?? "",
+    };
+  }
+
+  function write(f: Filters) {
+    const p = new URLSearchParams();
+    if (f.kind !== "all") p.set("kind", f.kind);
+    if (f.free) p.set("free", "1");
+    if (f.picks) p.set("picks", "1");
+    if (f.track) p.set("track", f.track);
+    if (f.q) p.set("q", f.q);
+    const query = p.toString() ? `?${p}` : "";
+    history.replaceState(null, "", `${location.pathname}${query}`);
+    // Switching days keeps the filters.
+    document.querySelectorAll<HTMLAnchorElement>("[data-day-link]").forEach((a) => {
+      a.search = query;
+    });
+  }
+
+  function apply(f: Filters) {
+    kindChips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.kindFilter === f.kind)));
+    flagChips.forEach((c) => c.setAttribute("aria-pressed", String(f[c.dataset.flagFilter as "free" | "picks"])));
+    trackSelect.value = f.track;
+    if (searchInput.value !== f.q) searchInput.value = f.q;
+
+    const words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
+    let shown = 0;
+    for (const row of rows) {
+      const d = row.dataset;
+      const visible =
+        (f.kind === "all" || d.kind === f.kind) &&
+        (!f.free || d.free === "1") &&
+        (!f.picks || d.pick === "1") &&
+        (!f.track || d.track === f.track) &&
+        words.every((w) => d.search!.includes(w));
+      row.hidden = !visible;
+      if (visible) shown++;
+    }
+    groups.forEach((g) => (g.hidden = !g.querySelector("[data-row]:not([hidden])")));
+    count.textContent = `${shown} ${shown === 1 ? "event" : "events"}`;
+    empty.hidden = shown > 0;
+  }
+
+  function update(change: Partial<Filters>) {
+    const next = { ...read(), ...change };
+    write(next);
+    apply(next);
+  }
+
+  kindChips.forEach((c) => c.addEventListener("click", () => update({ kind: c.dataset.kindFilter! })));
+  flagChips.forEach((c) =>
+    c.addEventListener("click", () => {
+      const key = c.dataset.flagFilter as "free" | "picks";
+      update({ [key]: !read()[key] });
+    }),
+  );
+  trackSelect.addEventListener("change", () => update({ track: trackSelect.value }));
+  searchInput.addEventListener("input", () => update({ q: searchInput.value.trim() }));
+  document.querySelector("[data-reset]")!.addEventListener("click", () =>
+    update({ kind: "all", free: false, picks: false, track: "", q: "" }),
+  );
+
+  const initial = read();
+  write(initial);
+  apply(initial);
+
+  // Open event details in the bottom sheet; the link still works without JS.
+  const sheet = document.querySelector<HTMLDialogElement>("#event-sheet")!;
+  const body = sheet.querySelector<HTMLElement>("[data-sheet-body]")!;
+  document.querySelector(".timeline")!.addEventListener("click", async (e) => {
+    const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="/event/"]');
+    const click = e as MouseEvent;
+    if (!link || click.metaKey || click.ctrlKey || click.shiftKey || click.button !== 0) return;
+    e.preventDefault();
+    try {
+      const res = await fetch(link.href);
+      if (!res.ok) throw new Error(String(res.status));
+      const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+      const detail = doc.querySelector("[data-event-detail]");
+      if (!detail) throw new Error("no detail");
+      body.replaceChildren(document.importNode(detail, true));
+      sheet.showModal();
+    } catch {
+      location.href = link.href;
+    }
+  });
+</script>
+
+<style>
+  .page-head {
+    padding-top: var(--space-6);
+  }
+  .title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+  h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+  .days {
+    display: flex;
+    gap: var(--space-1);
+    margin: var(--space-3) calc(var(--space-4) * -1) 0;
+    padding: 0 var(--space-4);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .days a {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    font-size: var(--text-sm);
+    text-decoration: none;
+  }
+  .days a[aria-current="page"] {
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .field {
+    flex: 1 1 160px;
+  }
+  .field.search {
+    flex: 2 1 200px;
+  }
+  select,
+  input {
+    width: 100%;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-md);
+  }
+  .count {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .group[hidden] {
+    display: none;
+  }
+  .empty {
+    padding: var(--space-8) 0;
+    text-align: center;
+  }
+  .reset {
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+  }
+</style>
