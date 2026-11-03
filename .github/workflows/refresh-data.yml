@@ -71,6 +71,13 @@ jobs:
         continue-on-error: true
         run: python3 scripts/update_side_events.py
 
+      # Pins for new side-event addresses on the city map. Only addresses not
+      # yet in data/geocode.json are looked up, one per second.
+      - name: Place new addresses
+        id: geocode
+        continue-on-error: true
+        run: python3 scripts/geocode.py
+
       - name: Check for changes
         id: changes
         run: |
@@ -100,9 +107,10 @@ jobs:
           git push origin HEAD:main
 
       - name: Report a broken source
-        if: steps.official.outcome == 'failure' || steps.side.outcome == 'failure'
+        if: steps.official.outcome == 'failure' || steps.side.outcome == 'failure' || steps.geocode.outcome == 'failure'
         run: |
           echo "official schedule: ${{ steps.official.outcome }}"
           echo "side events: ${{ steps.side.outcome }}"
+          echo "addresses: ${{ steps.geocode.outcome }}"
           echo "::error::A source failed; its last good data was kept. See the step logs above."
           exit 1

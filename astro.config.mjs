@@ -10,4 +10,6 @@ export default defineConfig({
   // (works on phones too). The light Schedule and Map tabs prefetch as soon as
   // they're on screen; see AppNav.
   prefetch: { prefetchAll: true, defaultStrategy: "tap" },
+  // MapLibre's worker (city map) is an ES module.
+  vite: { worker: { format: "es" } },
 });

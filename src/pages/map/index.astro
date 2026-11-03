@@ -4,6 +4,7 @@
 // for keyboard and screen-reader users, plus places that aren't on the map.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BottomSheet from "../../components/BottomSheet.astro";
+import MapSwitch from "../../components/MapSwitch.astro";
 import SourcesFooter from "../../components/SourcesFooter.astro";
 import { allEvents, venues } from "../../lib/events";
 import { floorPlan } from "../../lib/floor-plan";
@@ -49,8 +50,9 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   <header class="page-head sticky-head">
     <div class="title-row">
       <h1>Map</h1>
-      <span class="muted" data-map-day></span>
+      <MapSwitch current="venue" />
     </div>
+    <p class="muted day" data-map-day></p>
     <div class="levels" role="group" aria-label="Level">
       {
         levels.map((l) => (
@@ -470,6 +472,10 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   h1 {
     margin: 0;
     font-size: var(--text-2xl);
+  }
+  .day {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-sm);
   }
   .levels {
     display: flex;
