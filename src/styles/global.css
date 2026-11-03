@@ -42,6 +42,12 @@ button {
   border-radius: 4px;
 }
 
+/* Components set display on their roots, which would override the browser's
+   own [hidden] rule; scripts hide rows and sections with the attribute. */
+[hidden] {
+  display: none !important;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

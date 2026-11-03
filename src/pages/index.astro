@@ -1,27 +1,222 @@
 ---
+// Now: what's live and what starts in the next hour, on the timeline.
+// Every event is rendered; the script shows the right ones and refreshes each minute.
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { officialEvents, sideEvents } from "../lib/events";
+import Chip from "../components/Chip.astro";
+import Timeline from "../components/Timeline.astro";
+import TimelineRow from "../components/TimelineRow.astro";
+import EventCard from "../components/EventCard.astro";
+import NowMarker from "../components/NowMarker.astro";
+import SourcesFooter from "../components/SourcesFooter.astro";
+import { allEvents } from "../lib/events";
+import { CONFERENCE_DAYS } from "../lib/schedule";
+import { formatClock } from "../lib/time";
+
+// Only timed events can be "now"; untimed ones live on the schedule pages.
+const timed = allEvents.filter((e) => e.start);
 ---
 
-<BaseLayout title="AfroTech 2026 Planner" active="now">
-    <h1>AfroTech 2026 Planner</h1>
-    <p>
-      The schedule, side events and convention center map for AfroTech 2026 in
-      Houston, November 2–6, land here this week: {officialEvents.length} official
-      sessions and {sideEvents.length} side events so far.
-    </p>
-    <p>
-      Until then, read the
-      <a href="https://github.com/laudebugs/afrotech/blob/main/schedule/official.md">official schedule</a>
-      and the
-      <a href="https://github.com/laudebugs/afrotech/blob/main/schedule/side-events.md">side events</a>
-      on GitHub.
-    </p>
+<BaseLayout title="Now · AfroTech 2026 Planner" active="now">
+  <header class="page-head" data-days={JSON.stringify(CONFERENCE_DAYS)}>
+    <div class="title-row">
+      <h1 data-today>Now</h1>
+      <span class="muted" data-day-label></span>
+    </div>
+    <div class="chips" role="group" aria-label="Show">
+      <Chip pressed data-show="all">Everything</Chip>
+      <Chip data-show="plan">My plan</Chip>
+      <Chip data-show="side">Side events</Chip>
+    </div>
+    <p class="status muted" aria-live="polite" data-status>Loading what's on…</p>
+  </header>
+
+  <Timeline label="Happening now and next">
+    <div data-marker-slot hidden>
+      <NowMarker label="" />
+    </div>
+    {
+      timed.map((event) => (
+        <TimelineRow
+          time={formatClock(event.start!)}
+          datetime={event.start!}
+          data-row
+          data-event-id={event.id}
+          data-start={event.start!}
+          data-end={event.end ?? undefined}
+          data-kind={event.kind}
+        >
+          <EventCard event={event} />
+        </TimelineRow>
+      ))
+    }
+  </Timeline>
+
+  <p class="more"><a href="/schedule/" data-more>See the full schedule</a></p>
+  <SourcesFooter />
 </BaseLayout>
 
+<script>
+  import { readPlan } from "../lib/plan";
+  import { dayKey, formatClock, formatDate, formatTime } from "../lib/time";
+
+  const HOUR = 3600_000;
+  const head = document.querySelector<HTMLElement>("[data-days]")!;
+  const conferenceDays: string[] = JSON.parse(head.dataset.days!);
+  const rows = [...document.querySelectorAll<HTMLElement>("[data-row]")];
+  const timeline = rows[0]?.parentElement;
+  const markerSlot = document.querySelector<HTMLElement>("[data-marker-slot]")!;
+  const markerLabel = markerSlot.querySelector<HTMLElement>("time")!;
+  const status = document.querySelector<HTMLElement>("[data-status]")!;
+  const chips = [...document.querySelectorAll<HTMLButtonElement>("[data-show]")];
+  const more = document.querySelector<HTMLAnchorElement>("[data-more]")!;
+
+  const span = rows.map((row) => {
+    const start = Date.parse(row.dataset.start!);
+    // No end time: treat it as an hour long, as everywhere else on the site.
+    const end = row.dataset.end ? Date.parse(row.dataset.end) : start + HOUR;
+    return { row, start, end };
+  });
+
+  // ?now=2026-11-04T11:00 previews any moment (handy for testing).
+  function now(): number {
+    const forced = new URLSearchParams(location.search).get("now");
+    const parsed = forced ? Date.parse(forced.length === 16 ? `${forced}:00-06:00` : forced) : NaN;
+    return Number.isNaN(parsed) ? Date.now() : parsed;
+  }
+
+  const show = () => new URLSearchParams(location.search).get("show") ?? "all";
+
+  function render() {
+    const t = now();
+    const mode = show();
+    const planned = new Set(readPlan());
+    const wanted = (r: HTMLElement) =>
+      mode === "plan" ? planned.has(r.dataset.eventId!) : mode === "side" ? r.dataset.kind === "side" : true;
+
+    chips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.show === mode)));
+
+    const candidates = span.filter((s) => wanted(s.row));
+    const live = candidates.filter((s) => s.start <= t && t < s.end);
+    const soon = candidates.filter((s) => t < s.start && s.start <= t + HOUR);
+    // Quiet hours (overnight, before or after the week): show what's next instead.
+    const upcoming = live.length || soon.length ? soon : candidates.filter((s) => s.start > t).slice(0, 6);
+
+    const visible = new Set([...live, ...upcoming].map((s) => s.row));
+    for (const s of span) {
+      s.row.hidden = !visible.has(s.row);
+      // Progress for live events.
+      const bar = s.row.querySelector<HTMLElement>("[data-progress]");
+      if (bar) {
+        const isLive = live.includes(s);
+        bar.hidden = !isLive;
+        if (isLive) {
+          const pct = Math.round(((t - s.start) / (s.end - s.start)) * 100);
+          bar.setAttribute("aria-valuenow", String(pct));
+          bar.querySelector("span")!.style.width = `${Math.max(2, pct)}%`;
+        }
+      }
+    }
+
+    // Live events: your picks first, then sessions, then all-day items such as
+    // "Expo Hall Hours" (3 hours or more), each by most recent start.
+    const rank = (s: (typeof span)[number]) =>
+      (planned.has(s.row.dataset.eventId!) ? 0 : 2) + (s.end - s.start >= 3 * HOUR ? 1 : 0);
+    const order = [...live].sort((a, b) => rank(a) - rank(b) || b.start - a.start);
+    if (timeline) {
+      order.forEach((s) => timeline.insertBefore(s.row, markerSlot));
+      timeline.insertBefore(markerSlot, upcoming[0]?.row ?? null);
+      // Upcoming rows keep their time order after the marker.
+      upcoming.forEach((s) => timeline.appendChild(s.row));
+    }
+    markerSlot.hidden = !live.length && !soon.length;
+    markerLabel.textContent = formatClock(new Date(t));
+
+    // Header: today's date and where we are in the week.
+    const today = dayKey(new Date(t));
+    document.querySelector("[data-today]")!.textContent = formatDate(new Date(t));
+    const i = conferenceDays.indexOf(today);
+    document.querySelector("[data-day-label]")!.textContent =
+      i >= 0
+        ? `Day ${i + 1} of ${conferenceDays.length}`
+        : today < conferenceDays[0]!
+          ? "Before the conference"
+          : "After the conference";
+    more.href = `/schedule/${i >= 0 ? `${today}/` : ""}`;
+
+    const what = mode === "plan" ? "in your plan" : mode === "side" ? "side events" : "events";
+    if (live.length || soon.length) {
+      status.textContent = `${live.length} live, ${soon.length} starting within the hour`;
+    } else if (upcoming.length) {
+      const first = upcoming[0]!;
+      const when = new Date(first.start);
+      const day = dayKey(when) === today ? "today" : formatDate(when);
+      status.textContent = `Nothing ${mode === "all" ? "on" : what} right now. Next up: ${day} at ${formatTime(when)}.`;
+    } else {
+      status.textContent =
+        mode === "plan" && !planned.size
+          ? "Your plan is empty. Star events on the schedule to see them here."
+          : `No more ${what} this week. See you at AfroTech 2027.`;
+    }
+  }
+
+  chips.forEach((c) =>
+    c.addEventListener("click", () => {
+      const p = new URLSearchParams(location.search);
+      if (c.dataset.show === "all") p.delete("show");
+      else p.set("show", c.dataset.show!);
+      history.replaceState(null, "", `${location.pathname}${p.toString() ? `?${p}` : ""}`);
+      render();
+    }),
+  );
+  document.addEventListener("plan-change", () => render());
+  document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && render());
+
+  render();
+  // Refresh on each new minute.
+  setTimeout(
+    () => {
+      render();
+      setInterval(render, 60_000);
+    },
+    60_000 - (Date.now() % 60_000),
+  );
+</script>
+
 <style>
+  .page-head {
+    padding-top: var(--space-6);
+  }
+  .title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
   h1 {
-    margin: var(--space-12) 0 var(--space-4);
+    margin: 0;
     font-size: var(--text-2xl);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+  .status {
+    margin: var(--space-3) 0 0;
+    font-size: var(--text-sm);
+  }
+  [data-marker-slot][hidden] {
+    display: none;
+  }
+  .more {
+    margin-top: var(--space-6);
+  }
+  .more a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 600;
   }
 </style>

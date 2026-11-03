@@ -29,20 +29,18 @@ const people =
     <h3 class="title"><a href={`/event/${event.id}/`}>{event.title}</a></h3>
     <p class="meta">{meta}</p>
     {people && <p class="meta people">{people}</p>}
-    {
-      progress !== null && (
-        <div
-          class="progress"
-          role="progressbar"
-          aria-label="Session progress"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          aria-valuenow={Math.round(progress)}
-        >
-          <span style={`width: ${Math.max(2, Math.min(100, progress))}%`} />
-        </div>
-      )
-    }
+    <div
+      class="progress"
+      role="progressbar"
+      aria-label="Session progress"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow={progress === null ? undefined : Math.round(progress)}
+      data-progress
+      hidden={progress === null}
+    >
+      <span style={`width: ${Math.max(2, Math.min(100, progress ?? 0))}%`}></span>
+    </div>
     <p class="clash" data-clash hidden={!clash}>{clash}</p>
   </div>
   <Star eventId={event.id} title={event.title} on={inPlan} />
@@ -88,6 +86,9 @@ const people =
     color: var(--muted);
     font-size: var(--text-sm);
     overflow-wrap: anywhere;
+  }
+  .progress[hidden] {
+    display: none;
   }
   .progress {
     height: 4px;
