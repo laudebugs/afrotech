@@ -48,6 +48,7 @@ The site reads events through `src/lib/events.ts`; their type is
 npm run dev       # Astro dev server
 npm run build     # astro check + build to dist/
 npm run preview   # build, then serve with wrangler dev (like production)
+npm test          # Node test runner over tests/*.test.ts (notes Markdown round trips)
 npm run deploy    # manual deploy; needs a one-time `npx wrangler login`
 npm run db:migrate:local    # apply worker/migrations/ to a local D1 (preview does this too)
 ```

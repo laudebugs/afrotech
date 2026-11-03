@@ -2,6 +2,7 @@
 // One note, rendered (plan 0005): /notes/view/?id=<note>. The note comes from
 // this device, so the page is the same for everyone and fills in here.
 import "../../../styles/notes.css";
+import "../../../styles/note-prose.css";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import NoteEventLookup from "../../../components/NoteEventLookup.astro";
 ---
@@ -15,7 +16,7 @@ import NoteEventLookup from "../../../components/NoteEventLookup.astro";
         <p class="muted small" data-updated></p>
         <p class="small" data-event hidden>About <a data-event-link></a> <span class="muted" data-event-when></span></p>
       </header>
-      <div class="body" data-body></div>
+      <div class="body note-prose" data-body></div>
       <div class="buttons">
         <a class="button primary" data-edit>Edit</a>
         <button type="button" class="button" data-share hidden>Share</button>
@@ -33,19 +34,10 @@ import NoteEventLookup from "../../../components/NoteEventLookup.astro";
 </BaseLayout>
 
 <script>
-  import MarkdownIt from "markdown-it";
+  import { renderNote } from "../../../scripts/note-markdown";
   import { deleteNote, getNote } from "../../../lib/notes";
   import { noteEvent } from "../../../lib/note-events";
   import { formatDate, formatTime } from "../../../lib/time";
-
-  // Raw HTML stays text, so a pasted <script> can't run; markdown-it's own
-  // link check already refuses javascript: and similar URLs.
-  const md = new MarkdownIt({ html: false, linkify: true, breaks: true });
-  const defaultLink = md.renderer.rules.link_open ?? ((t, i, o, _e, self) => self.renderToken(t, i, o));
-  md.renderer.rules.link_open = (tokens, i, options, env, self) => {
-    tokens[i].attrSet("rel", "noopener nofollow");
-    return defaultLink(tokens, i, options, env, self);
-  };
 
   const id = new URLSearchParams(location.search).get("id") ?? "";
   const article = document.querySelector<HTMLElement>("[data-note]")!;
@@ -74,7 +66,7 @@ import NoteEventLookup from "../../../components/NoteEventLookup.astro";
       link.textContent = info.title;
       document.querySelector("[data-event-when]")!.textContent = `· ${info.when}`;
     }
-    document.querySelector("[data-body]")!.innerHTML = md.render(note.body);
+    document.querySelector("[data-body]")!.innerHTML = renderNote(note.body);
     document.querySelector<HTMLAnchorElement>("[data-edit]")!.href = `/notes/new/?id=${encodeURIComponent(id)}`;
   }
 
@@ -117,20 +109,5 @@ import NoteEventLookup from "../../../components/NoteEventLookup.astro";
   .body {
     margin: var(--space-6) 0;
     overflow-wrap: anywhere;
-  }
-  .body :global(h1),
-  .body :global(h2),
-  .body :global(h3) {
-    margin-top: var(--space-6);
-    font-size: var(--text-lg);
-  }
-  .body :global(blockquote) {
-    margin: 0;
-    padding-left: var(--space-4);
-    border-left: 2px solid var(--accent);
-    color: var(--muted);
-  }
-  .body :global(pre) {
-    overflow-x: auto;
   }
 </style>
