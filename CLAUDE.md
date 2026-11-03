@@ -52,6 +52,8 @@ Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
   user to review it before implementing. Don't start a todo whose plan is still a draft.
 - **Code review on every PR.** Run `/code-review` at least once before opening or
   updating a pull request, and fix or explain what it finds.
+- **Merge and keep going.** Once a PR's review findings are fixed, merge it
+  yourself and start the next todo. Don't wait for the user between todos.
 - **Writing.** For any prose people will read (docs, plans, READMEs, PR
   descriptions, notes), draft with the `anthropic-skills:writing` skill, then
   review the draft with `anthropic-skills:writing-review` and apply the fixes.

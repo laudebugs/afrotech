@@ -1,0 +1,47 @@
+---
+// One stop on the rail: a time, a dot and whatever hangs off it (usually an EventCard).
+interface Props {
+  time: string;
+  inPlan?: boolean;
+  datetime?: string;
+}
+const { time, inPlan = false, datetime } = Astro.props;
+---
+
+<div class="row" data-in-plan={inPlan ? "true" : undefined}>
+  <time class="time" datetime={datetime}>{time}</time>
+  <span class="dot" aria-hidden="true"></span>
+  <div class="body"><slot /></div>
+</div>
+
+<style>
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail-time) var(--rail-dot) minmax(0, 1fr);
+    align-items: start;
+  }
+  .time {
+    padding: 10px 6px 0 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    text-align: right;
+  }
+  .dot {
+    justify-self: center;
+    width: 10px;
+    height: 10px;
+    margin-top: 16px;
+    border: 2px solid var(--bg);
+    border-radius: 50%;
+    background: var(--muted);
+    box-sizing: content-box;
+  }
+  .row[data-in-plan="true"] .dot {
+    background: var(--accent);
+  }
+  .body {
+    min-width: 0;
+    padding-left: var(--space-2);
+  }
+</style>

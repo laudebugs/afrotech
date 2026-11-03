@@ -1,0 +1,44 @@
+---
+// Adds or removes an event from My plan. Todo 005 wires up the click.
+import Icon from "./Icon.astro";
+
+interface Props {
+  eventId: string;
+  title: string;
+  on?: boolean;
+}
+const { eventId, title, on = false } = Astro.props;
+---
+
+<button
+  class="star"
+  type="button"
+  data-star={eventId}
+  data-title={title}
+  aria-pressed={on ? "true" : "false"}
+  aria-label={`My plan: ${title}`}
+>
+  <Icon name="star" size={22} />
+</button>
+
+<style>
+  .star {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: var(--tap);
+    height: var(--tap);
+    margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) 0 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .star[aria-pressed="true"] {
+    color: var(--accent);
+  }
+  .star[aria-pressed="true"] :global(svg) {
+    fill: currentColor;
+  }
+</style>

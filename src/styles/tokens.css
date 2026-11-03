@@ -1,7 +1,9 @@
 /* Design tokens from docs/design/design-language.md: Plum (light) and Plum Night (dark).
-   Todo 003 completes this file. */
-:root {
-  color-scheme: light dark;
+   The theme follows the device unless data-theme="light" or "dark" is set on <html>.
+   data-theme on any other element themes just that subtree (the /design page uses this). */
+
+:root,
+[data-theme="light"] {
   --bg: #faf6f7;
   --surface: #ffffff;
   --ink: #23161d;
@@ -11,11 +13,26 @@
   --on-accent: #ffffff;
   --live: #2b7a3b;
   --warn: #8a5a00;
-  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --shadow: 0 -4px 24px rgb(35 22 29 / 0.12);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #161015;
+  --surface: #201820;
+  --ink: #f4ecef;
+  --muted: #b3a2ab;
+  --line: #352a32;
+  --accent: #e59ac4;
+  --on-accent: #161015;
+  --live: #6ccb7f;
+  --warn: #e8b04a;
+  --shadow: 0 -4px 24px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #161015;
     --surface: #201820;
     --ink: #f4ecef;
@@ -25,5 +42,44 @@
     --on-accent: #161015;
     --live: #6ccb7f;
     --warn: #e8b04a;
+    --shadow: 0 -4px 24px rgb(0 0 0 / 0.5);
+    color-scheme: dark;
   }
+}
+
+:root,
+[data-theme] {
+  /* Map area fills: pale tints of the theme colours, so labels stay readable. */
+  --area-stage: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  --area-room: color-mix(in srgb, var(--muted) 12%, var(--surface));
+  --area-expo: color-mix(in srgb, var(--warn) 12%, var(--surface));
+  --area-lounge: color-mix(in srgb, var(--live) 12%, var(--surface));
+  --area-outside: color-mix(in srgb, var(--live) 20%, var(--surface));
+}
+
+:root {
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --tap: 44px;
+  --ease: 150ms ease-out;
+
+  --tabbar-height: 64px;
+  --rail-time: 48px;
+  --rail-dot: 16px;
 }
