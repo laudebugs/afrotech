@@ -6,17 +6,17 @@ import Timeline from "../../components/Timeline.astro";
 import TimelineRow from "../../components/TimelineRow.astro";
 import EventCard from "../../components/EventCard.astro";
 import Account from "../../components/Account.astro";
+import SavedHead from "../../components/SavedHead.astro";
 import { eventsOnDay, scheduleDays } from "../../lib/schedule";
 import { formatClock, formatDate } from "../../lib/time";
 ---
 
-<BaseLayout title="My plan · AfroTech 2026 Planner" active="plan">
+<BaseLayout title="Plan · Saved · AfroTech 2026 Planner" active="plan">
   <header class="page-head sticky-head">
-    <h1>My plan</h1>
-    <p class="muted" data-summary>Star events on the schedule to build your plan.</p>
+    <SavedHead current="plan">
+      <p class="muted" data-summary>Star events on the schedule to build your plan.</p>
+    </SavedHead>
   </header>
-
-  <Account />
 
   <p class="ios-hint" data-ios-hint hidden>
     <span>
@@ -68,6 +68,8 @@ import { formatClock, formatDate } from "../../lib/time";
       </section>
     ))
   }
+
+  <Account />
 </BaseLayout>
 
 <script>

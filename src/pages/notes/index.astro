@@ -1,22 +1,26 @@
 ---
-// My notes (plan 0005): your notes from this device and, when you're signed
-// in, your account. Nothing about them is in the built page.
+// Saved › Notes (plans 0005, 0007): your notes from this device and, when
+// you're signed in, your account. Nothing about them is in the built page.
 import "../../styles/notes.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NoteEventLookup from "../../components/NoteEventLookup.astro";
+import SavedHead from "../../components/SavedHead.astro";
+import Account from "../../components/Account.astro";
 ---
 
-<BaseLayout title="My notes · AfroTech 2026 Planner" active="none">
+<BaseLayout title="Notes · Saved · AfroTech 2026 Planner" active="plan">
   <div class="notes-page">
     <header class="page-head sticky-head">
-      <h1>My notes</h1>
-      <p class="muted small">Only you can see these. Sign in on <a href="/plan/">My plan</a> to keep them on all your devices.</p>
+      <SavedHead current="notes">
+        <p class="muted small intro">Only you can see your notes. Sign in below to keep them on all your devices.</p>
+      </SavedHead>
     </header>
     <ul class="list" data-list></ul>
     <p data-empty hidden>No notes yet. Open any session and tap “Write a note”.</p>
     <div class="buttons new">
       <a class="button" href="/notes/new/">Write a note</a>
     </div>
+    <Account />
   </div>
   <NoteEventLookup />
 </BaseLayout>
@@ -52,6 +56,9 @@ import NoteEventLookup from "../../components/NoteEventLookup.astro";
 </script>
 
 <style>
+  .intro {
+    margin-top: var(--space-2);
+  }
   .list {
     display: flex;
     flex-direction: column;
