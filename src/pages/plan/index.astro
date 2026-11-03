@@ -10,7 +10,7 @@ import { formatClock, formatDate } from "../../lib/time";
 ---
 
 <BaseLayout title="My plan · AfroTech 2026 Planner" active="plan">
-  <header class="page-head">
+  <header class="page-head sticky-head" data-sticky-head>
     <h1>My plan</h1>
     <p class="muted" data-summary>Star events on the schedule to build your plan.</p>
   </header>
@@ -180,7 +180,7 @@ import { formatClock, formatDate } from "../../lib/time";
 
 <style>
   .page-head {
-    padding-top: var(--space-6);
+    padding-top: var(--space-4);
   }
   h1 {
     margin: 0;

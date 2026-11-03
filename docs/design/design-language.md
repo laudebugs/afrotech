@@ -60,7 +60,7 @@ lets each device override it.
 ## Spacing, shape and motion stay small and consistent
 
 - **Spacing:** steps of 4 px: 4, 8, 12, 16, 24, 32 and 48.
-- **Corners:** 8 px on chips and buttons, 12 px on event cards and sheets, square on map shapes.
+- **Corners:** 6 px on chips and buttons, 8 px on event cards and sheets, square on map shapes.
 - **Touch targets:** at least 44 × 44 px, the "add to my plan" star especially.
 - **Elevation:** flat, apart from one soft shadow under the bottom sheet.
 - **Motion:** 150 ms ease-out for sheets and toggles. The live pulse is the
@@ -78,7 +78,7 @@ The Now screen, and every day view, follows layout A1 from the canvas:
    for events in my plan, `--muted` for the rest.
 3. **Now marker:** a `--live` dot, rule and time label ("11:00") cross the rail
    at the current minute and move as time passes.
-4. **Event cards:** `--surface` cards with a 1 px border and 12 px corners;
+4. **Event cards:** `--surface` cards with a 1 px border and 8 px corners;
    events in my plan get a plum border. Each card shows the title, then the
    room and end time ("Grand Ballroom C · until 11:45").
 5. **Progress bar:** live events add a 4 px bar showing how much of the session

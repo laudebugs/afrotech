@@ -6,4 +6,7 @@ export default defineConfig({
   site: "https://afrotech26.laudebugs.me",
   output: "static",
   trailingSlash: "ignore",
+  // Fetch pages ahead of the tap: links on hover or focus, and the four tabs
+  // (marked data-astro-prefetch="viewport") as soon as they're on screen.
+  prefetch: { prefetchAll: true, defaultStrategy: "hover" },
 });

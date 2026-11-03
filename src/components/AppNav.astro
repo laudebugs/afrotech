@@ -19,7 +19,7 @@ const items = [
 <nav class="app-nav" aria-label="Main">
   {
     items.map((item) => (
-      <a href={item.href} aria-current={active === item.id ? "page" : undefined}>
+      <a href={item.href} aria-current={active === item.id ? "page" : undefined} data-astro-prefetch="viewport">
         <Icon name={item.icon} />
         <span>
           {item.label}

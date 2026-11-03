@@ -12,7 +12,7 @@ const { label, id } = Astro.props;
 <style>
   .time-header {
     position: sticky;
-    top: 0;
+    top: var(--sticky-offset, 0px);
     z-index: 5;
     margin: var(--space-2) 0 0;
     padding: var(--space-2) 0 var(--space-2) calc(var(--rail-time) + var(--rail-dot) + var(--space-2));

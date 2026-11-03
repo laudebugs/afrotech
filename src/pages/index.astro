@@ -17,7 +17,7 @@ const timed = allEvents.filter((e) => e.start);
 ---
 
 <BaseLayout title="Now · AfroTech 2026 Planner" active="now">
-  <header class="page-head" data-days={JSON.stringify(CONFERENCE_DAYS)}>
+  <header class="page-head sticky-head" data-sticky-head data-days={JSON.stringify(CONFERENCE_DAYS)}>
     <div class="title-row">
       <h1 data-today>Now</h1>
       <span class="muted" data-day-label></span>
@@ -27,9 +27,9 @@ const timed = allEvents.filter((e) => e.start);
       <Chip data-show="plan">My plan</Chip>
       <Chip data-show="side">Side events</Chip>
     </div>
-    <!-- Not aria-live: it rewrites itself every minute. -->
-    <p class="status muted" data-status>Loading what's on…</p>
   </header>
+  <!-- Not aria-live: it rewrites itself every minute. -->
+  <p class="status muted" data-status>Loading what's on…</p>
 
   <Timeline label="Happening now and next">
     <div data-marker-slot hidden>
@@ -171,6 +171,8 @@ const timed = allEvents.filter((e) => e.start);
   );
   document.addEventListener("plan-change", () => render());
   document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && render());
+  // Back/forward restores the page from memory, possibly hours old.
+  window.addEventListener("pageshow", (e) => e.persisted && render());
 
   render();
   // Refresh on each new minute.
@@ -185,7 +187,7 @@ const timed = allEvents.filter((e) => e.start);
 
 <style>
   .page-head {
-    padding-top: var(--space-6);
+    padding-top: var(--space-4);
   }
   .title-row {
     display: flex;

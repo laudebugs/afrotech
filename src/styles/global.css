@@ -48,6 +48,18 @@ button {
   display: none !important;
 }
 
+/* A page's title area stays pinned while the page scrolls. The sticky script
+   publishes its height as --sticky-offset, so hour headers pin just below. */
+.sticky-head {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin: 0 calc(var(--space-4) * -1);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
