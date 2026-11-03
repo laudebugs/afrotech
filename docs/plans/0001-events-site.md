@@ -150,28 +150,37 @@ workflow both redeploy the site with no extra wiring.
 
 ### One event format for every source
 
+The full type is `ScheduleEvent` in `src/lib/types.ts`; todo 002 explains how it
+grew from this sketch.
+
 ```ts
-type Event = {
-  id: string;              // official: schedule uuid; side: hash of date + title
+type ScheduleEvent = {
+  id: string;                    // official: schedule uuid; side: "side-" + hash of date + title
   kind: "official" | "side";
   title: string;
-  start: string; end?: string;   // ISO 8601 with -06:00
-  locationKey?: string;    // key into data/venues.json
-  locationLabel: string;   // the place as the source wrote it
-  address?: string;
-  track?: string; categories: string[];
-  speakers: { name: string; title?: string; company?: string }[];
-  host?: string;
-  price?: string; access?: string;   // "Open", "Invite only", "Badge"
-  rsvpUrl?: string;
+  start: string | null;          // ISO 8601 with -06:00
+  end: string | null;
+  timeLabel: string | null;      // "TBA" when start is null
+  locationKey: string | null;    // key into data/venues.json
+  locationLabel: string;         // the place as the source wrote it
+  address: string | null;
+  track: string | null;
+  categories: string[];
+  speakers: { name: string; title: string | null; company: string | null }[];
+  host: string | null;
+  price: string | null;
+  access: string | null;         // "Open", "Invite only", "Badge"
+  ticketLevels: string[];        // official passes that admit you
+  rsvpUrl: string | null;
   founderInvestorPick: boolean;
-  description?: string;
+  description: string | null;
   sources: string[];
 };
 ```
 
-`data/venues.json` maps each location key to a label, plus either a floor-plan
-area and level or a latitude and longitude.
+`data/venues.json` maps each location key to a label and a kind (`grb`,
+`marriott`, `outdoor`, `offsite` or `unplaced`), plus a floor-plan area and
+level or a latitude and longitude once todos 007 and 009 add them.
 
 ### Six pages
 

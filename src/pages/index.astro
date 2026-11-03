@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { officialEvents, sideEvents } from "../lib/events";
 ---
 
 <BaseLayout title="AfroTech 2026 Planner">
@@ -7,7 +8,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <h1>AfroTech 2026 Planner</h1>
     <p>
       The schedule, side events and convention center map for AfroTech 2026 in
-      Houston, November 2–6, land here this week.
+      Houston, November 2–6, land here this week: {officialEvents.length} official
+      sessions and {sideEvents.length} side events so far.
     </p>
     <p>
       Until then, read the

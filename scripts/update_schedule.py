@@ -12,6 +12,7 @@ from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
+import build_events
 from common import TZ, cell, clock, fetch, write_csv, write_text
 
 SITE = "https://afrotechconference.com"
@@ -89,12 +90,24 @@ def main():
             "track": s.get("track") or "",
             "location": s.get("location") or "",
             "speakers": "; ".join(speaker_label(sp) for sp in s.get("speakers") or []),
+            # Structured copy for data/events/ (JSON only; the CSV keeps the joined string).
+            "speaker_list": [
+                {k: (sp.get(k) or "").strip() for k in ("name", "title", "company")}
+                for sp in s.get("speakers") or []
+            ],
             "ticket_levels": "; ".join(s.get("ticketLevels") or []),
             "description": s.get("plainDescription") or "",
             "calendar_url": SITE + s["calendarUrl"] if s.get("calendarUrl") else "",
         })
+    # Validate the site's event data first, so a failure writes nothing.
+    try:
+        events = build_events.build(sessions=rows)
+    except ValueError as err:
+        sys.exit(f"{err}; keeping the existing files.")
+
     write_text("data/sessions.json", json.dumps(rows, indent=2, ensure_ascii=False) + "\n")
-    write_csv("data/sessions.csv", rows, FIELDS)
+    # The CSV keeps the joined speakers string, not the structured list.
+    write_csv("data/sessions.csv", [{k: r[k] for k in FIELDS} for r in rows], FIELDS)
 
     by_day = defaultdict(list)
     for r in rows:
@@ -122,6 +135,7 @@ def main():
             )
     write_text("schedule/official.md", "\n".join(out) + "\n")
     print(f"Wrote {len(rows)} sessions across {len(by_day)} days.")
+    build_events.write(*events)
 
 
 if __name__ == "__main__":
