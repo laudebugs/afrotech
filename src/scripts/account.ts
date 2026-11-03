@@ -1,6 +1,7 @@
 // The account panel on My plan: Google's sign-in button, or who you are with
 // Sign out and Delete my data. Google's script loads only here, only when needed.
 import { clearLocalNotes, readNoteChanges } from "../lib/notes";
+import { clearPhotos } from "../lib/photos";
 import { SIGNED_IN, setItem as store } from "../lib/storage";
 import { api } from "./api";
 import { forgetNotesAccount, notesSyncProblem, stopNotesSync, syncNotesNow } from "./notes-sync";
@@ -130,6 +131,7 @@ async function init() {
     store(MERGED, null);
     forgetNotesAccount();
     clearLocalNotes();
+    await clearPhotos();
     location.reload();
   });
 

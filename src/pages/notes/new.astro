@@ -51,7 +51,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
         <button type="button" class="button" data-delete hidden>Delete note</button>
       </div>
       <p class="muted small">
-        Only you can see your notes. They save on this device as you type; sign in on
+        Only you can see your notes. They save on this device as you type; sign in on{" "}
         <a href="/plan/">My plan</a> to keep them on all your devices.
       </p>
     </form>
@@ -65,6 +65,8 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   import { formatTime } from "../../lib/time";
   import { countWords, createNoteEditor } from "../../scripts/note-editor";
   import { attachToolbar } from "../../scripts/note-toolbar";
+  import { PHOTO_PREFIX, photoUrl } from "../../lib/photos";
+  import { fetchPhotoFromAccount } from "../../scripts/photo-fetch";
 
   const params = new URLSearchParams(location.search);
   const editing = getNote(params.get("id") ?? "");
@@ -98,6 +100,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     element: editorBox,
     markdown: editing?.body ?? NOTE_TEMPLATE,
     labelledBy: "note-label",
+    resolveImage: (src) => photoUrl(src.slice(PHOTO_PREFIX.length), fetchPhotoFromAccount),
     onChange: changed,
   });
 
@@ -264,10 +267,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   .toolbar-slot[hidden] {
     display: none;
   }
+  /* The slot is what sticks; the toolbar just fills it (and floats over the
+     keyboard on a phone). */
   .toolbar {
-    position: relative;
-    top: var(--sticky-offset, 0px);
-    z-index: 6;
     background: var(--bg);
   }
   /* Floating above the keyboard, an open panel sits above the buttons. */
@@ -379,6 +381,28 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     border-color: var(--accent);
     background: var(--accent);
     color: var(--on-accent);
+  }
+  .panel :global(.panel-preview) {
+    max-width: 100%;
+    max-height: 30vh;
+    object-fit: contain;
+    align-self: flex-start;
+    border-radius: var(--radius-sm);
+  }
+  .panel :global(.panel-label) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .panel :global(.panel-note) {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .panel :global(.panel-action[aria-disabled="true"]) {
+    opacity: 0.5;
   }
   .panel :global(.panel-results) {
     display: flex;

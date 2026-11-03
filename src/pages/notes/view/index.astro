@@ -35,6 +35,7 @@ import NoteEventLookup from "../../../components/NoteEventLookup.astro";
 
 <script>
   import { renderNote } from "../../../scripts/note-markdown";
+  import { showNotePhotos } from "../../../scripts/show-note-photos";
   import { deleteNote, getNote } from "../../../lib/notes";
   import { noteEvent } from "../../../lib/note-events";
   import { formatDate, formatTime } from "../../../lib/time";
@@ -66,7 +67,9 @@ import NoteEventLookup from "../../../components/NoteEventLookup.astro";
       link.textContent = info.title;
       document.querySelector("[data-event-when]")!.textContent = `· ${info.when}`;
     }
-    document.querySelector("[data-body]")!.innerHTML = renderNote(note.body);
+    const bodyEl = document.querySelector<HTMLElement>("[data-body]")!;
+    bodyEl.innerHTML = renderNote(note.body);
+    showNotePhotos(bodyEl);
     document.querySelector<HTMLAnchorElement>("[data-edit]")!.href = `/notes/new/?id=${encodeURIComponent(id)}`;
   }
 

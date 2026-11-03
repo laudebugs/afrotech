@@ -84,8 +84,9 @@ export async function getPhoto(env: Env, user: SignedInUser, id: string): Promis
   return new Response(object.body, {
     headers: {
       "Content-Type": row.type,
-      // A photo never changes under its id, but it's private: this browser only.
-      "Cache-Control": "private, max-age=31536000, immutable",
+      // The device keeps its own copy (IndexedDB); a cached one could outlive
+      // a deletion, so the browser's cache keeps nothing.
+      "Cache-Control": "no-store",
       "X-Content-Type-Options": "nosniff",
       "Content-Security-Policy": "default-src 'none'",
     },

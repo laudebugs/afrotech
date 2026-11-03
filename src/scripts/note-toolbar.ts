@@ -4,6 +4,8 @@
 import type { Editor } from "@tiptap/core";
 import { allNoteEvents, noteEvent } from "../lib/note-events";
 import { formatTime } from "../lib/time";
+import { newPhotoId, savePhoto } from "../lib/photos";
+import { shrinkPhoto } from "../lib/shrink-photo";
 
 type PanelKind = "link" | "insert" | "table" | "sessions";
 
@@ -275,11 +277,88 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
           ])
           .run(),
       ),
+      action("Photo…", pickPhoto),
       action("Link to a session…", () => togglePanel("sessions", buttons.get("insert")!)),
       action("Table", () => void editor.chain().focus().insertTable({ rows: 3, cols: 2, withHeaderRow: true }).run()),
     );
     panel.append(title("Insert"), ...items);
     items[0]!.focus();
+  }
+
+  /** Opens the camera or photo library, then asks for alt text. */
+  function pickPhoto() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.addEventListener("change", () => {
+      const file = input.files?.[0];
+      if (file) void photoPanel(file);
+    });
+    input.click(); // still inside the tap, so browsers allow it
+  }
+
+  async function photoPanel(file: File) {
+    const insert = buttons.get("insert")!;
+    closePanel();
+    openFor = insert;
+    opened++;
+    insert.setAttribute("aria-expanded", "true");
+    panel.hidden = false;
+    const status = document.createElement("p");
+    status.className = "panel-note";
+    status.setAttribute("role", "status");
+    status.textContent = "Preparing the photo…";
+    panel.append(title("Photo"), status);
+    place();
+
+    let blob: Blob;
+    try {
+      blob = await shrinkPhoto(file);
+    } catch {
+      status.textContent = "This photo couldn't be opened here. Try a JPEG or PNG, or take the photo again.";
+      return;
+    }
+    if (openFor !== insert) return; // closed while shrinking
+    const preview = document.createElement("img");
+    preview.className = "panel-preview";
+    preview.alt = "";
+    preview.src = URL.createObjectURL(blob);
+    const label = document.createElement("label");
+    label.className = "panel-label";
+    label.textContent = "Describe the photo, for anyone who can't see it";
+    const alt = document.createElement("input");
+    alt.placeholder = "e.g. Slide: three steps to an AI policy";
+    alt.maxLength = 200;
+    label.append(alt);
+    const add = action("Add photo", () => {
+      // Brackets would end the Markdown's alt text early.
+      const text = alt.value.replace(/[[\]\s]+/g, " ").trim();
+      const id = newPhotoId();
+      void savePhoto({ id, blob, uploaded: false, addedAt: Date.now() });
+      editor.chain().focus().setImage({ src: `photo:${id}`, alt: text }).run();
+      URL.revokeObjectURL(preview.src);
+    }, "panel-action primary");
+    add.setAttribute("aria-disabled", "true");
+    alt.addEventListener("input", () => add.setAttribute("aria-disabled", String(!alt.value.trim())));
+    // Alt text is required: the button does nothing until there is some.
+    add.addEventListener("click", (e) => {
+      if (alt.value.trim()) return;
+      e.stopImmediatePropagation();
+      alt.focus();
+    }, { capture: true });
+    alt.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        add.click();
+      }
+    });
+    const row = document.createElement("div");
+    row.className = "panel-form";
+    row.append(add, action("Cancel", () => URL.revokeObjectURL(preview.src), "panel-action"));
+    status.textContent = `Ready: ${Math.round(blob.size / 1024)} KB.`;
+    panel.append(preview, label, row);
+    alt.focus();
+    place();
   }
 
   function tablePanel() {

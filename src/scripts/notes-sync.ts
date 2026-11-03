@@ -18,6 +18,7 @@ import {
 } from "../lib/notes";
 import { SIGNED_IN, getItem as get, setItem as set } from "../lib/storage";
 import { api } from "./api";
+import { sweepPhotos, syncPhotos } from "./photos-sync";
 import { accountId, forgetAccount } from "./whoami";
 
 /** The account this device's notes were first merged into. */
@@ -160,13 +161,19 @@ export function syncNotesNow(): Promise<boolean> {
     again = true;
     return running;
   }
-  running = run().finally(() => {
-    running = null;
-    if (again) {
-      again = false;
-      void syncNotesNow();
-    }
-  });
+  running = run()
+    .then((ok) => {
+      // Photos upload once their notes are on the server.
+      if (ok) void syncPhotos();
+      return ok;
+    })
+    .finally(() => {
+      running = null;
+      if (again) {
+        again = false;
+        void syncNotesNow();
+      }
+    });
   return running;
 }
 
@@ -203,3 +210,4 @@ document.addEventListener("visibilitychange", () => {
 });
 window.addEventListener("online", () => void syncNotesNow());
 void syncNotesNow();
+void sweepPhotos();

@@ -32,6 +32,7 @@ const SAMPLES: Record<string, string> = {
     "",
     "1. [x] stays a numbered item",
   ].join("\n"),
+  photos: ["Before the slide.", "", "![Slide: three steps to an AI policy](photo:0123456789abcdef)", "", "After."].join("\n"),
   everything: [
     "## Key takeaways",
     "",
@@ -84,5 +85,11 @@ test("checklists: bulleted items get boxes, numbered items keep their numbers", 
   assert.match(out, /<li class="task-item"><input type="checkbox" disabled> open<\/li>/);
   assert.match(out, /<input type="checkbox" disabled checked> done/);
   assert.match(out, /<ol><li>\[x\] numbered<\/li><\/ol>/);
+});
+
+test("photos render as data-photo images, never as a URL the browser loads", () => {
+  const out = renderNote("![A <b>slide</b>](photo:0123456789abcdef)");
+  assert.match(out, /<img class="note-photo" data-photo="0123456789abcdef" alt="A &lt;b&gt;slide&lt;\/b&gt;">/);
+  assert.doesNotMatch(out, /src=/);
 });
 

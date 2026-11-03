@@ -33,4 +33,16 @@ md.core.ruler.after("inline", "task-lists", (state) => {
   }
 });
 
+// Photos (plan 0006): ![alt](photo:<id>) has no URL a browser can load, so it
+// renders as <img data-photo="<id>">, and showNotePhotos() fills in the image.
+const defaultImage = md.renderer.rules.image!;
+md.renderer.rules.image = (tokens, i, options, env, self) => {
+  const token = tokens[i]!;
+  const src = token.attrGet("src") ?? "";
+  const id = /^photo:([\w-]{8,64})$/.exec(src)?.[1];
+  if (!id) return defaultImage(tokens, i, options, env, self);
+  const alt = md.utils.escapeHtml(self.renderInlineAsText(token.children ?? [], options, env));
+  return `<img class="note-photo" data-photo="${id}" alt="${alt}">`;
+};
+
 export const renderNote = (markdown: string) => md.render(markdown);
