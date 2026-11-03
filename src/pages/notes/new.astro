@@ -10,10 +10,10 @@ import NoteEventLookup from "../../components/NoteEventLookup.astro";
 import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
 ---
 
-<BaseLayout title="Write a note · AfroTech 2026 Planner" active="none">
+<BaseLayout title="Write a note · AfroTech 2026 Planner" active="plan">
   <div class="notes-page">
     <header class="page-head sticky-head">
-      <p class="back"><a href="/notes/">← My notes</a></p>
+      <p class="back"><a href="/notes/">← Notes</a></p>
       <h1 data-heading>Write a note</h1>
       <p class="muted small" data-about></p>
     </header>
@@ -52,7 +52,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       </div>
       <p class="muted small">
         Only you can see your notes. They save on this device as you type; sign in on
-        <a href="/plan/">My plan</a> to keep them on all your devices.
+        <a href="/notes/">Saved</a> to keep them on all your devices.
       </p>
     </form>
   </div>
