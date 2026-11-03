@@ -1,0 +1,47 @@
+---
+// A filter toggle. Renders as a link when given href (filters kept in the URL),
+// otherwise as a button.
+interface Props {
+  pressed?: boolean;
+  href?: string;
+  [key: `data-${string}`]: string | undefined;
+}
+const { pressed = false, href, ...rest } = Astro.props;
+---
+
+{
+  href ? (
+    <a class="chip" href={href} aria-current={pressed ? "true" : undefined} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button class="chip" type="button" aria-pressed={pressed ? "true" : "false"} {...rest}>
+      <slot />
+    </button>
+  )
+}
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background var(--ease), color var(--ease);
+  }
+  .chip[aria-pressed="true"],
+  .chip[aria-current="true"] {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+</style>

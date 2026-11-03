@@ -1,0 +1,176 @@
+---
+// Every component in both themes, with real events. Not linked from the tabs.
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Chip from "../components/Chip.astro";
+import Timeline from "../components/Timeline.astro";
+import TimelineRow from "../components/TimelineRow.astro";
+import EventCard from "../components/EventCard.astro";
+import NowMarker from "../components/NowMarker.astro";
+import TimeHeader from "../components/TimeHeader.astro";
+import BottomSheet from "../components/BottomSheet.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import { officialEvents } from "../lib/events";
+import { formatClock, formatTime, formatRange } from "../lib/time";
+
+// Sample sessions by title; if the schedule renames one, fall back to another
+// timed session so the build never fails over a sample.
+const timed = officialEvents.filter((e) => e.start && e.end && e.speakers.length);
+const pick = (title: string, fallback: number) =>
+  officialEvents.find((e) => e.start && e.title.startsWith(title)) ?? timed[fallback]!;
+const agentic = pick("The Battle of Agentic AI", 0);
+const hack = pick("How I’d Hack You", 1);
+const products = pick("Building Products Rooted in Real Community Needs", 2);
+const csuite = pick("The C-Suite Guide to Innovation", 3);
+
+const tokens = ["bg", "surface", "ink", "muted", "line", "accent", "on-accent", "live", "warn"];
+const themes = ["light", "dark"] as const;
+---
+
+<BaseLayout title="Design · AfroTech 2026 Planner" active="none">
+  <header class="page-head">
+    <h1>Design components</h1>
+    <ThemeToggle />
+  </header>
+  <p class="muted">
+    Every component from the design language, shown in Plum and Plum Night. The theme button switches
+    the rest of the site.
+  </p>
+
+  {
+    themes.map((theme) => (
+      <section class="theme" data-theme={theme} aria-labelledby={`h-${theme}`}>
+        <h2 id={`h-${theme}`}>{theme === "light" ? "Plum" : "Plum Night"}</h2>
+
+        <h3>Colour tokens</h3>
+        <ul class="swatches">
+          {tokens.map((t) => (
+            <li>
+              <span class="swatch" style={`background: var(--${t})`} />
+              <code>--{t}</code>
+            </li>
+          ))}
+        </ul>
+
+        <h3>Chips</h3>
+        <div class="chips">
+          <Chip pressed>Everything</Chip>
+          <Chip>My plan · 3</Chip>
+          <Chip>Side events</Chip>
+        </div>
+
+        <h3>Timeline</h3>
+        <Timeline label="Sample timeline">
+          <TimeHeader label="10 AM" />
+          <TimelineRow time={formatClock(agentic.start!)} inPlan>
+            <EventCard
+              event={agentic}
+              inPlan
+              progress={25}
+              clash={`In my plan · clashes with ${formatTime(products.start!)}`}
+            />
+          </TimelineRow>
+          <NowMarker label="11:00" />
+          <TimeHeader label="11 AM" />
+          <TimelineRow time={formatClock(hack.start!)}>
+            <EventCard event={hack} progress={3} />
+          </TimelineRow>
+          <TimelineRow time={formatClock(products.start!)} inPlan>
+            <EventCard event={products} inPlan />
+          </TimelineRow>
+          <TimelineRow time={formatClock(csuite.start!)}>
+            <EventCard event={csuite} />
+          </TimelineRow>
+        </Timeline>
+
+        <h3>Bottom sheet</h3>
+        <button class="open-sheet" type="button" data-open={`sheet-${theme}`}>
+          Open event details
+        </button>
+        <BottomSheet id={`sheet-${theme}`} label={products.title}>
+          <div data-theme={theme} class="sheet-sample">
+            <p class="muted">{formatRange(products.start!, products.end)} · {products.locationLabel}</p>
+            <h2>{products.title}</h2>
+            <p>{products.speakers.map((s) => s.name).join(", ")}</p>
+            <p>{products.description}</p>
+          </div>
+        </BottomSheet>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-open]").forEach((button) => {
+    button.addEventListener("click", () => {
+      document.querySelector<HTMLDialogElement>(`#${button.dataset.open}`)?.showModal();
+    });
+  });
+</script>
+
+<style>
+  .page-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    padding-top: var(--space-8);
+  }
+  h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+  .theme {
+    margin: var(--space-6) calc(var(--space-4) * -1);
+    padding: var(--space-4);
+    background: var(--bg);
+    color: var(--ink);
+    border-block: 1px solid var(--line);
+  }
+  .theme h2 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-xl);
+  }
+  .theme h3 {
+    margin: var(--space-6) 0 var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .swatches li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+  }
+  .swatch {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .open-sheet {
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .sheet-sample h2 {
+    font-size: var(--text-xl);
+  }
+</style>

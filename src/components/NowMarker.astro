@@ -1,0 +1,48 @@
+---
+// The green line across the rail at the current minute.
+interface Props {
+  label: string;
+  datetime?: string;
+}
+const { label, datetime } = Astro.props;
+---
+
+<div class="now" data-now-marker>
+  <time class="label" datetime={datetime}><span class="visually-hidden">Now, </span>{label}</time>
+  <span class="dot" aria-hidden="true"></span>
+  <span class="rule" aria-hidden="true"></span>
+</div>
+
+<style>
+  .now {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail-time) var(--rail-dot) minmax(0, 1fr);
+    align-items: center;
+    scroll-margin-top: 120px;
+  }
+  .label {
+    padding-right: 6px;
+    color: var(--live);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-align: right;
+  }
+  .dot {
+    justify-self: center;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--live);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .rule {
+    height: 2px;
+    background: var(--live);
+  }
+  @keyframes pulse {
+    50% {
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--live) 25%, transparent);
+    }
+  }
+</style>

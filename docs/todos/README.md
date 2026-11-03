@@ -23,7 +23,7 @@ short note on anything that changed from the plan.
 |---|------|-------|--------|
 | [001](001-scaffold-astro-cloudflare.md) | Scaffold Astro and deploy to Cloudflare | 0 | doing |
 | [002](002-normalise-event-data.md) | Normalise event data to one schema | 0 | done |
-| [003](003-design-tokens-and-layout.md) | Design tokens, base layout and tab bar | 0 | todo |
+| [003](003-design-tokens-and-layout.md) | Design tokens, base layout and tab bar | 0 | done |
 | [004](004-schedule-pages.md) | Schedule pages with filters and search | 1 | todo |
 | [005](005-my-plan.md) | My plan: star, clashes, .ics export, share link | 1 | todo |
 | [006](006-now-view.md) | Now view | 1 | todo |

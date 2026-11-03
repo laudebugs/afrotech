@@ -1,14 +1,18 @@
 ---
-import "../styles/tokens.css";
+import "../styles/global.css";
+import AppNav, { type Section } from "../components/AppNav.astro";
 
 interface Props {
   title: string;
   description?: string;
+  /** Which tab to highlight. */
+  active?: Section;
 }
 
 const {
   title,
   description = "Plan your AfroTech 2026 week: the official schedule, community side events and a map of the convention center.",
+  active = "none",
 } = Astro.props;
 ---
 
@@ -16,28 +20,58 @@ const {
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
+    <!-- Meta tags can't read CSS variables: these copy --bg from tokens.css. -->
+    <meta name="theme-color" content="#faf6f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#161015" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
+    <!-- Apply a saved theme before first paint, so dark mode never flashes light. -->
+    <script is:inline>
+      try {
+        const theme = JSON.parse(localStorage.getItem("afrotech:prefs") || "{}").theme;
+        if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
   </head>
   <body>
-    <slot />
+    <a class="skip-link" href="#main">Skip to content</a>
+    <AppNav active={active} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
   </body>
 </html>
 
-<style is:global>
-  * {
-    box-sizing: border-box;
+<style>
+  .skip-link {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: 50;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+    transform: translateY(-200%);
   }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font);
-    line-height: 1.5;
+  .skip-link:focus {
+    transform: none;
   }
-  a {
-    color: var(--accent);
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 var(--space-4) calc(var(--tabbar-height) + env(safe-area-inset-bottom) + var(--space-8));
+  }
+  main:focus {
+    outline: none;
+  }
+  @media (min-width: 1024px) {
+    main {
+      margin-left: max(88px + var(--space-8), calc((100vw - 720px) / 2));
+      padding-bottom: var(--space-12);
+    }
   }
 </style>
