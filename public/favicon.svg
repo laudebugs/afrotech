@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Favicons can't read the page's CSS, so these mirror --accent and --on-accent from src/styles/tokens.css. -->
+  <style>
+    .tile { fill: #7a2e5c; }
+    .label { fill: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .tile { fill: #e59ac4; }
+      .label { fill: #161015; }
+    }
+  </style>
+  <rect class="tile" width="32" height="32" rx="8"/>
+  <text class="label" x="16" y="22" font-family="system-ui, sans-serif" font-size="16" font-weight="600" text-anchor="middle">26</text>
+</svg>

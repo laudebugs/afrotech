@@ -1,0 +1,29 @@
+/* Design tokens from docs/design/design-language.md: Plum (light) and Plum Night (dark).
+   Todo 003 completes this file. */
+:root {
+  color-scheme: light dark;
+  --bg: #faf6f7;
+  --surface: #ffffff;
+  --ink: #23161d;
+  --muted: #66545d;
+  --line: #ecdfe4;
+  --accent: #7a2e5c;
+  --on-accent: #ffffff;
+  --live: #2b7a3b;
+  --warn: #8a5a00;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161015;
+    --surface: #201820;
+    --ink: #f4ecef;
+    --muted: #b3a2ab;
+    --line: #352a32;
+    --accent: #e59ac4;
+    --on-accent: #161015;
+    --live: #6ccb7f;
+    --warn: #e8b04a;
+  }
+}
