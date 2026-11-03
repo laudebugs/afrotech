@@ -1,7 +1,7 @@
 // Keeps every star, card and the tab badge in step with My plan, and marks
 // clashes between planned events on the page. Loaded on every page.
 import { readPlan, togglePlan, watchOtherTabs } from "../lib/plan";
-import { formatTime } from "../lib/time";
+import { eventEndMs, formatTime } from "../lib/time";
 
 const announcer = () => document.querySelector<HTMLElement>("[data-announce]");
 
@@ -37,8 +37,7 @@ export function markClashes() {
     .filter((r) => r.dataset.inPlan === "true")
     .map((r) => {
       const start = Date.parse(r.dataset.start!);
-      // No end time: assume an hour, as the calendar export does.
-      const end = r.dataset.end ? Date.parse(r.dataset.end) : start + 3600_000;
+      const end = eventEndMs(r.dataset.start!, r.dataset.end);
       const title = r.querySelector(".title")?.textContent?.trim() ?? "";
       return { row: r, start, end, title, startIso: r.dataset.start! };
     })

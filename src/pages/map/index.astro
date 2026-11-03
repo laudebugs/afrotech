@@ -1,18 +1,760 @@
 ---
+// The convention center map: three levels, rooms coloured by what's on today,
+// tap a room for its sessions. The "Today" list below covers the same rooms
+// for keyboard and screen-reader users, plus places that aren't on the map.
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import BottomSheet from "../../components/BottomSheet.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+import { allEvents, venues } from "../../lib/events";
+import { floorPlan } from "../../lib/floor-plan";
+import type { MapEvent, ScheduleEvent } from "../../lib/types";
+import level1 from "../../assets/maps/grb-level-1.svg?raw";
+import level2 from "../../assets/maps/grb-level-2.svg?raw";
+import level3 from "../../assets/maps/grb-level-3.svg?raw";
+
+const svgs: Record<string, string> = { "1": level1, "2": level2, "3": level3 };
+const levels = Object.entries(floorPlan.levels).map(([n, l]) => ({ n, title: l.title }));
+
+const toMapEvent = (e: ScheduleEvent): MapEvent => ({
+  id: e.id,
+  title: e.title,
+  start: e.start!,
+  end: e.end,
+  date: e.date,
+  place: e.locationLabel,
+});
+
+// Timed events by map area, and by off-map place (expo areas, lounges).
+const byArea: Record<string, MapEvent[]> = {};
+const offMap: Record<string, { label: string; note: string; events: MapEvent[] }> = {};
+for (const e of allEvents) {
+  const venue = e.locationKey ? venues[e.locationKey] : undefined;
+  if (!venue || !e.start) continue;
+  if (venue.areaId) (byArea[venue.areaId] ??= []).push(toMapEvent(e));
+  else if (venue.note && venue.kind !== "offsite") {
+    (offMap[e.locationKey!] ??= { label: venue.label, note: venue.note, events: [] }).events.push(toMapEvent(e));
+  }
+}
+// Venues whose spot inside their area is unknown (e.g. HealthStack rooms in the Marriott).
+const approxPlaces = Object.values(venues)
+  .filter((v) => v.areaId && v.approximate)
+  .map((v) => ({ areaId: v.areaId!, label: v.label }));
+
+const mapData = { areas: floorPlan.areas, byArea, offMap, approxPlaces };
+// Safe inside <script type="application/json">: "<" can't start a closing tag.
+const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
 ---
 
 <BaseLayout title="Map · AfroTech 2026 Planner" active="map">
-  <h1>Map</h1>
-  <p>
-    The convention center map arrives later this week. Until then, every event shows its room or
-    venue, and side events link to their RSVP page for directions.
-  </p>
+  <header class="page-head sticky-head">
+    <div class="title-row">
+      <h1>Map</h1>
+      <span class="muted" data-map-day></span>
+    </div>
+    <div class="levels" role="group" aria-label="Level">
+      {
+        levels.map((l) => (
+          <button type="button" class="chip" data-level-button={l.n} aria-pressed={l.n === "1" ? "true" : "false"}>
+            Level {l.n}<span class="count" data-level-live={l.n}></span>
+          </button>
+        ))
+      }
+    </div>
+  </header>
+
+  <section class="map" aria-label="Convention center map">
+    <div class="viewport" data-viewport>
+      <div class="stage" data-stage>
+        {
+          levels.map((l) => (
+            <div class="level" data-level={l.n} hidden={l.n !== "1"}>
+              <Fragment set:html={svgs[l.n]} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <div class="zoom" role="group" aria-label="Zoom">
+      <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+      <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
+      <button type="button" data-zoom="reset" aria-label="Fit the whole level">⤢</button>
+    </div>
+    <p class="legend muted">
+      <span class="key live"></span> live now
+      <span class="key today"></span> on today
+      <span class="key plan"></span> in my plan
+      <span class="key dashed"></span> approximate
+    </p>
+    <p class="hint muted">Drag to move, pinch or use + and − to zoom. Swipe outside the map to scroll.</p>
+  </section>
+
+  <section class="today-list" aria-labelledby="today-title">
+    <h2 id="today-title">Today</h2>
+    <ul data-today-list></ul>
+    <p class="muted" data-today-empty hidden>Nothing is on today.</p>
+  </section>
+
+  <BottomSheet id="area-sheet" label="Room details">
+    <div data-area-body></div>
+  </BottomSheet>
+
+  <SourcesFooter />
 </BaseLayout>
 
+<script is:inline type="application/json" id="map-data" set:html={json} />
+
+<script>
+  import Panzoom from "@panzoom/panzoom";
+  import { readPlan } from "../../lib/plan";
+  import { syncPlan } from "../../scripts/plan-ui";
+  import { dayKey, eventEndMs, everyMinute, formatDate, formatRange, previewNow } from "../../lib/time";
+  import type { MapArea, MapEvent } from "../../lib/types";
+
+  type MapData = {
+    areas: Record<string, MapArea>;
+    byArea: Record<string, MapEvent[]>;
+    offMap: Record<string, { label: string; note: string; events: MapEvent[] }>;
+    approxPlaces: { areaId: string; label: string }[];
+  };
+  const data: MapData = JSON.parse(document.getElementById("map-data")!.textContent!);
+
+  const isLive = (e: MapEvent, t: number) => Date.parse(e.start) <= t && t < eventEndMs(e.start, e.end);
+  /** "320" on the map; "Meeting Room 320" in words. */
+  const placeName = (area: MapArea) => (/^\d+$/.test(area.label) ? `Meeting Room ${area.label}` : area.label);
+
+  // --- Pan and zoom -------------------------------------------------------
+  const viewport = document.querySelector<HTMLElement>("[data-viewport]")!;
+  const stage = document.querySelector<HTMLElement>("[data-stage]")!;
+  // No "contain": rooms near an edge must be able to reach the middle; ⤢ resets.
+  const panzoom = Panzoom(stage, { maxScale: 6, minScale: 0.8, step: 0.4 });
+  // The wheel scrolls the page; ctrl/⌘ + wheel (and trackpad pinch) zooms the map.
+  viewport.addEventListener("wheel", (e) => {
+    if (e.ctrlKey || e.metaKey) panzoom.zoomWithWheel(e);
+  });
+  // Small labels appear once zoomed in enough to read them.
+  stage.addEventListener("panzoomchange", (e) => {
+    stage.toggleAttribute("data-zoomed", (e as CustomEvent<{ scale: number }>).detail.scale >= 1.6);
+  });
+  // Focus can scroll an overflow:hidden box; keep the box still and pan instead.
+  viewport.addEventListener("scroll", () => {
+    viewport.scrollTop = 0;
+    viewport.scrollLeft = 0;
+  });
+  document.querySelectorAll<HTMLButtonElement>("[data-zoom]").forEach((b) =>
+    b.addEventListener("click", () => {
+      if (b.dataset.zoom === "in") panzoom.zoomIn();
+      else if (b.dataset.zoom === "out") panzoom.zoomOut();
+      else panzoom.reset();
+    }),
+  );
+
+  // --- Levels -------------------------------------------------------------
+  function showLevel(n: string) {
+    document.querySelectorAll<HTMLElement>("[data-level]").forEach((l) => (l.hidden = l.dataset.level !== n));
+    document.querySelectorAll<HTMLButtonElement>("[data-level-button]").forEach((b) =>
+      b.setAttribute("aria-pressed", String(b.dataset.levelButton === n)),
+    );
+    panzoom.reset({ animate: false });
+  }
+  document.querySelectorAll<HTMLButtonElement>("[data-level-button]").forEach((b) =>
+    b.addEventListener("click", () => showLevel(b.dataset.levelButton!)),
+  );
+  const hasLevel = (n: string) => Boolean(document.querySelector(`[data-level="${n}"]`));
+
+  // --- Room states --------------------------------------------------------
+  const svgNS = "http://www.w3.org/2000/svg";
+  function render() {
+    const t = previewNow();
+    const today = dayKey(new Date(t));
+    const planned = new Set(readPlan());
+    document.querySelector("[data-map-day]")!.textContent = formatDate(new Date(t));
+    const liveByLevel: Record<string, number> = {};
+
+    document.querySelectorAll<SVGGElement>("g.area").forEach((g) => {
+      const id = g.dataset.area!;
+      const area = data.areas[id];
+      const events = (data.byArea[id] ?? []).filter((e) => e.date === today);
+      const live = events.filter((e) => isLive(e, t)).length;
+      g.toggleAttribute("data-quiet", events.length === 0);
+      g.toggleAttribute("data-today", events.length > 0);
+      g.toggleAttribute("data-live", live > 0);
+      g.toggleAttribute("data-in-plan", events.some((e) => planned.has(e.id)));
+      if (live) liveByLevel[area.level] = (liveByLevel[area.level] ?? 0) + live;
+      const parts = [placeName(area), live ? `${live} live now` : null, events.length ? `${events.length} today` : "nothing today"];
+      g.setAttribute("aria-label", parts.filter(Boolean).join(", "));
+
+      // A count badge, so "live" never relies on colour alone.
+      g.querySelector(".badge")?.remove();
+      if (live) {
+        const box = g.querySelector("rect")!.getBBox();
+        const badge = document.createElementNS(svgNS, "g");
+        badge.setAttribute("class", "badge");
+        badge.setAttribute("aria-hidden", "true");
+        const dot = document.createElementNS(svgNS, "circle");
+        dot.setAttribute("class", "pulse");
+        dot.setAttribute("cx", String(box.x + 16));
+        dot.setAttribute("cy", String(box.y + 18));
+        dot.setAttribute("r", "8");
+        const text = document.createElementNS(svgNS, "text");
+        text.setAttribute("x", String(box.x + 30));
+        text.setAttribute("y", String(box.y + 19));
+        text.setAttribute("dominant-baseline", "middle");
+        text.textContent = `${live} live`;
+        badge.append(dot, text);
+        g.append(badge);
+      }
+    });
+
+    document.querySelectorAll<HTMLElement>("[data-level-live]").forEach((c) => {
+      const n = liveByLevel[c.dataset.levelLive!];
+      c.textContent = n ? ` · ${n} live` : "";
+    });
+    renderTodayList(t, today);
+  }
+
+  // --- The "Today" list (also the keyboard and screen-reader path) --------
+  type Row =
+    | { kind: "area"; id: string; name: string; level: number; todays: MapEvent[]; live: MapEvent[] }
+    | { kind: "place"; name: string; note: string; todays: MapEvent[]; live: MapEvent[] };
+
+  // Rebuilt only when its content changes, so a focused button isn't destroyed.
+  let listKey = "";
+  function renderTodayList(t: number, today: string) {
+    const rows: Row[] = [];
+    for (const [id, events] of Object.entries(data.byArea)) {
+      const todays = events.filter((e) => e.date === today);
+      if (!todays.length) continue;
+      const area = data.areas[id];
+      rows.push({ kind: "area", id, name: placeName(area), level: area.level, todays, live: todays.filter((e) => isLive(e, t)) });
+    }
+    for (const place of Object.values(data.offMap)) {
+      const todays = place.events.filter((e) => e.date === today);
+      if (!todays.length) continue;
+      rows.push({ kind: "place", name: place.label, note: place.note, todays, live: todays.filter((e) => isLive(e, t)) });
+    }
+    // Live places first, then by name.
+    rows.sort((a, b) => Number(b.live.length > 0) - Number(a.live.length > 0) || a.name.localeCompare(b.name));
+
+    const key = JSON.stringify(rows.map((r) => [r.name, r.todays.length, r.live.map((e) => e.id)]));
+    if (key === listKey) return;
+    listKey = key;
+
+    const items = rows.map((r) => {
+      const li = document.createElement("li");
+      const summary = r.live.length
+        ? `${r.live.length} live: ${r.live.map((e) => e.title).join("; ")}`
+        : `${r.todays.length} today`;
+      if (r.kind === "area") {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "place";
+        button.dataset.openArea = r.id;
+        if (r.live.length) button.dataset.live = "";
+        const name = document.createElement("strong");
+        name.textContent = r.name;
+        const detail = document.createElement("span");
+        detail.className = "muted";
+        detail.textContent = ` · Level ${r.level} · ${summary}`;
+        button.append(name, detail);
+        li.append(button);
+      } else {
+        // No map spot: list the sessions (live ones, else today's) as links.
+        li.className = "off-map";
+        const head = document.createElement("p");
+        const name = document.createElement("strong");
+        name.textContent = r.name;
+        const note = document.createElement("span");
+        note.className = "muted";
+        note.textContent = ` ${r.note}`;
+        head.append(name, note);
+        const links = document.createElement("p");
+        (r.live.length ? r.live : r.todays).forEach((e, i) => {
+          const a = document.createElement("a");
+          a.href = `/event/${e.id}/`;
+          a.textContent = e.title;
+          if (i) links.append("; ");
+          links.append(a);
+        });
+        li.append(head, links);
+      }
+      return li;
+    });
+    document.querySelector<HTMLElement>("[data-today-list]")!.replaceChildren(...items);
+    document.querySelector<HTMLElement>("[data-today-empty]")!.hidden = items.length > 0;
+  }
+
+  // --- Room sheet ---------------------------------------------------------
+  const sheet = document.querySelector<HTMLDialogElement>("#area-sheet")!;
+  const body = sheet.querySelector<HTMLElement>("[data-area-body]")!;
+  const starIcon =
+    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3"/></svg>';
+
+  /** Marks one room selected; it stays marked after its sheet closes. */
+  function select(id: string) {
+    document.querySelectorAll("g.area[data-selected]").forEach((g) => g.removeAttribute("data-selected"));
+    document.getElementById(`area-${id}`)?.setAttribute("data-selected", "");
+  }
+
+  function openArea(id: string) {
+    const area = data.areas[id];
+    if (!area) return;
+    const t = previewNow();
+    const today = dayKey(new Date(t));
+    const all = (data.byArea[id] ?? []).slice().sort((a, b) => a.start.localeCompare(b.start));
+    // Today's sessions; on a quiet day, the next day this room has any.
+    const hasToday = all.some((e) => e.date === today);
+    const day = hasToday ? today : all.find((e) => e.date > today)?.date;
+    const shown = all.filter((e) => e.date === day);
+    select(id);
+
+    const frag = document.createElement("div");
+    frag.className = "area-sheet";
+    const h = document.createElement("h2");
+    h.textContent = placeName(area);
+    const sub = document.createElement("p");
+    sub.className = "muted";
+    const when = shown[0]
+      ? hasToday
+        ? ` · Today, ${formatDate(shown[0].start)}`
+        : ` · Next sessions: ${formatDate(shown[0].start)}`
+      : "";
+    sub.textContent = `Level ${area.level}${when}`;
+    frag.append(h, sub);
+
+    const notes = [
+      area.approximate ? "Its position on the map is approximate." : null,
+      ...data.approxPlaces.filter((p) => p.areaId === id).map((p) => `${p.label}: the exact room isn't published.`),
+    ].filter((n): n is string => Boolean(n));
+    for (const n of notes) {
+      const p = document.createElement("p");
+      p.className = "muted note";
+      p.textContent = n;
+      frag.append(p);
+    }
+
+    if (!shown.length) {
+      const p = document.createElement("p");
+      p.textContent = "No sessions listed here for the rest of the week.";
+      frag.append(p);
+    } else {
+      const ul = document.createElement("ul");
+      ul.className = "sessions";
+      for (const e of shown) {
+        const li = document.createElement("li");
+        const live = isLive(e, t);
+        if (live) li.dataset.live = "";
+        const text = document.createElement("div");
+        const time = document.createElement("p");
+        time.className = "muted";
+        time.textContent = `${formatRange(e.start, e.end)}${live ? " · live" : ""}${e.place !== area.label ? ` · ${e.place}` : ""}`;
+        const a = document.createElement("a");
+        a.href = `/event/${e.id}/`;
+        a.textContent = e.title;
+        text.append(time, a);
+        const star = document.createElement("button");
+        star.type = "button";
+        star.className = "star";
+        star.dataset.star = e.id;
+        star.dataset.title = e.title;
+        star.setAttribute("aria-label", `My plan: ${e.title}`);
+        star.innerHTML = starIcon;
+        li.append(text, star);
+        ul.append(li);
+      }
+      frag.append(ul);
+    }
+    body.replaceChildren(frag);
+    syncPlan(body); // set each star from My plan
+    if (!sheet.open) sheet.showModal();
+  }
+
+  /** Centres a room in the viewport at the given zoom. Panzoom scales around
+   *  the stage's centre (w/2, h/2), then translates by (tx, ty) unscaled pixels,
+   *  so a point p lands at centre + scale·(p − centre + t); this solves for t
+   *  and applies it as Panzoom's start view. */
+  function centreOn(id: string, scale: number) {
+    const rect = document.querySelector<SVGRectElement>(`#area-${id} rect`);
+    const svg = rect?.ownerSVGElement;
+    if (!rect || !svg) return;
+    const box = rect.getBBox();
+    const viewBox = svg.viewBox.baseVal;
+    const k = svg.clientWidth / viewBox.width; // px per map foot at scale 1
+    const cx = (box.x + box.width / 2 - viewBox.x) * k;
+    const cy = (box.y + box.height / 2 - viewBox.y) * k;
+    const w = stage.clientWidth;
+    const h = stage.clientHeight;
+    panzoom.setOptions({
+      startScale: scale,
+      startX: (viewport.clientWidth / 2 - w / 2) / scale + w / 2 - cx,
+      startY: (viewport.clientHeight / 2 - h / 2) / scale + h / 2 - cy,
+    });
+    panzoom.reset({ animate: false });
+    // ⤢ and level changes still show the whole level.
+    panzoom.setOptions({ startScale: 1, startX: 0, startY: 0 });
+  }
+
+  /** Shows a room's level and centres it, zoomed in to read. */
+  function focusArea(id: string) {
+    const area = data.areas[id];
+    const rect = document.querySelector<SVGRectElement>(`#area-${id} rect`);
+    const svg = rect?.ownerSVGElement;
+    if (!area || !rect || !svg) return;
+    showLevel(String(area.level));
+    const k = svg.clientWidth / svg.viewBox.baseVal.width;
+    centreOn(id, Math.min(3, Math.max(1.5, (viewport.clientWidth * 0.6) / (rect.getBBox().width * k))));
+  }
+
+  // Taps on rooms: ignore the end of a drag, so panning never opens a sheet.
+  let down: { x: number; y: number } | null = null;
+  stage.addEventListener("pointerdown", (e) => (down = { x: e.clientX, y: e.clientY }));
+  stage.addEventListener("click", (e) => {
+    const g = (e.target as Element).closest<SVGGElement>("g.area");
+    const moved = down ? Math.hypot(e.clientX - down.x, e.clientY - down.y) : 0;
+    if (!g || moved >= 8) return;
+    g.focus({ preventScroll: true }); // so focus returns here when the sheet closes
+    openArea(g.dataset.area!);
+  });
+  stage.addEventListener("keydown", (e) => {
+    const g = (e.target as Element).closest<SVGGElement>("g.area");
+    if (g && (e.key === "Enter" || e.key === " ")) {
+      e.preventDefault();
+      openArea(g.dataset.area!);
+    }
+  });
+  // Tabbing to a room that's off screen brings it into view.
+  stage.addEventListener("focusin", (e) => {
+    const g = (e.target as Element).closest<SVGGElement>("g.area");
+    if (!g) return;
+    const r = g.querySelector("rect")!.getBoundingClientRect();
+    const v = viewport.getBoundingClientRect();
+    const inView = r.left >= v.left && r.right <= v.right && r.top >= v.top && r.bottom <= v.bottom;
+    if (!inView) centreOn(g.dataset.area!, Math.max(1, panzoom.getScale()));
+  });
+  document.querySelector("[data-today-list]")!.addEventListener("click", (e) => {
+    const b = (e.target as Element).closest<HTMLButtonElement>("[data-open-area]");
+    if (!b) return;
+    focusArea(b.dataset.openArea!);
+    openArea(b.dataset.openArea!);
+  });
+
+  // --- Start --------------------------------------------------------------
+  everyMinute(render);
+  document.addEventListener("plan-change", () => render());
+  document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && render());
+  window.addEventListener("pageshow", (e) => e.persisted && render());
+
+  // /map/?area=room-310 (from "Show on map") opens at that room; ?level=3 at a level.
+  const params = new URLSearchParams(location.search);
+  const start = params.get("area");
+  const startLevel = params.get("level");
+  if (start && data.areas[start]) {
+    // Panzoom queues a setTimeout at setup that pans to its start position;
+    // queue after it, or that pan would undo this one.
+    setTimeout(() => {
+      focusArea(start);
+      openArea(start);
+    });
+  } else if (startLevel && hasLevel(startLevel)) {
+    showLevel(startLevel);
+  }
+</script>
+
 <style>
+  .title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
   h1 {
-    margin: var(--space-12) 0 var(--space-4);
+    margin: 0;
     font-size: var(--text-2xl);
+  }
+  .levels {
+    display: flex;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+  .chip[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+  .map {
+    position: relative;
+    margin-top: var(--space-3);
+  }
+  .viewport {
+    /* Leaves room above and below to swipe the page on a phone. */
+    height: min(55vh, 600px);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--bg);
+    touch-action: none;
+  }
+  .zoom {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .zoom button {
+    width: var(--tap);
+    height: var(--tap);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: var(--text-lg);
+    cursor: pointer;
+  }
+  .legend,
+  .hint {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-2);
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-xs);
+  }
+  .key {
+    display: inline-block;
+    width: 14px;
+    height: 10px;
+    border: 2px solid var(--muted);
+    border-radius: 2px;
+  }
+  .key.live {
+    border-color: var(--live);
+  }
+  .key.today {
+    border-color: var(--ink);
+  }
+  .key.plan {
+    border-color: var(--accent);
+  }
+  .key.dashed {
+    border-style: dashed;
+  }
+  .today-list h2 {
+    margin: var(--space-6) 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+  .today-list ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .today-list :global(.place) {
+    width: 100%;
+    min-height: var(--tap);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    text-align: left;
+    cursor: pointer;
+  }
+  .today-list :global(.place[data-live]) {
+    border-color: var(--live);
+  }
+  .today-list :global(.off-map) {
+    padding: var(--space-2) var(--space-3);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+  }
+  .today-list :global(.off-map p) {
+    margin: 0;
+  }
+</style>
+
+<style is:global>
+  /* The inline SVGs aren't scoped, so their styles live here, under .stage. */
+  .stage .level svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--font-sans);
+  }
+  .stage .base-outline {
+    fill: var(--surface);
+    stroke: var(--ink);
+    stroke-width: 3;
+  }
+  .stage .base-dock,
+  .stage .base-below,
+  .stage .base-bridge {
+    fill: var(--line);
+  }
+  .stage .label {
+    fill: var(--muted);
+  }
+  .stage .area {
+    cursor: pointer;
+    outline: none;
+  }
+  .stage .area rect {
+    stroke: var(--muted);
+    stroke-width: 1.5;
+    transition: stroke var(--ease), opacity var(--ease);
+  }
+  .stage .area--hall rect {
+    fill: var(--area-expo);
+  }
+  .stage .area--stage rect {
+    fill: var(--area-stage);
+  }
+  .stage .area--room rect,
+  .stage .area--balcony rect,
+  .stage .area--hotel rect {
+    fill: var(--area-room);
+  }
+  .stage .area--lobby rect {
+    fill: var(--area-lounge);
+  }
+  .stage .area--corridor rect {
+    fill: var(--surface);
+  }
+  .stage .area--outside rect {
+    fill: var(--area-outside);
+  }
+  .stage .area-label {
+    fill: var(--ink);
+    pointer-events: none;
+  }
+  /* Small labels wait until the map is zoomed in. */
+  .stage:not([data-zoomed]) .area-label.small {
+    display: none;
+  }
+  /* Quiet rooms fade; rooms with sessions today get a dark outline. */
+  .stage .area[data-quiet] rect {
+    opacity: 0.55;
+  }
+  .stage .area[data-quiet] .area-label {
+    fill: var(--muted);
+  }
+  .stage .area[data-today] rect {
+    stroke: var(--ink);
+    stroke-width: 3;
+  }
+  .stage .area[data-approximate] rect {
+    stroke-dasharray: 8 6;
+  }
+  .stage .area[data-in-plan] rect {
+    stroke: var(--accent);
+    stroke-width: 5;
+  }
+  .stage .area[data-live] rect {
+    stroke: var(--live);
+    stroke-width: 6;
+  }
+  /* Selected keeps its live or plan outline and gains a plum wash. */
+  .stage .area[data-selected] rect {
+    fill: color-mix(in srgb, var(--accent) 28%, var(--surface));
+    opacity: 1;
+  }
+  .stage .area:focus-visible rect {
+    stroke: var(--accent);
+    stroke-width: 8;
+  }
+  .stage .badge {
+    pointer-events: none;
+  }
+  .stage .badge text {
+    fill: var(--ink);
+    font-size: 30px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    paint-order: stroke;
+    stroke: var(--surface);
+    stroke-width: 6px;
+  }
+  .stage .badge .pulse {
+    fill: var(--live);
+    animation: map-pulse 2s ease-in-out infinite;
+  }
+  @keyframes map-pulse {
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  /* The room sheet. */
+  .area-sheet h2 {
+    margin: 0;
+    font-size: var(--text-xl);
+  }
+  .area-sheet .note {
+    margin: var(--space-1) 0 0;
+    font-size: var(--text-sm);
+  }
+  .area-sheet .sessions {
+    display: flex;
+    flex-direction: column;
+    margin: var(--space-3) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .area-sheet .sessions li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .area-sheet .sessions li[data-live] {
+    border-left: 3px solid var(--live);
+    padding-left: var(--space-2);
+  }
+  .area-sheet .sessions p {
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+  .area-sheet .sessions a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .area-sheet .star {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: var(--tap);
+    height: var(--tap);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .area-sheet .star[aria-pressed="true"] {
+    color: var(--accent);
+  }
+  .area-sheet .star[aria-pressed="true"] svg {
+    fill: currentColor;
   }
 </style>

@@ -30,7 +30,7 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers).
 | [005](005-my-plan.md) | My plan: star, clashes, .ics export, share link | 1 | done |
 | [006](006-now-view.md) | Now view | 1 | done |
 | [007](007-trace-floor-plan.md) | Trace GRB floor plan SVGs + venues mapping | 2 | done |
-| [008](008-interactive-floor-map.md) | Interactive floor map component | 2 | todo |
+| [008](008-interactive-floor-map.md) | Interactive floor map component | 2 | done |
 | [009](009-city-map.md) | Geocode side events + city map | 2 | todo |
 | [010](010-near-me.md) | Near me (geolocation + "I'm at…") | 3 | todo |
 | [011](011-notes-on-site.md) | Public notes: write in the browser, publish through GitHub | 1 | done |

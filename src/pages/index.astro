@@ -58,7 +58,7 @@ const timed = allEvents.filter((e) => e.start);
 
 <script>
   import { readPlan } from "../lib/plan";
-  import { dayKey, formatClock, formatDate, formatTime } from "../lib/time";
+  import { dayKey, eventEndMs, formatClock, formatDate, formatTime, previewNow } from "../lib/time";
 
   const HOUR = 3600_000;
   const head = document.querySelector<HTMLElement>("[data-days]")!;
@@ -73,17 +73,10 @@ const timed = allEvents.filter((e) => e.start);
 
   const span = rows.map((row) => {
     const start = Date.parse(row.dataset.start!);
-    // No end time: treat it as an hour long, as everywhere else on the site.
-    const end = row.dataset.end ? Date.parse(row.dataset.end) : start + HOUR;
-    return { row, start, end };
+    return { row, start, end: eventEndMs(row.dataset.start!, row.dataset.end) };
   });
 
-  // ?now=2026-11-04T11:00 previews any moment (handy for testing).
-  function now(): number {
-    const forced = new URLSearchParams(location.search).get("now");
-    const parsed = forced ? Date.parse(forced.length === 16 ? `${forced}:00-06:00` : forced) : NaN;
-    return Number.isNaN(parsed) ? Date.now() : parsed;
-  }
+  const now = previewNow;
 
   const show = () => new URLSearchParams(location.search).get("show") ?? "all";
 

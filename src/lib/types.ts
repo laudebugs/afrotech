@@ -90,6 +90,17 @@ export type FloorPlan = {
   areas: Record<string, MapArea>;
 };
 
+/** One timed event as the Map page needs it, grouped by map area. */
+export type MapEvent = {
+  id: string;
+  title: string;
+  start: string;
+  end: string | null;
+  date: string;
+  /** The place as the source wrote it, e.g. "Main Stage (Exhibit Hall E 1st Floor)". */
+  place: string;
+};
+
 export type VenueKind = "grb" | "marriott" | "outdoor" | "offsite" | "unplaced";
 
 export type Venue = {

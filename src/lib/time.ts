@@ -49,6 +49,30 @@ export const formatLongDate = (value: string | Date) => longDateFmt.format(asDat
 /** "2026-11-04": the Houston calendar day an instant falls on. */
 export const dayKey = (value: string | Date) => dayKeyFmt.format(asDate(value));
 
+/** Default length of an event with no end time, as in the calendar export. */
+export const DEFAULT_EVENT_MS = 3600_000;
+
+/** When an event ends, in ms: its end time, or an hour after it starts. */
+export const eventEndMs = (start: string, end: string | null | undefined) =>
+  end ? Date.parse(end) : Date.parse(start) + DEFAULT_EVENT_MS;
+
+/** "Now" in ms. `?now=2026-11-04T11:00` (Houston time) previews any moment,
+ *  for testing the Now and Map pages. */
+export function previewNow(): number {
+  const forced = new URLSearchParams(location.search).get("now");
+  const t = forced ? Date.parse(forced.length === 16 ? `${forced}:00-06:00` : forced) : NaN;
+  return Number.isNaN(t) ? Date.now() : t;
+}
+
+/** Calls fn now, then at the start of every minute. */
+export function everyMinute(fn: () => void): void {
+  fn();
+  setTimeout(() => {
+    fn();
+    setInterval(fn, 60_000);
+  }, 60_000 - (Date.now() % 60_000));
+}
+
 /** "10:45–11:45 AM" or "11:00 AM–12:00 PM": drops a repeated AM/PM. */
 export function formatRange(start: string, end: string | null): string {
   const a = formatTime(start);

@@ -169,7 +169,9 @@ def area_label(label, x, y, w, h, place=None):
     tall = h > w * 1.6
     room = (h if tall else w) / max(len(label), 3)
     size = max(12, min(30, room * 1.6))
-    return label_el(label, cx, cy, round(size), 90 if tall else 0, "area-label")
+    # Labels too small to read at full view hide until the map is zoomed in.
+    cls = "area-label small" if size < 18 else "area-label"
+    return label_el(label, cx, cy, round(size), 90 if tall else 0, cls)
 
 
 def areas_of(spec):
