@@ -22,7 +22,7 @@ const lookup = Object.fromEntries(
 ---
 
 <BaseLayout title="Write a note · AfroTech 2026 Planner" active="none">
-  <header class="page-head">
+  <header class="page-head sticky-head">
     <p class="back"><a href="/notes/">← Notes</a></p>
     <h1>Write a note</h1>
     <p class="muted" data-about>Pick a session from the schedule and tap “Write a note”.</p>
@@ -238,9 +238,6 @@ const lookup = Object.fromEntries(
 </script>
 
 <style>
-  .page-head {
-    padding-top: var(--space-2);
-  }
   .back a {
     display: inline-flex;
     align-items: center;

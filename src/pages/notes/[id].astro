@@ -21,7 +21,7 @@ const editUrl = `https://github.com/${NOTES_REPO.owner}/${NOTES_REPO.repo}/edit/
 ---
 
 <BaseLayout title={`${note.data.title} · Notes · AfroTech 2026 Planner`} active="none">
-  <p class="back"><a href="/notes/">← Notes</a></p>
+  <p class="back sticky-head"><a href="/notes/">← Notes</a></p>
   <article class="note">
     <header>
       <h1>{note.data.title}</h1>
@@ -43,7 +43,7 @@ const editUrl = `https://github.com/${NOTES_REPO.owner}/${NOTES_REPO.repo}/edit/
 
 <style>
   .back {
-    margin: var(--space-6) 0 var(--space-4);
+    margin-bottom: var(--space-4);
   }
   .back a,
   .edit a {

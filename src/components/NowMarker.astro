@@ -19,7 +19,7 @@ const { label, datetime } = Astro.props;
     display: grid;
     grid-template-columns: var(--rail-time) var(--rail-dot) minmax(0, 1fr);
     align-items: center;
-    scroll-margin-top: calc(var(--sticky-offset, 0px) + 48px);
+    scroll-margin-top: calc(var(--sticky-offset, 0px) + var(--space-12));
   }
   .label {
     padding-right: 6px;
