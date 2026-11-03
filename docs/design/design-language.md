@@ -2,8 +2,8 @@
 
 People will use this site standing in a hallway, phone in one hand, between
 sessions. They need an answer in a glance, often on weak Wi-Fi. So the design
-hangs every screen on a timeline, uses one plum accent and the phone's own
-fonts, and keeps touch targets generous. You chose this direction on November 3
+hangs every screen on a timeline, uses one plum accent and two IBM Plex
+typefaces, and keeps touch targets generous. You chose this direction on November 3
 from the options on the [design canvas](https://claude.ai/artifact/D2nw7f2nWWTyJEEzYwxKDz):
 layout A1 (Timeline) in the Plum palette, with Plum Night as its dark mode.
 
@@ -15,8 +15,8 @@ layout A1 (Timeline) in the Plum palette, with Plum Night as its dark mode.
    nothing decorative.
 4. **Content over chrome.** Borders and space separate things; shadows, cards
    and gradients stay out.
-5. **Light on the network.** System fonts, no images in lists, and every page
-   cached after the first visit.
+5. **Light on the network.** Four small self-hosted font files, no images in
+   lists, and every page cached after the first visit.
 
 ## Nine colour tokens cover Plum and Plum Night
 
@@ -48,13 +48,23 @@ gets a solid 2 px `--accent` stroke.
 The theme follows the device setting (`prefers-color-scheme`), and a toggle
 lets each device override it.
 
-## System fonts and tabular times keep text fast and aligned
+## IBM Plex Sans carries the text, and Plex Mono carries the times
 
-- **Family:** the system UI stack, `system-ui, -apple-system, "Segoe UI",
-  Roboto, sans-serif`, so no font files download.
-- **Times:** `font-variant-numeric: tabular-nums`, so columns of times line up.
+You chose IBM Plex on November 3. Sans reads cleanly at small sizes, and Mono
+gives every time and short label the same width, so the timeline's columns
+line up.
+
+- **Plex Sans** (`--font-sans`) for all text: weights 400 and 600.
+- **Plex Mono** (`--font-mono`) for times and short labels: rail times, hour
+  headers, the now marker, an event's date-and-time line, the day picker and
+  "Day 3 of 5". Weights 500 and 600; the `.mono` class applies it anywhere.
+- **Loading:** the fonts come from the `@fontsource` packages, Latin subset only
+  (about 75 KB in four `woff2` files), served from our own domain with
+  `font-display: swap`. The system UI stack shows while they load and for any
+  character outside the Latin subset.
+- **Times:** `font-variant-numeric: tabular-nums` on everything else, so numbers
+  in Sans line up too.
 - **Sizes** (rem, on a 16 px base): 0.75, 0.875, 1, 1.25, 1.5 and 2.
-- **Weights:** 400 for body text and 600 for titles and times.
 - **Titles:** two lines at most in lists, and in full on the detail page.
 
 ## Spacing, shape and motion stay small and consistent

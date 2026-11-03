@@ -11,6 +11,8 @@
     gap: var(--space-3);
   }
   .detail .when {
+    font-family: var(--font-mono);
+    font-weight: 500;
     margin: 0 0 var(--space-1);
     color: var(--muted);
     font-size: var(--text-sm);

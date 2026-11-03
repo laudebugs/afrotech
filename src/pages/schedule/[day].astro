@@ -28,7 +28,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   <header class="page-head sticky-head">
     <div class="title-row">
       <h1>{dateLabel}</h1>
-      <span class="muted">{dayLabel(day)}</span>
+      <span class="muted mono">{dayLabel(day)}</span>
     </div>
 
     <nav class="days" aria-label="Days">
@@ -263,6 +263,8 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     scrollbar-width: none;
   }
   .days a {
+    font-family: var(--font-mono);
+    font-weight: 500;
     flex: none;
     display: inline-flex;
     align-items: center;
