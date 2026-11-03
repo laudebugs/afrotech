@@ -33,6 +33,11 @@ python3 scripts/update_side_events.py   # side events → data/side-events.csv, 
 python3 scripts/build_events.py         # both → data/events/*.json and data/venues.json (the update scripts run it too)
 ```
 
+The update scripts refuse to write if a source returns nothing or the event
+count drops more than 20%; prefix with `ALLOW_SHRINK=1` to accept a real drop.
+A GitHub Action (`.github/workflows/refresh-data.yml`) runs them every two hours
+during the week.
+
 The site reads events through `src/lib/events.ts`; their type is
 `ScheduleEvent` in `src/lib/types.ts`, which must match `validate()` in
 `scripts/build_events.py`.

@@ -1,13 +1,13 @@
 # Refreshes the official schedule and side events every two hours during
-# AfroTech week, and commits any change. Cloudflare Workers Builds deploys the
-# commit. A broken source fails the run (GitHub emails the repo owner) and the
-# last good data stays in place.
+# AfroTech 2026 week, and commits any change to main. Cloudflare Workers Builds
+# deploys the commit. A broken source fails the run (GitHub emails whoever last
+# edited the schedule below) and the last good data stays in place.
 name: Refresh event data
 
 on:
   schedule:
-    # Every 2 hours, Nov 1–7 (UTC). The week runs Nov 2–6 in Houston.
-    - cron: "17 */2 1-7 11 *"
+    # Every 2 hours, Nov 1–8 UTC, which covers Nov 1–7 in Houston.
+    - cron: "17 */2 1-8 11 *"
   workflow_dispatch:
 
 permissions:
@@ -17,12 +17,35 @@ concurrency:
   group: refresh-data
   cancel-in-progress: false
 
+env:
+  # Everything the update scripts write.
+  DATA_PATHS: data schedule
+
 jobs:
+  # Cron has no year, so scheduled runs only go ahead during AfroTech 2026.
+  # Running by hand always goes ahead.
+  in-season:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.check.outputs.run }}
+    steps:
+      - id: check
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%Y)" = "2026" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Outside AfroTech 2026; nothing to do."
+          fi
+
   refresh:
+    needs: in-season
+    if: needs.in-season.outputs.run == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      # Always work on main, which is what Cloudflare deploys.
+      # Scheduled runs start from the default branch; always work on main,
+      # which is what Cloudflare deploys.
       - uses: actions/checkout@v4
         with:
           ref: main
@@ -31,44 +54,55 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Fetch the official schedule
-        run: python3 scripts/update_schedule.py
-
-      - name: Fetch side events
-        run: python3 scripts/update_side_events.py
-
-      - name: Stop if nothing changed
-        id: diff
-        run: |
-          if [ -z "$(git status --porcelain -- data schedule)" ]; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No changes to the event data."
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-            git status --short -- data schedule
-          fi
-
-      # Build the site before committing, so new data that breaks the build
-      # never reaches main.
       - uses: actions/setup-node@v4
-        if: steps.diff.outputs.changed == 'true'
         with:
           node-version-file: .node-version
           cache: npm
 
-      - name: Check the site still builds
-        if: steps.diff.outputs.changed == 'true'
-        run: |
-          npm ci
-          npm run build
+      # Each fetch runs even if the other fails. A failing script writes
+      # nothing, so a broken source never replaces good data.
+      - name: Fetch the official schedule
+        id: official
+        continue-on-error: true
+        run: python3 scripts/update_schedule.py
 
-      - name: Commit the new data
-        if: steps.diff.outputs.changed == 'true'
+      - name: Fetch side events
+        id: side
+        continue-on-error: true
+        run: python3 scripts/update_side_events.py
+
+      - name: Check for changes
+        id: changes
         run: |
+          # DATA_PATHS is split into its folders on purpose.
+          # shellcheck disable=SC2086
+          if [ -z "$(git status --porcelain -- $DATA_PATHS)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes to the event data."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git status --short -- $DATA_PATHS
+          fi
+
+      # Commit, catch up with main (a note may have landed meanwhile), then
+      # build that exact tree before pushing it.
+      - name: Commit, build and push
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          # shellcheck disable=SC2086
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data schedule
-          git commit -m "Refresh event data ($(TZ=America/Chicago date '+%a %b %-d, %-I:%M %p') Houston)"
-          # Someone may have pushed (a note, say) while this ran.
+          git add -- $DATA_PATHS
+          git commit -m "Refresh event data ($(TZ=America/Chicago date '+%a, %b %-d, %-I:%M %p') Houston)"
           git pull --rebase origin main
+          npm ci
+          npm run build
           git push origin HEAD:main
+
+      - name: Report a broken source
+        if: steps.official.outcome == 'failure' || steps.side.outcome == 'failure'
+        run: |
+          echo "official schedule: ${{ steps.official.outcome }}"
+          echo "side events: ${{ steps.side.outcome }}"
+          echo "::error::A source failed; its last good data was kept. See the step logs above."
+          exit 1
