@@ -22,6 +22,11 @@ const { speaker } = Astro.props;
 const sessions = sessionsOf(speaker);
 const role = [speaker.title, speaker.company].filter(Boolean).join(" · ");
 const paragraphs = speaker.bio?.split("\n\n") ?? [];
+const research = speaker.research;
+const links = research?.website
+  ? [...speaker.links, { kind: "website" as const, label: "Website", url: research.website }]
+  : speaker.links;
+const kindLabel = { article: "Article", talk: "Talk", podcast: "Podcast" } as const;
 // The full bio adds nothing when it's no longer than the brief.
 const hasMore = Boolean(speaker.bio && speaker.brief && speaker.bio.length > speaker.brief.length + 20);
 
@@ -70,14 +75,54 @@ const jsonLd = JSON.stringify({
   }
 
   {
-    speaker.links.length > 0 && (
+    links.length > 0 && (
       <ul class="links" aria-label="Links">
-        {speaker.links.map((l) => (
+        {links.map((l) => (
           <li>
             <a class="button" href={l.url} rel="noopener noreferrer">{l.label}</a>
           </li>
         ))}
       </ul>
+    )
+  }
+
+  {
+    research && (research.facts.length > 0 || research.articles.length > 0) && (
+      <section class="research" aria-labelledby="research-title">
+        <h2 id="research-title" class="mono">Community-compiled</h2>
+        <p class="muted note">
+          Gathered from public sources by the planner's editors, not supplied by the speaker. Each line links
+          to its source{research.checkedAt && <>; checked {research.checkedAt}</>}.
+        </p>
+        {research.facts.length > 0 && (
+          <>
+            <h3>Fun facts</h3>
+            <ul class="facts">
+              {research.facts.map((f) => (
+                <li>
+                  {f.text}{" "}
+                  <a href={f.url} rel="noopener noreferrer">{f.publisher ?? "Source"}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+        {research.articles.length > 0 && (
+          <>
+            <h3>Articles and talks</h3>
+            <ul class="articles">
+              {research.articles.map((a) => (
+                <li>
+                  <a href={a.url} rel="noopener noreferrer">{a.title}</a>
+                  <span class="muted">
+                    {[a.kind ? kindLabel[a.kind] : null, a.publisher, a.date].filter(Boolean).join(" · ")}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </section>
     )
   }
 
@@ -183,6 +228,33 @@ const jsonLd = JSON.stringify({
     color: var(--ink);
     font-weight: 600;
     text-decoration: none;
+  }
+  .research {
+    margin-top: var(--space-2);
+  }
+  .research .note {
+    margin: 0;
+    font-size: var(--text-xs);
+  }
+  .research h3 {
+    margin: var(--space-4) 0 var(--space-2);
+    font-size: var(--text-md);
+  }
+  .facts,
+  .articles {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding-left: var(--space-4);
+  }
+  .facts a,
+  .articles .muted {
+    font-size: var(--text-sm);
+  }
+  .articles li {
+    display: flex;
+    flex-direction: column;
   }
   .day {
     margin: var(--space-2) 0 0 calc(var(--rail-time) + var(--rail-dot) + var(--space-2));

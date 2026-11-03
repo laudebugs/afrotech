@@ -70,6 +70,7 @@ def official_kind(location):
 # ---- Speakers -------------------------------------------------------------
 
 SUPPRESSIONS = ROOT / "data/sources/speaker-suppressions.json"
+RESEARCH = ROOT / "data/sources/speaker-research.json"
 LINK_LABELS = {"linkedin": "LinkedIn", "twitter": "X", "facebook": "Facebook", "instagram": "Instagram"}
 HANDLE_HOSTS = {"twitter": "x.com", "instagram": "instagram.com", "facebook": "facebook.com", "linkedin": "linkedin.com/in"}
 BRIEF_MAX = 200
@@ -163,9 +164,44 @@ def load_suppressions():
     return {entry["id"] for entry in data.get("removed", [])}
 
 
+def approved_research(speaker_id, research):
+    """The approved, researched extras for one speaker, or None.
+
+    Only rows marked "approved" are published; drafts and rejected rows stay
+    in data/sources/speaker-research.json for review.
+    """
+    entry = research.get(speaker_id)
+    if not entry:
+        return None
+
+    def ok(row):
+        return row.get("status") == "approved" and str(row.get("url", "")).startswith("https://")
+
+    facts = [
+        {k: row.get(k) for k in ("text", "url", "publisher", "date")}
+        for row in entry.get("facts", []) if ok(row)
+    ][:3]
+    articles = [
+        {k: row.get(k) for k in ("title", "url", "publisher", "date", "kind")}
+        for row in entry.get("articles", []) if ok(row)
+    ][:3]
+    website = entry.get("website")
+    website = website["url"] if website and ok(website) else None
+    if not (facts or articles or website):
+        return None
+    return {"facts": facts, "articles": articles, "website": website, "checkedAt": entry.get("researchedAt")}
+
+
+def load_research():
+    if not RESEARCH.exists():
+        return {}
+    return json.loads(RESEARCH.read_text(encoding="utf-8")).get("speakers", {})
+
+
 def build_speakers(sessions):
     """One profile per speaker id, from the speaker records on each session."""
     suppressed = load_suppressions()
+    research = load_research()
     records, session_ids = {}, {}
     for s in sessions:
         for sp in s.get("speaker_list", []):
@@ -201,6 +237,7 @@ def build_speakers(sessions):
             "photoUrl": photo if photo and photo.startswith("https://") else None,
             "links": links,
             "sessionIds": session_ids[sid],
+            "research": approved_research(sid, research),
         })
     return speakers
 
@@ -215,6 +252,11 @@ def validate_speakers(speakers, events):
         assert all(i in event_ids for i in sp["sessionIds"]), f"unknown session for {sp['name']}"
         for link in sp["links"]:
             assert link["url"].startswith("https://"), f"unsafe link for {sp['name']}"
+        if sp["research"]:
+            r = sp["research"]
+            for row in r["facts"] + r["articles"]:
+                assert row["url"].startswith("https://"), f"unsafe research link for {sp['name']}"
+            assert all(f.get("text") for f in r["facts"]), f"empty fact for {sp['name']}"
 
 
 # ---- Events ---------------------------------------------------------------

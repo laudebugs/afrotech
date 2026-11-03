@@ -33,6 +33,23 @@ export type SpeakerProfile = {
   photoUrl: string | null;
   links: SpeakerLink[];
   sessionIds: string[];
+  /** Approved, researched extras (plan 0003, Phase B); null until reviewed. */
+  research: SpeakerResearch | null;
+};
+
+/** Community-compiled facts and articles, each with its source. */
+export type SpeakerResearch = {
+  facts: { text: string; url: string; publisher: string | null; date: string | null }[];
+  articles: {
+    title: string;
+    url: string;
+    publisher: string | null;
+    date: string | null;
+    kind: "article" | "talk" | "podcast" | null;
+  }[];
+  website: string | null;
+  /** When the research was done, "2026-11-03". */
+  checkedAt: string | null;
 };
 
 /** One event, official or side. Named ScheduleEvent to avoid the DOM's Event. */
