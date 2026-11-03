@@ -1,7 +1,8 @@
 // The site's only server code (plan 0002). Cloudflare sends /api/* here
 // (`run_worker_first` in wrangler.jsonc); every other request is a static file.
+import { deleteAccount, signIn, signOut, verifyGoogleToken, type AuthEnv } from "./auth";
 import { applyChanges, parseChanges, readItems } from "./plan";
-import { currentUser, type Env } from "./session";
+import { COOKIE, currentUser, readCookie } from "./session";
 
 const JSON_HEADERS = {
   "Content-Type": "application/json; charset=utf-8",
@@ -9,10 +10,10 @@ const JSON_HEADERS = {
   "X-Content-Type-Options": "nosniff",
 };
 
-export const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
+export const json = (body: unknown, status = 200, extra: Record<string, string> = {}) =>
+  new Response(JSON.stringify(body), { status, headers: { ...JSON_HEADERS, ...extra } });
 
-type Handler = (request: Request, env: Env, url: URL) => Promise<Response>;
+type Handler = (request: Request, env: AuthEnv, url: URL) => Promise<Response>;
 
 /**
  * Writes must come from our own pages: a same-origin Origin header and a JSON
@@ -31,6 +32,44 @@ const routes: Record<string, Handler> = {
     return json(
       user ? { signedIn: true, id: user.id, name: user.name, pictureUrl: user.pictureUrl } : { signedIn: false },
     );
+  },
+
+  /** Body: { credential } from Google's sign-in button. Sets the session cookie. */
+  "POST /api/auth/google": async (request, env, url) => {
+    if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
+    const ip = request.headers.get("CF-Connecting-IP") ?? "local";
+    const { success } = await env.SIGNIN_LIMITER.limit({ key: ip });
+    if (!success) return json({ error: "too many sign-in attempts; try again in a minute" }, 429);
+    let credential: unknown;
+    try {
+      credential = ((await request.json()) as { credential?: unknown }).credential;
+    } catch {
+      return json({ error: "body must be JSON" }, 400);
+    }
+    if (typeof credential !== "string" || credential.length > 4096) return json({ error: "missing credential" }, 400);
+    let claims;
+    try {
+      claims = await verifyGoogleToken(credential, env);
+    } catch {
+      return json({ error: "Google sign-in couldn't be verified" }, 401);
+    }
+    const { user, cookie } = await signIn(env, claims);
+    return json({ signedIn: true, id: user.id, name: user.name, pictureUrl: user.pictureUrl }, 200, { "Set-Cookie": cookie });
+  },
+
+  "POST /api/auth/signout": async (request, env, url) => {
+    if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
+    const cookie = await signOut(env, readCookie(request, COOKIE));
+    return json({ signedIn: false }, 200, { "Set-Cookie": cookie });
+  },
+
+  /** "Delete my data": the account, its sessions and its saved stars. */
+  "DELETE /api/me": async (request, env, url) => {
+    if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
+    const user = await currentUser(request, env);
+    if (!user) return json({ error: "sign in first" }, 401);
+    await deleteAccount(env, user.id);
+    return json({ deleted: true }, 200, { "Set-Cookie": await signOut(env, null) });
   },
 
   "GET /api/plan": async (request, env) => {
@@ -78,4 +117,4 @@ export default {
     // run_worker_first only sends /api/* here, but serve assets for anything else just in case.
     return env.ASSETS.fetch(request);
   },
-} satisfies ExportedHandler<Env>;
+} satisfies ExportedHandler<AuthEnv>;

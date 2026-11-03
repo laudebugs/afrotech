@@ -12,6 +12,14 @@
     "not_found_handling": "404-page",
     "run_worker_first": ["/api/*"]
   },
+  // Public by design: the browser needs it to show Google's sign-in button.
+  "vars": {
+    "GOOGLE_CLIENT_ID": "316564590500-t9tgifb1fhjool4mhfi6dp93pbug1n0j.apps.googleusercontent.com"
+  },
+  // At most 10 sign-in attempts per minute from one address.
+  "ratelimits": [
+    { "name": "SIGNIN_LIMITER", "namespace_id": "1001", "simple": { "limit": 10, "period": 60 } }
+  ],
   "d1_databases": [
     {
       "binding": "DB",

@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+---
+
+<BaseLayout title="Privacy · AfroTech 2026 Planner" active="none" description="What the AfroTech 2026 Planner stores, and how to delete it.">
+  <article class="privacy">
+    <h1>Privacy: you can use everything without signing in</h1>
+    <p>
+      The planner is a free, ad-free community site. Without an account, nothing about you leaves your
+      device: your plan, note drafts and theme live in your browser's storage.
+    </p>
+
+    <h2>If you sign in with Google</h2>
+    <p>Signing in is optional and only syncs your plan across your devices. We store:</p>
+    <ul>
+      <li>Your Google account id, email address, name and profile picture link, as Google provides them.</li>
+      <li>The events you've starred or unstarred, with the time of each change.</li>
+      <li>A session record so you stay signed in for 30 days. We keep only a scrambled form of the session key.</li>
+    </ul>
+    <p>
+      We don't store Google passwords or tokens, ask for any other Google data, sell or share anything, or use
+      ads or tracking cookies. Our only cookie is the session cookie that keeps you signed in. On My plan,
+      Google's sign-in button loads Google's own script, which may set a small cookie to remember your
+      sign-in choices; <a href="https://policies.google.com/privacy">Google's privacy policy</a> covers it.
+    </p>
+
+    <h2>Deleting your data</h2>
+    <p>
+      On <a href="/plan/">My plan</a>, tap <strong>Delete my data</strong>. Your account, sessions and saved
+      plan are deleted at once. The copy of your plan on your device stays until you clear it.
+    </p>
+
+    <h2>Your location</h2>
+    <p>
+      "Near me" uses your location only when you tap it, and only inside your browser. It is never sent to us.
+    </p>
+
+    <h2>Speaker profiles</h2>
+    <p>
+      Speaker bios, photos and links come from the official AfroTech schedule. Researched facts appear only
+      after review, each with its source. Speakers can ask for changes or removal by opening an issue on
+      <a href="https://github.com/laudebugs/afrotech/issues">GitHub</a>.
+    </p>
+
+    <h2>Who runs this</h2>
+    <p>
+      The planner is run by <a href="https://github.com/laudebugs">laudebugs</a>. It isn't affiliated with
+      AfroTech or Blavity. Questions go to <a href="https://github.com/laudebugs/afrotech/issues">GitHub issues</a>.
+    </p>
+  </article>
+  <SourcesFooter />
+</BaseLayout>
+
+<style>
+  .privacy {
+    padding-top: var(--space-6);
+  }
+  h1 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-2xl);
+  }
+  h2 {
+    margin: var(--space-6) 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+  li {
+    margin: var(--space-1) 0;
+  }
+</style>

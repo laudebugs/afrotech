@@ -1,10 +1,9 @@
 // Sessions: a random token in an HttpOnly cookie, stored only as a SHA-256 hash.
 export const COOKIE = "__Host-session";
 
-export type Env = {
-  ASSETS: Fetcher;
-  DB: D1Database;
-};
+// Env (the Worker's bindings) is generated from wrangler.jsonc by
+// `wrangler types` into worker-configuration.d.ts; `npm run types` refreshes it.
+export type WorkerEnv = Env;
 
 export type SignedInUser = { id: string; name: string | null; pictureUrl: string | null };
 

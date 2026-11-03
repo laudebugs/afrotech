@@ -111,6 +111,9 @@ The build also writes `dist/sw.js` (the offline service worker) from
   changes are new files in `worker/migrations/`, never edits to old ones, and
   only the production deploy applies them.
   Plain Astro components + small client scripts; ask before adding a UI framework.
-- **No sign-in.** Per-user state (My plan, note drafts) lives in `localStorage`.
-  Notes are public and publish by committing Markdown to `notes/` through GitHub.
+- **Sign-in is optional.** Everything works signed out, with My plan and note
+  drafts in `localStorage`. Signing in with Google only syncs My plan across
+  devices (`worker/auth.ts`, `worker/plan.ts`, `src/scripts/plan-sync.ts`);
+  signed-out visitors send no API requests. Notes are public and publish by
+  committing Markdown to `notes/` through GitHub.
 - **Location** data stays on the device; ask for it only on a user action.
