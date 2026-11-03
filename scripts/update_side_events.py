@@ -261,17 +261,19 @@ def main():
 
 
 def page_differences(events, pages):
-    """Where an event's own page disagrees with the lists, for a person to check (plan 0008)."""
-    _, diffs = build_events.apply_event_pages(events, pages)
-    if not diffs:
+    """What each event's own page changed, for a person to check (plan 0008)."""
+    _, changes = build_events.apply_event_pages(events, pages)
+    if not changes:
         return []
-    names = {"status": "Status", "date": "Date", "start": "Start time"}
-    out = ["", "## Event pages that disagree", "",
-           "Each event's own page was read for missing details. These rows differ from the",
-           "lists, which the site keeps; check the page and fix the list if it's out of date.", "",
+    names = {"status": "Status", "name": "Name", "date": "Date", "start": "Start", "end": "End",
+             "location": "Location"}
+    out = ["", "## Changes from event pages", "",
+           "Each side event was checked against its own page, and the site uses the page's",
+           "name, date, times and location. A page with no location removes ours. These rows",
+           "differ from the lists; the site shows the page's version (a status is shown here only).", "",
            "| Date | Event | What | List says | Page says |",
            "|------|-------|------|-----------|-----------|"]
-    for d in sorted(diffs, key=lambda d: (d["date"], d["title"])):
+    for d in sorted(changes, key=lambda d: (d["date"], d["title"], d["field"])):
         out.append(f"| {d['date']} | {link(cell(d['title']), d['url'])} | {names.get(d['field'], d['field'])} | "
                    f"{cell(d['list'])} | {cell(d['page'])} |")
     return out

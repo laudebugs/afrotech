@@ -57,3 +57,4 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plans 00
 | [032](032-directions-maps-app.md) | Directions open a maps app (plan 0008) | 5 | done |
 | [033](033-read-event-pages.md) | Read side-event pages (plan 0008) | 5 | done |
 | [034](034-merge-event-pages.md) | Merge event pages into events (plan 0008) | 5 | done |
+| [035](035-event-pages-win.md) | Event pages win on name, date, times and location (plan 0008) | 5 | done |
