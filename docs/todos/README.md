@@ -32,7 +32,7 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers).
 | [007](007-trace-floor-plan.md) | Trace GRB floor plan SVGs + venues mapping | 2 | done |
 | [008](008-interactive-floor-map.md) | Interactive floor map component | 2 | done |
 | [009](009-city-map.md) | Geocode side events + city map | 2 | done |
-| [010](010-near-me.md) | Near me (geolocation + "I'm at…") | 3 | todo |
+| [010](010-near-me.md) | Near me (geolocation + "I'm at…") | 3 | done |
 | [011](011-notes-on-site.md) | Public notes: write in the browser, publish through GitHub | 1 | done |
 | [012](012-auto-refresh-data.md) | Scheduled data refresh | 3 | done |
 | [013](013-offline-pwa.md) | Service worker: precache, per-request rules and offline page | 3 | done |
