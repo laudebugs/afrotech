@@ -97,6 +97,34 @@ class ReadEvent(unittest.TestCase):
         self.assertLessEqual(len(e["description"]), ee.MAX_DESCRIPTION + 1)
         self.assertTrue(e["description"].endswith("…"))
 
+    def test_own_event_wins_over_a_list_of_other_events(self):
+        listing = ('{"@type":"ItemList","itemListElement":[{"@type":"ListItem","item":'
+                   '{"@type":"Event","name":"Someone else","startDate":"2026-11-01T10:00:00-06:00"}}]}')
+        own = '{"@type":"Event","name":"This one","startDate":"2026-11-04T18:00:00-06:00"}'
+        self.assertEqual(ee.read_event(page(listing, own))["title"], "This one")
+        # With nothing else on the page, a listed event is still used.
+        self.assertEqual(ee.read_event(page(listing))["title"], "Someone else")
+
+    def test_date_only_start_is_kept_as_a_day(self):
+        e = ee.read_event(page('{"@type":"Event","name":"All day","startDate":"2026-11-04"}'))
+        self.assertNotIn("start", e)
+        self.assertEqual(e["startDay"], "2026-11-04")
+
+    def test_angle_brackets_in_plain_text_survive(self):
+        e = ee.read_event(page('{"@type":"Event","name":"x","startDate":"2026-11-02T12:00:00-06:00",'
+                               '"description":"Bring <your laptop> and <b>ideas</b>"}'))
+        self.assertEqual(e["description"], "Bring <your laptop> and ideas")
+
+
+class Cache(unittest.TestCase):
+    def test_stale_handles_missing_naive_and_bad_times(self):
+        now = ee.now_utc()
+        self.assertTrue(ee.stale({}, now))
+        self.assertTrue(ee.stale({"checkedAt": None}, now))
+        self.assertTrue(ee.stale({"checkedAt": "nonsense"}, now))
+        self.assertFalse(ee.stale({"checkedAt": now.replace(tzinfo=None).isoformat()}, now))
+        self.assertFalse(ee.stale({"checkedAt": now.isoformat()}, now))
+
 
 if __name__ == "__main__":
     unittest.main()

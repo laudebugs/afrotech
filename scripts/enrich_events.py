@@ -13,7 +13,8 @@ data/event-pages.json, keyed by URL. build_events.py (todo 034) uses it only
 to fill fields the community lists leave empty.
 
 Fetches go one at a time, a second apart, with no sign-in, and each page at
-most once a day. A page that fails to load keeps its last good result.
+most once a day, whether it loaded or not. A page that fails keeps its last
+good result. A run stops fetching after RUN_BUDGET and carries on next time.
 """
 import csv
 import html
@@ -31,6 +32,8 @@ OUT = "data/event-pages.json"
 SIDE_CSV = ROOT / "data/side-events.csv"
 FRESH_FOR = timedelta(days=1)
 PAUSE_SECONDS = 1.0
+FETCH_TIMEOUT = 20  # seconds per page
+RUN_BUDGET = timedelta(minutes=15)  # the refresh Action runs every two hours
 MAX_DESCRIPTION = 2000
 
 # Hosts whose pages carry no Event block worth reading: AfroTech's own partner
@@ -40,7 +43,8 @@ SKIP_HOSTS = {"afrotechconference.com", "www.afrotechconference.com", "forms.clo
 LD_JSON = re.compile(
     r"<script[^>]+type=[\"']application/ld\+json[\"'][^>]*>(.*?)</script>", re.I | re.S
 )
-TAG = re.compile(r"<[^>]+>")
+# Only real HTML tags, so text such as "Bring <your laptop>" keeps its words.
+TAG = re.compile(r"</?(?:p|br|div|span|b|strong|i|em|u|a|ul|ol|li|h[1-6]|blockquote|img)\b[^>]*>", re.I)
 
 
 # --- Reading a page ---------------------------------------------------------
@@ -69,19 +73,25 @@ def is_event(node):
     return any(isinstance(k, str) and k.endswith("Event") for k in kinds)
 
 
-def find_event(node):
-    """The first schema.org Event anywhere in a JSON-LD value, or None."""
+def find_event(node, lists=False):
+    """The first schema.org Event in a JSON-LD value, or None.
+
+    Pages put their own event at the top level, in @graph or as mainEntity;
+    lists such as "more events from this organiser" come only as a fallback
+    (lists=True), so another event's details are never taken for this one.
+    """
+    keys = ("@graph", "mainEntity") + (("itemListElement", "item") if lists else ())
     if isinstance(node, list):
         for item in node:
-            found = find_event(item)
+            found = find_event(item, lists)
             if found:
                 return found
     elif isinstance(node, dict):
         if is_event(node) and node.get("startDate"):
             return node
-        for key in ("@graph", "mainEntity", "itemListElement", "item", "subEvent"):
+        for key in keys:
             if key in node:
-                found = find_event(node[key])
+                found = find_event(node[key], lists)
                 if found:
                     return found
     return None
@@ -189,11 +199,9 @@ def status_of(event):
 
 def read_event(page):
     """What a page's Event block says, in our field names, or None."""
-    event = None
-    for block in json_ld_blocks(page):
-        event = find_event(block)
-        if event:
-            break
+    blocks = json_ld_blocks(page)
+    event = next((e for e in (find_event(b) for b in blocks) if e), None)
+    event = event or next((e for e in (find_event(b, lists=True) for b in blocks) if e), None)
     if not event:
         return None
     venue, address = address_of(event.get("location"))
@@ -203,6 +211,9 @@ def read_event(page):
     found = {
         "title": text_of(event.get("name")) or None,
         "start": houston_iso(event.get("startDate")),
+        # A date with no time (an all-day listing) is kept as just the date.
+        "startDay": str(event["startDate"])[:10] if not houston_iso(event.get("startDate")) and re.fullmatch(
+            r"\d{4}-\d{2}-\d{2}", str(event.get("startDate"))[:10]) else None,
         "end": houston_iso(event.get("endDate")),
         "venue": venue or None,
         "address": address or None,
@@ -234,10 +245,12 @@ def now_utc():
 
 def stale(entry, now):
     try:
-        read = datetime.fromisoformat(entry["checkedAt"])
+        checked = datetime.fromisoformat(entry["checkedAt"])
+        if checked.tzinfo is None:
+            checked = checked.replace(tzinfo=timezone.utc)
+        return now - checked >= FRESH_FOR
     except (KeyError, TypeError, ValueError):
         return True
-    return now - read >= FRESH_FOR
 
 
 def main(argv):
@@ -247,25 +260,33 @@ def main(argv):
     pages = cache.get("pages", {})
     now = now_utc()
     links = side_event_links()
-    tried = read = failed = 0
+    tried = read = failed = out_of_time = 0
 
     for url in links:
         host = urlparse(url).netloc.lower()
         entry = pages.get(url, {})
         if host in SKIP_HOSTS:
-            pages[url] = {"checkedAt": now.isoformat(), "skipped": "no event block expected on this site"}
+            if not entry.get("skipped"):  # written once, so the file doesn't change every run
+                pages[url] = {"checkedAt": now.isoformat(), "skipped": "no event block expected on this site"}
             continue
         if not force and not stale(entry, now):
+            continue
+        if now_utc() - now > RUN_BUDGET:
+            out_of_time += 1
             continue
         if tried:
             time.sleep(PAUSE_SECONDS)
         tried += 1
         try:
-            event = read_event(fetch(url))
+            event = read_event(fetch(url, timeout=FETCH_TIMEOUT))
         except (OSError, http.client.HTTPException, UnicodeDecodeError, ValueError) as err:
             failed += 1
-            # Keep the last good result; note the failure so it's retried next run.
-            pages[url] = {**entry, "checkedAt": entry.get("checkedAt"), "lastError": f"{now.isoformat()} {err}"}
+            # Keep the last good result, and wait a day before trying again.
+            pages[url] = {**entry, "checkedAt": now.isoformat(), "lastError": str(err)[:200]}
+            continue
+        except Exception as err:  # an odd page must not stop the run
+            failed += 1
+            pages[url] = {**entry, "checkedAt": now.isoformat(), "lastError": f"couldn't read the page: {err!r}"[:200]}
             continue
         read += 1
         pages[url] = {"checkedAt": now.isoformat(), "event": event} if event else {
@@ -274,11 +295,15 @@ def main(argv):
     # Pages no longer linked from the list drop out.
     pages = {u: pages[u] for u in links if u in pages}
     if tried and not read:
-        sys.exit(f"Read none of {tried} event pages (network down?); keeping {OUT} as it was.")
+        # Not an error for the refresh Action: the other sources still update.
+        print(f"Read none of {tried} event pages (network down, or the sites refuse scripts); "
+              f"keeping {OUT} as it was.", file=sys.stderr)
+        return
     write_text(OUT, json.dumps({"_about": __doc__.strip().splitlines()[0], "pages": pages}, indent=2,
                                ensure_ascii=False, sort_keys=True) + "\n")
     found = sum(1 for p in pages.values() if p.get("event"))
-    print(f"event pages: {len(links)} links, {tried} fetched, {failed} failed, {found} with an event block")
+    print(f"event pages: {len(links)} links, {tried} fetched, {failed} failed, {found} with an event block"
+          + (f", {out_of_time} left for the next run" if out_of_time else ""))
 
 
 if __name__ == "__main__":

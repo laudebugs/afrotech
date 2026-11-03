@@ -22,7 +22,16 @@ Built on November 3:
 - **Skipped sites:** afrotechconference.com links are skipped, since those
   rows already come from AfroTech's own listing, and so are form builders.
 - **Failures:** a page that fails keeps its last good result and is tried
-  again next run. If no page loads at all, the script writes nothing.
+  again a day later. If no page loads at all, the script writes nothing and
+  still exits cleanly, so the refresh Action carries on.
+- **Review fixes:**
+  - Pages are fetched at most once a day, even after a failure.
+  - Skipped sites are written once, so the file doesn't change every run.
+  - An odd page or bad saved data can't stop the run.
+  - A page's own event wins over lists of other events on it.
+  - A date-only start is kept as `startDay`.
+  - Tag-like text such as "<your laptop>" keeps its words.
+  - Each page gets 20 seconds, and each run 15 minutes.
 - **Tests:** `tests/test_enrich_events.py` runs on pages built to the shapes
   Eventbrite, Luma and posh.vip publish. They aren't saved copies, because
   this sandbox can't reach those sites.
