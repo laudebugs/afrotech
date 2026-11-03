@@ -93,9 +93,15 @@
   gap: var(--space-2);
   align-items: flex-start;
 }
+/* The box is small, but its label is a 44 px target around it. */
 .note-prose ul[data-type="taskList"] li > label {
   flex: none;
-  margin-top: 0.15em;
+  display: grid;
+  place-items: center;
+  width: var(--tap);
+  height: var(--tap);
+  margin: calc((1.55em - var(--tap)) / 2) 0 calc((1.55em - var(--tap)) / 2) calc(var(--space-2) * -1);
+  cursor: pointer;
 }
 .note-prose ul[data-type="taskList"] li > div {
   flex: 1;
@@ -103,7 +109,9 @@
 .note-prose li.task-item {
   list-style: none;
 }
-.note-prose li.task-item > input[type="checkbox"] {
+/* Tight lists put the box straight in the item; loose ones wrap it in a <p>. */
+.note-prose li.task-item > input[type="checkbox"],
+.note-prose li.task-item > p:first-child > input[type="checkbox"]:first-child {
   margin: 0 0.45em 0 -1.5em;
   vertical-align: -0.15em;
 }

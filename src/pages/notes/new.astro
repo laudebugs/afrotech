@@ -38,7 +38,8 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
           data-source
           hidden></textarea>
       </div>
-      <p class="muted small" aria-live="polite" data-saved></p>
+      <p class="muted small" data-saved></p>
+      <p class="small warn" role="alert" data-save-problem hidden></p>
       <div class="buttons">
         <button type="submit" class="button primary">Done</button>
         <button type="button" class="button" data-delete hidden>Delete note</button>
@@ -56,7 +57,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   import { MAX_BODY, NOTE_TEMPLATE, deleteNote, getNote, notesPersist, saveNote } from "../../lib/notes";
   import { noteEvent } from "../../lib/note-events";
   import { formatTime } from "../../lib/time";
-  import { createNoteEditor } from "../../scripts/note-editor";
+  import { countWords, createNoteEditor } from "../../scripts/note-editor";
 
   const params = new URLSearchParams(location.search);
   const editing = getNote(params.get("id") ?? "");
@@ -68,6 +69,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   const source = document.querySelector<HTMLTextAreaElement>("[data-source]")!;
   const sourceToggle = document.querySelector<HTMLButtonElement>("[data-source-toggle]")!;
   const saved = document.querySelector<HTMLElement>("[data-saved]")!;
+  const problem = document.querySelector<HTMLElement>("[data-save-problem]")!;
   const removeButton = document.querySelector<HTMLButtonElement>("[data-delete]")!;
 
   if (info) document.querySelector("[data-about]")!.textContent = `${info.title} · ${info.when} · ${info.place}`;
@@ -82,40 +84,44 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   titleInput.value = editing?.title ?? (info ? `Takeaways: ${info.title}` : "");
   removeButton.hidden = !noteId;
 
+  const editorBox = document.querySelector<HTMLElement>("[data-body-editor]")!;
   const body = createNoteEditor({
-    element: document.querySelector<HTMLElement>("[data-body-editor]")!,
+    element: editorBox,
     markdown: editing?.body ?? NOTE_TEMPLATE,
-    label: "Note",
+    labelledBy: "note-label",
     onChange: changed,
   });
 
-  // The Markdown view edits the raw text; switching back re-reads it.
+  // The Markdown view edits the raw text. Switching back re-reads it only if
+  // you changed it, so a look at the Markdown never rewrites the note.
   let showingSource = false;
+  let shownMarkdown = "";
   const bodyMarkdown = () => (showingSource ? source.value : body.getMarkdown());
   sourceToggle.addEventListener("click", () => {
     showingSource = !showingSource;
-    if (showingSource) source.value = body.getMarkdown();
-    else {
-      body.setMarkdown(source.value);
-      changed(); // save what the editor now holds
-    }
+    if (showingSource) source.value = shownMarkdown = body.getMarkdown();
+    else if (source.value !== shownMarkdown) body.setMarkdown(source.value);
     source.hidden = !showingSource;
-    body.editor.view.dom.closest<HTMLElement>("[data-body-editor]")!.hidden = showingSource;
+    editorBox.hidden = showingSource;
     sourceToggle.setAttribute("aria-pressed", String(showingSource));
-    (showingSource ? source : body.editor.view.dom).focus();
+    if (showingSource) source.focus();
+    else body.focus();
   });
 
+  // Both views count words in the text without Markdown syntax.
   const words = () => {
-    const n = showingSource ? source.value.split(/\s+/).filter(Boolean).length : body.words();
+    const n = countWords(showingSource ? source.value.replace(/[#>*_`~|[\]()-]+/g, " ") : body.getText());
     return `${n} ${n === 1 ? "word" : "words"}`;
   };
 
-  function save() {
+  /** Saves the note; false if it's too long to save. */
+  function save(): boolean {
     timer = 0;
     const markdown = bodyMarkdown();
+    problem.hidden = markdown.length <= MAX_BODY;
     if (markdown.length > MAX_BODY) {
-      saved.textContent = `This note is too long to save (${markdown.length.toLocaleString()} of ${MAX_BODY.toLocaleString()} characters). Shorten it to keep your changes.`;
-      return;
+      problem.textContent = `This note is too long to save (${markdown.length.toLocaleString()} of ${MAX_BODY.toLocaleString()} characters). Shorten it to keep your changes.`;
+      return false;
     }
     const note = saveNote({ id: noteId, eventId, title: titleInput.value, body: markdown });
     // A new note, or this one was deleted elsewhere and saved as a new note.
@@ -126,8 +132,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       history.replaceState(null, "", `/notes/new/?id=${encodeURIComponent(noteId)}`);
     }
     saved.textContent = notesPersist()
-      ? `Saved ${formatTime(new Date())} · ${words()}`
+      ? `Saved on this device at ${formatTime(new Date())} · ${words()}`
       : "This browser blocks saving; your note lasts only while this page is open.";
+    return true;
   }
 
   let timer = 0;
@@ -159,7 +166,8 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       location.href = eventId ? `/event/${eventId}/` : "/notes/";
       return;
     }
-    save();
+    // Too long: stay, with the message showing, rather than lose the changes.
+    if (!save()) return;
     location.href = `/notes/view/?id=${encodeURIComponent(noteId!)}`;
   });
 
@@ -236,6 +244,14 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     height: 0;
     color: var(--muted);
     pointer-events: none;
+  }
+  .warn {
+    margin: 0;
+    color: var(--warn);
+    font-weight: 600;
+  }
+  .warn[hidden] {
+    display: none;
   }
   .source {
     font-family: var(--font-mono);

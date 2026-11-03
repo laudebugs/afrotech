@@ -18,7 +18,10 @@ md.core.ruler.after("inline", "task-lists", (state) => {
   const tokens = state.tokens;
   for (let i = 2; i < tokens.length; i++) {
     const inline = tokens[i]!;
-    if (inline.type !== "inline" || tokens[i - 1]!.type !== "paragraph_open" || tokens[i - 2]!.type !== "list_item_open") continue;
+    const item = tokens[i - 2]!;
+    if (inline.type !== "inline" || tokens[i - 1]!.type !== "paragraph_open" || item.type !== "list_item_open") continue;
+    // Only bulleted items: "1. [x]" keeps its number and stays text.
+    if (item.markup === "." || item.markup === ")") continue;
     const match = /^\[([ xX])\](\s|$)/.exec(inline.content);
     const first = inline.children?.[0];
     if (!match || first?.type !== "text") continue;
@@ -26,15 +29,7 @@ md.core.ruler.after("inline", "task-lists", (state) => {
     const box = new state.Token("html_inline", "", 0);
     box.content = `<input type="checkbox" disabled${match[1] === " " ? "" : " checked"}> `;
     inline.children!.unshift(box);
-    tokens[i - 2]!.attrJoin("class", "task-item");
-    // Mark the enclosing list.
-    for (let j = i - 3; j >= 0; j--) {
-      const t = tokens[j]!;
-      if (t.type === "bullet_list_open" && t.level === tokens[i - 2]!.level - 1) {
-        if (!t.attrGet("class")?.includes("task-list")) t.attrJoin("class", "task-list");
-        break;
-      }
-    }
+    item.attrJoin("class", "task-item");
   }
 });
 

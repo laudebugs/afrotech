@@ -16,6 +16,22 @@ const html = (markdown: string) =>
 
 const SAMPLES: Record<string, string> = {
   template: NOTE_TEMPLATE,
+  "more blocks": [
+    "# Top heading",
+    "",
+    "### Small heading",
+    "",
+    "```js",
+    "const answer = 42;",
+    "```",
+    "",
+    "- [ ] Parent task",
+    "  - [x] Child task",
+    "",
+    "Use a > b and 1 < 2 in text.",
+    "",
+    "1. [x] stays a numbered item",
+  ].join("\n"),
   everything: [
     "## Key takeaways",
     "",
@@ -62,3 +78,11 @@ for (const [name, markdown] of Object.entries(SAMPLES)) {
     assert.equal(roundTrip(once), once);
   });
 }
+
+test("checklists: bulleted items get boxes, numbered items keep their numbers", () => {
+  const out = html("- [ ] open\n- [x] done\n\n1. [x] numbered");
+  assert.match(out, /<li class="task-item"><input type="checkbox" disabled> open<\/li>/);
+  assert.match(out, /<input type="checkbox" disabled checked> done/);
+  assert.match(out, /<ol><li>\[x\] numbered<\/li><\/ol>/);
+});
+
