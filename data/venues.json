@@ -54,8 +54,11 @@
     "label": "AFER HTX"
   },
   "afrotech-authors-pavilion-presented-by-penguin-random-house": {
+    "approximate": true,
     "kind": "grb",
-    "label": "AfroTech Authors Pavilion Presented by Penguin Random House"
+    "label": "AfroTech Authors Pavilion Presented by Penguin Random House",
+    "level": 1,
+    "note": "In the exhibit halls; AfroTech hasn't published where."
   },
   "almost-famous": {
     "address": "807 West 19th Street 77008, Houston, TX",
@@ -88,8 +91,10 @@
     "label": "Axelrad Beer Garden"
   },
   "balconies-c-avenida-balcony": {
+    "areaId": "avenida-balcony",
     "kind": "grb",
-    "label": "Balconies C - Avenida Balcony"
+    "label": "Balconies C - Avenida Balcony",
+    "level": 2
   },
   "bald-kitty": {
     "address": "1113 Providence, Houston, TX 77002",
@@ -130,12 +135,16 @@
     "label": "CIEL Restaurant & Lounge"
   },
   "coca-cola-lounge": {
+    "approximate": true,
     "kind": "grb",
-    "label": "Coca-Cola Lounge"
+    "label": "Coca-Cola Lounge",
+    "note": "Inside the convention center; AfroTech hasn't published where."
   },
   "connect-lounge": {
+    "approximate": true,
     "kind": "grb",
-    "label": "Connect Lounge"
+    "label": "Connect Lounge",
+    "note": "Inside the convention center; AfroTech hasn't published where."
   },
   "dch": {
     "address": "1203 Cravens Road, Stafford, TX 77477",
@@ -149,8 +158,10 @@
   },
   "discovery-green": {
     "address": "1500 McKinney St, Houston, TX 77010, USA",
+    "areaId": "discovery-green",
     "kind": "outdoor",
-    "label": "Discovery Green"
+    "label": "Discovery Green",
+    "level": 1
   },
   "discovery-green-afrotech": {
     "address": "1500 McKinney St, Houston, TX 77010, USA",
@@ -164,7 +175,7 @@
   },
   "downtown-houston-near-the-george-r-brown-convention-center": {
     "address": "Exact address shared with approved guests.",
-    "kind": "grb",
+    "kind": "offsite",
     "label": "Downtown Houston (near the George R. Brown Convention Center)"
   },
   "eldorado-ballroom": {
@@ -173,24 +184,37 @@
     "label": "Eldorado Ballroom"
   },
   "executive-lounge": {
+    "approximate": true,
     "kind": "grb",
-    "label": "Executive Lounge"
+    "label": "Executive Lounge",
+    "note": "Inside the convention center; AfroTech hasn't published where."
   },
   "exhibit-hall-e-1st-floor": {
+    "areaId": "hall-e",
     "kind": "grb",
-    "label": "Exhibit Hall E (1st Floor)"
+    "label": "Exhibit Hall E (1st Floor)",
+    "level": 1
   },
   "expo-hall": {
+    "approximate": true,
     "kind": "grb",
-    "label": "Expo Hall"
+    "label": "Expo Hall",
+    "level": 1,
+    "note": "In the exhibit halls; AfroTech hasn't published where."
   },
   "expo-hall-book-nook": {
+    "approximate": true,
     "kind": "grb",
-    "label": "Expo Hall / Book Nook"
+    "label": "Expo Hall / Book Nook",
+    "level": 1,
+    "note": "In the exhibit halls; AfroTech hasn't published where."
   },
   "expo-hall-the-yard": {
+    "approximate": true,
     "kind": "grb",
-    "label": "Expo Hall / The Yard"
+    "label": "Expo Hall / The Yard",
+    "level": 1,
+    "note": "In the exhibit halls; AfroTech hasn't published where."
   },
   "fairfax": {
     "address": "81 Drew St, Houston TX",
@@ -208,36 +232,50 @@
     "label": "Forme HTX"
   },
   "founders-pavillion": {
+    "approximate": true,
     "kind": "grb",
-    "label": "Founders Pavillion"
+    "label": "Founders Pavillion",
+    "level": 1,
+    "note": "In the exhibit halls; AfroTech hasn't published where."
   },
   "george-r-brown-convention-center": {
     "address": "1001 Avenida De Las Americas, Houston, TX 77010",
     "kind": "grb",
-    "label": "George R. Brown Convention Center"
+    "label": "George R. Brown Convention Center",
+    "note": "Somewhere in the convention center; the listing doesn't say where."
   },
   "george-r-brown-convention-center-balconies-c-avenida-balcony": {
     "address": "1001 Avenida De Las Americas, Houston, TX 77010",
+    "areaId": "avenida-balcony",
     "kind": "grb",
-    "label": "George R. Brown Convention Center — Balconies C, Avenida Balcony"
+    "label": "George R. Brown Convention Center — Balconies C, Avenida Balcony",
+    "level": 2
   },
   "george-r-brown-convention-center-exhibit-hall-e-1st-floor": {
     "address": "1001 Avenida De Las Americas, Houston, TX 77010",
+    "areaId": "hall-e",
     "kind": "grb",
-    "label": "George R. Brown Convention Center — Exhibit Hall E (1st Floor)"
+    "label": "George R. Brown Convention Center — Exhibit Hall E (1st Floor)",
+    "level": 1
   },
   "george-r-brown-convention-center-meeting-room-310": {
     "address": "1001 Avenida De Las Americas, Houston, TX 77010",
+    "areaId": "room-310",
     "kind": "grb",
-    "label": "George R. Brown Convention Center — Meeting Room 310"
+    "label": "George R. Brown Convention Center — Meeting Room 310",
+    "level": 3
   },
   "grand-ballroom-a": {
+    "areaId": "ballroom-a",
     "kind": "grb",
-    "label": "Grand Ballroom A"
+    "label": "Grand Ballroom A",
+    "level": 3
   },
   "grand-ballroom-c": {
+    "areaId": "ballroom-c",
     "kind": "grb",
-    "label": "Grand Ballroom C"
+    "label": "Grand Ballroom C",
+    "level": 3
   },
   "grb-avenida-balcony": {
     "address": "1001 Avenida de las Americas, Houston, TX 77010",
@@ -275,16 +313,25 @@
     "label": "Harold’s Chicken Sports Bar"
   },
   "healthstack-general-session-marriott": {
+    "approximate": true,
+    "areaId": "marriott",
     "kind": "marriott",
-    "label": "HealthStack General Session (Marriott)"
+    "label": "HealthStack General Session (Marriott)",
+    "level": 1
   },
   "healthstack-pavillion": {
+    "approximate": true,
     "kind": "grb",
-    "label": "HealthStack Pavillion"
+    "label": "HealthStack Pavillion",
+    "level": 1,
+    "note": "In the exhibit halls; AfroTech hasn't published where."
   },
   "healthstack-seminar-room-marriott": {
+    "approximate": true,
+    "areaId": "marriott",
     "kind": "marriott",
-    "label": "HealthStack Seminar Room (Marriott)"
+    "label": "HealthStack Seminar Room (Marriott)",
+    "level": 1
   },
   "heights-house-hotel": {
     "address": "100 W Cavalcade St, Houston, TX",
@@ -394,16 +441,22 @@
     "label": "LOV3 HOUSTON"
   },
   "main-stage-exhibit-hall-e-1st-floor": {
+    "areaId": "hall-e",
     "kind": "grb",
-    "label": "Main Stage (Exhibit Hall E 1st Floor)"
+    "label": "Main Stage (Exhibit Hall E 1st Floor)",
+    "level": 1
   },
   "meeting-room-310": {
+    "areaId": "room-310",
     "kind": "grb",
-    "label": "Meeting Room 310"
+    "label": "Meeting Room 310",
+    "level": 3
   },
   "meeting-room-320": {
+    "areaId": "room-320",
     "kind": "grb",
-    "label": "Meeting Room 320"
+    "label": "Meeting Room 320",
+    "level": 3
   },
   "mo-brunch-brews": {
     "address": "1201 Southmore Blvd Houston, TX 77004",
@@ -481,8 +534,10 @@
     "label": "Private venue — confirmed guests only"
   },
   "product-innovation-stage-exhibit-hall-c-d-1st-floor": {
+    "areaId": "halls-c-d",
     "kind": "grb",
-    "label": "Product & Innovation Stage (Exhibit Hall C&D (1st Floor))"
+    "label": "Product & Innovation Stage (Exhibit Hall C&D (1st Floor))",
+    "level": 1
   },
   "project-row-houses": {
     "address": "2521 Holman Street, Houston, TX 77004",
@@ -515,8 +570,10 @@
     "label": "Red Oak Ballroom - Houston"
   },
   "registration-grand-lobby": {
+    "areaId": "grand-lobby",
     "kind": "grb",
-    "label": "Registration - Grand Lobby"
+    "label": "Registration - Grand Lobby",
+    "level": 1
   },
   "reserve-101": {
     "address": "1201 Caroline St",
@@ -594,8 +651,11 @@
     "label": "Skylab Social"
   },
   "smart-cities-pavillion": {
+    "approximate": true,
     "kind": "grb",
-    "label": "Smart Cities Pavillion"
+    "label": "Smart Cities Pavillion",
+    "level": 1,
+    "note": "In the exhibit halls; AfroTech hasn't published where."
   },
   "sophie-cocktail-terrace-bar": {
     "address": "910 Westheimer Rd, Houston, TX 77006",
@@ -674,8 +734,11 @@
   },
   "the-grove": {
     "address": "1611 Lamar St, Houston, TX 77010, USA",
+    "approximate": true,
+    "areaId": "the-grove",
     "kind": "outdoor",
-    "label": "The Grove"
+    "label": "The Grove",
+    "level": 1
   },
   "the-ion": {
     "address": "4201 Main St, Houston, TX 77002",

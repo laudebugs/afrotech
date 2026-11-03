@@ -7,7 +7,8 @@ The shape matches the `ScheduleEvent` type in src/lib/types.ts.
 
 data/venues.json is partly hand-maintained: this script only adds places it
 hasn't seen and refreshes their label, kind and address. Fields added later
-by hand or by other scripts (level, areaId, lat, lng) are kept.
+by hand or by other scripts (level, areaId, approximate, note, lat, lng) are
+kept.
 """
 import csv
 import hashlib
@@ -23,6 +24,8 @@ MARRIOTT = "(Marriott)"
 OUTDOOR = {"Discovery Green", "The Grove"}
 UNPLACED = {"Private", "Partner Events", "Naming Rights Events", "Blavity House Party Events"}
 VENUE_KINDS = {"grb", "marriott", "outdoor", "offsite", "unplaced"}
+# Places at the conference site, which belong on the floor plan.
+ON_SITE_KINDS = {"grb", "marriott", "outdoor"}
 
 
 def slug(text):
@@ -127,7 +130,9 @@ def side_events(rows, venues):
         label = r["venue"].strip() or address
         key = side_venue_key(label, address, venues) if label else None
         if key:
-            at_grb = "george r. brown" in f"{r['venue']} {address}".lower()
+            where = f"{r['venue']} {address}".lower()
+            # "Downtown Houston, near the George R. Brown…" is not inside it.
+            at_grb = "george r. brown" in where and "near the george r. brown" not in where
             entry = venues.setdefault(key, {})
             # Official places (Discovery Green, the GRB) keep their own label and kind,
             # and the first address seen for a venue sticks.
@@ -189,8 +194,22 @@ def validate(events, venues):
         assert isinstance(e["founderInvestorPick"], bool), where
         for k in ("categories", "speakers", "ticketLevels", "sources"):
             assert isinstance(e[k], list), f"{k}: {where}"
+    plan_path = ROOT / "data/floor-plan.json"
+    assert plan_path.exists(), "data/floor-plan.json is missing; run scripts/build_floor_plan.py"
+    areas = json.loads(plan_path.read_text(encoding="utf-8"))["areas"]
     for key, v in venues.items():
         assert v.get("label") and v.get("kind") in VENUE_KINDS, f"bad venue {key}"
+        if v.get("areaId"):
+            area = areas.get(v["areaId"])
+            assert area, f"venue {key} points at unknown map area {v['areaId']}"
+            assert v.get("level") == area["level"], (
+                f"venue {key} says level {v.get('level')}, but area {v['areaId']} is on level {area['level']}"
+            )
+    # New on-site places need a map spot or a note in data/venues.json; warn
+    # rather than fail, so a new room in a source can't stop the refresh.
+    unmapped = [k for k, v in venues.items() if v["kind"] in ON_SITE_KINDS and not v.get("areaId") and not v.get("note")]
+    if unmapped:
+        print(f"Note: {len(unmapped)} on-site venue(s) have no map area or note yet: {', '.join(unmapped)}")
 
 
 def sort_key(e):
