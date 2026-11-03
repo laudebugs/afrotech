@@ -1,0 +1,754 @@
+{
+  "10-mins-from-convention-center-exact-location-shared-to-appr": {
+    "kind": "offsite",
+    "label": "10 mins from Convention Center (exact location shared to approved registrants)"
+  },
+  "1401-commerce-st-buffalo-bayou-trail-entrance": {
+    "address": "1401 Commerce St, Houston, TX 77002, USA",
+    "kind": "offsite",
+    "label": "1401 Commerce St / Buffalo Bayou trail entrance"
+  },
+  "1954-1st-ave": {
+    "address": "1954 1ST AVE",
+    "kind": "offsite",
+    "label": "1954 1ST AVE"
+  },
+  "3-stories": {
+    "address": "2026 Emancipation Ave, Houston, TX 77003",
+    "kind": "offsite",
+    "label": "3 Stories"
+  },
+  "3686-barker-cypress-rd": {
+    "address": "3686 Barker Cypress Road 77084, Houston, TX",
+    "kind": "offsite",
+    "label": "3686 Barker Cypress Rd"
+  },
+  "5015-almeda-rd": {
+    "address": "5015 Almeda Road 77004, Houston, TX",
+    "kind": "offsite",
+    "label": "5015 Almeda Rd"
+  },
+  "69-lounge": {
+    "address": "5219 Washington Ave, Houston, TX 77007",
+    "kind": "offsite",
+    "label": "69 Lounge"
+  },
+  "77-degrees-rooftop": {
+    "address": "2416 Brazos St Ste 200, Houston, TX 77006",
+    "kind": "offsite",
+    "label": "77 Degrees Rooftop"
+  },
+  "812-yorkshire-st": {
+    "address": "812 Yorkshire St, Houston, TX",
+    "kind": "offsite",
+    "label": "812 Yorkshire St"
+  },
+  "a-golden-tree-banquet": {
+    "address": "9151 South Texas 6 77083, Houston, TX",
+    "kind": "offsite",
+    "label": "A Golden Tree Banquet"
+  },
+  "afer-htx": {
+    "address": "2701 Fannin Street 77002, Houston, TX",
+    "kind": "offsite",
+    "label": "AFER HTX"
+  },
+  "afrotech-authors-pavilion-presented-by-penguin-random-house": {
+    "kind": "grb",
+    "label": "AfroTech Authors Pavilion Presented by Penguin Random House"
+  },
+  "almost-famous": {
+    "address": "807 West 19th Street 77008, Houston, TX",
+    "kind": "offsite",
+    "label": "Almost Famous"
+  },
+  "around-the-corner-leeland-house": {
+    "address": "2119 Leeland Street 77003, Houston, TX",
+    "kind": "offsite",
+    "label": "Around the Corner @ Leeland House"
+  },
+  "art-club-at-post-houston": {
+    "address": "401 Franklin St, Suite 1050, Houston, TX",
+    "kind": "offsite",
+    "label": "ART CLUB at POST Houston"
+  },
+  "avant-garden": {
+    "address": "411 Westheimer Rd, Houston, TX 77006, USA",
+    "kind": "offsite",
+    "label": "Avant Garden"
+  },
+  "axel-rad": {
+    "address": "1517 Alabama St, Houston, TX 77004",
+    "kind": "offsite",
+    "label": "Axel Rad"
+  },
+  "axelrad-beer-garden": {
+    "address": "1517 Alabama St, Houston, TX 77004, USA",
+    "kind": "offsite",
+    "label": "Axelrad Beer Garden"
+  },
+  "balconies-c-avenida-balcony": {
+    "kind": "grb",
+    "label": "Balconies C - Avenida Balcony"
+  },
+  "bald-kitty": {
+    "address": "1113 Providence, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Bald Kitty"
+  },
+  "bald-kitty-houston": {
+    "address": "1113 Providence St, Houston, TX",
+    "kind": "offsite",
+    "label": "Bald Kitty Houston"
+  },
+  "blavity-house-party-events": {
+    "kind": "unplaced",
+    "label": "Blavity House Party Events"
+  },
+  "blue-tile-coffee-shop": {
+    "address": "3663 Washington Ave Ste 150, Houston, TX 77007, USA",
+    "kind": "offsite",
+    "label": "Blue Tile Coffee Shop"
+  },
+  "boozers-htx": {
+    "address": "2024 Rusk St, Houston, TX 77003, USA",
+    "kind": "offsite",
+    "label": "Boozers HTX"
+  },
+  "capital-one-caf-houston-galleria": {
+    "kind": "offsite",
+    "label": "Capital One Café Houston Galleria"
+  },
+  "chapman-kirby": {
+    "address": "2118 Lamar St Houston TX",
+    "kind": "offsite",
+    "label": "Chapman & Kirby"
+  },
+  "ciel-restaurant-lounge": {
+    "address": "4411 San Felipe Street, #Unit 101 77027, Houston, TX",
+    "kind": "offsite",
+    "label": "CIEL Restaurant & Lounge"
+  },
+  "coca-cola-lounge": {
+    "kind": "grb",
+    "label": "Coca-Cola Lounge"
+  },
+  "connect-lounge": {
+    "kind": "grb",
+    "label": "Connect Lounge"
+  },
+  "dch": {
+    "address": "1203 Cravens Road, Stafford, TX 77477",
+    "kind": "offsite",
+    "label": "DCH"
+  },
+  "decorum": {
+    "address": "2211 Travis St, Houston, TX 77002, USA",
+    "kind": "offsite",
+    "label": "Decorum"
+  },
+  "discovery-green": {
+    "address": "1500 McKinney St, Houston, TX 77010, USA",
+    "kind": "outdoor",
+    "label": "Discovery Green"
+  },
+  "discovery-green-afrotech": {
+    "address": "1500 McKinney St, Houston, TX 77010, USA",
+    "kind": "offsite",
+    "label": "Discovery Green - AfroTech"
+  },
+  "discovery-green-park": {
+    "address": "1500 McKinney St, Houston, TX 77010",
+    "kind": "offsite",
+    "label": "Discovery Green Park"
+  },
+  "downtown-houston-near-the-george-r-brown-convention-center": {
+    "address": "Exact address shared with approved guests.",
+    "kind": "grb",
+    "label": "Downtown Houston (near the George R. Brown Convention Center)"
+  },
+  "eldorado-ballroom": {
+    "address": "2310 Elgin Street, Houston, TX 77004",
+    "kind": "offsite",
+    "label": "Eldorado Ballroom"
+  },
+  "executive-lounge": {
+    "kind": "grb",
+    "label": "Executive Lounge"
+  },
+  "exhibit-hall-e-1st-floor": {
+    "kind": "grb",
+    "label": "Exhibit Hall E (1st Floor)"
+  },
+  "expo-hall": {
+    "kind": "grb",
+    "label": "Expo Hall"
+  },
+  "expo-hall-book-nook": {
+    "kind": "grb",
+    "label": "Expo Hall / Book Nook"
+  },
+  "expo-hall-the-yard": {
+    "kind": "grb",
+    "label": "Expo Hall / The Yard"
+  },
+  "fairfax": {
+    "address": "81 Drew St, Houston TX",
+    "kind": "offsite",
+    "label": "Fairfax"
+  },
+  "fairfax-houston-tx": {
+    "address": "81 Drew Street Houston, TX 77006",
+    "kind": "offsite",
+    "label": "Fairfax Houston, TX"
+  },
+  "forme-htx": {
+    "address": "5501 La Branch Street, Houston, TX 77004",
+    "kind": "offsite",
+    "label": "Forme HTX"
+  },
+  "founders-pavillion": {
+    "kind": "grb",
+    "label": "Founders Pavillion"
+  },
+  "george-r-brown-convention-center": {
+    "address": "1001 Avenida De Las Americas, Houston, TX 77010",
+    "kind": "grb",
+    "label": "George R. Brown Convention Center"
+  },
+  "george-r-brown-convention-center-balconies-c-avenida-balcony": {
+    "address": "1001 Avenida De Las Americas, Houston, TX 77010",
+    "kind": "grb",
+    "label": "George R. Brown Convention Center — Balconies C, Avenida Balcony"
+  },
+  "george-r-brown-convention-center-exhibit-hall-e-1st-floor": {
+    "address": "1001 Avenida De Las Americas, Houston, TX 77010",
+    "kind": "grb",
+    "label": "George R. Brown Convention Center — Exhibit Hall E (1st Floor)"
+  },
+  "george-r-brown-convention-center-meeting-room-310": {
+    "address": "1001 Avenida De Las Americas, Houston, TX 77010",
+    "kind": "grb",
+    "label": "George R. Brown Convention Center — Meeting Room 310"
+  },
+  "grand-ballroom-a": {
+    "kind": "grb",
+    "label": "Grand Ballroom A"
+  },
+  "grand-ballroom-c": {
+    "kind": "grb",
+    "label": "Grand Ballroom C"
+  },
+  "grb-avenida-balcony": {
+    "address": "1001 Avenida de las Americas, Houston, TX 77010",
+    "kind": "offsite",
+    "label": "GRB: Avenida Balcony"
+  },
+  "grb-executive-lounge": {
+    "address": "1001 Avenida de las Americas, Houston, TX 77010",
+    "kind": "offsite",
+    "label": "GRB: Executive Lounge"
+  },
+  "grb-exhibit-hall-e": {
+    "address": "1001 Avenida de las Americas, Houston, TX 77010",
+    "kind": "offsite",
+    "label": "GRB: Exhibit Hall E"
+  },
+  "grb-founders-pavilion": {
+    "address": "1001 Avenida de las Americas, Houston, TX 77010",
+    "kind": "offsite",
+    "label": "GRB: Founders Pavilion"
+  },
+  "grb-meeting-room-320": {
+    "address": "1001 Avenida de las Americas, Houston, TX 77010",
+    "kind": "offsite",
+    "label": "GRB: Meeting Room 320"
+  },
+  "grb-product-innovation-stage": {
+    "address": "1001 Avenida de las Americas, Houston, TX 77010",
+    "kind": "offsite",
+    "label": "GRB: Product & Innovation Stage"
+  },
+  "harold-s-chicken-sports-bar": {
+    "address": "5334 Washington Avenue Houston, TX 77007",
+    "kind": "offsite",
+    "label": "Harold’s Chicken Sports Bar"
+  },
+  "healthstack-general-session-marriott": {
+    "kind": "marriott",
+    "label": "HealthStack General Session (Marriott)"
+  },
+  "healthstack-pavillion": {
+    "kind": "grb",
+    "label": "HealthStack Pavillion"
+  },
+  "healthstack-seminar-room-marriott": {
+    "kind": "marriott",
+    "label": "HealthStack Seminar Room (Marriott)"
+  },
+  "heights-house-hotel": {
+    "address": "100 W Cavalcade St, Houston, TX",
+    "kind": "offsite",
+    "label": "Heights House Hotel"
+  },
+  "hermann-park-golf-course": {
+    "address": "2155 N MacGregor Way, Houston, TX 77004, USA",
+    "kind": "offsite",
+    "label": "Hermann Park Golf Course"
+  },
+  "hibachi-king-houston": {
+    "address": "5427 Bissonnet St, Suite 200, Houston, TX 77081",
+    "kind": "offsite",
+    "label": "Hibachi King Houston"
+  },
+  "hookahs-and-ash": {
+    "address": "4715 Main Street Houston TX 77002",
+    "kind": "offsite",
+    "label": "Hookahs and Ash"
+  },
+  "hotel-saint-augustine": {
+    "address": "4110 Loretto Dr., Houston, TX 77006",
+    "kind": "offsite",
+    "label": "Hotel Saint Augustine"
+  },
+  "houston": {
+    "address": "Address in info section 77003, Houston, TX",
+    "kind": "offsite",
+    "label": "Houston"
+  },
+  "houston-location-shared-after-rsvp-approval": {
+    "kind": "offsite",
+    "label": "Houston · Location shared after RSVP approval"
+  },
+  "houston-museum-of-african-american-culture": {
+    "address": "4807 Caroline St, Houston, TX 77004, USA",
+    "kind": "offsite",
+    "label": "Houston Museum of African American Culture"
+  },
+  "houston-private-venue-shared-with-approved-guests": {
+    "address": "Shared on approval",
+    "kind": "offsite",
+    "label": "Houston · Private venue shared with approved guests"
+  },
+  "houston-river-oaks-montrose-area-restaurant": {
+    "address": "Address shared 24 hrs before",
+    "kind": "offsite",
+    "label": "Houston: River Oaks/Montrose Area Restaurant"
+  },
+  "houston-shared-on-approval": {
+    "address": "Shared on approval",
+    "kind": "offsite",
+    "label": "Houston (shared on approval)"
+  },
+  "houston-venue-not-publicly-listed": {
+    "address": "TBA",
+    "kind": "offsite",
+    "label": "Houston — venue not publicly listed"
+  },
+  "houston-venue-shared-with-confirmed-guests": {
+    "kind": "offsite",
+    "label": "Houston · Venue shared with confirmed guests"
+  },
+  "ilekan-athletics": {
+    "address": "5151a Mitchelldale St A-14, Houston, TX 77092",
+    "kind": "offsite",
+    "label": "Ilekan Athletics"
+  },
+  "insider-lounge": {
+    "address": "1001 Avenida de las Americas, Houston, TX 77010",
+    "kind": "offsite",
+    "label": "Insider Lounge"
+  },
+  "ion-district": {
+    "address": "4201 Main Street Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Ion District"
+  },
+  "iykyk": {
+    "address": "1008 Prairie St, Houston, TX 77002, USA",
+    "kind": "offsite",
+    "label": "IYKYK"
+  },
+  "kamp-houston": {
+    "address": "6025 Westheimer Rd, Houston, TX 77057",
+    "kind": "offsite",
+    "label": "Kamp Houston"
+  },
+  "little-woodrow-s-eado": {
+    "address": "801 St Emanuel St, Houston, TX 77003, USA",
+    "kind": "offsite",
+    "label": "Little Woodrow’s EaDo"
+  },
+  "liv-houston": {
+    "address": "108 Main St, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "LIV Houston"
+  },
+  "location-provided-upon-rsvp": {
+    "kind": "offsite",
+    "label": "Location Provided Upon RSVP"
+  },
+  "lov3-houston": {
+    "address": "2900 Travis St, Houston, TX 77006, USA",
+    "kind": "offsite",
+    "label": "LOV3 HOUSTON"
+  },
+  "main-stage-exhibit-hall-e-1st-floor": {
+    "kind": "grb",
+    "label": "Main Stage (Exhibit Hall E 1st Floor)"
+  },
+  "meeting-room-310": {
+    "kind": "grb",
+    "label": "Meeting Room 310"
+  },
+  "meeting-room-320": {
+    "kind": "grb",
+    "label": "Meeting Room 320"
+  },
+  "mo-brunch-brews": {
+    "address": "1201 Southmore Blvd Houston, TX 77004",
+    "kind": "offsite",
+    "label": "Mo' Brunch & Brews"
+  },
+  "moca-htx": {
+    "address": "4212 Almeda Road Houston, Texas 77004",
+    "kind": "offsite",
+    "label": "Moca Htx"
+  },
+  "montrose-cocktail-lounge": {
+    "address": "Montrose | RSVP for exact address",
+    "kind": "offsite",
+    "label": "Montrose Cocktail Lounge"
+  },
+  "naming-rights-events": {
+    "kind": "unplaced",
+    "label": "Naming Rights Events"
+  },
+  "netrality-building-13th-floor": {
+    "address": "1301 Fannin St, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Netrality Building, 13th Floor"
+  },
+  "noto-houston": {
+    "address": "3215 McKinney St, Houston, TX 77003, USA",
+    "kind": "offsite",
+    "label": "NOTO Houston"
+  },
+  "noto-htx": {
+    "address": "3215 McKinney St, Houston, TX 77003",
+    "kind": "offsite",
+    "label": "Noto HTX"
+  },
+  "off-the-record": {
+    "address": "416 Main St, Houston, TX",
+    "kind": "offsite",
+    "label": "Off the Record"
+  },
+  "partner-events": {
+    "kind": "unplaced",
+    "label": "Partner Events"
+  },
+  "picklemania": {
+    "address": "411 Smith Street, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "PickleMania"
+  },
+  "plume": {
+    "address": "1100 West 23rd Street, #Suite 150 77008, Houston, TX",
+    "kind": "offsite",
+    "label": "Plume"
+  },
+  "post-houston": {
+    "address": "401 Franklin St, Houston, TX 77201, USA",
+    "kind": "offsite",
+    "label": "POST Houston"
+  },
+  "private": {
+    "kind": "unplaced",
+    "label": "Private"
+  },
+  "private-venue": {
+    "address": "TBA",
+    "kind": "offsite",
+    "label": "Private venue"
+  },
+  "private-venue-confirmation-required": {
+    "kind": "offsite",
+    "label": "Private venue — confirmation required"
+  },
+  "private-venue-confirmed-guests-only": {
+    "kind": "offsite",
+    "label": "Private venue — confirmed guests only"
+  },
+  "product-innovation-stage-exhibit-hall-c-d-1st-floor": {
+    "kind": "grb",
+    "label": "Product & Innovation Stage (Exhibit Hall C&D (1st Floor))"
+  },
+  "project-row-houses": {
+    "address": "2521 Holman Street, Houston, TX 77004",
+    "kind": "offsite",
+    "label": "Project Row Houses"
+  },
+  "prospect-park": {
+    "address": "3100 Fountain View Drive, Houston, TX 77057",
+    "kind": "offsite",
+    "label": "Prospect Park"
+  },
+  "provar": {
+    "address": "5102 Washington Avenue 77007, Houston, TX",
+    "kind": "offsite",
+    "label": "Provaré"
+  },
+  "provar-houston": {
+    "address": "5102 Washington Ave",
+    "kind": "offsite",
+    "label": "Provaré Houston"
+  },
+  "puttery-houston": {
+    "address": "1818 Washington Ave Ste 180, Houston, TX 77007",
+    "kind": "offsite",
+    "label": "Puttery Houston"
+  },
+  "red-oak-ballroom-houston": {
+    "address": "803 Town and Country Blvd 77024, Houston, TX",
+    "kind": "offsite",
+    "label": "Red Oak Ballroom - Houston"
+  },
+  "registration-grand-lobby": {
+    "kind": "grb",
+    "label": "Registration - Grand Lobby"
+  },
+  "reserve-101": {
+    "address": "1201 Caroline St",
+    "kind": "offsite",
+    "label": "Reserve 101"
+  },
+  "reset": {
+    "address": "606 Dennis Street, Houston, TX, USA",
+    "kind": "offsite",
+    "label": "Reset"
+  },
+  "reset-rooftop": {
+    "address": "606 Dennis St, Suite 200, Houston, TX",
+    "kind": "offsite",
+    "label": "Reset (rooftop)"
+  },
+  "rich-s-houston": {
+    "address": "2401 San Jacinto St, Houston, TX",
+    "kind": "offsite",
+    "label": "Rich’s Houston"
+  },
+  "river-oaks-montrose-area-restaurant-disclosed-24-hours-befor": {
+    "address": "Address shared 24 hrs before",
+    "kind": "offsite",
+    "label": "River Oaks / Montrose area restaurant — disclosed 24 hours before"
+  },
+  "ronin-2": {
+    "address": "1315 Sterrett St, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Ronin 2"
+  },
+  "ronin-art-house": {
+    "address": "3501 Harrisburg Blvd, Houston, TX 77003, USA",
+    "kind": "offsite",
+    "label": "Ronin Art House"
+  },
+  "salvaje-htx": {
+    "address": "2303 Smith St Ste 300 Houston, TX 77006 United States",
+    "kind": "offsite",
+    "label": "Salvaje Htx"
+  },
+  "sanctuary-eado": {
+    "address": "2108 Leeland St, Houston, TX 77003, USA",
+    "kind": "offsite",
+    "label": "Sanctuary Eado"
+  },
+  "sanman-studios": {
+    "address": "1109 Providence St, Houston, TX 77002, USA",
+    "kind": "offsite",
+    "label": "Sanman Studios"
+  },
+  "seaside-lounge": {
+    "address": "702 West Dallas Street 77019, Houston, TX",
+    "kind": "offsite",
+    "label": "Seaside Lounge"
+  },
+  "seremoni-brick-house": {
+    "address": "1125 Providence St, Houston, TX 77002, USA",
+    "kind": "offsite",
+    "label": "Seremoni Brick House"
+  },
+  "shared-after-approval": {
+    "address": "Shared after approval",
+    "kind": "offsite",
+    "label": "Shared after approval"
+  },
+  "sharespace-navigation": {
+    "address": "3536 Navigation Blvd, Houston, TX 77003",
+    "kind": "offsite",
+    "label": "Sharespace Navigation"
+  },
+  "skylab-social": {
+    "address": "4112 Washington Ave Houston, TX 77007 United States",
+    "kind": "offsite",
+    "label": "Skylab Social"
+  },
+  "smart-cities-pavillion": {
+    "kind": "grb",
+    "label": "Smart Cities Pavillion"
+  },
+  "sophie-cocktail-terrace-bar": {
+    "address": "910 Westheimer Rd, Houston, TX 77006",
+    "kind": "offsite",
+    "label": "Sophie Cocktail & Terrace Bar"
+  },
+  "status-nightclub": {
+    "address": "5002 Washington Ave, Houston, TX 77007, USA",
+    "kind": "offsite",
+    "label": "Status Nightclub"
+  },
+  "studioco": {
+    "address": "1919 N. Main St., Houston, TX 77009",
+    "kind": "offsite",
+    "label": "Studioco"
+  },
+  "styx-stone": {
+    "address": "2400 Brazos St, Houston, TX 77006",
+    "kind": "offsite",
+    "label": "STYX + STONE"
+  },
+  "supreme-houston": {
+    "address": "1515 Pease St b, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Supreme Houston"
+  },
+  "tago": {
+    "address": "1120 Dennis St, Houston, TX 77004",
+    "kind": "offsite",
+    "label": "Tago"
+  },
+  "tba": {
+    "address": "TBA",
+    "kind": "offsite",
+    "label": "TBA"
+  },
+  "tba-houston": {
+    "address": "TBA",
+    "kind": "offsite",
+    "label": "TBA, Houston"
+  },
+  "tbd": {
+    "address": "3737 cogdell st",
+    "kind": "offsite",
+    "label": "TBD"
+  },
+  "the-allnatt-venue": {
+    "address": "3686 Barker Cypress Rd, Houston, TX 77084, USA",
+    "kind": "offsite",
+    "label": "The Allnatt Venue"
+  },
+  "the-ballroom-at-tanglewood": {
+    "address": "5430 Westheimer Rd, Houston, TX 77056",
+    "kind": "offsite",
+    "label": "The Ballroom at Tanglewood"
+  },
+  "the-blank-canvas-space": {
+    "address": "2955 Gulf Freeway 77003, Houston, TX",
+    "kind": "offsite",
+    "label": "The Blank Canvas Space"
+  },
+  "the-duke": {
+    "address": "305 Travis St",
+    "kind": "offsite",
+    "label": "The Duke"
+  },
+  "the-encore": {
+    "address": "2301 Main Street, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "The Encore"
+  },
+  "the-encore-day-and-night-beach-club": {
+    "address": "2301 Main Street, #400 77002, Houston, TX",
+    "kind": "offsite",
+    "label": "THE ENCORE DAY AND NIGHT BEACH CLUB"
+  },
+  "the-grove": {
+    "address": "1611 Lamar St, Houston, TX 77010, USA",
+    "kind": "outdoor",
+    "label": "The Grove"
+  },
+  "the-ion": {
+    "address": "4201 Main St Ste 200 Houston, TX 77002 United States",
+    "kind": "offsite",
+    "label": "The Ion"
+  },
+  "the-kbc-event-venue": {
+    "address": "6011 West Orem Drive, Houston, Texas 77085",
+    "kind": "offsite",
+    "label": "The KBC Event Venue"
+  },
+  "the-mood-room": {
+    "address": "711 Milby St, Houston, TX 77023, USA",
+    "kind": "offsite",
+    "label": "The Mood Room"
+  },
+  "the-podium": {
+    "address": "4007B Greenbriar Dr, Houston, TX 77098, United States",
+    "kind": "offsite",
+    "label": "The Podium"
+  },
+  "the-podium-at-porsche-river-oaks": {
+    "address": "4007B Greenbriar Dr, Houston, TX 77098",
+    "kind": "offsite",
+    "label": "The Podium at Porsche River Oaks"
+  },
+  "the-us-space": {
+    "address": "800 Travis Street, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "The Us Space"
+  },
+  "the-view-htx": {
+    "address": "EaDo, Houston, TX (full address shared on RSVP approval)",
+    "kind": "offsite",
+    "label": "The View HTX"
+  },
+  "toro-toro": {
+    "address": "1300 Lamar St, Houston, TX 77010, USA",
+    "kind": "offsite",
+    "label": "Toro Toro"
+  },
+  "tribeca": {
+    "address": "2222 Emancipation Ave, Houston, TX 77003",
+    "kind": "offsite",
+    "label": "Tribeca"
+  },
+  "tribeca-htx": {
+    "address": "2222 Emancipation Ave",
+    "kind": "offsite",
+    "label": "Tribeca HTX"
+  },
+  "velocity": {
+    "address": "2110 Edwards St, Houston, TX 77007",
+    "kind": "offsite",
+    "label": "Velocity"
+  },
+  "velvet-rail": {
+    "address": "3100 fountain view Dr, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Velvet Rail"
+  },
+  "velvet-taco-galleria": {
+    "address": "2626 West Loop S, Houston, TX 77027",
+    "kind": "offsite",
+    "label": "Velvet Taco - Galleria"
+  },
+  "virtual": {
+    "kind": "offsite",
+    "label": "Virtual"
+  },
+  "warehouse-live": {
+    "address": "2600 Travis Street Houston, TX, 77006",
+    "kind": "offsite",
+    "label": "Warehouse Live"
+  }
+}

@@ -30,7 +30,12 @@ Start with [`docs/plans/0001-events-site.md`](docs/plans/0001-events-site.md).
 ```bash
 python3 scripts/update_schedule.py      # official sessions → data/sessions.*, schedule/official.md
 python3 scripts/update_side_events.py   # side events → data/side-events.csv, schedule/side-events.md
+python3 scripts/build_events.py         # both → data/events/*.json and data/venues.json (the update scripts run it too)
 ```
+
+The site reads events through `src/lib/events.ts`; their type is
+`ScheduleEvent` in `src/lib/types.ts`, which must match `validate()` in
+`scripts/build_events.py`.
 
 ```bash
 npm run dev       # Astro dev server
@@ -64,7 +69,9 @@ Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
 - **Times:** always Houston time (`America/Chicago`, CST `-06:00` this week),
   formatted `2:30 PM`, dates `Wed, Nov 4`, regardless of the viewer's timezone.
 - **Generated files** (`data/*`, `schedule/*`) are never edited by hand — change
-  the script and re-run it.
+  the script and re-run it. Two exceptions: `data/sources/` holds hand exports,
+  and `data/venues.json` takes hand-added map fields (`level`, `areaId`, `lat`,
+  `lng`) that the scripts keep.
 - **Sources:** credit each community list on the site. Don't republish the GRB
   floor-plan PDFs; we trace our own SVG. Keep organisers' personal contact
   details out of the site.

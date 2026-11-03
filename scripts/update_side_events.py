@@ -17,6 +17,7 @@ import sys
 from collections import defaultdict
 from datetime import date, datetime
 
+import build_events
 from common import ROOT, TZ, cell, clock, fetch, first_time, link, short_date, write_csv, write_text
 
 GUIDE_API = "https://afrotech.guide/api/events"
@@ -129,6 +130,23 @@ def match_score(a, b):
     return ratio if ratio >= 0.85 or (same_start and ratio >= 0.6) else 0
 
 
+def dedupe(rows):
+    """Collapse exact repeats inside one list: same date, title and start time.
+
+    A source sometimes lists one event twice; the copies fill each other's gaps.
+    """
+    kept = {}
+    for r in rows:
+        k = (r["date"], key(r["event"]), r["start"])
+        if k in kept:
+            for f, v in r.items():
+                if v and not kept[k].get(f):
+                    kept[k][f] = v
+        else:
+            kept[k] = dict(r)
+    return list(kept.values())
+
+
 def merge(sources):
     """Merge lists in priority order.
 
@@ -166,7 +184,7 @@ def sort_key(e):
 
 
 def main():
-    sources = [from_guide(), from_sheet(), from_adaptive()]
+    sources = [dedupe(rows) for rows in (from_guide(), from_sheet(), from_adaptive())]
     events = sorted(merge(sources), key=sort_key)
     if not events:
         sys.exit("No side events found in any source; keeping the existing files.")
@@ -208,6 +226,7 @@ def main():
                        f"{cell(e['venue'])} | {cell(e['price'])} | {cell(e['registration'])} | {rsvp} |")
     write_text("schedule/side-events.md", "\n".join(out) + "\n")
     print(f"Wrote {len(events)} side events across {len(by_day)} days.")
+    build_events.main()
 
 
 if __name__ == "__main__":

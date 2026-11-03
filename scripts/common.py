@@ -49,9 +49,10 @@ def write_text(path, text):
 
 
 def write_csv(path, rows, fieldnames):
+    """Write the named columns; any other keys in the rows are left out."""
     path = ROOT / path
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=fieldnames)
+        w = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
         w.writeheader()
         w.writerows(rows)
