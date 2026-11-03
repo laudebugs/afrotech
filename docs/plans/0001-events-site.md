@@ -75,6 +75,9 @@ plans showing who is going where.
 
 ## Notes publish through GitHub, so the site needs no sign-in
 
+> **Replaced** by [plan 0005](0005-notes-in-account.md) on November 3: notes
+> are now private, kept on the device and synced to your account.
+
 A public site with no sign-in can't accept posts directly, because anyone could
 then post. Instead, each note lives as a Markdown file in `notes/`, and
 publishing a note means adding that file to the repo. GitHub's own login then

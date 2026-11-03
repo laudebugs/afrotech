@@ -5,7 +5,7 @@ Guidance for Claude when working in this repo.
 ## What this is
 
 A tracker for AfroTech 2026 (Houston, Nov 2–6): the merged official schedule and
-community side events, shared session notes, and (in progress) an Astro site to
+community side events, private session notes, and (in progress) an Astro site to
 plan your week and find events on a map of the convention center.
 
 Start with [`docs/plans/0001-events-site.md`](docs/plans/0001-events-site.md).
@@ -23,7 +23,6 @@ Start with [`docs/plans/0001-events-site.md`](docs/plans/0001-events-site.md).
 | `scripts/` | Python (stdlib only) that fetches sources and writes `data/` and `schedule/`. |
 | `data/` | Generated data (committed). `data/sources/` holds hand-exported inputs. |
 | `schedule/` | Generated markdown schedules for reading on GitHub. |
-| `notes/` | Session notes; copy `notes/_template.md`. |
 | `src/`, `public/` | Astro site (from todo 001 onward). |
 
 ## Commands
@@ -111,9 +110,9 @@ The build also writes `dist/sw.js` (the offline service worker) from
   changes are new files in `worker/migrations/`, never edits to old ones, and
   only the production deploy applies them.
   Plain Astro components + small client scripts; ask before adding a UI framework.
-- **Sign-in is optional.** Everything works signed out, with My plan and note
-  drafts in `localStorage`. Signing in with Google only syncs My plan across
+- **Sign-in is optional.** Everything works signed out, with My plan and notes
+  in `localStorage`. Signing in with Google only syncs My plan across
   devices (`worker/auth.ts`, `worker/plan.ts`, `src/scripts/plan-sync.ts`);
-  signed-out visitors send no API requests. Notes are public and publish by
-  committing Markdown to `notes/` through GitHub.
+  signed-out visitors send no API requests. Notes are private: they live in
+  `localStorage` (`src/lib/notes.ts`), never in the build or the repo.
 - **Location** data stays on the device; ask for it only on a user action.
