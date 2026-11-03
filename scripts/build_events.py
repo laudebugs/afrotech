@@ -22,7 +22,7 @@ import sys
 from urllib.parse import urlparse
 from datetime import date, datetime, timedelta
 
-from common import ROOT, TZ, first_time, write_text
+from common import ROOT, TZ, clock, first_time, write_text
 
 # Official locations that aren't a room in the GRB.
 MARRIOTT = "(Marriott)"
@@ -327,6 +327,72 @@ def street(address):
     return f"{m[1]}-{m[2]}" if m else None
 
 
+EVENT_PAGES = ROOT / "data/event-pages.json"
+
+
+def load_event_pages():
+    """data/event-pages.json's pages (scripts/enrich_events.py), or {}."""
+    if not EVENT_PAGES.exists():
+        return {}
+    return json.loads(EVENT_PAGES.read_text(encoding="utf-8")).get("pages", {})
+
+
+def apply_event_pages(rows, pages):
+    """Fill fields the community lists leave empty from each event's own page.
+
+    Plan 0008, todo 034. The lists stay the source of truth: a page fills only
+    an empty address, venue, start, end, price or description, and only when
+    it's about the same day (and the same start time, for the end). Returns
+    copies of the rows, which the caller must not write back to the CSV, and
+    the places where a page disagrees with a list, for a person to check.
+    """
+    filled_rows, differences = [], []
+    for r in rows:
+        url = (r.get("rsvp") or "").strip()
+        page = (pages.get(url) or {}).get("event")
+        if not page:
+            filled_rows.append(r)
+            continue
+        r2 = dict(r)
+        filled = []
+
+        def differ(field, ours, theirs):
+            differences.append({"date": r["date"], "title": r["event"].strip(), "url": url,
+                                "field": field, "list": ours, "page": theirs})
+
+        page_start = page.get("start")
+        page_day = (page_start or page.get("startDay") or "")[:10]
+        if page.get("status"):
+            differ("status", "on", page["status"])
+        if page_day and page_day != r["date"]:
+            # Another day (a series, or a moved event): fill nothing, flag it.
+            differ("date", r["date"], page_day)
+            filled_rows.append(r)
+            continue
+        ours_start = iso(r["date"], r["start"])
+        if ours_start and page_start and ours_start != page_start:
+            differ("start", r["start"].strip(), clock(datetime.fromisoformat(page_start)))
+        if not ours_start and page_start:
+            r2["start"] = clock(datetime.fromisoformat(page_start))
+            filled.append("start")
+            ours_start = page_start
+        page_end = page.get("end")
+        if not r["end"].strip() and page_end and ours_start == page_start:
+            length = datetime.fromisoformat(page_end) - datetime.fromisoformat(page_start)
+            if timedelta(0) < length <= timedelta(hours=24):
+                r2["end"] = clock(datetime.fromisoformat(page_end))
+                filled.append("end")
+        for ours, theirs in (("address", "address"), ("venue", "venue"), ("price", "price"),
+                             ("description", "description")):
+            if not (r.get(ours) or "").strip() and page.get(theirs) and page[theirs] != "Online":
+                r2[ours] = page[theirs]
+                filled.append(ours)
+        if filled:
+            r2["source"] = ", ".join(p for p in (r.get("source", "").strip(), "event page") if p)
+        filled_rows.append(r2)
+    return filled_rows, differences
+
+
 def side_events(rows, venues):
     events = []
     seen_ids = set()
@@ -442,6 +508,7 @@ def build(sessions=None, side_rows=None):
     speakers = build_speakers(sessions)
     slugs = {sp["id"]: sp["slug"] for sp in speakers}
     official = sorted(official_events(sessions, venues, slugs), key=sort_key)
+    side_rows, _ = apply_event_pages(side_rows, load_event_pages())
     side = sorted(side_events(side_rows, venues), key=sort_key)
     try:
         validate(official + side, venues)
