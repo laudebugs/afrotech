@@ -47,3 +47,6 @@ Built on November 3:
   pages, plan export and fonts. **Not tested:** the three-second slow-network
   fallback, because Chromium's throttling doesn't reach the worker's own
   requests.
+- **Known cost:** each data refresh changes the precached pages, so phones fetch
+  the core again (a few hundred KB compressed) and lose event pages they saved
+  but didn't star. Starred events are re-saved on the next page load.
