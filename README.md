@@ -47,12 +47,13 @@ record and certificate on the first deploy.
 ## Docs
 
 - [Plan: events site](docs/plans/0001-events-site.md) — what we're building and why
-- [Plan: optional Google sign-in](docs/plans/0002-google-sign-in.md) — sync My plan across devices (draft)
-- [Plan: speaker profiles](docs/plans/0003-speaker-profiles.md) — bios, sourced fun facts and links (draft)
-- [Plan: offline support](docs/plans/0004-offline-support.md) — keep working on dead convention Wi-Fi (draft)
+- [Plan: optional Google sign-in](docs/plans/0002-google-sign-in.md) — sync My plan across devices
+- [Plan: speaker profiles](docs/plans/0003-speaker-profiles.md) — bios, sourced fun facts and links
+- [Plan: offline support](docs/plans/0004-offline-support.md) — keep working on dead convention Wi-Fi
 - [To-dos](docs/todos/README.md) — tasks, one file each
 - [Design language](docs/design/design-language.md)
 - [Research: interactive SVG floor plan](docs/research/svg-floor-plan.md)
+- [Research: speaker profile sources](reports/Speaker%20profile%20research%20sources.md) — how to gather speaker info safely
 - [Sources](docs/sources.md) — where every bit of data comes from
 
 ## Layout

@@ -1,6 +1,6 @@
 # Plan 0004: A service worker keeps the planner working on dead convention Wi-Fi
 
-**Status:** draft, awaiting review · **Created:** 2026-11-03
+**Status:** approved 2026-11-03, using the recommended answers below until you say otherwise · **Created:** 2026-11-03
 
 Convention halls are where phones lose signal: thousands of people share the
 Wi-Fi, and the George R. Brown's concrete eats cellular. Today the planner

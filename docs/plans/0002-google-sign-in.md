@@ -1,6 +1,6 @@
 # Plan 0002: Optional Google sign-in keeps My plan in step across devices
 
-**Status:** draft, sign-in approved; three decisions open · **Created:** 2026-11-03
+**Status:** approved 2026-11-03; todos 014–015 wait on your Google client ID and D1 database ID · **Created:** 2026-11-03
 
 My plan lives in one browser's `localStorage`. Star a session on your phone and
 it's missing on your laptop; clear the browser's data and the plan is gone. The

@@ -1,6 +1,6 @@
 # Plan 0003: Speaker profiles with a short bio, sourced fun facts and links
 
-**Status:** draft, photos decided; three decisions open · **Created:** 2026-11-03
+**Status:** approved 2026-11-03, using the recommended answers below until you say otherwise · **Created:** 2026-11-03
 
 Event pages list speakers by name only, so deciding whether a session is worth
 your time means searching each person yourself. Yet the official schedule
