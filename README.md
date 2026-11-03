@@ -9,7 +9,7 @@ Shared tracker for AfroTech Conference 2026 events and the notes we take at them
 | Path | What's in it |
 |------|--------------|
 | [`schedule/official.md`](schedule/official.md) | Full official agenda, by day (259 sessions, Houston time) |
-| [`schedule/side-events.md`](schedule/side-events.md) | 146 side events (parties, mixers, dinners, workshops) with RSVP links |
+| [`schedule/side-events.md`](schedule/side-events.md) | 170 side events (parties, mixers, dinners, workshops) with RSVP links and founder/investor picks |
 | [`data/sessions.csv`](data/sessions.csv) / [`.json`](data/sessions.json) | Official agenda as data, with descriptions, ticket levels and calendar links |
 | [`data/side-events.csv`](data/side-events.csv) | Side events as data, with addresses and descriptions |
 | [`notes/`](notes/) | One file per session we attend — copy [`notes/_template.md`](notes/_template.md) |
@@ -42,4 +42,4 @@ _None yet._
 - Official schedule: https://afrotechconference.com/schedule
 - AfroTech Guide: https://afrotech.guide/
 - Side events (Google Sheet): https://docs.google.com/spreadsheets/d/1PLDLOdFCuwDAy4fe5y09hb4KgYlX3bsgX60U2z2KE_0/edit
-- Side events (OneDrive, not imported yet — Microsoft blocks automated downloads): https://1drv.ms/x/c/201780541da98428/IQAwneocjcw7RLgXigZPaCX-Afj6iRzSioL8HrnOZ6uMc-Y
+- Side events (Adaptive Foundation, OneDrive — saved in `data/sources/` since OneDrive blocks automated downloads): https://1drv.ms/x/c/201780541da98428/IQAwneocjcw7RLgXigZPaCX-Afj6iRzSioL8HrnOZ6uMc-Y
