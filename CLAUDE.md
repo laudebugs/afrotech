@@ -31,7 +31,7 @@ Start with [`docs/plans/0001-events-site.md`](docs/plans/0001-events-site.md).
 ```bash
 python3 scripts/update_schedule.py      # official sessions → data/sessions.*, schedule/official.md
 python3 scripts/update_side_events.py   # side events → data/side-events.csv, schedule/side-events.md
-python3 scripts/build_events.py         # both → data/events/*.json and data/venues.json (the update scripts run it too)
+python3 scripts/build_events.py         # both → data/events/*.json, data/venues.json and data/speakers.json (the update scripts run it too)
 python3 scripts/build_floor_plan.py     # traced map → src/assets/maps/grb-level-*.svg and data/floor-plan.json
 ```
 
@@ -82,7 +82,9 @@ Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
   and `data/venues.json` takes hand-added map fields (`areaId`, `level`,
   `approximate`, `note`, `lat`, `lng`) that the scripts keep. A venue with an
   `areaId` gets its level from the map and doesn't repeat it. The map itself is
-  a table in `scripts/build_floor_plan.py`; edit that, not the SVGs.
+  a table in `scripts/build_floor_plan.py`; edit that, not the SVGs. Speakers
+  removed at their request go in `data/sources/speaker-suppressions.json`
+  (never delete entries); the build drops their profile.
 - **Sources:** credit each community list on the site. Don't republish the GRB
   floor-plan PDFs; we trace our own SVG. Keep organisers' personal contact
   details out of the site.

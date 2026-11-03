@@ -3,10 +3,36 @@
 
 export type EventKind = "official" | "side";
 
+/** A speaker as listed on an event. */
 export type Speaker = {
   name: string;
   title: string | null;
   company: string | null;
+  /** Their profile at /speakers/<slug>/; null if removed at their request. */
+  slug: string | null;
+};
+
+export type SpeakerLink = {
+  kind: "linkedin" | "x" | "facebook" | "instagram" | "tiktok" | "youtube" | "github" | "website";
+  label: string;
+  url: string;
+};
+
+/** A speaker profile, from data/speakers.json. */
+export type SpeakerProfile = {
+  id: string;
+  slug: string;
+  name: string;
+  title: string | null;
+  company: string | null;
+  /** The bio's first sentence or two, about 200 characters. */
+  brief: string | null;
+  /** Plain text; paragraphs separated by blank lines. */
+  bio: string | null;
+  /** Hosted by the schedule's image service (Sessionboard). */
+  photoUrl: string | null;
+  links: SpeakerLink[];
+  sessionIds: string[];
 };
 
 /** One event, official or side. Named ScheduleEvent to avoid the DOM's Event. */

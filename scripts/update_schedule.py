@@ -19,6 +19,8 @@ SITE = "https://afrotechconference.com"
 WRAPPERS = {"ShallowReactive", "Reactive", "Ref", "ShallowRef", "EmptyRef", "EmptyShallowRef"}
 # devalue encodes special values as negative indexes.
 SENTINELS = {-1: None, -2: None, -3: float("nan"), -4: float("inf"), -5: float("-inf"), -6: -0.0}
+# What build_events.py needs to make speaker profiles (bio is HTML here).
+SPEAKER_FIELDS = ("id", "name", "title", "company", "about", "image", "linkedin", "twitter", "facebook", "instagram")
 FIELDS = ["id", "date", "start", "end", "title", "track", "location", "speakers",
           "ticket_levels", "description", "calendar_url"]
 
@@ -95,7 +97,7 @@ def main():
             "speakers": "; ".join(speaker_label(sp) for sp in s.get("speakers") or []),
             # Structured copy for data/events/ (JSON only; the CSV keeps the joined string).
             "speaker_list": [
-                {k: (sp.get(k) or "").strip() for k in ("name", "title", "company")}
+                {k: (sp.get(k) or "").strip() for k in SPEAKER_FIELDS}
                 for sp in s.get("speakers") or []
             ],
             "ticket_levels": "; ".join(s.get("ticketLevels") or []),

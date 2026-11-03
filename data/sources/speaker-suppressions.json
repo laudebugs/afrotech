@@ -1,0 +1,4 @@
+{
+  "_about": "Speakers removed from the site at their request. Add {\"id\": \"<speaker id>\", \"name\": \"...\", \"date\": \"YYYY-MM-DD\"}; the build drops their profile and unlinks their name. Never delete entries.",
+  "removed": []
+}

@@ -1,0 +1,35 @@
+---
+// A speaker's headshot from the schedule's image host, with initials behind it
+// for when the photo is missing or fails to load.
+import "../styles/speaker-photo.css";
+import { initials } from "../lib/speakers";
+
+interface Props {
+  name: string;
+  url: string | null;
+  size: number;
+  /** The header photo loads first; small ones wait until they're near the screen. */
+  priority?: boolean;
+}
+const { name, url, size, priority = false } = Astro.props;
+---
+
+<!-- Decorative: the name always sits beside it, so screen readers skip the initials. -->
+<span class="speaker-photo" style={`--size: ${size}px`} aria-hidden="true">
+  <span class="initials">{initials(name)}</span>
+  {
+    url && (
+      <img
+        src={url}
+        alt=""
+        width={size}
+        height={size}
+        loading={priority ? "eager" : "lazy"}
+        fetchpriority={priority ? "high" : "auto"}
+        decoding="async"
+        referrerpolicy="no-referrer"
+        onerror="this.remove()"
+      />
+    )
+  }
+</span>

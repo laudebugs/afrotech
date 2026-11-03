@@ -1,0 +1,196 @@
+---
+// One speaker: photo, In brief, full bio, links and their sessions.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SpeakerPhoto from "../../components/SpeakerPhoto.astro";
+import Timeline from "../../components/Timeline.astro";
+import TimelineRow from "../../components/TimelineRow.astro";
+import EventCard from "../../components/EventCard.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+import { sessionsOf, speakers } from "../../lib/speakers";
+import { formatClock, formatDate, formatRange } from "../../lib/time";
+import type { SpeakerProfile } from "../../lib/types";
+import { SITE_URL } from "../../config";
+
+export function getStaticPaths() {
+  return speakers.map((speaker) => ({ params: { slug: speaker.slug }, props: { speaker } }));
+}
+
+interface Props {
+  speaker: SpeakerProfile;
+}
+const { speaker } = Astro.props;
+const sessions = sessionsOf(speaker);
+const role = [speaker.title, speaker.company].filter(Boolean).join(" · ");
+const paragraphs = speaker.bio?.split("\n\n") ?? [];
+// The full bio adds nothing when it's no longer than the brief.
+const hasMore = Boolean(speaker.bio && speaker.brief && speaker.bio.length > speaker.brief.length + 20);
+
+// schema.org Person, so search engines can tell who this is.
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${SITE_URL}/speakers/${speaker.slug}/#person`,
+  name: speaker.name,
+  jobTitle: speaker.title ?? undefined,
+  worksFor: speaker.company ? { "@type": "Organization", name: speaker.company } : undefined,
+  description: speaker.brief ?? undefined,
+  image: speaker.photoUrl ?? undefined,
+  sameAs: speaker.links.map((l) => l.url),
+  url: `${SITE_URL}/speakers/${speaker.slug}/`,
+}).replace(/</g, "\\u003c");
+---
+
+<BaseLayout title={`${speaker.name} · Speakers · AfroTech 2026 Planner`} active="none" description={speaker.brief ?? undefined}>
+  <p class="back"><a href="/speakers/">← Speakers</a></p>
+
+  <header class="profile-head">
+    <SpeakerPhoto name={speaker.name} url={speaker.photoUrl} size={96} priority />
+    <div>
+      <h1>{speaker.name}</h1>
+      {role && <p class="muted role">{role}</p>}
+    </div>
+  </header>
+
+  {
+    speaker.brief && (
+      <section class="brief" aria-labelledby="brief-title">
+        <h2 id="brief-title" class="mono">In brief</h2>
+        <p>{speaker.brief}</p>
+      </section>
+    )
+  }
+
+  {
+    hasMore && (
+      <details class="bio">
+        <summary>Read the full bio</summary>
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </details>
+    )
+  }
+
+  {
+    speaker.links.length > 0 && (
+      <ul class="links" aria-label="Links">
+        {speaker.links.map((l) => (
+          <li>
+            <a class="button" href={l.url} rel="noopener noreferrer">{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  {
+    sessions.length > 0 && (
+      <section aria-labelledby="sessions-title">
+        <h2 id="sessions-title" class="mono">Sessions</h2>
+        <Timeline label={`Sessions with ${speaker.name}`}>
+          {sessions.map((event) => (
+            <>
+              {/* No hour headers here, so the day line carries AM/PM. */}
+              <p class="day mono">
+                {event.start ? `${formatDate(event.start)} · ${formatRange(event.start, event.end)}` : event.date}
+              </p>
+              <TimelineRow
+                time={event.start ? formatClock(event.start) : (event.timeLabel ?? "TBA")}
+                datetime={event.start ?? undefined}
+                data-row
+                data-event-id={event.id}
+                data-start={event.start ?? undefined}
+                data-end={event.end ?? undefined}
+              >
+                <EventCard event={event} />
+              </TimelineRow>
+            </>
+          ))}
+        </Timeline>
+      </section>
+    )
+  }
+
+  <p class="credit muted">
+    Bio, photo and links from the official AfroTech 2026 schedule.
+  </p>
+  <SourcesFooter />
+</BaseLayout>
+
+<script is:inline type="application/ld+json" set:html={jsonLd} />
+
+<style>
+  .back {
+    margin: var(--space-6) 0 var(--space-4);
+  }
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .profile-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+  .role {
+    margin: var(--space-1) 0 0;
+  }
+  h2 {
+    margin: var(--space-6) 0 var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  .brief p {
+    margin: 0;
+    font-size: var(--text-lg);
+    line-height: 1.4;
+  }
+  .bio {
+    margin-top: var(--space-4);
+  }
+  .bio summary {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--accent);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .bio p {
+    overflow-wrap: anywhere;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .day {
+    margin: var(--space-2) 0 0 calc(var(--rail-time) + var(--rail-dot) + var(--space-2));
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  .credit {
+    margin-top: var(--space-8);
+    font-size: var(--text-xs);
+  }
+</style>

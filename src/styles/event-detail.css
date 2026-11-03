@@ -1,3 +1,4 @@
+@import "./speaker-photo.css";
 /* Event details. Shared by the event page and the schedule's bottom sheet,
    which loads details from that page, so it lives outside the component. */
   .detail {
@@ -71,8 +72,26 @@
     padding-left: var(--space-4);
   }
   .detail .speakers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
     margin: 0;
-    padding-left: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+  .detail .speakers li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .detail .speakers .who {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    font-size: var(--text-sm);
+  }
+  .detail .speakers a {
+    color: var(--ink);
   }
   .detail .description {
     white-space: pre-line;
