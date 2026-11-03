@@ -53,6 +53,9 @@ npm run deploy    # manual deploy; needs a one-time `npx wrangler login`
 
 Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
 
+The build also writes `dist/sw.js` (the offline service worker) from
+`src/sw/sw.template.js`; edit the template, not the output.
+
 ## Review rules
 
 - **Plans before code.** Write or update a plan in `docs/plans/` and wait for the
