@@ -342,18 +342,34 @@ def load_event_pages():
         return {}
 
 
-def apply_event_pages(rows, pages):
-    """Fill fields the community lists leave empty from each event's own page.
+def same_text(a, b):
+    """Equal apart from case, spacing and punctuation."""
+    norm = lambda t: re.sub(r"[^a-z0-9]+", " ", (t or "").lower()).strip()
+    return norm(a) == norm(b)
 
-    Plan 0008, todo 034. The lists stay the source of truth: a page fills only
-    an empty address, venue, start, end, price or description, and only when
-    it's about the same day (and the same start time, for the end). Returns
-    copies of the rows, which the caller must not write back to the CSV, and
-    the places where a page disagrees with a list, for a person to check.
+
+def apply_event_pages(rows, pages):
+    """Check each side event against its own page, and let the page win.
+
+    Plan 0008. Each event's own page (its "official link") is the authority on
+    its name, date, start and end time, and location; when a page was read and
+    says something different, the page's version is used. A page read without
+    any location removes ours. Price and description only fill gaps.
+
+    Nothing changes when a page wasn't read, has no Event block, or is shared
+    by rows on several days (a series page can't speak for each day). Event
+    ids keep coming from the list's own date and name (_id_date, _id_title),
+    so a rename doesn't break saved plans or notes.
+
+    Returns copies of the rows, which the caller must not write back to the
+    CSV, and every change made, for a person to check.
     """
-    filled_rows, differences = [], []
-    # A link shared by rows on several days is a series page: its one date
-    # can't be checked against each row, so those rows are left alone.
+    out_rows, changes = [], []
+    # Pages can move an event within the week the lists cover, not beyond it:
+    # a page showing another month is a recurring event's next date.
+    list_days = sorted(r["date"] for r in rows) or [""]
+    first_day = (date.fromisoformat(list_days[0]) - timedelta(days=1)).isoformat() if list_days[0] else ""
+    last_day = (date.fromisoformat(list_days[-1]) + timedelta(days=1)).isoformat() if list_days[-1] else ""
     days_per_url = {}
     for r in rows:
         days_per_url.setdefault((r.get("rsvp") or "").strip(), set()).add(r["date"])
@@ -361,54 +377,90 @@ def apply_event_pages(rows, pages):
         url = (r.get("rsvp") or "").strip()
         page = (pages.get(url) or {}).get("event")
         if not page or len(days_per_url.get(url, ())) > 1:
-            filled_rows.append(r)
+            out_rows.append(r)
             continue
-        r2 = dict(r)
-        filled = []
+        r2 = {**r, "_id_date": r["date"], "_id_title": r["event"], "_id_start": r["start"]}
 
-        def differ(field, ours, theirs):
-            differences.append({"date": r["date"], "title": r["event"].strip(), "url": url,
-                                "field": field, "list": ours, "page": theirs})
+        def change(field, ours, theirs):
+            changes.append({"date": r["date"], "title": r["event"].strip(), "url": url,
+                            "field": field, "list": ours or "(none)", "page": theirs or "(none)"})
+
+        if page.get("status"):
+            change("status", "on", page["status"])
 
         page_start = page.get("start")
         page_day = (page_start or page.get("startDay") or "")[:10]
-        if page.get("status"):
-            differ("status", "on", page["status"])
-        if page_day and page_day != r["date"]:
-            # Another day (a series, or a moved event): fill nothing, flag it.
-            differ("date", r["date"], page_day)
-            filled_rows.append(r)
+        if page_day and not (first_day <= page_day <= last_day):
+            # Another occurrence, not this one: change nothing, but list it.
+            change("date", r["date"], f"{page_day} (outside the week; not applied)")
+            out_rows.append(r)
             continue
-        ours_start = iso(r["date"], r["start"])
-        if ours_start and page_start and ours_start != page_start:
-            differ("start", r["start"].strip(), clock(datetime.fromisoformat(page_start)))
-        if not ours_start and page_start:
-            r2["start"] = clock(datetime.fromisoformat(page_start))
-            filled.append("start")
-            ours_start = page_start
-        page_end = page.get("end")
-        if not r["end"].strip() and page_end and page_start and ours_start == page_start:
-            length = datetime.fromisoformat(page_end) - datetime.fromisoformat(page_start)
-            if timedelta(0) < length <= timedelta(hours=24):
-                r2["end"] = clock(datetime.fromisoformat(page_end))
-                filled.append("end")
-        # The venue fills only with the address: naming a venue for a row that
-        # has an address would change its venue key and detach hand-added map
-        # fields in data/venues.json.
-        if not r["address"].strip() and page.get("address"):
-            r2["address"] = page["address"]
-            filled.append("address")
-            if not r["venue"].strip() and page.get("venue") and page["venue"] != "Online":
-                r2["venue"] = page["venue"]
-                filled.append("venue")
+
+        # Name, without a ticket site's branding ("… | Eventbrite").
+        title = re.sub(r"\s*[|–-]\s*(eventbrite|posh|luma|partiful)\s*$", "", page.get("title") or "", flags=re.I)
+        if title and not same_text(title, r["event"]):
+            r2["event"] = title
+            change("name", r["event"].strip(), title)
+
+        # Date and times.
+        if page_day and page_day != r["date"]:
+            r2["date"] = page_day
+            change("date", r["date"], page_day)
+        if page_start:
+            start_clock = clock(datetime.fromisoformat(page_start))
+            if iso(r2["date"], r["start"]) != page_start:
+                r2["start"] = start_clock
+                change("start", r["start"].strip(), start_clock)
+            page_end = page.get("end")
+            length = (datetime.fromisoformat(page_end) - datetime.fromisoformat(page_start)) if page_end else None
+            if length is not None and timedelta(0) < length <= timedelta(hours=24):
+                end_clock = clock(datetime.fromisoformat(page_end))
+                if first_time(r["end"]) != end_clock:
+                    r2["end"] = end_clock
+                    change("end", r["end"].strip(), end_clock)
+            elif r2["start"] != r["start"] and r["end"].strip():
+                # A new start with no usable end: our old end may now come first.
+                r2["end"] = ""
+                change("end", r["end"].strip(), "")
+
+        # Location: the page's, or none if the page gives none. A page that
+        # gives less than we have (only a city, or a venue name without an
+        # address, as many show until you RSVP) doesn't replace our address.
+        venue, address = page.get("venue") or "", page.get("address") or ""
+        if venue == "Online":
+            venue, address = "Online", ""
+        ours_venue, ours_address = r["venue"].strip(), r["address"].strip()
+        ours = " · ".join(x for x in (ours_venue, ours_address) if x)
+        theirs = " · ".join(x for x in (venue, address) if x)
+        on_site = "george r. brown" in ours.lower() or "grb" in ours.lower().split()
+        vague = venue != "Online" and not street(address or "") and bool(street(ours_address))
+        if not venue and not address:
+            if ours:
+                r2["venue"], r2["address"] = "", ""
+                change("location", ours, "none on the page (removed)")
+        elif on_site or vague:
+            pass  # keep ours: the convention center's map spot, or a fuller address
+        elif address and street(address) and street(address) == street(ours_address):
+            pass  # same place, written differently
+        elif address and not ours_address and (not ours_venue or same_text(venue, ours_venue)):
+            r2["address"] = address  # a gap, not a disagreement
+            if venue and not ours_venue:
+                r2["venue"] = venue
+        elif not address and not ours_address and same_text(venue, ours_venue):
+            pass
+        else:
+            r2["venue"], r2["address"] = venue, address
+            change("location", ours, theirs)
+
+        # Gaps only.
         for field in ("price", "description"):
             if not (r.get(field) or "").strip() and page.get(field):
                 r2[field] = page[field]
-                filled.append(field)
-        if filled:
+
+        if any(r2.get(k) != r.get(k) for k in ("event", "date", "start", "end", "venue", "address", "price", "description")):
             r2["source"] = ", ".join(p for p in (r.get("source", "").strip(), "event page") if p)
-        filled_rows.append(r2)
-    return filled_rows, differences
+        out_rows.append(r2)
+    return out_rows, changes
 
 
 def side_events(rows, venues):
@@ -433,9 +485,14 @@ def side_events(rows, venues):
                 entry.setdefault("address", address)
         # Date + title keeps ids stable across refreshes; the start time only
         # separates two same-titled events on one day.
-        event_id = "side-" + hashlib.sha1(f"{r['date']}|{slug(title)}".encode()).hexdigest()[:12]
+        # Ids come from the list's own date and name, even when the event's
+        # page renamed or moved it (apply_event_pages), so saved plans and
+        # notes keep pointing at the right event.
+        id_date, id_title = r.get("_id_date", r["date"]), r.get("_id_title", title).strip()
+        id_start = r.get("_id_start", r["start"])
+        event_id = "side-" + hashlib.sha1(f"{id_date}|{slug(id_title)}".encode()).hexdigest()[:12]
         if event_id in seen_ids:
-            event_id = "side-" + hashlib.sha1(f"{r['date']}|{slug(title)}|{r['start']}".encode()).hexdigest()[:12]
+            event_id = "side-" + hashlib.sha1(f"{id_date}|{slug(id_title)}|{id_start}".encode()).hexdigest()[:12]
         seen_ids.add(event_id)
         events.append({
             "id": event_id,

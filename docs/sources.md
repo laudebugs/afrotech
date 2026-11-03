@@ -15,12 +15,13 @@ manual export because OneDrive blocks automated downloads.
 
 The scripts write the merged results to `data/sessions.json`, `data/sessions.csv` and `data/side-events.csv`.
 
-Each side event's own page (posh.vip, Eventbrite, Luma and others) fills
-details the lists leave empty: address, venue, end time, price and
-description (plan 0008). `scripts/enrich_events.py` reads the page's
-schema.org Event block at most once a day into `data/event-pages.json`, and
-the build uses it only for empty fields. Where a page disagrees with a list,
-`schedule/side-events.md` lists the difference for review instead.
+Each side event is checked against its own page (posh.vip, Eventbrite, Luma
+and others; plan 0008). `scripts/enrich_events.py` reads the page's
+schema.org Event block at most once a day into `data/event-pages.json`. The
+build then uses the page's name, date, times and location wherever they
+differ from the lists, removes our location when a read page has none, and
+fills an empty price or description. `schedule/side-events.md` lists every
+change for review.
 
 ## Map and venue sources
 

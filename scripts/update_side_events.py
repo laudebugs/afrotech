@@ -209,6 +209,30 @@ def main():
 
     write_csv("data/side-events.csv", events, FIELDS)
 
+    out = markdown(events)
+    write_text("schedule/side-events.md", "\n".join(out) + "\n")
+    print(f"Wrote {len(events)} side events across {len({e['date'] for e in events})} days.")
+    build_events.write(*built)
+
+    # Then read each event's own page (at most once a day per page), from the
+    # list just written, and rebuild with it. Everything above is already
+    # saved, so a problem here costs only this run's page data.
+    try:
+        enrich_events.main([])
+        pages = build_events.load_event_pages()
+        rebuilt = build_events.build(side_rows=events, pages=pages)
+    except Exception as err:  # noqa: BLE001 - never undo the side-event refresh
+        print(f"Event pages not used this run: {err!r}", file=sys.stderr)
+        return
+    build_events.write(*rebuilt)
+    # The day tables show events as the site does, after their pages' changes.
+    shown, _ = build_events.apply_event_pages(events, pages)
+    write_text("schedule/side-events.md", "\n".join(markdown(sorted(shown, key=sort_key))
+                                                   + page_differences(events, pages)) + "\n")
+
+
+def markdown(events):
+    """schedule/side-events.md's day-by-day tables, from rows as the site shows them."""
     by_day = defaultdict(list)
     for e in events:
         by_day[e["date"]].append(e)
@@ -242,36 +266,23 @@ def main():
             star = "⭐ " if e["founder_investor_pick"] == "yes" else ""
             out.append(f"| {cell(time)} | {star}**{cell(e['event'])}** | {cell(e['host'])} | "
                        f"{cell(e['venue'])} | {cell(e['price'])} | {cell(e['registration'])} | {rsvp} |")
-    write_text("schedule/side-events.md", "\n".join(out) + "\n")
-    print(f"Wrote {len(events)} side events across {len(by_day)} days.")
-    build_events.write(*built)
-
-    # Then read each event's own page (at most once a day per page), from the
-    # list just written, and rebuild with it. Everything above is already
-    # saved, so a problem here costs only this run's page data.
-    try:
-        enrich_events.main([])
-        pages = build_events.load_event_pages()
-        rebuilt = build_events.build(side_rows=events, pages=pages)
-    except Exception as err:  # noqa: BLE001 - never undo the side-event refresh
-        print(f"Event pages not used this run: {err!r}", file=sys.stderr)
-        return
-    build_events.write(*rebuilt)
-    write_text("schedule/side-events.md", "\n".join(out + page_differences(events, pages)) + "\n")
+    return out
 
 
 def page_differences(events, pages):
-    """Where an event's own page disagrees with the lists, for a person to check (plan 0008)."""
-    _, diffs = build_events.apply_event_pages(events, pages)
-    if not diffs:
+    """What each event's own page changed, for a person to check (plan 0008)."""
+    _, changes = build_events.apply_event_pages(events, pages)
+    if not changes:
         return []
-    names = {"status": "Status", "date": "Date", "start": "Start time"}
-    out = ["", "## Event pages that disagree", "",
-           "Each event's own page was read for missing details. These rows differ from the",
-           "lists, which the site keeps; check the page and fix the list if it's out of date.", "",
+    names = {"status": "Status", "name": "Name", "date": "Date", "start": "Start", "end": "End",
+             "location": "Location"}
+    out = ["", "## Changes from event pages", "",
+           "Each side event was checked against its own page, and the site uses the page's",
+           "name, date, times and location. A page with no location removes ours. These rows",
+           "differ from the lists; the site shows the page's version (a status is shown here only).", "",
            "| Date | Event | What | List says | Page says |",
            "|------|-------|------|-----------|-----------|"]
-    for d in sorted(diffs, key=lambda d: (d["date"], d["title"])):
+    for d in sorted(changes, key=lambda d: (d["date"], d["title"], d["field"])):
         out.append(f"| {d['date']} | {link(cell(d['title']), d['url'])} | {names.get(d['field'], d['field'])} | "
                    f"{cell(d['list'])} | {cell(d['page'])} |")
     return out

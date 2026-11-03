@@ -30,16 +30,33 @@ block. It uses Python's standard library, like the other scripts.
 
 ### What it changes, and what it leaves alone
 
-The community lists stay the source of truth. The script only **fills empty
-fields**: address, end time, description and price. When an event page
-disagrees with a list, for example on the start time, the script doesn't
-overwrite the list. It records the difference in a review table in
-`schedule/side-events.md`, so a person can check it.
+**Updated November 3, at your request:** each event's own page is now the
+authority on its name, date, start and end time, and location. Where a page
+was read and says something different, the site uses the page's version. A
+page read without any location removes ours. A page that gives less than we
+have (only a city, or a venue name without an address, as many do until you
+RSVP) doesn't replace our address, and convention-center events keep their
+map spot. Price and description still only fill gaps.
 
-Results go to `data/event-pages.json`, cached by URL with the date
-read. `build_events.py` merges them, and each event's `sources` names the page
-that filled a field. Event pages are fetched at most once a day, one at a
-time, with a plain user agent and no sign-in.
+Three safeguards keep this from doing harm:
+
+- **Only pages that were read change anything.** A page that fails to load,
+  has no Event block, is shared by events on several days (a series page), or
+  shows a date outside the week (a recurring event's next date) changes
+  nothing.
+- **Ids don't change.** An event's id still comes from the list's own date
+  and name, so a rename or a move doesn't break saved plans or notes.
+- **Every change is listed.** "Changes from event pages" in
+  `schedule/side-events.md` shows what the list said and what the page says,
+  and cancellations appear there too.
+
+Small differences in spelling ("St" or "Street", case or punctuation) don't
+count as changes. The CSV of lists keeps the lists' own values; the change
+happens when the site's events are built.
+
+Results go to `data/event-pages.json`, cached by URL with the date read, and
+each changed event's `sources` includes "event page". Event pages are fetched
+at most once a day, one at a time, with a plain user agent and no sign-in.
 
 New addresses also go through `geocode.py`, so these events gain pins on the
 city map.
@@ -82,6 +99,7 @@ city map.
 | 032 | Directions open a maps app on phones, with a chooser on iPhone |
 | 033 | `enrich_events.py`: read JSON-LD from side-event pages into `data/event-pages.json` |
 | 034 | Merge the results into events, the review table and the refresh Action |
+| 035 | Let the page win on name, date, times and location (your November 3 request) |
 
 Todo 032 doesn't depend on the others, so it ships first.
 
