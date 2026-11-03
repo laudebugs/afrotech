@@ -2,7 +2,7 @@
 // precache list and a build id that changes only when the template or a
 // precached file does.
 import { createHash } from "node:crypto";
-import { readdir, readFile, writeFile } from "node:fs/promises";
+import { readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -27,7 +27,14 @@ export default function serviceWorker() {
         const url = (file) => "/" + relative(out, file).split(sep).join("/");
 
         // Hashed CSS, JS and woff2 fonts (the woff fallbacks are for old browsers).
-        const assets = files.filter((f) => /\/_astro\/.+\.(css|js|woff2)$/.test(url(f))).map(url);
+        // Files over 200 KB (the city map's MapLibre bundles, ~1.6 MB) aren't
+        // precached for every visitor; the cache-first rule for /_astro/ saves
+        // them the first time the city map is opened.
+        const MAX_PRECACHE_BYTES = 200 * 1024;
+        const assets = [];
+        for (const f of files.filter((f) => /\/_astro\/.+\.(css|js|woff2)$/.test(url(f)))) {
+          if ((await stat(f)).size <= MAX_PRECACHE_BYTES) assets.push(url(f));
+        }
         // Every day's schedule page.
         const days = files
           .map(url)

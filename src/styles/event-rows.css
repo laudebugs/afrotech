@@ -1,0 +1,46 @@
+/* Event lists built in the browser by src/scripts/event-rows.ts. */
+.event-rows {
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.event-rows li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+}
+.event-rows li[data-live] {
+  border-left: 3px solid var(--live);
+  padding-left: var(--space-2);
+}
+.event-rows p {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+.event-rows a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+.star-button {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: var(--tap);
+  height: var(--tap);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+.star-button[aria-pressed="true"] {
+  color: var(--accent);
+}
+.star-button[aria-pressed="true"] svg {
+  fill: currentColor;
+}

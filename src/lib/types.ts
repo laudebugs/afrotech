@@ -118,6 +118,17 @@ export type MapEvent = {
   place: string;
 };
 
+/** One side event as the city map needs it. */
+export type CityEvent = {
+  id: string;
+  title: string;
+  start: string | null;
+  end: string | null;
+  date: string;
+  venue: string;
+  host: string | null;
+};
+
 export type VenueKind = "grb" | "marriott" | "outdoor" | "offsite" | "unplaced";
 
 export type Venue = {

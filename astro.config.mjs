@@ -26,5 +26,7 @@ export default defineConfig({
   integrations: [serviceWorker()],
   vite: {
     define: { "import.meta.env.PUBLIC_UPDATED_AT": JSON.stringify(commitTime()) },
+    // MapLibre's worker (city map) is an ES module.
+    worker: { format: "es" },
   },
 });

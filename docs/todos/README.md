@@ -23,7 +23,7 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers).
 
 | # | Task | Phase | Status |
 |---|------|-------|--------|
-| [001](001-scaffold-astro-cloudflare.md) | Scaffold Astro and deploy to Cloudflare | 0 | doing |
+| [001](001-scaffold-astro-cloudflare.md) | Scaffold Astro and deploy to Cloudflare | 0 | done |
 | [002](002-normalise-event-data.md) | Normalise event data to one schema | 0 | done |
 | [003](003-design-tokens-and-layout.md) | Design tokens, base layout and tab bar | 0 | done |
 | [004](004-schedule-pages.md) | Schedule pages with filters and search | 1 | done |
@@ -31,7 +31,7 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers).
 | [006](006-now-view.md) | Now view | 1 | done |
 | [007](007-trace-floor-plan.md) | Trace GRB floor plan SVGs + venues mapping | 2 | done |
 | [008](008-interactive-floor-map.md) | Interactive floor map component | 2 | done |
-| [009](009-city-map.md) | Geocode side events + city map | 2 | todo |
+| [009](009-city-map.md) | Geocode side events + city map | 2 | done |
 | [010](010-near-me.md) | Near me (geolocation + "I'm at…") | 3 | todo |
 | [011](011-notes-on-site.md) | Public notes: write in the browser, publish through GitHub | 1 | done |
 | [012](012-auto-refresh-data.md) | Scheduled data refresh | 3 | done |

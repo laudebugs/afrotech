@@ -1,0 +1,36 @@
+---
+// Switches between the convention center map and the city map of side events.
+interface Props {
+  current: "venue" | "city";
+}
+const { current } = Astro.props;
+---
+
+<nav class="map-switch" aria-label="Map">
+  <a href="/map/" aria-current={current === "venue" ? "page" : undefined}>Convention center</a>
+  <a href="/map/city/" aria-current={current === "city" ? "page" : undefined}>City</a>
+</nav>
+
+<style>
+  .map-switch {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    color: var(--ink);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    background: var(--surface);
+  }
+  a[aria-current="page"] {
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+</style>
