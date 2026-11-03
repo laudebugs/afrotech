@@ -108,6 +108,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 
 <script>
   import { readPlan } from "../../lib/plan";
+  import { dayKey, eventEndMs, previewNow } from "../../lib/time";
 
   type Flag = "plan" | "free" | "picks";
   type Filters = { kind: string; plan: boolean; free: boolean; picks: boolean; track: string; q: string };
@@ -197,9 +198,33 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   // Starring or unstarring changes what the My plan filter shows.
   document.addEventListener("plan-change", () => apply(read()));
 
+  // Read before write() tidies the URL, which drops a ?now= preview time.
+  const openedAt = previewNow();
   const initial = read();
   write(initial);
   apply(initial);
+
+  // On today's page, open at the current hour: the first shown event starting
+  // this hour or later (all-day events like registration stay above), else the
+  // first one still running. Coming back (Back button) or to a #link keeps
+  // that position.
+  const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+  if (!location.hash && navigation?.type !== "back_forward") {
+    const pageDay = location.pathname.split("/").filter(Boolean).pop();
+    const hourStart = openedAt - (openedAt % 3600_000); // Houston is a whole-hour offset
+    const shown = rows.filter((r) => !r.hidden && r.dataset.start);
+    const current =
+      shown.find((r) => Date.parse(r.dataset.start!) >= hourStart) ??
+      shown.find((r) => openedAt < eventEndMs(r.dataset.start!, r.dataset.end ?? null));
+    // Only on today's page once the day has started; before that, the top is right.
+    if (pageDay === dayKey(new Date(openedAt)) && current && current !== rows.find((r) => !r.hidden)) {
+      // The first event of an hour scrolls with its hour label. Wait for the
+      // fonts, which change the height of everything above.
+      const group = current.closest<HTMLElement>("[data-group]")!;
+      const target = group.querySelector("[data-row]:not([hidden])") === current ? group : current;
+      document.fonts.ready.then(() => requestAnimationFrame(() => target.scrollIntoView({ block: "start" })));
+    }
+  }
 
   // Open event details in the bottom sheet; the link still works without JS.
   const sheet = document.querySelector<HTMLDialogElement>("#event-sheet")!;
@@ -243,6 +268,13 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 </script>
 
 <style>
+  /* Scrolling to an event leaves room for the sticky header and hour label. */
+  .timeline :global([data-row]) {
+    scroll-margin-top: calc(var(--sticky-offset, 0px) + var(--space-12));
+  }
+  .group {
+    scroll-margin-top: var(--sticky-offset, 0px);
+  }
   .title-row {
     display: flex;
     flex-wrap: wrap;
