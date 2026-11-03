@@ -1,6 +1,6 @@
 // Plan sync (plan 0002, todo 016): each star is its own row, and the latest
 // change wins. Unstars are kept as starred = 0 so they reach other devices.
-import type { Env, SignedInUser } from "./session";
+import type { SignedInUser } from "./session";
 
 export type PlanItem = { eventId: string; starred: boolean; updatedAt: number };
 

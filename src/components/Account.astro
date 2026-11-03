@@ -1,0 +1,96 @@
+---
+// Optional Google sign-in (plan 0002): keeps My plan in step across devices.
+// Signed out, the site works exactly as before.
+import { GOOGLE_CLIENT_ID, SIGN_IN_HOSTS } from "../config";
+---
+
+<section
+  class="account"
+  aria-labelledby="account-title"
+  data-account
+  data-client-id={GOOGLE_CLIENT_ID}
+  data-hosts={SIGN_IN_HOSTS.join(" ")}
+>
+  <h2 id="account-title" class="visually-hidden">Account</h2>
+
+  <div data-state="signed-out" hidden>
+    <p>
+      <strong>Sync your plan.</strong> Sign in with Google to keep your stars on every device. Optional;
+      everything works without it. <a href="/privacy/">What we store</a>.
+    </p>
+    <div class="google-button" data-google-button></div>
+  </div>
+
+  <p data-state="unavailable" class="muted" hidden>
+    Sign-in works on <a href="https://afrotech26.laudebugs.me/plan/">afrotech26.laudebugs.me</a>, not on preview links.
+  </p>
+
+  <div data-state="signed-in" class="signed-in" hidden>
+    <img data-picture alt="" width="40" height="40" referrerpolicy="no-referrer" hidden />
+    <p>Signed in as <strong data-name></strong>. Your plan syncs across your devices.</p>
+    <div class="buttons">
+      <button type="button" class="button" data-sign-out>Sign out</button>
+      <button type="button" class="button danger" data-delete>Delete my data</button>
+    </div>
+  </div>
+
+  <p class="status" role="status" data-account-status></p>
+</section>
+
+<script>
+  import "../scripts/account";
+</script>
+
+<style>
+  .account {
+    margin-top: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    font-size: var(--text-sm);
+  }
+  .account p {
+    margin: 0;
+  }
+  .google-button {
+    margin-top: var(--space-3);
+    min-height: var(--tap);
+  }
+  .signed-in {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .signed-in img {
+    border-radius: 50%;
+  }
+  .signed-in p {
+    flex: 1 1 200px;
+  }
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .button {
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .button.danger {
+    color: var(--warn);
+  }
+  .status:empty {
+    display: none;
+  }
+  .status {
+    margin-top: var(--space-2) !important;
+  }
+</style>
