@@ -11,8 +11,10 @@ import type { ScheduleEvent } from "../lib/types";
 interface Props {
   event: ScheduleEvent;
   headingLevel?: "h1" | "h2";
+  /** Published notes about this event. */
+  notes?: { id: string; title: string }[];
 }
-const { event, headingLevel = "h1" } = Astro.props;
+const { event, headingLevel = "h1", notes = [] } = Astro.props;
 const Heading = headingLevel;
 
 const when = event.start
@@ -50,7 +52,21 @@ const facts = [
     {event.rsvpUrl && <a class="button primary" href={event.rsvpUrl} rel="noopener">RSVP</a>}
     {event.start && <a class="button" href={`/event/${event.id}.ics`} download>Add to calendar</a>}
     {mapsUrl && <a class="button" href={mapsUrl} rel="noopener">Directions</a>}
+    <a class="button" href={`/notes/new/?event=${event.id}`}>Write a note</a>
   </div>
+
+  {
+    notes.length > 0 && (
+      <section>
+        <h3>Notes</h3>
+        <ul class="notes">
+          {notes.map((n) => (
+            <li><a href={`/notes/${n.id}/`}>{n.title}</a></li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 
   {
     event.speakers.length > 0 && (
