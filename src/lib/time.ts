@@ -49,6 +49,9 @@ export const formatLongDate = (value: string | Date) => longDateFmt.format(asDat
 /** "2026-11-04": the Houston calendar day an instant falls on. */
 export const dayKey = (value: string | Date) => dayKeyFmt.format(asDate(value));
 
+/** Noon on a Houston day ("2026-11-04"), safe to format as that date anywhere. */
+export const dayNoon = (day: string) => `${day}T12:00:00-06:00`;
+
 /** Default length of an event with no end time, as in the calendar export. */
 export const DEFAULT_EVENT_MS = 3600_000;
 

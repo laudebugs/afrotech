@@ -2,6 +2,7 @@
 // The convention center map: three levels, rooms coloured by what's on today,
 // tap a room for its sessions. The "Today" list below covers the same rooms
 // for keyboard and screen-reader users, plus places that aren't on the map.
+import "../../styles/event-rows.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BottomSheet from "../../components/BottomSheet.astro";
 import MapSwitch from "../../components/MapSwitch.astro";
@@ -109,6 +110,7 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   import Panzoom from "@panzoom/panzoom";
   import { readPlan } from "../../lib/plan";
   import { syncPlan } from "../../scripts/plan-ui";
+  import { eventRow } from "../../scripts/event-rows";
   import { dayKey, eventEndMs, everyMinute, formatDate, formatRange, previewNow } from "../../lib/time";
   import type { MapArea, MapEvent } from "../../lib/types";
 
@@ -288,8 +290,6 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   // --- Room sheet ---------------------------------------------------------
   const sheet = document.querySelector<HTMLDialogElement>("#area-sheet")!;
   const body = sheet.querySelector<HTMLElement>("[data-area-body]")!;
-  const starIcon =
-    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3"/></svg>';
 
   /** Marks one room selected; it stays marked after its sheet closes. */
   function select(id: string) {
@@ -340,28 +340,11 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
       frag.append(p);
     } else {
       const ul = document.createElement("ul");
-      ul.className = "sessions";
+      ul.className = "event-rows";
       for (const e of shown) {
-        const li = document.createElement("li");
         const live = isLive(e, t);
-        if (live) li.dataset.live = "";
-        const text = document.createElement("div");
-        const time = document.createElement("p");
-        time.className = "muted";
-        time.textContent = `${formatRange(e.start, e.end)}${live ? " · live" : ""}${e.place !== area.label ? ` · ${e.place}` : ""}`;
-        const a = document.createElement("a");
-        a.href = `/event/${e.id}/`;
-        a.textContent = e.title;
-        text.append(time, a);
-        const star = document.createElement("button");
-        star.type = "button";
-        star.className = "star";
-        star.dataset.star = e.id;
-        star.dataset.title = e.title;
-        star.setAttribute("aria-label", `My plan: ${e.title}`);
-        star.innerHTML = starIcon;
-        li.append(text, star);
-        ul.append(li);
+        const where = e.place !== area.label ? ` · ${e.place}` : "";
+        ul.append(eventRow({ id: e.id, title: e.title, before: `${formatRange(e.start, e.end)}${live ? " · live" : ""}${where}`, live }));
       }
       frag.append(ul);
     }
@@ -717,50 +700,5 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   .area-sheet .note {
     margin: var(--space-1) 0 0;
     font-size: var(--text-sm);
-  }
-  .area-sheet .sessions {
-    display: flex;
-    flex-direction: column;
-    margin: var(--space-3) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .area-sheet .sessions li {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-2);
-    padding: var(--space-2) 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .area-sheet .sessions li[data-live] {
-    border-left: 3px solid var(--live);
-    padding-left: var(--space-2);
-  }
-  .area-sheet .sessions p {
-    margin: 0;
-    font-size: var(--text-sm);
-  }
-  .area-sheet .sessions a {
-    color: var(--ink);
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .area-sheet .star {
-    flex: none;
-    display: inline-grid;
-    place-items: center;
-    width: var(--tap);
-    height: var(--tap);
-    border: 0;
-    border-radius: var(--radius-sm);
-    background: none;
-    color: var(--muted);
-    cursor: pointer;
-  }
-  .area-sheet .star[aria-pressed="true"] {
-    color: var(--accent);
-  }
-  .area-sheet .star[aria-pressed="true"] svg {
-    fill: currentColor;
   }
 </style>

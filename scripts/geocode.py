@@ -14,6 +14,7 @@ import json
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -36,9 +37,15 @@ def clean(address):
 
 
 # Words that mark an address as a placeholder, not a location.
-PLACEHOLDERS = ("shared", "tba", "tbd", "approved", "rsvp", "dm for", "upon", "announced")
-# Bump when the matching rules change, so earlier misses get another try.
-RULES = 2
+PLACEHOLDERS = ("shared", "tba", "tbd", "approved", "rsvp", "dm for", "upon", "announced", "info section")
+# Starts with a house number, e.g. "2301 Main St" or "4007B Greenbriar Dr".
+HOUSE_NUMBER = re.compile(r"^\s*\d+[a-z]?\s+\w", re.I)
+ZIP = re.compile(r"\b(77\d{3})\b")
+# Version of the matching rules above. Bump it when they change, and every
+# cached address is looked up again under the new rules.
+MATCH_RULES_VERSION = 3
+# Give up after this many lookups fail in a row (rate limiting, an outage).
+MAX_FAILURES_IN_A_ROW = 3
 
 
 def lookup(address):
@@ -63,6 +70,12 @@ def lookup(address):
     precise = "house_number" in hit.get("address", {}) or hit.get("category") not in TOO_BROAD
     if not precise:
         return {"found": False, "why": f"only matched a {hit.get('type', 'region')}"}
+    # A matching house number in another city (e.g. South Houston for a 77002
+    # address) is the wrong place: the postcodes must agree.
+    asked = ZIP.findall(address)
+    got = hit.get("address", {}).get("postcode", "")
+    if asked and not got.startswith(asked[-1]):
+        return {"found": False, "why": f"postcode {got or 'missing'} isn't {asked[-1]}"}
     return {
         "found": True,
         "lat": round(float(hit["lat"]), 6),
@@ -75,23 +88,33 @@ def main():
     events = json.loads((ROOT / "data/events/side.json").read_text(encoding="utf-8"))
     cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
     wanted = sorted({e["address"].strip() for e in events if e.get("address")})
-    # New addresses, plus earlier misses worth retrying under the current rules.
-    retry = {a for a in wanted if not cache.get(a, {}).get("found") and cache.get(a, {}).get("rules") != RULES}
-    todo = [a for a in wanted if a not in cache or a in retry]
-    print(f"{len(wanted)} addresses, {len(todo)} new to look up.")
-    for i, address in enumerate(todo):
-        if any(word in address.lower() for word in PLACEHOLDERS) and not any(c.isdigit() for c in address):
-            cache[address] = {"found": False, "why": "placeholder, not an address", "rules": RULES}
+    # New addresses, plus any looked up under older matching rules.
+    todo = [a for a in wanted if cache.get(a, {}).get("rules") != MATCH_RULES_VERSION]
+    print(f"{len(wanted)} addresses, {len(todo)} to look up.")
+    errors = 0
+    failures_in_a_row = 0
+    for address in todo:
+        lowered = address.lower()
+        if any(word in lowered for word in PLACEHOLDERS) and not HOUSE_NUMBER.match(address):
+            cache[address] = {"found": False, "why": "placeholder, not an address", "rules": MATCH_RULES_VERSION}
             continue
         try:
-            cache[address] = {**lookup(address), "rules": RULES}
-        except Exception as err:  # network trouble: leave it uncached and try next run
-            print(f"  skipped {address!r}: {err}", file=sys.stderr)
-        if i < len(todo) - 1:
-            time.sleep(1.1)  # at most one request per second
+            cache[address] = {**lookup(address), "rules": MATCH_RULES_VERSION}
+            failures_in_a_row = 0
+        except Exception as err:  # leave it uncached; the next run tries again
+            errors += 1
+            failures_in_a_row += 1
+            print(f"  failed {address!r}: {err}", file=sys.stderr)
+            limited = isinstance(err, urllib.error.HTTPError) and err.code in (403, 429)
+            if limited or failures_in_a_row >= MAX_FAILURES_IN_A_ROW:
+                print("  stopping: Nominatim is refusing or unreachable; try again later.", file=sys.stderr)
+                break
+        time.sleep(1.1)  # at most one request per second
     found = sum(1 for a in wanted if cache.get(a, {}).get("found"))
     write_text("data/geocode.json", json.dumps(dict(sorted(cache.items())), indent=2, ensure_ascii=False) + "\n")
     print(f"Wrote data/geocode.json: {found} of {len(wanted)} addresses placed.")
+    if errors:
+        sys.exit(f"{errors} lookup(s) failed; the rest were saved.")
 
 
 if __name__ == "__main__":

@@ -1,20 +1,23 @@
 ---
 // Side events on a map of Houston. Pins come from data/geocode.json
-// (scripts/geocode.py); events without a usable address are listed below.
+// (scripts/geocode.py). Below the map, "Places on the map" gives the same
+// pins as a list (the keyboard and screen-reader path), and "Not on the map"
+// lists events without a usable address.
+import "../../styles/event-rows.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BottomSheet from "../../components/BottomSheet.astro";
 import MapSwitch from "../../components/MapSwitch.astro";
 import SourcesFooter from "../../components/SourcesFooter.astro";
 import { sideEvents } from "../../lib/events";
 import { scheduleDays } from "../../lib/schedule";
-import { formatDate } from "../../lib/time";
+import { dayNoon, formatDate } from "../../lib/time";
+import type { CityEvent, ScheduleEvent } from "../../lib/types";
 import geocodeJson from "../../../data/geocode.json";
 
 type Geo = { found: boolean; lat?: number; lng?: number };
 const geocode = geocodeJson as Record<string, Geo>;
 
-type CityEvent = { id: string; title: string; start: string | null; end: string | null; date: string; venue: string; host: string | null };
-const toCity = (e: (typeof sideEvents)[number]): CityEvent => ({
+const toCityEvent = (e: ScheduleEvent): CityEvent => ({
   id: e.id,
   title: e.title,
   start: e.start,
@@ -31,14 +34,16 @@ for (const e of sideEvents) {
   const geo = e.address ? geocode[e.address.trim()] : undefined;
   if (geo?.found && geo.lat !== undefined && geo.lng !== undefined) {
     const key = `${geo.lat},${geo.lng}`;
-    (pins[key] ??= { lat: geo.lat, lng: geo.lng, venue: e.locationLabel, address: e.address!, events: [] }).events.push(toCity(e));
+    (pins[key] ??= { lat: geo.lat, lng: geo.lng, venue: e.locationLabel, address: e.address!, events: [] }).events.push(
+      toCityEvent(e),
+    );
   } else {
-    unpinned.push({ ...toCity(e), address: e.address });
+    unpinned.push({ ...toCityEvent(e), address: e.address });
   }
 }
 const cityData = { pins: Object.values(pins), unpinned };
 const json = JSON.stringify(cityData).replace(/</g, "\\u003c");
-const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
+const shortDay = (d: string) => formatDate(dayNoon(d)).replace(/,.*?(\d+)$/, " $1");
 ---
 
 <BaseLayout title="City map · AfroTech 2026 Planner" active="map">
@@ -52,7 +57,7 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
       {
         scheduleDays.map((d) => (
           <button type="button" class="chip" data-day={d} aria-pressed="false">
-            {dayLabel(d).replace(/,.*?(\d+)$/, " $1")}
+            {shortDay(d)}
           </button>
         ))
       }
@@ -65,10 +70,15 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
     <p class="status muted" aria-live="polite" data-status></p>
   </section>
 
+  <section class="places" aria-labelledby="places-title">
+    <h2 id="places-title">Places on the map</h2>
+    <ul class="place-list" data-places></ul>
+  </section>
+
   <section class="unpinned" aria-labelledby="unpinned-title">
     <h2 id="unpinned-title">Not on the map</h2>
     <p class="muted">These events have no usable address yet ("shared on approval", TBA) or one the map couldn't place.</p>
-    <ul data-unpinned></ul>
+    <ul class="event-rows" data-unpinned></ul>
   </section>
 
   <BottomSheet id="venue-sheet" label="Events here">
@@ -90,20 +100,17 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
     type GeoJSONSource,
     type MapLayerMouseEvent,
   } from "maplibre-gl";
+  import "maplibre-gl/dist/maplibre-gl.css";
   // MapLibre does its tile work in a module worker; Vite bundles it with its
   // shared code and hands back the URL.
   import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
-  import "maplibre-gl/dist/maplibre-gl.css";
   import { readPlan } from "../../lib/plan";
   import { syncPlan } from "../../scripts/plan-ui";
-  import { dayKey, formatDate, formatRange, previewNow } from "../../lib/time";
+  import { eventRow } from "../../scripts/event-rows";
+  import { dayKey, dayNoon, formatDate, formatRange, previewNow } from "../../lib/time";
+  import type { CityEvent } from "../../lib/types";
 
-  type CityEvent = { id: string; title: string; start: string | null; end: string | null; date: string; venue: string; host: string | null };
   type Pin = { lat: number; lng: number; venue: string; address: string; events: CityEvent[] };
-  const data: { pins: Pin[]; unpinned: (CityEvent & { address: string | null })[] } = JSON.parse(
-    document.getElementById("city-data")!.textContent!,
-  );
-
   type PinFeature = {
     type: "Feature";
     id: number;
@@ -112,6 +119,9 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
   };
   type Pins = { type: "FeatureCollection"; features: PinFeature[] };
 
+  const data: { pins: Pin[]; unpinned: (CityEvent & { address: string | null })[] } = JSON.parse(
+    document.getElementById("city-data")!.textContent!,
+  );
   // The convention center, for orientation.
   const GRB: [number, number] = [-95.3576, 29.7522];
 
@@ -121,10 +131,12 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
   const days = dayButtons.map((b) => b.dataset.day!).filter((d) => d !== "all");
   const params = new URLSearchParams(location.search);
   const today = dayKey(new Date(previewNow()));
-  let day = params.get("day") ?? (days.includes(today) ? today : "all");
+  const asked = params.get("day");
+  // Only a day of the week (or "all") is accepted from the URL.
+  let day = asked === "all" || (asked && days.includes(asked)) ? asked : days.includes(today) ? today : "all";
   let planOnly = params.get("plan") === "1";
 
-  function keep(e: CityEvent): boolean {
+  function matchesFilters(e: CityEvent): boolean {
     return (day === "all" || e.date === day) && (!planOnly || readPlan().includes(e.id));
   }
   function saveFilters() {
@@ -136,27 +148,33 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
   }
 
   // --- Map ----------------------------------------------------------------
-  // MapLibre needs colour strings, so read them from the design tokens.
-  const css = getComputedStyle(document.documentElement);
-  const token = (name: string) => css.getPropertyValue(name).trim();
-  const dark = css.colorScheme.includes("dark");
+  // MapLibre needs colour strings, so the tokens are read at draw time, and
+  // again whenever the theme changes.
+  const token = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const isDark = () => getComputedStyle(document.documentElement).colorScheme.includes("dark");
+  const styleUrl = () => `https://tiles.openfreemap.org/styles/${isDark() ? "dark" : "positron"}`;
+
   setWorkerUrl(workerUrl);
   const map = new MapLibreMap({
     container: document.querySelector<HTMLElement>("[data-city-map]")!,
-    style: `https://tiles.openfreemap.org/styles/${dark ? "dark" : "positron"}`,
+    style: styleUrl(),
     center: GRB,
     zoom: 11.5,
-    attributionControl: { compact: true },
+    attributionControl: { compact: false }, // keep the OpenStreetMap credit visible
     cooperativeGestures: true, // one finger scrolls the page; two fingers move the map
   });
   map.addControl(new NavigationControl({ showCompass: false }), "top-right");
+  new Marker({ color: token("--ink"), scale: 0.8 })
+    .setLngLat(GRB)
+    .setPopup(new Popup({ offset: 24 }).setText("George R. Brown Convention Center"))
+    .addTo(map);
 
   function geojson(): Pins {
     const planned = new Set(readPlan());
     return {
       type: "FeatureCollection",
       features: data.pins.flatMap((pin, i): PinFeature[] => {
-        const events = pin.events.filter(keep);
+        const events = pin.events.filter(matchesFilters);
         if (!events.length) return [];
         return [
           {
@@ -170,21 +188,30 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
     };
   }
 
-  map.on("load", () => {
-    map.addSource("events", { type: "geojson", data: geojson(), cluster: true, clusterRadius: 40, clusterMaxZoom: 14 });
+  /** Adds the pins; runs on every style load, since a new style drops them. */
+  function addPins() {
+    map.addSource("events", {
+      type: "geojson",
+      data: geojson() as unknown as Parameters<GeoJSONSource["setData"]>[0],
+      cluster: true,
+      clusterRadius: 40,
+      clusterMaxZoom: 14,
+      // Clusters count events, like the status line, not venues.
+      clusterProperties: { events: ["+", ["get", "count"]] },
+    });
     map.addLayer({
       id: "clusters",
       type: "circle",
       source: "events",
       filter: ["has", "point_count"],
-      paint: { "circle-color": token("--accent"), "circle-radius": 18, "circle-stroke-color": token("--surface"), "circle-stroke-width": 2 },
+      paint: { "circle-color": token("--accent"), "circle-radius": 22, "circle-stroke-color": token("--surface"), "circle-stroke-width": 2 },
     });
     map.addLayer({
       id: "cluster-count",
       type: "symbol",
       source: "events",
       filter: ["has", "point_count"],
-      layout: { "text-field": ["get", "point_count_abbreviated"], "text-size": 13, "text-font": ["Noto Sans Bold"] },
+      layout: { "text-field": ["get", "events"], "text-size": 14, "text-font": ["Noto Sans Bold"] },
       paint: { "text-color": token("--on-accent") },
     });
     map.addLayer({
@@ -193,72 +220,59 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
       source: "events",
       filter: ["!", ["has", "point_count"]],
       paint: {
-        // Venues with your picks are plum; others are outlined, so the
-        // difference isn't colour alone.
+        // Venues with your picks are filled plum; others are plum rings, so
+        // the difference isn't colour alone.
         "circle-color": ["case", ["==", ["get", "mine"], 1], token("--accent"), token("--surface")],
         "circle-stroke-color": token("--accent"),
         "circle-stroke-width": 3,
-        "circle-radius": 10,
+        "circle-radius": 12,
       },
     });
-    new Marker({ color: token("--ink"), scale: 0.8 })
-      .setLngLat(GRB)
-      .setPopup(new Popup({ offset: 24 }).setText("George R. Brown Convention Center"))
-      .addTo(map);
-
-    map.on("click", "clusters", (e: MapLayerMouseEvent) => {
-      const feature = e.features![0]!;
-      const source = map.getSource("events") as GeoJSONSource;
-      const center = (feature.geometry as unknown as { coordinates: [number, number] }).coordinates;
-      source
-        .getClusterExpansionZoom(feature.properties!.cluster_id as number)
-        .then((zoom: number) => map.easeTo({ center, zoom }));
+    // An invisible 44 px target around each pin, so it's easy to tap.
+    map.addLayer({
+      id: "pin-targets",
+      type: "circle",
+      source: "events",
+      filter: ["!", ["has", "point_count"]],
+      paint: { "circle-radius": 22, "circle-opacity": 0 },
     });
-    map.on("click", "pins", (e: MapLayerMouseEvent) => openPin(e.features![0]!.properties!.pin as number));
-    for (const layer of ["clusters", "pins"]) {
-      map.on("mouseenter", layer, () => (map.getCanvas().style.cursor = "pointer"));
-      map.on("mouseleave", layer, () => (map.getCanvas().style.cursor = ""));
-    }
-    refresh();
+  }
+  map.on("style.load", addPins);
+
+  map.on("click", "clusters", (e: MapLayerMouseEvent) => {
+    const feature = e.features![0]!;
+    const source = map.getSource("events") as GeoJSONSource;
+    const center = (feature.geometry as unknown as { coordinates: [number, number] }).coordinates;
+    source.getClusterExpansionZoom(feature.properties!.cluster_id as number).then((zoom: number) => map.easeTo({ center, zoom }));
   });
+  map.on("click", "pin-targets", (e: MapLayerMouseEvent) => openPin(e.features![0]!.properties!.pin as number));
+  for (const layer of ["clusters", "pin-targets"]) {
+    map.on("mouseenter", layer, () => (map.getCanvas().style.cursor = "pointer"));
+    map.on("mouseleave", layer, () => (map.getCanvas().style.cursor = ""));
+  }
+
+  // The theme toggle (or the device) switching light/dark redraws the map.
+  let dark = isDark();
+  const onThemeChange = () => {
+    if (isDark() === dark) return;
+    dark = isDark();
+    map.setStyle(styleUrl()); // style.load then re-adds the pins in the new colours
+  };
+  new MutationObserver(onThemeChange).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", onThemeChange);
 
   // --- Venue sheet --------------------------------------------------------
   const sheet = document.querySelector<HTMLDialogElement>("#venue-sheet")!;
   const body = sheet.querySelector<HTMLElement>("[data-venue-body]")!;
-  const starIcon =
-    '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3"/></svg>';
 
-  function eventRow(e: CityEvent): HTMLLIElement {
-    const li = document.createElement("li");
-    const text = document.createElement("div");
-    const time = document.createElement("p");
-    time.className = "muted";
-    time.textContent = `${formatDate(e.start ?? `${e.date}T12:00:00-06:00`)} · ${e.start ? formatRange(e.start, e.end) : "Time TBA"}`;
-    const a = document.createElement("a");
-    a.href = `/event/${e.id}/`;
-    a.textContent = e.title;
-    text.append(time, a);
-    if (e.host) {
-      const host = document.createElement("p");
-      host.className = "muted";
-      host.textContent = e.host;
-      text.append(host);
-    }
-    const star = document.createElement("button");
-    star.type = "button";
-    star.className = "star";
-    star.dataset.star = e.id;
-    star.dataset.title = e.title;
-    star.setAttribute("aria-label", `My plan: ${e.title}`);
-    star.innerHTML = starIcon;
-    li.append(text, star);
-    return li;
-  }
+  const when = (e: CityEvent) =>
+    `${formatDate(e.start ?? dayNoon(e.date))} · ${e.start ? formatRange(e.start, e.end) : "Time TBA"}`;
 
-  function openPin(index: number) {
+  function openPin(index: number, centre = false) {
     const pin = data.pins[index];
     if (!pin) return;
-    const events = pin.events.filter(keep).sort((a, b) => (a.start ?? "").localeCompare(b.start ?? ""));
+    if (centre) map.easeTo({ center: [pin.lng, pin.lat], zoom: Math.max(map.getZoom(), 14) });
+    const events = pin.events.filter(matchesFilters).sort((a, b) => (a.start ?? "").localeCompare(b.start ?? ""));
     const wrap = document.createElement("div");
     wrap.className = "venue-sheet";
     const h = document.createElement("h2");
@@ -266,54 +280,80 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
     const address = document.createElement("p");
     address.className = "muted";
     address.textContent = pin.address;
-    const ul = document.createElement("ul");
-    ul.className = "sessions";
-    ul.append(...events.map(eventRow));
     const directions = document.createElement("a");
     directions.className = "button";
     directions.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pin.address)}`;
     directions.rel = "noopener";
     directions.textContent = "Directions";
+    const ul = document.createElement("ul");
+    ul.className = "event-rows";
+    ul.append(...events.map((e) => eventRow({ id: e.id, title: e.title, before: when(e), after: e.host ? [e.host] : [] })));
     wrap.append(h, address, directions, ul);
     body.replaceChildren(wrap);
     syncPlan(body);
     if (!sheet.open) sheet.showModal();
   }
 
-  // --- Refresh pins, the list below and the status line --------------------
+  // --- Lists below the map and the status line ---------------------------
   function refresh() {
     dayButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.day === day)));
     planButton.setAttribute("aria-pressed", String(planOnly));
-    const source = map.getSource("events") as GeoJSONSource | undefined;
     const features = geojson();
-    source?.setData(features as unknown as Parameters<GeoJSONSource["setData"]>[0]);
+    (map.getSource("events") as GeoJSONSource | undefined)?.setData(
+      features as unknown as Parameters<GeoJSONSource["setData"]>[0],
+    );
 
     const shown = features.features.reduce((n: number, f: PinFeature) => n + f.properties.count, 0);
-    const where = day === "all" ? "this week" : formatDate(`${day}T12:00:00-06:00`);
+    const where = day === "all" ? "this week" : formatDate(dayNoon(day));
     document.querySelector("[data-status]")!.textContent =
       `${shown} side ${shown === 1 ? "event" : "events"} on the map ${planOnly ? "in your plan " : ""}${where}.`;
 
-    const list = document.querySelector<HTMLElement>("[data-unpinned]")!;
-    const rows = data.unpinned.filter(keep).sort((a, b) => (a.start ?? a.date).localeCompare(b.start ?? b.date));
-    list.replaceChildren(
-      ...rows.map((e) => {
-        const li = eventRow(e);
-        const where = document.createElement("p");
-        where.className = "muted";
-        where.textContent = [e.venue, e.address].filter((x, i, all) => x && all.indexOf(x) === i).join(" · ") || "Place TBA";
-        li.querySelector("div")!.append(where);
+    // Places on the map, as buttons: the way in without the map itself.
+    const places = document.querySelector<HTMLElement>("[data-places]")!;
+    const placeRows = features.features
+      .map((f) => ({ index: f.properties.pin, count: f.properties.count, pin: data.pins[f.properties.pin]! }))
+      .sort((a, b) => a.pin.venue.localeCompare(b.pin.venue));
+    places.replaceChildren(
+      ...placeRows.map(({ index, count, pin }) => {
+        const li = document.createElement("li");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "place";
+        button.dataset.pin = String(index);
+        const name = document.createElement("strong");
+        name.textContent = pin.venue;
+        const detail = document.createElement("span");
+        detail.className = "muted";
+        detail.textContent = ` · ${count} ${count === 1 ? "event" : "events"} · ${pin.address}`;
+        button.append(name, detail);
+        li.append(button);
         return li;
       }),
     );
-    if (!rows.length) {
-      const li = document.createElement("li");
-      li.className = "muted";
-      li.textContent = "None for this filter.";
-      list.append(li);
-    }
+    if (!placeRows.length) places.append(emptyRow());
+
+    const list = document.querySelector<HTMLElement>("[data-unpinned]")!;
+    const rows = data.unpinned.filter(matchesFilters).sort((a, b) => (a.start ?? a.date).localeCompare(b.start ?? b.date));
+    list.replaceChildren(
+      ...rows.map((e) => {
+        const place = [e.venue, e.address].filter((x, i, all) => x && all.indexOf(x) === i).join(" · ");
+        return eventRow({ id: e.id, title: e.title, before: when(e), after: [place || "Place TBA"] });
+      }),
+    );
+    if (!rows.length) list.append(emptyRow());
     syncPlan(list);
   }
+  function emptyRow() {
+    const li = document.createElement("li");
+    li.className = "muted";
+    li.textContent = "None for this filter.";
+    return li;
+  }
 
+  document.querySelector("[data-places]")!.addEventListener("click", (e) => {
+    const b = (e.target as Element).closest<HTMLButtonElement>("[data-pin]");
+    if (b) openPin(Number(b.dataset.pin), true);
+  });
   dayButtons.forEach((b) =>
     b.addEventListener("click", () => {
       day = b.dataset.day!;
@@ -327,7 +367,8 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
     refresh();
   });
   document.addEventListener("plan-change", () => refresh());
-  // The list and status don't wait for the map, which can be slow or blocked.
+  map.on("load", refresh);
+  // The lists and status don't wait for the map, which can be slow or blocked.
   refresh();
 </script>
 
@@ -383,23 +424,39 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
     margin: var(--space-2) 0 0;
     font-size: var(--text-sm);
   }
+  .places h2,
   .unpinned h2 {
-    margin: var(--space-6) 0 var(--space-1);
+    margin: var(--space-6) 0 var(--space-2);
     font-size: var(--text-lg);
   }
   .unpinned > p {
     margin: 0 0 var(--space-2);
     font-size: var(--text-sm);
   }
-  .unpinned ul {
+  .place-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
     margin: 0;
     padding: 0;
     list-style: none;
   }
+  .place-list :global(.place) {
+    width: 100%;
+    min-height: var(--tap);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    text-align: left;
+    cursor: pointer;
+  }
 </style>
 
 <style is:global>
-  /* Event rows in the venue sheet and the "Not on the map" list. */
   .venue-sheet h2 {
     margin: 0;
     font-size: var(--text-xl);
@@ -418,53 +475,5 @@ const dayLabel = (d: string) => formatDate(`${d}T12:00:00-06:00`);
     color: var(--ink);
     font-weight: 600;
     text-decoration: none;
-  }
-  .venue-sheet .sessions,
-  .unpinned ul {
-    display: flex;
-    flex-direction: column;
-    margin: var(--space-3) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .venue-sheet .sessions li,
-  .unpinned li {
-    display: flex;
-    justify-content: space-between;
-    gap: var(--space-2);
-    padding: var(--space-2) 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .venue-sheet .sessions p,
-  .unpinned li p {
-    margin: 0;
-    font-size: var(--text-sm);
-  }
-  .venue-sheet .sessions a,
-  .unpinned li a {
-    color: var(--ink);
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .venue-sheet .star,
-  .unpinned .star {
-    flex: none;
-    display: inline-grid;
-    place-items: center;
-    width: var(--tap);
-    height: var(--tap);
-    border: 0;
-    border-radius: var(--radius-sm);
-    background: none;
-    color: var(--muted);
-    cursor: pointer;
-  }
-  .venue-sheet .star[aria-pressed="true"],
-  .unpinned .star[aria-pressed="true"] {
-    color: var(--accent);
-  }
-  .venue-sheet .star[aria-pressed="true"] svg,
-  .unpinned .star[aria-pressed="true"] svg {
-    fill: currentColor;
   }
 </style>

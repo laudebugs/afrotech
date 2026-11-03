@@ -4,819 +4,813 @@
     "lat": 29.804317,
     "lng": -95.374456,
     "match": "Heights House Hotel, 100, West Cavalcade Street, Brooke Smith, Houston Heights, Houston, Harris County, Texas, 77009, Un",
-    "rules": 2
+    "rules": 3
   },
   "1001 Avenida De Las Americas, Houston, TX 77010": {
     "found": true,
     "lat": 29.751793,
     "lng": -95.358114,
     "match": "George R. Brown Convention Center, 1001, Avenida de Las Americas, Downtown, Houston, Harris County, Texas, 77010, United",
-    "rules": 2
+    "rules": 3
   },
   "1001 Avenida de las Americas, Houston, TX 77010": {
     "found": true,
     "lat": 29.751793,
     "lng": -95.358114,
     "match": "George R. Brown Convention Center, 1001, Avenida de Las Americas, Downtown, Houston, Harris County, Texas, 77010, United",
-    "rules": 2
+    "rules": 3
   },
   "1008 Prairie St, Houston, TX 77002, USA": {
     "found": true,
     "lat": 29.760421,
     "lng": -95.361669,
     "match": "IYKYK, 1008, Prairie Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "108 Main St, Houston, TX 77002": {
     "found": true,
     "lat": 29.763654,
     "lng": -95.359728,
     "match": "108, Main Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1100 West 23rd Street, #Suite 150 77008, Houston, TX": {
     "found": true,
     "lat": 29.806649,
     "lng": -95.418251,
     "match": "1100, West 23rd Street, Houston Heights, Houston, Harris County, Texas, 77008, United States",
-    "rules": 2
+    "rules": 3
   },
   "1109 Providence St, Houston, TX 77002, USA": {
     "found": true,
     "lat": 29.767947,
     "lng": -95.357602,
     "match": "1109, Providence Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1113 Providence St, Houston, TX": {
     "found": true,
     "lat": 29.767948,
     "lng": -95.35762,
     "match": "1113, Providence Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1113 Providence, Houston, TX 77002": {
     "found": true,
     "lat": 29.767948,
     "lng": -95.35762,
     "match": "1113, Providence Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1120 Dennis St, Houston, TX 77004": {
     "found": true,
     "lat": 29.743929,
     "lng": -95.373574,
     "match": "1120, Dennis Street, Midtown, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "1125 Providence St, Houston, TX 77002, USA": {
     "found": true,
     "lat": 29.767948,
     "lng": -95.357673,
     "match": "1125, Providence Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1201 Caroline St": {
     "found": true,
     "lat": 29.753743,
     "lng": -95.363497,
     "match": "1201, Caroline Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1201 Southmore Blvd Houston, TX 77004": {
     "found": true,
     "lat": 29.727477,
     "lng": -95.385549,
     "match": "1201, Southmore Boulevard, Museum District, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "1203 Cravens Road, Stafford, TX 77477": {
     "found": false,
     "why": "only matched a unclassified",
-    "rules": 2
+    "rules": 3
   },
   "1300 Lamar St, Houston, TX 77010, USA": {
     "found": true,
     "lat": 29.754073,
     "lng": -95.362794,
     "match": "Four Seasons Hotel Houston, 1300, Lamar Street, Downtown, Houston, Harris County, Texas, 77010, United States",
-    "rules": 2
+    "rules": 3
   },
   "1301 Fannin St, Houston, TX 77002": {
     "found": true,
     "lat": 29.753433,
     "lng": -95.365798,
     "match": "1301, Fannin Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1315 Sterrett St, Houston, TX 77002": {
     "found": true,
     "lat": 29.767436,
     "lng": -95.354035,
     "match": "1315, Sterrett Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1401 Commerce St, Houston, TX 77002, USA": {
     "found": true,
     "lat": 29.761492,
     "lng": -95.355623,
     "match": "1401, Commerce Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "1500 McKinney St, Houston, TX 77010": {
     "found": true,
     "lat": 29.754221,
     "lng": -95.360537,
     "match": "1500, McKinney Street, Downtown, Houston, Harris County, Texas, 77010, United States",
-    "rules": 2
+    "rules": 3
   },
   "1500 McKinney St, Houston, TX 77010, USA": {
     "found": true,
     "lat": 29.754221,
     "lng": -95.360537,
     "match": "1500, McKinney Street, Downtown, Houston, Harris County, Texas, 77010, United States",
-    "rules": 2
+    "rules": 3
   },
   "1515 Pease St b, Houston, TX 77002": {
     "found": false,
     "why": "no match in the Houston area",
-    "rules": 2
+    "rules": 3
   },
   "1517 Alabama St, Houston, TX 77004": {
     "found": true,
     "lat": 29.735151,
     "lng": -95.374764,
     "match": "Axelrad Beer Garden, 1517, Alabama Street, Midtown, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "1517 Alabama St, Houston, TX 77004, USA": {
     "found": true,
     "lat": 29.735151,
     "lng": -95.374764,
     "match": "Axelrad Beer Garden, 1517, Alabama Street, Midtown, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "1611 Lamar St, Houston, TX 77010, USA": {
     "found": true,
     "lat": 29.752661,
     "lng": -95.360185,
     "match": "The Grove, 1611, Lamar Street, Downtown, Houston, Harris County, Texas, 77010, United States",
-    "rules": 2
+    "rules": 3
   },
   "1818 Washington Ave Ste 180, Houston, TX 77007": {
     "found": true,
     "lat": 29.767749,
     "lng": -95.37599,
     "match": "1818, Washington Avenue, Washington Avenue Coalition / Memorial Park, Old Sixth Ward, Houston, Harris County, Texas, 770",
-    "rules": 2
+    "rules": 3
   },
   "1919 N Main St, Suite 8-14, Houston, TX 77009": {
     "found": true,
     "lat": 29.776248,
     "lng": -95.361788,
     "match": "1919, North Main Street, Near Northside, Houston, Harris County, Texas, 77009, United States",
-    "rules": 2
+    "rules": 3
   },
   "1919 N. Main St., Houston, TX 77009": {
     "found": true,
     "lat": 29.776248,
     "lng": -95.361788,
     "match": "1919, North Main Street, Near Northside, Houston, Harris County, Texas, 77009, United States",
-    "rules": 2
+    "rules": 3
   },
   "1954 1ST AVE": {
     "found": false,
     "why": "no match in the Houston area",
-    "rules": 2
+    "rules": 3
   },
   "2024 Rusk St, Houston, TX 77003": {
     "found": true,
     "lat": 29.753028,
     "lng": -95.354922,
     "match": "2024, Rusk Street, East Downtown, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2024 Rusk St, Houston, TX 77003, USA": {
     "found": true,
     "lat": 29.753028,
     "lng": -95.354922,
     "match": "2024, Rusk Street, East Downtown, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2026 Emancipation Ave, Houston, TX 77003": {
     "found": true,
     "lat": 29.74205,
     "lng": -95.359115,
     "match": "2026, Emancipation Avenue, Third Ward, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2108 Leeland St, Houston, TX 77003, USA": {
     "found": true,
     "lat": 29.746593,
     "lng": -95.358917,
     "match": "2108, Leeland Street, East Downtown, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2110 Edwards St, Houston, TX 77007": {
     "found": true,
     "lat": 29.770782,
     "lng": -95.37916,
     "match": "2110, Edwards Street, Washington Avenue Coalition / Memorial Park, Old Sixth Ward, Houston, Harris County, Texas, 77007,",
-    "rules": 2
+    "rules": 3
   },
   "2118 Lamar St Houston TX": {
     "found": true,
     "lat": 29.750031,
     "lng": -95.355566,
     "match": "Truck Yard, 2118, Lamar Street, East Downtown, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2119 Leeland St, Houston, TX 77003": {
     "found": true,
     "lat": 29.746549,
     "lng": -95.358214,
     "match": "Leeland House, 2119, Leeland Street, East Downtown, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2119 Leeland Street 77003, Houston, TX": {
     "found": true,
     "lat": 29.746549,
     "lng": -95.358214,
     "match": "Leeland House, 2119, Leeland Street, East Downtown, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2155 N MacGregor Way, Houston, TX 77004, USA": {
     "found": true,
     "lat": 29.714596,
     "lng": -95.382252,
     "match": "Hermann Park Golf Course, 2155, North MacGregor Way, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "2211 Travis St, Houston, TX 77002, USA": {
     "found": true,
     "lat": 29.748332,
     "lng": -95.37294,
     "match": "2211, Travis Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "2222 Emancipation Ave": {
     "found": true,
     "lat": 29.740585,
     "lng": -95.360261,
     "match": "2222, Emancipation Avenue, Third Ward, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2222 Emancipation Ave, Houston, TX 77003": {
     "found": true,
     "lat": 29.740585,
     "lng": -95.360261,
     "match": "2222, Emancipation Avenue, Third Ward, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "2301 Main Street, #400 77002, Houston, TX": {
-    "found": true,
-    "lat": 29.652734,
-    "lng": -95.233438,
-    "match": "2301, Main Street, South Houston, Harris County, Texas, 77587, United States",
-    "rules": 2
+    "found": false,
+    "why": "postcode 77587 isn't 77002",
+    "rules": 3
   },
   "2301 Main Street, Houston, TX 77002": {
-    "found": true,
-    "lat": 29.652734,
-    "lng": -95.233438,
-    "match": "2301, Main Street, South Houston, Harris County, Texas, 77587, United States",
-    "rules": 2
+    "found": false,
+    "why": "postcode 77587 isn't 77002",
+    "rules": 3
   },
   "2303 Smith St Ste 300 Houston, TX 77006 United States": {
     "found": true,
     "lat": 29.749105,
     "lng": -95.376,
     "match": "FAO, 2303, Smith Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "2310 Elgin Street, Houston, TX 77004": {
     "found": true,
     "lat": 29.734798,
     "lng": -95.365746,
     "match": "2310, Elgin Street, Third Ward, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "2400 Brazos St, Houston, TX 77006": {
     "found": true,
     "lat": 29.749098,
     "lng": -95.377612,
     "match": "2400, Brazos Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "2401 San Jacinto St": {
     "found": true,
     "lat": 29.7451,
     "lng": -95.37153,
     "match": "Rich's Houston, 2401, San Jacinto Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "2401 San Jacinto St, Houston, TX": {
     "found": true,
     "lat": 29.7451,
     "lng": -95.37153,
     "match": "Rich's Houston, 2401, San Jacinto Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "2416 Brazos St Ste 200, Houston, TX 77006": {
     "found": true,
     "lat": 29.749941,
     "lng": -95.376569,
     "match": "2416, Brazos Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "2521 Holman Street, Houston, TX 77004": {
     "found": true,
     "lat": 29.731944,
     "lng": -95.365296,
     "match": "2521, Holman Street, Washington Terrace, Third Ward, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "2600 Travis St, Houston, TX 77006, USA": {
     "found": true,
     "lat": 29.74588,
     "lng": -95.375106,
     "match": "2600, Travis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "2600 Travis Street Houston, TX, 77006": {
     "found": true,
     "lat": 29.74588,
     "lng": -95.375106,
     "match": "2600, Travis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "2626 West Loop S, Houston, TX 77027": {
     "found": true,
     "lat": 29.740047,
     "lng": -95.459053,
     "match": "Velvet Taco, 2626, West Loop South, Houston, Harris County, Texas, 77027, United States",
-    "rules": 2
+    "rules": 3
   },
   "2701 Fannin Street 77002, Houston, TX": {
     "found": true,
     "lat": 29.743995,
     "lng": -95.373765,
     "match": "2701, Fannin Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "2900 Travis St, Houston, TX 77006": {
     "found": true,
     "lat": 29.743639,
     "lng": -95.377197,
     "match": "Cali Sandwich & Pho, 2900, Travis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "2900 Travis St, Houston, TX 77006, USA": {
     "found": true,
     "lat": 29.743769,
     "lng": -95.37715,
     "match": "2900, Travis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "2955 Gulf Freeway 77003, Houston, TX": {
     "found": true,
     "lat": 29.740428,
     "lng": -95.35318,
     "match": "CrossFit EaDo, 2955, Gulf Freeway, East Downtown, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "305 Travis St": {
     "found": true,
     "lat": 29.762611,
     "lng": -95.361624,
     "match": "305, Travis Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "3100 Fountain View Drive, Houston, TX 77057": {
     "found": true,
     "lat": 29.732721,
     "lng": -95.484639,
     "match": "Prospect Park, 3100, Fountain View Drive, Gulfton, Houston, Harris County, Texas, 77057, United States",
-    "rules": 2
+    "rules": 3
   },
   "3100 fountain view Dr, Houston, TX 77002": {
-    "found": true,
-    "lat": 29.732721,
-    "lng": -95.484639,
-    "match": "Prospect Park, 3100, Fountain View Drive, Gulfton, Houston, Harris County, Texas, 77057, United States",
-    "rules": 2
+    "found": false,
+    "why": "postcode 77057 isn't 77002",
+    "rules": 3
   },
   "3215 McKinney St, Houston, TX 77003": {
     "found": true,
     "lat": 29.745436,
     "lng": -95.345662,
     "match": "3215, McKinney Street, Eastwood, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "3215 McKinney St, Houston, TX 77003, USA": {
     "found": true,
     "lat": 29.745436,
     "lng": -95.345662,
     "match": "3215, McKinney Street, Eastwood, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "3215 McKinney Street 77003, Houston, TX": {
     "found": true,
     "lat": 29.745436,
     "lng": -95.345662,
     "match": "3215, McKinney Street, Eastwood, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "3501 Harrisburg Blvd, Houston, TX 77003, USA": {
     "found": true,
     "lat": 29.747816,
     "lng": -95.340333,
     "match": "3501, Harrisburg Boulevard, Second Ward, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "3536 Navigation Blvd, Houston, TX 77003": {
     "found": true,
     "lat": 29.754727,
     "lng": -95.334523,
     "match": "3536, Navigation Boulevard, Second Ward, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "3663 Washington Ave Ste 150, Houston, TX 77007, USA": {
     "found": true,
     "lat": 29.768611,
     "lng": -95.396192,
     "match": "3663, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
-    "rules": 2
+    "rules": 3
   },
   "3686 Barker Cypress Rd, Houston, TX 77084, USA": {
     "found": false,
     "why": "only matched a primary",
-    "rules": 2
+    "rules": 3
   },
   "3686 Barker Cypress Road 77084, Houston, TX": {
     "found": false,
     "why": "only matched a primary",
-    "rules": 2
+    "rules": 3
   },
   "3737 cogdell st": {
     "found": false,
     "why": "only matched a residential",
-    "rules": 2
+    "rules": 3
   },
   "4007B Greenbriar Dr, Houston, TX 77098": {
     "found": false,
     "why": "only matched a tertiary",
-    "rules": 2
+    "rules": 3
   },
   "4007B Greenbriar Dr, Houston, TX 77098, United States": {
     "found": false,
     "why": "only matched a tertiary",
-    "rules": 2
+    "rules": 3
   },
   "401 Franklin St, Houston, TX 77201, USA": {
     "found": true,
     "lat": 29.766803,
     "lng": -95.365679,
     "match": "401, Franklin Street, Downtown, Houston, Harris County, Texas, 77201, United States",
-    "rules": 2
+    "rules": 3
   },
   "401 Franklin St, Suite 1050, Houston, TX": {
     "found": true,
     "lat": 29.765919,
     "lng": -95.364025,
     "match": "713 Music Hall, 401, Franklin Street, Downtown, Houston, Harris County, Texas, 77201, United States",
-    "rules": 2
+    "rules": 3
   },
   "401 franklin st houston tx 77201": {
     "found": true,
     "lat": 29.766803,
     "lng": -95.365679,
     "match": "401, Franklin Street, Downtown, Houston, Harris County, Texas, 77201, United States",
-    "rules": 2
+    "rules": 3
   },
   "411 Smith Street, Houston, TX 77002": {
     "found": true,
     "lat": 29.76309,
     "lng": -95.364552,
     "match": "Lyric Centre Market, 411, Smith Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "411 Westheimer Rd, Houston, TX 77006, USA": {
     "found": true,
     "lat": 29.74433,
     "lng": -95.386472,
     "match": "AvantGarden, 411, Westheimer Road, Westmoreland, Montrose, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "4110 Loretto Dr., Houston, TX 77006": {
     "found": true,
     "lat": 29.735673,
     "lng": -95.398057,
     "match": "Hotel Saint Augustine, 4110, Loretto Drive, Lancaster Place, Montrose, Houston, Harris County, Texas, 77006, United Stat",
-    "rules": 2
+    "rules": 3
   },
   "4112 Washington Ave Houston, TX 77007 United States": {
     "found": true,
     "lat": 29.770169,
     "lng": -95.40205,
     "match": "4112, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
-    "rules": 2
+    "rules": 3
   },
   "416 Main St, Houston, TX": {
     "found": true,
     "lat": 29.761059,
     "lng": -95.361884,
     "match": "Off The Record, 416, Main Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "4201 Main St Ste 200 Houston, TX 77002 United States": {
     "found": true,
     "lat": 29.734217,
     "lng": -95.382285,
     "match": "The Ion, 4201, Main Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "4201 Main St, Houston, TX 77002": {
     "found": true,
     "lat": 29.734217,
     "lng": -95.382285,
     "match": "The Ion, 4201, Main Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "4201 Main Street Houston, TX 77002": {
     "found": true,
     "lat": 29.734065,
     "lng": -95.382274,
     "match": "Impact Hub, 4201, Main Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "4212 Almeda Road Houston, Texas 77004": {
     "found": true,
     "lat": 29.731083,
     "lng": -95.376171,
     "match": "Cafe 4212, 4212, Almeda Road, Third Ward, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "4411 San Felipe Street, #Unit 101 77027, Houston, TX": {
     "found": true,
     "lat": 29.746555,
     "lng": -95.454113,
     "match": "4411, San Felipe Street, Houston, Harris County, Texas, 77027, United States",
-    "rules": 2
+    "rules": 3
   },
   "4715 Main Street Houston TX 77002": {
     "found": true,
     "lat": 29.731836,
     "lng": -95.384686,
     "match": "4715, Main Street, Museum District, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "4807 Caroline St, Houston, TX 77004, USA": {
     "found": true,
     "lat": 29.729703,
     "lng": -95.382561,
     "match": "4807, Caroline Street, Museum District, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "5002 Washington Ave, Houston, TX 77007, USA": {
     "found": true,
     "lat": 29.770518,
     "lng": -95.411682,
     "match": "5002, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
-    "rules": 2
+    "rules": 3
   },
   "5015 Almeda Road 77004, Houston, TX": {
     "found": true,
     "lat": 29.724152,
     "lng": -95.378387,
     "match": "5015, Almeda Road, Museum District, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "505 Main st. Houston, TX. 77002": {
     "found": true,
     "lat": 29.760577,
     "lng": -95.361959,
     "match": "505, Main Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "5102 Washington Ave": {
     "found": true,
     "lat": 29.770509,
     "lng": -95.412647,
     "match": "5102, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
-    "rules": 2
+    "rules": 3
   },
   "5102 Washington Avenue 77007, Houston, TX": {
     "found": true,
     "lat": 29.770509,
     "lng": -95.412647,
     "match": "5102, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
-    "rules": 2
+    "rules": 3
   },
   "5151a Mitchelldale St A-14, Houston, TX 77092": {
     "found": false,
     "why": "no match in the Houston area",
-    "rules": 2
+    "rules": 3
   },
   "5219 Washington Ave, Houston, TX 77007": {
     "found": true,
     "lat": 29.77036,
     "lng": -95.413688,
     "match": "5219, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
-    "rules": 2
+    "rules": 3
   },
   "5334 Washington Avenue Houston, TX 77007": {
     "found": true,
     "lat": 29.77074,
     "lng": -95.41607,
     "match": "Clutch Bar, 5334, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, H",
-    "rules": 2
+    "rules": 3
   },
   "5427 Bissonnet St, Suite 200, Houston, TX 77081": {
     "found": true,
     "lat": 29.703519,
     "lng": -95.475156,
     "match": "5427, Bissonnet Street, Gulfton, Houston, Harris County, Texas, 77081, United States",
-    "rules": 2
+    "rules": 3
   },
   "5430 Westheimer Rd, Houston, TX 77056": {
     "found": true,
     "lat": 29.73866,
     "lng": -95.4717,
     "match": "5430, Westheimer Road, Houston, Harris County, Texas, 77056, United States",
-    "rules": 2
+    "rules": 3
   },
   "5501 La Branch Street, Houston, TX 77004": {
     "found": true,
     "lat": 29.723908,
     "lng": -95.384635,
     "match": "5501, La Branch Street, Museum District, Houston, Harris County, Texas, 77004, United States",
-    "rules": 2
+    "rules": 3
   },
   "6011 West Orem Drive, Houston, Texas 77085": {
     "found": true,
     "lat": 29.627214,
     "lng": -95.469467,
     "match": "6011, West Orem Drive, Houston, Harris County, Texas, 77085, United States",
-    "rules": 2
+    "rules": 3
   },
   "6025 Westheimer Rd, Houston, TX 77057": {
     "found": true,
     "lat": 29.73671,
     "lng": -95.489335,
     "match": "KAMP Houston, 6025, Westheimer Road, Houston, Harris County, Texas, 77057, United States",
-    "rules": 2
+    "rules": 3
   },
   "606 Dennis St, Suite 200, Houston, TX": {
     "found": true,
     "lat": 29.746606,
     "lng": -95.37798,
     "match": "606, Dennis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "606 Dennis Street #Suite 200 Houston, TX 77006": {
     "found": true,
     "lat": 29.746606,
     "lng": -95.37798,
     "match": "606, Dennis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "606 Dennis Street, Houston, TX, USA": {
     "found": true,
     "lat": 29.746606,
     "lng": -95.37798,
     "match": "606, Dennis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "702 West Dallas Street 77019, Houston, TX": {
     "found": true,
     "lat": 29.757935,
     "lng": -95.375703,
     "match": "Seaside Lounge, 702, West Dallas Street, Fourth Ward, Houston, Harris County, Texas, 77019, United States",
-    "rules": 2
+    "rules": 3
   },
   "711 Milby St, Houston, TX 77023, USA": {
     "found": true,
     "lat": 29.74475,
     "lng": -95.339142,
     "match": "Ironworks, 711, Milby Street, Second Ward, Houston, Harris County, Texas, 77023, United States",
-    "rules": 2
+    "rules": 3
   },
   "800 Travis Street, Houston, TX 77002": {
     "found": true,
     "lat": 29.758929,
     "lng": -95.364774,
     "match": "800, Travis Street, Downtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "801 St Emanuel St, Houston, TX 77003, USA": {
     "found": true,
     "lat": 29.752365,
     "lng": -95.35422,
     "match": "801, Saint Emanuel Street, East Downtown, Houston, Harris County, Texas, 77003, United States",
-    "rules": 2
+    "rules": 3
   },
   "803 Town and Country Blvd 77024, Houston, TX": {
     "found": true,
     "lat": 29.780638,
     "lng": -95.558202,
     "match": "803, Town and Country Boulevard, CityCentre, Town & Country / CityCentre, Houston, Harris County, Texas, 77024, United S",
-    "rules": 2
+    "rules": 3
   },
   "807 West 19th Street 77008, Houston, TX": {
     "found": true,
     "lat": 29.802988,
     "lng": -95.412626,
     "match": "Almost Famous, 807, West 19th Street, Houston Heights, Houston, Harris County, Texas, 77008, United States",
-    "rules": 2
+    "rules": 3
   },
   "81 Drew St, Houston TX": {
     "found": true,
     "lat": 29.748974,
     "lng": -95.382986,
     "match": "81, Drew Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "81 Drew Street Houston, TX 77006": {
     "found": true,
     "lat": 29.748974,
     "lng": -95.382986,
     "match": "81, Drew Street, Midtown, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "812 Yorkshire St, Houston, TX": {
     "found": true,
     "lat": 29.827602,
     "lng": -95.360921,
     "match": "812, Yorkshire Street, Houston, Harris County, Texas, 77022, United States",
-    "rules": 2
+    "rules": 3
   },
   "910 Westheimer Rd, Houston, TX 77006": {
     "found": true,
     "lat": 29.744755,
     "lng": -95.39085,
     "match": "910, Westheimer Road, Audubon Place, Montrose, Houston, Harris County, Texas, 77006, United States",
-    "rules": 2
+    "rules": 3
   },
   "9151 South Texas 6 77083, Houston, TX": {
     "found": true,
     "lat": 29.680169,
     "lng": -95.641304,
     "match": "9151, Highway 6 South, Houston, Fort Bend County, Texas, 77083, United States",
-    "rules": 2
+    "rules": 3
   },
   "Address in info section 77003, Houston, TX": {
     "found": false,
-    "why": "no match in the Houston area",
-    "rules": 2
+    "why": "placeholder, not an address",
+    "rules": 3
   },
   "Address shared 24 hrs before": {
     "found": false,
-    "why": "no match in the Houston area",
-    "rules": 2
+    "why": "placeholder, not an address",
+    "rules": 3
   },
   "EaDo, Houston, TX (full address shared on RSVP approval)": {
     "found": false,
     "why": "placeholder, not an address",
-    "rules": 2
+    "rules": 3
   },
   "Exact address shared with approved guests.": {
     "found": false,
     "why": "placeholder, not an address",
-    "rules": 2
+    "rules": 3
   },
   "Montrose | RSVP for exact address": {
     "found": false,
     "why": "placeholder, not an address",
-    "rules": 2
+    "rules": 3
   },
   "Shared after approval": {
     "found": false,
     "why": "placeholder, not an address",
-    "rules": 2
+    "rules": 3
   },
   "Shared on approval": {
     "found": false,
     "why": "placeholder, not an address",
-    "rules": 2
+    "rules": 3
   },
   "TBA": {
     "found": false,
     "why": "placeholder, not an address",
-    "rules": 2
+    "rules": 3
   },
   "The Ion": {
     "found": true,
     "lat": 29.734217,
     "lng": -95.382285,
     "match": "The Ion, 4201, Main Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   },
   "The Ion, 4201 Main St, Houston, TX 77002": {
     "found": true,
     "lat": 29.734217,
     "lng": -95.382285,
     "match": "The Ion, 4201, Main Street, Midtown, Houston, Harris County, Texas, 77002, United States",
-    "rules": 2
+    "rules": 3
   }
 }

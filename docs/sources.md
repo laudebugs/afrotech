@@ -25,7 +25,7 @@ The scripts write the merged results to `data/sessions.json`, `data/sessions.csv
 | [GRB dimensions & capacities](https://www.grbhouston.com/planners/dimensions-capacities/) | Room sizes, to keep the traced plan in proportion |
 | [OpenStreetMap](https://www.openstreetmap.org/) | Building footprint of the GRB and the Marriott Marquis, for placing the floor plan at real-world coordinates |
 | [OpenFreeMap](https://openfreemap.org/) | Free vector map tiles (no API key) for the city map of side events |
-| [Nominatim](https://nominatim.org/) | One-off geocoding of side-event addresses at build time (max 1 request/second, results cached in the repo) |
+| [Nominatim](https://nominatim.org/) | Places side-event addresses for the city map. `scripts/geocode.py` looks up only addresses not yet in `data/geocode.json`, one per second, during the scheduled refresh; results are cached in the repo |
 
 ## Other references
 
