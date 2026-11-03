@@ -65,9 +65,14 @@ record and certificate on the first deploy.
 
 ## Adding notes
 
-1. Copy `notes/_template.md` to `notes/YYYY-MM-DD-short-session-name.md`.
-2. Fill it in during or after the session.
-3. Add a link to it in the session list below.
+The quickest way is on the site: open any session, tap **Write a note**, and
+tap **Publish on GitHub** when you're done. GitHub opens with the file filled
+in; tap **Commit changes**, and the note appears at
+[/notes](https://afrotech26.laudebugs.me/notes/) about two minutes later.
+
+To write one by hand, copy `notes/_template.md` to
+`notes/YYYY-MM-DD-short-title.md`, set `eventId` to the id in the session's URL
+(`/event/<id>/`), and commit it.
 
 ## Refreshing the schedules
 
@@ -80,10 +85,6 @@ python3 scripts/update_side_events.py
 ```
 
 No dependencies beyond Python 3.9+.
-
-## Notes so far
-
-_None yet._
 
 ## Sources
 

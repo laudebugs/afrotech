@@ -1,0 +1,77 @@
+---
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+import { getNotes, type Note } from "../../lib/notes";
+import { allEvents } from "../../lib/events";
+import { formatDate, formatRange } from "../../lib/time";
+import { NOTES_REPO, SITE_AUTHOR } from "../../config";
+
+export async function getStaticPaths() {
+  return (await getNotes()).map((note) => ({ params: { id: note.id }, props: { note } }));
+}
+
+interface Props {
+  note: Note;
+}
+const { note } = Astro.props;
+const { Content } = await render(note);
+const event = allEvents.find((e) => e.id === note.data.eventId);
+const editUrl = `https://github.com/${NOTES_REPO.owner}/${NOTES_REPO.repo}/edit/${NOTES_REPO.branch}/${note.filePath ?? `${NOTES_REPO.dir}/${note.id}.md`}`;
+---
+
+<BaseLayout title={`${note.data.title} · Notes · AfroTech 2026 Planner`} active="none">
+  <p class="back"><a href="/notes/">← Notes</a></p>
+  <article class="note">
+    <header>
+      <h1>{note.data.title}</h1>
+      <p class="muted">{SITE_AUTHOR} · {formatDate(note.data.published)}</p>
+      {
+        event && (
+          <p class="event">
+            About <a href={`/event/${event.id}/`}>{event.title}</a>
+            {event.start && <span class="muted"> · {formatDate(event.start)}, {formatRange(event.start, event.end)}</span>}
+          </p>
+        )
+      }
+    </header>
+    <div class="body"><Content /></div>
+    <p class="edit"><a href={editUrl} rel="noopener">Edit on GitHub</a></p>
+  </article>
+  <SourcesFooter />
+</BaseLayout>
+
+<style>
+  .back {
+    margin: var(--space-6) 0 var(--space-4);
+  }
+  .back a,
+  .edit a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+  header p {
+    margin: var(--space-1) 0 0;
+  }
+  .body {
+    margin-top: var(--space-6);
+    overflow-wrap: anywhere;
+  }
+  .body :global(h2) {
+    margin-top: var(--space-6);
+    font-size: var(--text-lg);
+  }
+  .body :global(blockquote) {
+    margin: 0;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--accent);
+    color: var(--muted);
+  }
+</style>

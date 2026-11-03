@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import EventDetail from "../../components/EventDetail.astro";
 import SourcesFooter from "../../components/SourcesFooter.astro";
 import { allEvents } from "../../lib/events";
+import { notesForEvent } from "../../lib/notes";
 import type { ScheduleEvent } from "../../lib/types";
 
 export function getStaticPaths() {
@@ -14,11 +15,12 @@ interface Props {
 }
 const { event } = Astro.props;
 const back = `/schedule/${event.date}/`;
+const notes = (await notesForEvent(event.id)).map((n) => ({ id: n.id, title: n.data.title }));
 ---
 
 <BaseLayout title={`${event.title} · AfroTech 2026 Planner`} active="schedule" description={event.description?.slice(0, 160) ?? undefined}>
   <p class="back"><a href={back}>← Schedule</a></p>
-  <EventDetail event={event} />
+  <EventDetail event={event} notes={notes} />
   <SourcesFooter />
 </BaseLayout>
 

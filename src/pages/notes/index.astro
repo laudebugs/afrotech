@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+import { getNotes } from "../../lib/notes";
+import { allEvents } from "../../lib/events";
+import { formatDate } from "../../lib/time";
+import { SITE_AUTHOR } from "../../config";
+
+const notes = await getNotes();
+const eventTitle = new Map(allEvents.map((e) => [e.id, e.title]));
+---
+
+<BaseLayout title="Notes · AfroTech 2026 Planner" active="none">
+  <header class="page-head">
+    <h1>Session notes</h1>
+    <p class="muted">Notes from AfroTech 2026 sessions by {SITE_AUTHOR}, newest first.</p>
+  </header>
+
+  {
+    notes.length ? (
+      <ul class="list">
+        {notes.map((n) => (
+          <li>
+            <a href={`/notes/${n.id}/`}>
+              <strong>{n.data.title}</strong>
+              <span class="muted">
+                {formatDate(n.data.published)}
+                {eventTitle.get(n.data.eventId) && <> · {eventTitle.get(n.data.eventId)}</>}
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>No notes yet. Open any session and tap “Write a note”.</p>
+    )
+  }
+  <SourcesFooter />
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-top: var(--space-6);
+  }
+  h1 {
+    margin: 0;
+    font-size: var(--text-2xl);
+  }
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .list a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .list .muted {
+    font-size: var(--text-sm);
+  }
+</style>

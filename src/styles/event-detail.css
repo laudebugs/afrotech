@@ -64,6 +64,10 @@
     font-size: var(--text-sm);
     color: var(--muted);
   }
+  .detail .notes {
+    margin: 0;
+    padding-left: var(--space-4);
+  }
   .detail .speakers {
     margin: 0;
     padding-left: var(--space-4);
