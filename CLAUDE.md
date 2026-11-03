@@ -19,6 +19,7 @@ Start with [`docs/plans/0001-events-site.md`](docs/plans/0001-events-site.md).
 | `docs/design/design-language.md` | Colors, type, spacing, components. Follow it for all UI. |
 | `docs/research/` | Research notes (e.g. the SVG floor-plan approach). |
 | `docs/sources.md` | Every data source and how it's pulled. |
+| `reports/`, `research_notes/` | Deep-research reports and the notes behind them (e.g. speaker profile sources). |
 | `scripts/` | Python (stdlib only) that fetches sources and writes `data/` and `schedule/`. |
 | `data/` | Generated data (committed). `data/sources/` holds hand-exported inputs. |
 | `schedule/` | Generated markdown schedules for reading on GitHub. |
