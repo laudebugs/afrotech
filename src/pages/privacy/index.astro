@@ -8,14 +8,18 @@ import SourcesFooter from "../../components/SourcesFooter.astro";
     <h1>Privacy: you can use everything without signing in</h1>
     <p>
       The planner is a free, ad-free community site. Without an account, nothing about you leaves your
-      device: your plan, your notes and theme live in your browser's storage.
+      device: your plan, your notes and your theme live in your browser's storage.
     </p>
 
     <h2>If you sign in with Google</h2>
-    <p>Signing in is optional and only syncs your plan across your devices. We store:</p>
+    <p>Signing in is optional and only syncs your plan and notes across your devices. We store:</p>
     <ul>
       <li>Your Google account id, email address, name and profile picture link, as Google provides them.</li>
       <li>The events you've starred or unstarred, with the time of each change.</li>
+      <li>
+        Your notes: each note's title, text, session and times. Only you can read them; nobody else can see
+        them on the site. A deleted note is kept as an empty record so the deletion reaches your other devices.
+      </li>
       <li>A session record so you stay signed in for 30 days. We keep only a scrambled form of the session key.</li>
     </ul>
     <p>
@@ -27,8 +31,10 @@ import SourcesFooter from "../../components/SourcesFooter.astro";
 
     <h2>Deleting your data</h2>
     <p>
-      On <a href="/plan/">My plan</a>, tap <strong>Delete my data</strong>. Your account, sessions and saved
-      plan are deleted at once. The copy of your plan on your device stays until you clear it.
+      On <a href="/plan/">My plan</a>, tap <strong>Delete my data</strong>. Your account, sessions, saved plan
+      and notes are deleted at once. The copies on your device stay until you clear them. Signing out instead
+      keeps everything in your account and removes your notes from that device, so they stay private on a
+      shared phone or laptop.
     </p>
 
     <h2>Your location</h2>

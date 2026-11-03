@@ -5,6 +5,7 @@
 // server confirms the session. Each sync sends the logged changes and gets the
 // merged plan back; the latest change per event wins on the server.
 import { applySyncedPlan, forgetSentChanges, readChanges, readPlan, type PlanChange } from "../lib/plan";
+import { accountId as whoAmI, forgetAccount } from "./whoami";
 
 const SIGNED_IN = "afrotech:signed-in";
 const MERGED = "afrotech:plan-merged"; // the account this device's old stars were merged into
@@ -27,12 +28,6 @@ let accountId: string | null = null;
 let running = false;
 let again = false;
 let timer = 0;
-
-async function whoAmI(): Promise<string | null> {
-  const res = await fetch("/api/me", { credentials: "same-origin" });
-  const me = (await res.json()) as { signedIn: boolean; id?: string };
-  return me.signedIn && me.id ? me.id : null;
-}
 
 async function sync(): Promise<void> {
   if (!get(SIGNED_IN)) return;
@@ -65,6 +60,7 @@ async function sync(): Promise<void> {
     if (res.status === 401) {
       set(SIGNED_IN, null);
       accountId = null;
+      forgetAccount();
       return;
     }
     if (!res.ok) return; // try again on the next trigger

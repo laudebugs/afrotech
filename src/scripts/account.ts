@@ -1,5 +1,8 @@
 // The account panel on My plan: Google's sign-in button, or who you are with
 // Sign out and Delete my data. Google's script loads only here, only when needed.
+import { clearLocalNotes, readNoteChanges } from "../lib/notes";
+import { forgetNotesAccount, syncNotesNow } from "./notes-sync";
+
 const SIGNED_IN = "afrotech:signed-in";
 const MERGED = "afrotech:plan-merged";
 
@@ -110,14 +113,28 @@ async function init() {
   }
 
   root.querySelector("[data-sign-out]")!.addEventListener("click", async () => {
-    await api("POST", "/api/auth/signout", {});
+    // Notes are private, so signing out takes them off this device; send any
+    // waiting changes first so nothing is lost.
+    if (accountNote) accountNote.textContent = "Saving your notes…";
+    const synced = await syncNotesNow();
+    const waiting = Object.keys(readNoteChanges()).length;
+    if (!synced && waiting && !confirm(
+      `${waiting === 1 ? "1 note hasn't" : `${waiting} notes haven't`} reached your account yet (are you offline?). ` +
+        "Signing out removes notes from this device, so these changes would be lost. Sign out anyway?",
+    )) {
+      if (accountNote) accountNote.textContent = "Still signed in. Try again once you're online.";
+      return;
+    }
+    await api("POST", "/api/auth/signout", {}).catch(() => undefined);
     store(SIGNED_IN, null);
     store(MERGED, null);
+    forgetNotesAccount();
+    clearLocalNotes();
     location.reload();
   });
 
   root.querySelector("[data-delete]")!.addEventListener("click", async () => {
-    if (!confirm("Delete your account and the plan saved with it? Your plan stays on this device.")) return;
+    if (!confirm("Delete your account and the plan and notes saved with it? This device keeps its own copy of both.")) return;
     const res = await api("DELETE", "/api/me", {});
     if (!res.ok) {
       if (accountNote) accountNote.textContent = "Couldn't delete right now. Try again in a moment.";
@@ -125,7 +142,8 @@ async function init() {
     }
     store(SIGNED_IN, null);
     store(MERGED, null);
-    if (accountNote) accountNote.textContent = "Deleted. Your account and saved plan are gone; this device keeps its copy.";
+    forgetNotesAccount();
+    if (accountNote) accountNote.textContent = "Deleted. Your account, saved plan and notes are gone; this device keeps its copy.";
     show("signed-out");
     void showSignIn();
   });
