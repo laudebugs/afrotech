@@ -1,0 +1,43 @@
+name: Speaker profile change
+description: Ask us to correct or remove a speaker profile on the AfroTech 2026 Planner.
+title: "Speaker profile: "
+labels: ["speaker-profile"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep profiles accurate. We fix or remove profiles within 48 hours (the same day during conference week). You don't need to give a reason for a removal.
+
+        This issue is public, so please don't include private contact details. To remove a profile, the profile's address and "Remove my whole profile" are enough; no details needed.
+  - type: input
+    id: speaker
+    attributes:
+      label: Profile
+      description: The profile's address, e.g. https://afrotech26.laudebugs.me/speakers/jane-doe/
+    validations:
+      required: true
+  - type: dropdown
+    id: request
+    attributes:
+      label: What would you like?
+      options:
+        - Correct something
+        - Remove a fact or link
+        - Remove my whole profile
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What's wrong, and what it should say instead (if anything).
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Who are you?
+      options:
+        - I'm the speaker
+        - I represent the speaker
+        - Someone else who spotted a mistake
+    validations:
+      required: true
