@@ -1,0 +1,126 @@
+---
+// "Use my location" and "I'm at…", shared by /near/ and the floor plan.
+// The page listens for "here-change" on document to redraw.
+import { areaName, floorPlan, isPickable } from "../lib/floor-plan";
+
+const PRIVACY = "Your location stays on this device; it's never sent anywhere.";
+const byLevel = new Map<number, { id: string; label: string }[]>();
+for (const [id, area] of Object.entries(floorPlan.areas)) {
+  if (!isPickable(area.kind)) continue;
+  const label = areaName(area);
+  if (!byLevel.has(area.level)) byLevel.set(area.level, []);
+  byLevel.get(area.level)!.push({ id, label });
+}
+const groups = [...byLevel.entries()]
+  .sort(([a], [b]) => a - b)
+  .map(([level, areas]) => ({ level, areas: areas.sort((a, b) => a.label.localeCompare(b.label, "en", { numeric: true })) }));
+---
+
+<div class="here" data-here data-privacy={PRIVACY}>
+  <div class="row">
+    <button type="button" class="button" data-gps aria-pressed="false">Use my location</button>
+    <label class="pick">
+      <span class="visually-hidden">I'm at</span>
+      <select data-pick>
+        <option value="">I'm at…</option>
+        {
+          groups.map((g) => (
+            <optgroup label={`Level ${g.level}`}>
+              {g.areas.map((a) => (
+                <option value={a.id}>{a.label}</option>
+              ))}
+            </optgroup>
+          ))
+        }
+      </select>
+    </label>
+  </div>
+  <p class="status muted" role="status" data-here-status>{PRIVACY}</p>
+</div>
+
+<script>
+  import { clearPick, currentHere, gpsOn, pickArea, startGps, stopGps } from "../lib/here";
+  import { formatDistance } from "../lib/geo";
+  import { formatTime } from "../lib/time";
+
+  document.querySelectorAll<HTMLElement>("[data-here]").forEach((root) => {
+    const gpsButton = root.querySelector<HTMLButtonElement>("[data-gps]")!;
+    const select = root.querySelector<HTMLSelectElement>("[data-pick]")!;
+    const status = root.querySelector<HTMLElement>("[data-here-status]")!;
+    const labelOf = (id: string) => select.querySelector<HTMLOptionElement>(`option[value="${id}"]`)?.textContent ?? id;
+    // A GPS error, shown until the next change of where you are.
+    let gpsError = "";
+
+    function show() {
+      const here = currentHere();
+      gpsButton.setAttribute("aria-pressed", String(gpsOn()));
+      gpsButton.textContent = gpsOn() ? "Stop using my location" : "Use my location";
+      select.value = here?.source === "picked" ? here.areaId : "";
+      if (here?.source === "picked") {
+        status.textContent = `You're at ${labelOf(here.areaId)} until ${formatTime(new Date(here.until))}. Indoors, this beats GPS.`;
+      } else if (here?.source === "gps") {
+        status.textContent = `Using your location (within about ${formatDistance(here.accuracy)}). It stays on this device.`;
+      } else {
+        status.textContent = gpsError || root.dataset.privacy!;
+      }
+    }
+
+    gpsButton.addEventListener("click", async () => {
+      if (gpsOn()) {
+        stopGps();
+        return;
+      }
+      status.textContent = "Finding you…";
+      const result = await startGps();
+      gpsError = result.ok ? "" : result.reason;
+      show();
+    });
+    select.addEventListener("change", () => {
+      gpsError = "";
+      if (select.value) pickArea(select.value);
+      else clearPick();
+    });
+    document.addEventListener("here-change", show);
+    show();
+  });
+</script>
+
+<style>
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .button {
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--accent);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .button[aria-pressed="true"] {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .pick {
+    flex: 1 1 180px;
+  }
+  select {
+    width: 100%;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+  }
+  .status {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+  }
+</style>

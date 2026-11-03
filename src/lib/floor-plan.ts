@@ -1,7 +1,8 @@
 // The traced convention center map: areas, levels and the building's
 // real-world corners. Written by scripts/build_floor_plan.py.
 import planJson from "../../data/floor-plan.json";
-import type { AreaKind, FloorPlan, MapArea } from "./types";
+import { floorPlanTransform } from "./geo";
+import type { AreaKind, FloorPlan, MapArea, Place } from "./types";
 
 // Every AreaKind, once. `satisfies` makes TypeScript reject this list if it
 // drifts from the type, and checkFloorPlan() rejects JSON that drifts from it.
@@ -46,3 +47,38 @@ function checkFloorPlan(json: unknown): FloorPlan {
 }
 
 export const floorPlan = checkFloorPlan(planJson);
+
+/** Latitude/longitude ↔ plan feet, fitted through the building's corners. */
+export const planTransform = floorPlanTransform(floorPlan.controlPoints);
+
+export { areaName } from "./area-name";
+
+/** Hotels and outdoor places sit on the Level 1 drawing as small insets, not
+ *  where they really are, and have no floor of their own. */
+export const isInset = (kind: AreaKind) => kind === "hotel" || kind === "outside";
+
+/** Places you can say you're at: everything but corridors. */
+export const isPickable = (kind: AreaKind) => kind !== "corridor";
+
+// Where the insets really are (OpenStreetMap via Nominatim), so distances to
+// and from them are real-world ones. checkInsets() keeps this list complete.
+const INSET_LOCATIONS: Record<string, { lat: number; lng: number }> = {
+  "avenida-plaza": { lat: 29.751793, lng: -95.358114 },
+  "discovery-green": { lat: 29.752941, lng: -95.359606 },
+  "the-grove": { lat: 29.752661, lng: -95.360185 },
+  hilton: { lat: 29.751555, lng: -95.36066 },
+  marriott: { lat: 29.754374, lng: -95.357634 },
+};
+for (const [id, area] of Object.entries(floorPlan.areas)) {
+  if (isInset(area.kind) && !INSET_LOCATIONS[id]) {
+    throw new Error(`src/lib/floor-plan.ts: add ${id} (an inset) to INSET_LOCATIONS.`);
+  }
+}
+
+/** A place's real latitude/longitude and indoor level (null for insets). */
+export function areaPlace(id: string): Place | null {
+  const area = floorPlan.areas[id];
+  if (!area) return null;
+  if (isInset(area.kind)) return { ...INSET_LOCATIONS[id]!, level: null };
+  return { ...planTransform.toLatLng(area.center[0], area.center[1]), level: area.level };
+}

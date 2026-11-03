@@ -118,6 +118,21 @@ export type MapEvent = {
   place: string;
 };
 
+/** A point on the ground, with a convention center level when indoors. */
+export type Place = { lat: number; lng: number; level: number | null };
+
+/** One event as Near me needs it: lat/lng are null when its spot is unknown. */
+export type NearEvent = {
+  id: string;
+  title: string;
+  start: string;
+  end: string | null;
+  place: string;
+  lat: number | null;
+  lng: number | null;
+  level: number | null;
+};
+
 /** One side event as the city map needs it. */
 export type CityEvent = {
   id: string;

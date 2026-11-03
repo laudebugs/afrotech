@@ -6,6 +6,7 @@ import "../../styles/event-rows.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import BottomSheet from "../../components/BottomSheet.astro";
 import MapSwitch from "../../components/MapSwitch.astro";
+import HereControls from "../../components/HereControls.astro";
 import SourcesFooter from "../../components/SourcesFooter.astro";
 import { allEvents, venues } from "../../lib/events";
 import { floorPlan } from "../../lib/floor-plan";
@@ -42,7 +43,7 @@ const approxPlaces = Object.values(venues)
   .filter((v) => v.areaId && v.approximate)
   .map((v) => ({ areaId: v.areaId!, label: v.label }));
 
-const mapData = { areas: floorPlan.areas, byArea, offMap, approxPlaces };
+const mapData = { areas: floorPlan.areas, byArea, offMap, approxPlaces, controlPoints: floorPlan.controlPoints };
 // Safe inside <script type="application/json">: "<" can't start a closing tag.
 const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
 ---
@@ -89,6 +90,11 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
       <span class="key dashed"></span> approximate
     </p>
     <p class="hint muted">Drag to move, pinch or use + and − to zoom. Swipe outside the map to scroll.</p>
+    <p class="muted you-note" data-you-note hidden></p>
+  </section>
+
+  <section class="you" aria-label="Where you are">
+    <HereControls />
   </section>
 
   <section class="today-list" aria-labelledby="today-title">
@@ -111,6 +117,9 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   import { readPlan } from "../../lib/plan";
   import { syncPlan } from "../../scripts/plan-ui";
   import { eventRow } from "../../scripts/event-rows";
+  import { currentHere } from "../../lib/here";
+  import { areaName } from "../../lib/area-name";
+  import { FEET_PER_METRE, floorPlanTransform, type ControlPoint } from "../../lib/geo";
   import { dayKey, eventEndMs, everyMinute, formatDate, formatRange, previewNow } from "../../lib/time";
   import type { MapArea, MapEvent } from "../../lib/types";
 
@@ -119,12 +128,12 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
     byArea: Record<string, MapEvent[]>;
     offMap: Record<string, { label: string; note: string; events: MapEvent[] }>;
     approxPlaces: { areaId: string; label: string }[];
+    controlPoints: ControlPoint[];
   };
   const data: MapData = JSON.parse(document.getElementById("map-data")!.textContent!);
 
   const isLive = (e: MapEvent, t: number) => Date.parse(e.start) <= t && t < eventEndMs(e.start, e.end);
-  /** "320" on the map; "Meeting Room 320" in words. */
-  const placeName = (area: MapArea) => (/^\d+$/.test(area.label) ? `Meeting Room ${area.label}` : area.label);
+  const placeName = areaName;
 
   // --- Pan and zoom -------------------------------------------------------
   const viewport = document.querySelector<HTMLElement>("[data-viewport]")!;
@@ -422,6 +431,69 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
     openArea(b.dataset.openArea!);
   });
 
+  // --- You are here --------------------------------------------------------
+  const transform = floorPlanTransform(data.controlPoints);
+  const youNote = document.querySelector<HTMLElement>("[data-you-note]")!;
+  let lastPickedArea: string | null = null;
+
+  /** Draws (or clears) the you-are-here dot and accuracy circle on every level. */
+  function drawYou() {
+    document.querySelectorAll(".you-marker").forEach((m) => m.remove());
+    const here = currentHere();
+    youNote.hidden = true;
+    if (!here) {
+      lastPickedArea = null;
+      return;
+    }
+    let x: number;
+    let y: number;
+    let radius = 0;
+    let level: string | null = null;
+    if (here.source === "picked") {
+      const area = data.areas[here.areaId];
+      if (!area) return;
+      [x, y] = area.center as [number, number];
+      level = String(area.level);
+      // Jump to the room once, when it's first picked.
+      if (lastPickedArea !== here.areaId) focusArea(here.areaId);
+      lastPickedArea = here.areaId;
+    } else {
+      lastPickedArea = null;
+      ({ x, y } = transform.toMap(here));
+      radius = here.accuracy * FEET_PER_METRE;
+      // Off the drawing: say so rather than draw past its edge.
+      const box = document.querySelector<SVGSVGElement>("[data-level] svg")!.viewBox.baseVal;
+      if (x < box.x || x > box.x + box.width || y < box.y || y > box.y + box.height) {
+        youNote.textContent = "You're outside the area this map covers. Try the city map, or pick your room.";
+        youNote.hidden = false;
+        return;
+      }
+      youNote.textContent = "GPS can't tell which floor you're on; the dot shows on every level.";
+      youNote.hidden = false;
+    }
+    document.querySelectorAll<SVGSVGElement>("[data-level] svg").forEach((svg) => {
+      if (level && svg.dataset.level !== level) return;
+      const pins = svg.querySelector("#layer-pins");
+      if (!pins) return;
+      const g = document.createElementNS(svgNS, "g");
+      g.setAttribute("class", "you-marker");
+      g.setAttribute("role", "img");
+      g.setAttribute("aria-label", "You are here");
+      const circle = (cls: string, r: number) => {
+        const c = document.createElementNS(svgNS, "circle");
+        c.setAttribute("class", cls);
+        c.setAttribute("cx", String(x));
+        c.setAttribute("cy", String(y));
+        c.setAttribute("r", String(r));
+        g.append(c);
+      };
+      if (radius) circle("you-accuracy", radius);
+      circle("you-dot", 14);
+      pins.append(g);
+    });
+  }
+  document.addEventListener("here-change", drawYou);
+
   // --- Start --------------------------------------------------------------
   everyMinute(render);
   document.addEventListener("plan-change", () => render());
@@ -442,6 +514,8 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   } else if (startLevel && hasLevel(startLevel)) {
     showLevel(startLevel);
   }
+  // A room picked on another page, still in force, shows straight away.
+  setTimeout(drawYou);
 </script>
 
 <style>
@@ -513,6 +587,13 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
     color: var(--ink);
     font-size: var(--text-lg);
     cursor: pointer;
+  }
+  .you {
+    margin-top: var(--space-4);
+  }
+  .you-note {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-xs);
   }
   .legend,
   .hint {
@@ -672,6 +753,19 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   }
   .stage .badge {
     pointer-events: none;
+  }
+  .stage .you-marker {
+    pointer-events: none;
+  }
+  .stage .you-accuracy {
+    fill: color-mix(in srgb, var(--accent) 15%, transparent);
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+  .stage .you-dot {
+    fill: var(--accent);
+    stroke: var(--surface);
+    stroke-width: 5;
   }
   .stage .badge text {
     fill: var(--ink);

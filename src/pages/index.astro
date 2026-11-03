@@ -26,6 +26,7 @@ const timed = allEvents.filter((e) => e.start);
       <Chip pressed data-show="all">Everything</Chip>
       <Chip data-show="plan">My plan</Chip>
       <Chip data-show="side">Side events</Chip>
+      <a class="near-link" href="/near/">Near me</a>
     </div>
   </header>
   <!-- Not aria-live: it rewrites itself every minute. -->
@@ -189,6 +190,14 @@ const timed = allEvents.filter((e) => e.start);
   h1 {
     margin: 0;
     font-size: var(--text-2xl);
+  }
+  .near-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 600;
   }
   .chips {
     display: flex;
