@@ -39,7 +39,44 @@ type Raw = {
   seq: number;
 };
 
-export type NotesPage = { notes: NoteRow[]; cursor: number; more: boolean };
+export type NotesPage = { notes: NoteRow[]; cursor: number; more: boolean; conflicts?: NoteRow[] };
+
+const toNote = (r: Raw): NoteRow => ({
+  id: r.id,
+  eventId: r.event_id,
+  title: r.title,
+  body: r.body,
+  createdAt: r.created_at,
+  updatedAt: r.updated_at,
+  deleted: r.deleted === 1,
+});
+
+/** Whether the stored row is exactly the version the device sent. */
+const same = (sent: NoteRow | undefined, r: Raw) =>
+  Boolean(
+    sent &&
+      sent.updatedAt === r.updated_at &&
+      sent.deleted === (r.deleted === 1) &&
+      sent.title === r.title &&
+      sent.body === r.body,
+  );
+
+/**
+ * The stored version of each sent note that differs from what was sent: the
+ * change lost to a newer one. The device may have skipped that newer version
+ * earlier (it had an edit pending), so it needs it now. Notes the server never
+ * had (a deletion of an unsynced note) aren't returned.
+ */
+export async function readConflicts(env: Env, user: SignedInUser, sent: Map<string, NoteRow>): Promise<NoteRow[]> {
+  if (!sent.size) return [];
+  const { results } = await env.DB.prepare(
+    `SELECT id, event_id, title, body, created_at, updated_at, deleted, seq
+       FROM notes WHERE user_id = ?1 AND id IN (SELECT value FROM json_each(?2))`,
+  )
+    .bind(user.id, JSON.stringify([...sent.keys()]))
+    .all<Raw>();
+  return results.filter((r) => !same(sent.get(r.id), r)).map(toNote);
+}
 
 /**
  * One page of notes written after `since`, oldest write first. Notes stored
@@ -61,26 +98,7 @@ export async function readNotes(
   return {
     cursor: results.length ? results[results.length - 1].seq : since,
     more: results.length === PAGE,
-    notes: results
-      .filter((r) => {
-        const sent = echo.get(r.id);
-        return !(
-          sent &&
-          sent.updatedAt === r.updated_at &&
-          sent.deleted === (r.deleted === 1) &&
-          sent.title === r.title &&
-          sent.body === r.body
-        );
-      })
-      .map((r) => ({
-        id: r.id,
-        eventId: r.event_id,
-        title: r.title,
-        body: r.body,
-        createdAt: r.created_at,
-        updatedAt: r.updated_at,
-        deleted: r.deleted === 1,
-      })),
+    notes: results.filter((r) => !same(echo.get(r.id), r)).map(toNote),
   };
 }
 

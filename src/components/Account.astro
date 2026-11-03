@@ -1,5 +1,5 @@
 ---
-// Optional Google sign-in (plan 0002): keeps My plan in step across devices.
+// Optional Google sign-in (plans 0002, 0005): keeps My plan and notes in step across devices.
 // Signed out, the site works exactly as before.
 import { GOOGLE_CLIENT_ID, SIGN_IN_HOSTS } from "../config";
 ---
@@ -15,8 +15,8 @@ import { GOOGLE_CLIENT_ID, SIGN_IN_HOSTS } from "../config";
 
   <div data-state="signed-out" hidden>
     <p>
-      <strong>Sync your plan.</strong> Sign in with Google to keep your stars on every device. Optional;
-      everything works without it. <a href="/privacy/">What we store</a>.
+      <strong>Sync your plan and notes.</strong> Sign in with Google to keep your stars and notes on every
+      device. Optional; everything works without it. <a href="/privacy/">What we store</a>.
     </p>
     <div class="google-button" data-google-button></div>
   </div>
@@ -27,7 +27,10 @@ import { GOOGLE_CLIENT_ID, SIGN_IN_HOSTS } from "../config";
 
   <div data-state="signed-in" class="signed-in" hidden>
     <img data-picture alt="" width="40" height="40" referrerpolicy="no-referrer" hidden />
-    <p>Signed in as <strong data-name></strong>. Your plan syncs across your devices.</p>
+    <p>
+      Signed in as <strong data-name></strong>. Your plan and notes sync across your devices. Signing out
+      removes your notes from this device; they stay in your account.
+    </p>
     <div class="buttons">
       <button type="button" class="button" data-sign-out>Sign out</button>
       <button type="button" class="button danger" data-delete>Delete my data</button>
