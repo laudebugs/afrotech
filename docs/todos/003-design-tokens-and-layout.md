@@ -8,8 +8,8 @@ Implement the [design language](../design/design-language.md) as CSS tokens and 
 
 ## Done when
 
-- [ ] `src/styles/tokens.css` with light + dark tokens, system and manual theme
+- [ ] `src/styles/tokens.css` with Plum and Plum Night tokens, system and manual theme
 - [ ] `BaseLayout.astro`: head, skip link, bottom tab bar (mobile), nav rail (≥1024 px)
-- [ ] Event row, time header, chip, star and bottom sheet components (static, no data yet)
+- [ ] Timeline rail, now marker, event card with progress bar, time header, chip, star and bottom sheet components (static, no data yet)
 - [ ] No horizontal scroll at 320 px; focus rings visible; 44 px touch targets
 - [ ] A `/design` page showing every component in both themes
