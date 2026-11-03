@@ -4,11 +4,12 @@ interface Props {
   time: string;
   inPlan?: boolean;
   datetime?: string;
+  [key: `data-${string}`]: string | undefined;
 }
-const { time, inPlan = false, datetime } = Astro.props;
+const { time, inPlan = false, datetime, ...rest } = Astro.props;
 ---
 
-<div class="row" data-in-plan={inPlan ? "true" : undefined}>
+<div class="row" data-in-plan={inPlan ? "true" : undefined} {...rest}>
   <time class="time" datetime={datetime}>{time}</time>
   <span class="dot" aria-hidden="true"></span>
   <div class="body"><slot /></div>

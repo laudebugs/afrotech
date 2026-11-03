@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EventDetail from "../../components/EventDetail.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+import { allEvents } from "../../lib/events";
+import type { ScheduleEvent } from "../../lib/types";
+
+export function getStaticPaths() {
+  return allEvents.map((event) => ({ params: { id: event.id }, props: { event } }));
+}
+
+interface Props {
+  event: ScheduleEvent;
+}
+const { event } = Astro.props;
+const back = `/schedule/${event.date}/`;
+---
+
+<BaseLayout title={`${event.title} · AfroTech 2026 Planner`} active="schedule" description={event.description?.slice(0, 160) ?? undefined}>
+  <p class="back"><a href={back}>← Schedule</a></p>
+  <EventDetail event={event} />
+  <SourcesFooter />
+</BaseLayout>
+
+<style>
+  .back {
+    margin: var(--space-6) 0 var(--space-4);
+  }
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    text-decoration: none;
+    font-weight: 600;
+  }
+</style>

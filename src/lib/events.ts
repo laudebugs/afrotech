@@ -7,7 +7,7 @@ import type { ScheduleEvent, Venue } from "./types";
 // Every key a ScheduleEvent has. `satisfies` makes TypeScript reject this list
 // if it drifts from the type, and checkEvents() rejects JSON that drifts from it.
 const EVENT_KEYS = {
-  id: true, kind: true, title: true, start: true, end: true, timeLabel: true,
+  id: true, kind: true, title: true, date: true, start: true, end: true, timeLabel: true,
   locationKey: true, locationLabel: true, address: true, track: true,
   categories: true, speakers: true, host: true, price: true, access: true,
   ticketLevels: true, rsvpUrl: true, founderInvestorPick: true,

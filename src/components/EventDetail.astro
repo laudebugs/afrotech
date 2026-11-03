@@ -1,0 +1,77 @@
+---
+// Everything about one event. The event page shows it, and the schedule's
+// bottom sheet loads it from that page.
+import "../styles/event-detail.css";
+import Star from "./Star.astro";
+import { venues } from "../lib/events";
+import { knownPrice } from "../lib/schedule";
+import { formatDate, formatRange } from "../lib/time";
+import type { ScheduleEvent } from "../lib/types";
+
+interface Props {
+  event: ScheduleEvent;
+  headingLevel?: "h1" | "h2";
+}
+const { event, headingLevel = "h1" } = Astro.props;
+const Heading = headingLevel;
+
+const when = event.start
+  ? `${formatDate(event.start)} · ${formatRange(event.start, event.end)}`
+  : `${formatDate(`${event.date}T12:00:00-06:00`)} · ${event.timeLabel ?? "Time TBA"}`;
+const venue = event.locationKey ? venues[event.locationKey] : undefined;
+const address = event.address ?? venue?.address ?? null;
+const mapsUrl = address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : null;
+const facts = [
+  event.kind === "official" ? "Official session" : "Side event",
+  event.track,
+  knownPrice(event.price),
+  event.access,
+  event.founderInvestorPick ? "Founder & investor pick" : null,
+].filter(Boolean);
+---
+
+<article class="detail" data-event-detail data-event-id={event.id}>
+  <div class="head">
+    <div>
+      <p class="when">{when}</p>
+      <Heading class="title">{event.title}</Heading>
+    </div>
+    <Star eventId={event.id} title={event.title} />
+  </div>
+
+  <p class="place">
+    <strong>{event.locationLabel}</strong>
+    {address && address !== event.locationLabel && <><br />{address}</>}
+  </p>
+
+  <ul class="facts">{facts.map((f) => <li>{f}</li>)}</ul>
+
+  <div class="actions">
+    {event.rsvpUrl && <a class="button primary" href={event.rsvpUrl} rel="noopener">RSVP</a>}
+    {event.start && <a class="button" href={`/event/${event.id}.ics`} download>Add to calendar</a>}
+    {mapsUrl && <a class="button" href={mapsUrl} rel="noopener">Directions</a>}
+  </div>
+
+  {
+    event.speakers.length > 0 && (
+      <section>
+        <h3>Speakers</h3>
+        <ul class="speakers">
+          {event.speakers.map((s) => (
+            <li>
+              <strong>{s.name}</strong>
+              {(s.title || s.company) && <span class="muted"> · {[s.title, s.company].filter(Boolean).join(", ")}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+  {event.host && <p><span class="muted">Hosted by</span> {event.host}</p>}
+  {event.description && <p class="description">{event.description}</p>}
+  {
+    event.ticketLevels.length > 0 && (
+      <p class="passes muted">Passes: {event.ticketLevels.join(", ")}</p>
+    )
+  }
+</article>

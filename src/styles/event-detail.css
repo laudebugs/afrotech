@@ -1,0 +1,77 @@
+/* Event details. Shared by the event page and the schedule's bottom sheet,
+   which loads details from that page, so it lives outside the component. */
+  .detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .detail .head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .detail .when {
+    margin: 0 0 var(--space-1);
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .detail .title {
+    margin: 0;
+    font-size: var(--text-xl);
+  }
+  .detail .place {
+    margin: 0;
+  }
+  .detail .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .detail .facts li {
+    padding: 2px var(--space-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-xs);
+    color: var(--muted);
+  }
+  .detail .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .detail .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .detail .button.primary {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .detail h3 {
+    margin: var(--space-2) 0;
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  .detail .speakers {
+    margin: 0;
+    padding-left: var(--space-4);
+  }
+  .detail .description {
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+  .detail .passes {
+    font-size: var(--text-sm);
+  }

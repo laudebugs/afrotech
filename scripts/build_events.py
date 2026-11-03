@@ -71,6 +71,7 @@ def official_events(sessions, venues):
             "id": s["id"],
             "kind": "official",
             "title": s["title"].strip(),
+            "date": s["date"],
             "start": start,
             "end": end,
             "timeLabel": None if start else "TBA",
@@ -144,6 +145,7 @@ def side_events(rows, venues):
             "id": event_id,
             "kind": "side",
             "title": title,
+            "date": r["date"],
             "start": start,
             "end": end,
             "timeLabel": None if start else "TBA",
@@ -174,6 +176,9 @@ def validate(events, venues):
         ids.add(e["id"])
         assert e["kind"] in ("official", "side"), where
         assert e["title"], where
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", e["date"] or ""), f"bad date: {where}"
+        if e["start"]:
+            assert e["start"].startswith(e["date"]), f"start not on date: {where}"
         for k in ("start", "end"):
             if e[k] is not None:
                 assert datetime.fromisoformat(e[k]).utcoffset() is not None, f"{k} lacks offset: {where}"

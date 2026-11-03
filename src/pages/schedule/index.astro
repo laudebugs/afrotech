@@ -1,0 +1,55 @@
+---
+// Sends you to today's schedule during the week, or lists the days.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { dayLabel, eventsOnDay, scheduleDays } from "../../lib/schedule";
+import { formatDate } from "../../lib/time";
+---
+
+<BaseLayout title="Schedule · AfroTech 2026 Planner" active="schedule">
+  <h1>Schedule</h1>
+  <ul class="days" data-days={JSON.stringify(scheduleDays)}>
+    {
+      scheduleDays.map((d) => (
+        <li>
+          <a href={`/schedule/${d}/`}>
+            <strong>{formatDate(`${d}T12:00:00-06:00`)}</strong>
+            <span class="muted">{dayLabel(d)} · {eventsOnDay(d).length} events</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
+
+<script>
+  import { dayKey } from "../../lib/time";
+
+  const days: string[] = JSON.parse(document.querySelector<HTMLElement>("[data-days]")!.dataset.days!);
+  const today = dayKey(new Date());
+  if (days.includes(today)) location.replace(`/schedule/${today}/${location.search}`);
+</script>
+
+<style>
+  h1 {
+    margin: var(--space-12) 0 var(--space-4);
+    font-size: var(--text-2xl);
+  }
+  .days {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .days a {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+  }
+</style>
