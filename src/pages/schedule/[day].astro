@@ -42,7 +42,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     </nav>
   </header>
 
-  <div class="filters" role="group" aria-label="Filters">
+  <div class="filters" role="group" aria-label="Filters" data-day={day}>
     <div class="chips">
       <Chip pressed data-kind-filter="all">Everything</Chip>
       <Chip data-kind-filter="official">Official</Chip>
@@ -108,7 +108,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 
 <script>
   import { readPlan } from "../../lib/plan";
-  import { dayKey, eventEndMs, previewNow } from "../../lib/time";
+  import { HOUR_MS, dayKey, eventEndMs, previewNow } from "../../lib/time";
 
   type Flag = "plan" | "free" | "picks";
   type Filters = { kind: string; plan: boolean; free: boolean; picks: boolean; track: string; q: string };
@@ -206,23 +206,30 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 
   // On today's page, open at the current hour: the first shown event starting
   // this hour or later (all-day events like registration stay above), else the
-  // first one still running. Coming back (Back button) or to a #link keeps
-  // that position.
+  // first one still running. A Back/Forward visit, a reload or a #link keeps
+  // the browser's own position.
+  const firstShown = (scope: ParentNode) => scope.querySelector<HTMLElement>("[data-row]:not([hidden])");
   const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-  if (!location.hash && navigation?.type !== "back_forward") {
-    const pageDay = location.pathname.split("/").filter(Boolean).pop();
-    const hourStart = openedAt - (openedAt % 3600_000); // Houston is a whole-hour offset
+  const pageDay = document.querySelector<HTMLElement>("[data-day]")!.dataset.day;
+  if (!location.hash && navigation?.type === "navigate" && pageDay === dayKey(new Date(openedAt))) {
+    const hourStart = openedAt - (openedAt % HOUR_MS); // Houston is a whole-hour offset
     const shown = rows.filter((r) => !r.hidden && r.dataset.start);
     const current =
       shown.find((r) => Date.parse(r.dataset.start!) >= hourStart) ??
-      shown.find((r) => openedAt < eventEndMs(r.dataset.start!, r.dataset.end ?? null));
-    // Only on today's page once the day has started; before that, the top is right.
-    if (pageDay === dayKey(new Date(openedAt)) && current && current !== rows.find((r) => !r.hidden)) {
-      // The first event of an hour scrolls with its hour label. Wait for the
-      // fonts, which change the height of everything above.
+      shown.find((r) => openedAt < eventEndMs(r.dataset.start!, r.dataset.end));
+    // Before the day starts the current event is the first, and the top is right.
+    if (current && current !== firstShown(document)) {
+      // The first event of an hour scrolls with its hour label.
       const group = current.closest<HTMLElement>("[data-group]")!;
-      const target = group.querySelector("[data-row]:not([hidden])") === current ? group : current;
-      document.fonts.ready.then(() => requestAnimationFrame(() => target.scrollIntoView({ block: "start" })));
+      const target = firstShown(group) === current ? group : current;
+      // Wait for the fonts, which change the height of everything above, but
+      // leave the page alone if the reader has started scrolling by then.
+      const startY = scrollY;
+      document.fonts.ready.then(() =>
+        requestAnimationFrame(() => {
+          if (scrollY === startY) target.scrollIntoView({ block: "start" });
+        }),
+      );
     }
   }
 
