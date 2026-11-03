@@ -38,7 +38,7 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers).
 | [013](013-offline-pwa.md) | Service worker: precache, per-request rules and offline page | 3 | done |
 | [014](014-worker-and-d1.md) | Worker and D1 skeleton | 4 | done (deploy command is yours) |
 | [015](015-google-sign-in.md) | Google sign-in and sessions | 4 | waiting on you |
-| [016](016-plan-sync.md) | Sync My plan across devices | 4 | todo |
+| [016](016-plan-sync.md) | Sync My plan across devices | 4 | done |
 | [017](017-account-and-privacy.md) | Account controls and privacy page | 4 | todo |
 | [018](018-speaker-pages.md) | Speaker pages from the official schedule | 4 | done |
 | [019](019-speaker-research-pilot.md) | Speaker research format and a 20-speaker pilot | 4 | done, rows await your review |
