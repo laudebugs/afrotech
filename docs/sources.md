@@ -20,6 +20,8 @@ The scripts write the merged results to `data/sessions.json`, `data/sessions.csv
 | Source | Use |
 |--------|-----|
 | [GRB floor plans](https://grbhouston.com/planners/floor-plans) | Reference PDFs (exhibit halls A–E, Level 2, meeting rooms, ballroom) for tracing our own simplified SVG |
+| [GRB 2024 planner brochure](https://assets.simpleviewinc.com/simpleview/image/upload/v1/clients/houston/2024_GRB_Brochure_Updated_10_22_cca7b39e-c795-4c75-b7cb-29a4c7113074.pdf) | Whole-floor maps of Levels 1–3 with dimensions; the main tracing reference for `scripts/build_floor_plan.py` |
+| [OpenStreetMap way 44129959](https://www.openstreetmap.org/way/44129959) | The convention center's outline; its corners anchor the map to latitude and longitude |
 | [GRB dimensions & capacities](https://www.grbhouston.com/planners/dimensions-capacities/) | Room sizes, to keep the traced plan in proportion |
 | [OpenStreetMap](https://www.openstreetmap.org/) | Building footprint of the GRB and the Marriott Marquis, for placing the floor plan at real-world coordinates |
 | [OpenFreeMap](https://openfreemap.org/) | Free vector map tiles (no API key) for the city map of side events |

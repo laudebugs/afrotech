@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-430 -70 920 1700" role="group" aria-label="George R. Brown Convention Center, Level 1 · exhibit halls and concourse" data-level="1">
+<g id="layer-base" aria-hidden="true">
+<rect class="base-outline" x="0" y="0" width="470" height="1568"/>
+<rect class="base-dock" x="380" y="0" width="90" height="1568"/>
+<text class="label" x="425" y="784" font-size="24" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 425 784)">Loading dock</text>
+<text class="label" x="-105" y="400" font-size="26" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 -105 400)">Avenida de las Americas</text>
+<text class="label" x="440" y="-30" font-size="28" text-anchor="middle" dominant-baseline="middle">N</text>
+</g>
+<g id="layer-areas">
+<g id="area-hall-a" class="area area--hall" data-area="hall-a"><rect x="86" y="0" width="294" height="325"/><text class="area-label" x="233" y="162.5" font-size="30" text-anchor="middle" dominant-baseline="middle">Hall A</text></g>
+<g id="area-hall-b" class="area area--hall" data-area="hall-b"><rect x="86" y="325" width="294" height="307"/><text class="area-label" x="233" y="478.5" font-size="30" text-anchor="middle" dominant-baseline="middle">Hall B</text></g>
+<g id="area-halls-c-d" class="area area--stage" data-area="halls-c-d"><rect x="86" y="632" width="294" height="608"/><text class="area-label" x="233" y="936" font-size="30" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 233 936)">Halls C–D</text></g>
+<g id="area-hall-e" class="area area--stage" data-area="hall-e"><rect x="86" y="1240" width="294" height="328"/><text class="area-label" x="233" y="1404" font-size="25" text-anchor="middle" dominant-baseline="middle">Hall E · Main Stage</text></g>
+<g id="area-concourse" class="area area--corridor" data-area="concourse"><rect x="0" y="0" width="86" height="1568"/><text class="area-label" x="43" y="420" font-size="22" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 43 420)">Concourse</text></g>
+<g id="area-grand-lobby" class="area area--lobby" data-area="grand-lobby"><rect x="0" y="740" width="86" height="80"/><text class="area-label" x="43" y="780" font-size="13" text-anchor="middle" dominant-baseline="middle">Grand Lobby</text></g>
+<g id="area-avenida-plaza" class="area area--outside" data-area="avenida-plaza"><rect x="-60" y="640" width="60" height="300"/><text class="area-label" x="-30" y="790" font-size="30" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 -30 790)">Avenida Plaza</text></g>
+<g id="area-marriott" class="area area--hotel" data-area="marriott"><rect x="-400" y="-20" width="220" height="320"/><text class="area-label" x="-290" y="140" font-size="22" text-anchor="middle" dominant-baseline="middle">Marriott Marquis</text></g>
+<g id="area-discovery-green" class="area area--outside" data-area="discovery-green"><rect x="-400" y="680" width="250" height="432"/><text class="area-label" x="-275" y="896" font-size="30" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 -275 896)">Discovery Green</text></g>
+<g id="area-the-grove" class="area area--outside" data-area="the-grove" data-approximate="true"><rect x="-390" y="700" width="110" height="70"/><text class="area-label" x="-335" y="735" font-size="20" text-anchor="middle" dominant-baseline="middle">The Grove</text></g>
+<g id="area-hilton" class="area area--hotel" data-area="hilton"><rect x="-400" y="1320" width="220" height="250"/><text class="area-label" x="-290" y="1445" font-size="23" text-anchor="middle" dominant-baseline="middle">Hilton Americas</text></g>
+</g>
+<g id="layer-pins"></g>
+</svg>

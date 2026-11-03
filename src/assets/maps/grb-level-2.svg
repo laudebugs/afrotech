@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-430 -70 920 1700" role="group" aria-label="George R. Brown Convention Center, Level 2 · mezzanine and balconies" data-level="2">
+<g id="layer-base" aria-hidden="true">
+<rect class="base-outline" x="0" y="0" width="470" height="1568"/>
+<rect class="base-below" x="86" y="0" width="384" height="1568"/>
+<rect class="base-bridge" x="-180" y="65" width="180" height="16"/>
+<rect class="base-bridge" x="-180" y="1358" width="180" height="16"/>
+<text class="label" x="278" y="784" font-size="28" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 278 784)">Exhibit halls below</text>
+<text class="label" x="-280" y="784" font-size="26" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 -280 784)">Avenida de las Americas</text>
+<text class="label" x="-200" y="45" font-size="20" text-anchor="middle" dominant-baseline="middle">Skybridge to Marriott</text>
+<text class="label" x="-200" y="1350" font-size="20" text-anchor="middle" dominant-baseline="middle">Skybridge to Hilton</text>
+<text class="label" x="440" y="-30" font-size="28" text-anchor="middle" dominant-baseline="middle">N</text>
+</g>
+<g id="layer-areas">
+<g id="area-mezzanine" class="area area--corridor" data-area="mezzanine"><rect x="20" y="30" width="66" height="1500"/><text class="area-label" x="53" y="780" font-size="30" text-anchor="middle" dominant-baseline="middle" transform="rotate(90 53 780)">Mezzanine A–D</text></g>
+<g id="area-rusk-balcony" class="area area--balcony" data-area="rusk-balcony"><rect x="0" y="85" width="26" height="50"/><text class="area-label" x="-14" y="110" font-size="20" text-anchor="end" dominant-baseline="middle">Rusk Balcony</text></g>
+<g id="area-walker-balcony" class="area area--balcony" data-area="walker-balcony"><rect x="0" y="330" width="26" height="92"/><text class="area-label" x="-14" y="376" font-size="20" text-anchor="end" dominant-baseline="middle">Walker Balcony</text></g>
+<g id="area-mckinney-balcony" class="area area--balcony" data-area="mckinney-balcony"><rect x="0" y="602" width="26" height="92"/><text class="area-label" x="-14" y="648" font-size="20" text-anchor="end" dominant-baseline="middle">McKinney Balcony</text></g>
+<g id="area-avenida-balcony" class="area area--balcony" data-area="avenida-balcony"><rect x="0" y="872" width="26" height="92"/><text class="area-label" x="-14" y="918" font-size="20" text-anchor="end" dominant-baseline="middle">Avenida Balcony</text></g>
+<g id="area-lamar-balcony" class="area area--balcony" data-area="lamar-balcony"><rect x="0" y="1143" width="26" height="92"/><text class="area-label" x="-14" y="1189" font-size="20" text-anchor="end" dominant-baseline="middle">Lamar Balcony</text></g>
+<g id="area-polk-balcony" class="area area--balcony" data-area="polk-balcony"><rect x="0" y="1470" width="26" height="56"/><text class="area-label" x="-14" y="1498" font-size="20" text-anchor="end" dominant-baseline="middle">Polk Balcony</text></g>
+</g>
+<g id="layer-pins"></g>
+</svg>

@@ -189,8 +189,17 @@ def validate(events, venues):
         assert isinstance(e["founderInvestorPick"], bool), where
         for k in ("categories", "speakers", "ticketLevels", "sources"):
             assert isinstance(e[k], list), f"{k}: {where}"
+    plan_path = ROOT / "data/floor-plan.json"
+    areas = json.loads(plan_path.read_text(encoding="utf-8"))["areas"] if plan_path.exists() else {}
     for key, v in venues.items():
         assert v.get("label") and v.get("kind") in VENUE_KINDS, f"bad venue {key}"
+        if v.get("areaId"):
+            assert v["areaId"] in areas, f"venue {key} points at unknown map area {v['areaId']}"
+    # New on-site places need a map spot or a note in data/venues.json; warn
+    # rather than fail, so a new room in a source can't stop the refresh.
+    unmapped = [k for k, v in venues.items() if v["kind"] in ("grb", "marriott", "outdoor") and not v.get("areaId") and not v.get("note")]
+    if unmapped:
+        print(f"Note: {len(unmapped)} on-site venue(s) have no map area or note yet: {', '.join(unmapped)}")
 
 
 def sort_key(e):

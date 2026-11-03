@@ -1,0 +1,497 @@
+{
+  "units": "feet",
+  "frame": {
+    "width": 470,
+    "length": 1568,
+    "note": "x west→east, y north→south, shared by all levels"
+  },
+  "controlPoints": [
+    {
+      "name": "north-west corner",
+      "lat": 29.754256,
+      "lng": -95.357061,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "name": "north-east corner",
+      "lat": 29.753528,
+      "lng": -95.35584,
+      "x": 470,
+      "y": 0
+    },
+    {
+      "name": "south-west corner",
+      "lat": 29.750717,
+      "lng": -95.359862,
+      "x": 0,
+      "y": 1568
+    }
+  ],
+  "levels": {
+    "1": {
+      "title": "Level 1 · exhibit halls and concourse",
+      "svg": "src/assets/maps/grb-level-1.svg"
+    },
+    "2": {
+      "title": "Level 2 · mezzanine and balconies",
+      "svg": "src/assets/maps/grb-level-2.svg"
+    },
+    "3": {
+      "title": "Level 3 · ballroom and meeting rooms",
+      "svg": "src/assets/maps/grb-level-3.svg"
+    }
+  },
+  "areas": {
+    "hall-a": {
+      "level": 1,
+      "label": "Hall A",
+      "kind": "hall",
+      "center": [
+        233,
+        162
+      ],
+      "approximate": false
+    },
+    "hall-b": {
+      "level": 1,
+      "label": "Hall B",
+      "kind": "hall",
+      "center": [
+        233,
+        478
+      ],
+      "approximate": false
+    },
+    "halls-c-d": {
+      "level": 1,
+      "label": "Halls C–D",
+      "kind": "stage",
+      "center": [
+        233,
+        936
+      ],
+      "approximate": false
+    },
+    "hall-e": {
+      "level": 1,
+      "label": "Hall E · Main Stage",
+      "kind": "stage",
+      "center": [
+        233,
+        1404
+      ],
+      "approximate": false
+    },
+    "concourse": {
+      "level": 1,
+      "label": "Concourse",
+      "kind": "corridor",
+      "center": [
+        43,
+        784
+      ],
+      "approximate": false
+    },
+    "grand-lobby": {
+      "level": 1,
+      "label": "Grand Lobby",
+      "kind": "lobby",
+      "center": [
+        43,
+        780
+      ],
+      "approximate": false
+    },
+    "avenida-plaza": {
+      "level": 1,
+      "label": "Avenida Plaza",
+      "kind": "outside",
+      "center": [
+        -30,
+        790
+      ],
+      "approximate": false
+    },
+    "marriott": {
+      "level": 1,
+      "label": "Marriott Marquis",
+      "kind": "hotel",
+      "center": [
+        -290,
+        140
+      ],
+      "approximate": false
+    },
+    "discovery-green": {
+      "level": 1,
+      "label": "Discovery Green",
+      "kind": "outside",
+      "center": [
+        -275,
+        896
+      ],
+      "approximate": false
+    },
+    "the-grove": {
+      "level": 1,
+      "label": "The Grove",
+      "kind": "outside",
+      "center": [
+        -335,
+        735
+      ],
+      "approximate": true
+    },
+    "hilton": {
+      "level": 1,
+      "label": "Hilton Americas",
+      "kind": "hotel",
+      "center": [
+        -290,
+        1445
+      ],
+      "approximate": false
+    },
+    "mezzanine": {
+      "level": 2,
+      "label": "Mezzanine A–D",
+      "kind": "corridor",
+      "center": [
+        53,
+        780
+      ],
+      "approximate": false
+    },
+    "rusk-balcony": {
+      "level": 2,
+      "label": "Rusk Balcony",
+      "kind": "balcony",
+      "center": [
+        13,
+        110
+      ],
+      "approximate": false
+    },
+    "walker-balcony": {
+      "level": 2,
+      "label": "Walker Balcony",
+      "kind": "balcony",
+      "center": [
+        13,
+        376
+      ],
+      "approximate": false
+    },
+    "mckinney-balcony": {
+      "level": 2,
+      "label": "McKinney Balcony",
+      "kind": "balcony",
+      "center": [
+        13,
+        648
+      ],
+      "approximate": false
+    },
+    "avenida-balcony": {
+      "level": 2,
+      "label": "Avenida Balcony",
+      "kind": "balcony",
+      "center": [
+        13,
+        918
+      ],
+      "approximate": false
+    },
+    "lamar-balcony": {
+      "level": 2,
+      "label": "Lamar Balcony",
+      "kind": "balcony",
+      "center": [
+        13,
+        1189
+      ],
+      "approximate": false
+    },
+    "polk-balcony": {
+      "level": 2,
+      "label": "Polk Balcony",
+      "kind": "balcony",
+      "center": [
+        13,
+        1498
+      ],
+      "approximate": false
+    },
+    "hall-a3": {
+      "level": 3,
+      "label": "Hall A3",
+      "kind": "hall",
+      "center": [
+        258,
+        162
+      ],
+      "approximate": false
+    },
+    "hall-b3": {
+      "level": 3,
+      "label": "Hall B3",
+      "kind": "hall",
+      "center": [
+        258,
+        453
+      ],
+      "approximate": false
+    },
+    "ballroom-a": {
+      "level": 3,
+      "label": "Ballroom A",
+      "kind": "stage",
+      "center": [
+        247,
+        737
+      ],
+      "approximate": false
+    },
+    "ballroom-b": {
+      "level": 3,
+      "label": "Ballroom B",
+      "kind": "room",
+      "center": [
+        247,
+        830
+      ],
+      "approximate": false
+    },
+    "ballroom-c": {
+      "level": 3,
+      "label": "Ballroom C",
+      "kind": "stage",
+      "center": [
+        247,
+        922
+      ],
+      "approximate": false
+    },
+    "ballroom-prefunction": {
+      "level": 3,
+      "label": "Prefunction",
+      "kind": "corridor",
+      "center": [
+        134,
+        828
+      ],
+      "approximate": false
+    },
+    "room-310": {
+      "level": 3,
+      "label": "310",
+      "kind": "room",
+      "center": [
+        136,
+        730
+      ],
+      "approximate": false
+    },
+    "room-320": {
+      "level": 3,
+      "label": "320",
+      "kind": "room",
+      "center": [
+        136,
+        928
+      ],
+      "approximate": false
+    },
+    "room-322": {
+      "level": 3,
+      "label": "322",
+      "kind": "room",
+      "center": [
+        341,
+        943
+      ],
+      "approximate": false
+    },
+    "general-assembly": {
+      "level": 3,
+      "label": "General Assembly",
+      "kind": "stage",
+      "center": [
+        204,
+        1105
+      ],
+      "approximate": false
+    },
+    "room-330": {
+      "level": 3,
+      "label": "330",
+      "kind": "room",
+      "center": [
+        122,
+        1012
+      ],
+      "approximate": false
+    },
+    "room-340": {
+      "level": 3,
+      "label": "340",
+      "kind": "room",
+      "center": [
+        122,
+        1184
+      ],
+      "approximate": false
+    },
+    "room-332": {
+      "level": 3,
+      "label": "332",
+      "kind": "room",
+      "center": [
+        329,
+        1016
+      ],
+      "approximate": false
+    },
+    "room-342": {
+      "level": 3,
+      "label": "342",
+      "kind": "room",
+      "center": [
+        329,
+        1180
+      ],
+      "approximate": false
+    },
+    "prefunction": {
+      "level": 3,
+      "label": "Prefunction",
+      "kind": "corridor",
+      "center": [
+        72,
+        1075
+      ],
+      "approximate": false
+    },
+    "room-350": {
+      "level": 3,
+      "label": "350",
+      "kind": "room",
+      "center": [
+        136,
+        1266
+      ],
+      "approximate": false
+    },
+    "room-351": {
+      "level": 3,
+      "label": "351",
+      "kind": "room",
+      "center": [
+        230,
+        1266
+      ],
+      "approximate": false
+    },
+    "room-352": {
+      "level": 3,
+      "label": "352",
+      "kind": "room",
+      "center": [
+        329,
+        1266
+      ],
+      "approximate": false
+    },
+    "room-360": {
+      "level": 3,
+      "label": "360",
+      "kind": "room",
+      "center": [
+        136,
+        1358
+      ],
+      "approximate": false
+    },
+    "room-361": {
+      "level": 3,
+      "label": "361",
+      "kind": "room",
+      "center": [
+        230,
+        1358
+      ],
+      "approximate": false
+    },
+    "room-362": {
+      "level": 3,
+      "label": "362",
+      "kind": "room",
+      "center": [
+        329,
+        1358
+      ],
+      "approximate": false
+    },
+    "room-370": {
+      "level": 3,
+      "label": "370",
+      "kind": "room",
+      "center": [
+        136,
+        1449
+      ],
+      "approximate": false
+    },
+    "room-371": {
+      "level": 3,
+      "label": "371",
+      "kind": "room",
+      "center": [
+        230,
+        1449
+      ],
+      "approximate": false
+    },
+    "room-372": {
+      "level": 3,
+      "label": "372",
+      "kind": "room",
+      "center": [
+        329,
+        1449
+      ],
+      "approximate": false
+    },
+    "room-380": {
+      "level": 3,
+      "label": "380",
+      "kind": "room",
+      "center": [
+        136,
+        1528
+      ],
+      "approximate": false
+    },
+    "room-381": {
+      "level": 3,
+      "label": "381",
+      "kind": "room",
+      "center": [
+        230,
+        1528
+      ],
+      "approximate": false
+    },
+    "room-382": {
+      "level": 3,
+      "label": "382",
+      "kind": "room",
+      "center": [
+        329,
+        1528
+      ],
+      "approximate": false
+    }
+  }
+}
