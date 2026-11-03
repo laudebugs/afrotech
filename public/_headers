@@ -1,0 +1,5 @@
+# Cloudflare static-asset headers.
+# Astro's built files carry a content hash in their names, so they can be
+# cached for a year; pages themselves keep the default (always revalidate).
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -8,18 +8,20 @@ interface Props {
 }
 const { active } = Astro.props;
 
+// Now and My plan render every event (~750 KB), so they prefetch on tap like
+// other links; the small tabs prefetch as soon as they're visible.
 const items = [
-  { id: "now", href: "/", label: "Now", icon: "now" },
-  { id: "schedule", href: "/schedule/", label: "Schedule", icon: "schedule" },
-  { id: "map", href: "/map/", label: "Map", icon: "map" },
-  { id: "plan", href: "/plan/", label: "My plan", icon: "star" },
+  { id: "now", href: "/", label: "Now", icon: "now", prefetch: "tap" },
+  { id: "schedule", href: "/schedule/", label: "Schedule", icon: "schedule", prefetch: "viewport" },
+  { id: "map", href: "/map/", label: "Map", icon: "map", prefetch: "viewport" },
+  { id: "plan", href: "/plan/", label: "My plan", icon: "star", prefetch: "tap" },
 ] as const;
 ---
 
 <nav class="app-nav" aria-label="Main">
   {
     items.map((item) => (
-      <a href={item.href} aria-current={active === item.id ? "page" : undefined}>
+      <a href={item.href} aria-current={active === item.id ? "page" : undefined} data-astro-prefetch={item.prefetch}>
         <Icon name={item.icon} />
         <span>
           {item.label}

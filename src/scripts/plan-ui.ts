@@ -74,5 +74,10 @@ new MutationObserver((records) => {
   for (const r of records) r.addedNodes.forEach((n) => n instanceof Element && syncPlan(n));
 }).observe(document.body, { childList: true, subtree: true });
 
+// Back/forward restores a page from memory; catch up with stars made since.
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted) syncPlan();
+});
+
 watchOtherTabs();
 syncPlan();

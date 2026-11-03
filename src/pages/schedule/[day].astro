@@ -25,7 +25,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 ---
 
 <BaseLayout title={`${dateLabel} · Schedule · AfroTech 2026 Planner`} active="schedule">
-  <header class="page-head">
+  <header class="page-head sticky-head">
     <div class="title-row">
       <h1>{dateLabel}</h1>
       <span class="muted">{dayLabel(day)}</span>
@@ -40,32 +40,32 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
         ))
       }
     </nav>
-
-    <div class="filters" role="group" aria-label="Filters">
-      <div class="chips">
-        <Chip pressed data-kind-filter="all">Everything</Chip>
-        <Chip data-kind-filter="official">Official</Chip>
-        <Chip data-kind-filter="side">Side events</Chip>
-        <Chip data-flag-filter="plan">My plan</Chip>
-        <Chip data-flag-filter="free">Free</Chip>
-        <Chip data-flag-filter="picks">Founder picks</Chip>
-      </div>
-      <div class="fields">
-        <label class="field">
-          <span class="visually-hidden">Track</span>
-          <select data-track-filter>
-            <option value="">All tracks</option>
-            {tracks.map((t) => <option value={t}>{t}</option>)}
-          </select>
-        </label>
-        <label class="field search">
-          <span class="visually-hidden">Search titles, speakers and hosts</span>
-          <input type="search" placeholder="Search titles, speakers, hosts" data-search-filter />
-        </label>
-      </div>
-      <p class="count muted" aria-live="polite" data-count>{events.length} events</p>
-    </div>
   </header>
+
+  <div class="filters" role="group" aria-label="Filters">
+    <div class="chips">
+      <Chip pressed data-kind-filter="all">Everything</Chip>
+      <Chip data-kind-filter="official">Official</Chip>
+      <Chip data-kind-filter="side">Side events</Chip>
+      <Chip data-flag-filter="plan">My plan</Chip>
+      <Chip data-flag-filter="free">Free</Chip>
+      <Chip data-flag-filter="picks">Founder picks</Chip>
+    </div>
+    <div class="fields">
+      <label class="field">
+        <span class="visually-hidden">Track</span>
+        <select data-track-filter>
+          <option value="">All tracks</option>
+          {tracks.map((t) => <option value={t}>{t}</option>)}
+        </select>
+      </label>
+      <label class="field search">
+        <span class="visually-hidden">Search titles, speakers and hosts</span>
+        <input type="search" placeholder="Search titles, speakers, hosts" data-search-filter />
+      </label>
+    </div>
+    <p class="count muted" aria-live="polite" data-count>{events.length} events</p>
+  </div>
 
   <Timeline label={`Events on ${dateLabel}`}>
     {
@@ -243,9 +243,6 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 </script>
 
 <style>
-  .page-head {
-    padding-top: var(--space-6);
-  }
   .title-row {
     display: flex;
     flex-wrap: wrap;
@@ -260,7 +257,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   .days {
     display: flex;
     gap: var(--space-1);
-    margin: var(--space-3) calc(var(--space-4) * -1) 0;
+    margin: var(--space-2) calc(var(--space-4) * -1) 0;
     padding: 0 var(--space-4);
     overflow-x: auto;
     scrollbar-width: none;

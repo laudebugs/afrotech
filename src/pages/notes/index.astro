@@ -11,7 +11,7 @@ const eventTitle = new Map(allEvents.map((e) => [e.id, e.title]));
 ---
 
 <BaseLayout title="Notes · AfroTech 2026 Planner" active="none">
-  <header class="page-head">
+  <header class="page-head sticky-head">
     <h1>Session notes</h1>
     <p class="muted">Notes from AfroTech 2026 sessions by {SITE_AUTHOR}, newest first.</p>
   </header>
@@ -39,9 +39,6 @@ const eventTitle = new Map(allEvents.map((e) => [e.id, e.title]));
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding-top: var(--space-6);
-  }
   h1 {
     margin: 0;
     font-size: var(--text-2xl);

@@ -19,14 +19,14 @@ const notes = (await notesForEvent(event.id)).map((n) => ({ id: n.id, title: n.d
 ---
 
 <BaseLayout title={`${event.title} · AfroTech 2026 Planner`} active="schedule" description={event.description?.slice(0, 160) ?? undefined}>
-  <p class="back"><a href={back}>← Schedule</a></p>
+  <p class="back sticky-head"><a href={back}>← Schedule</a></p>
   <EventDetail event={event} notes={notes} />
   <SourcesFooter />
 </BaseLayout>
 
 <style>
   .back {
-    margin: var(--space-6) 0 var(--space-4);
+    margin-bottom: var(--space-4);
   }
   .back a {
     display: inline-flex;
