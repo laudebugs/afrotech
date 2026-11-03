@@ -30,3 +30,8 @@ Built on November 3:
 - **Tested:** a changed worker showed the note; tapping it reloaded under the new
   build's cache. The hint showed on an emulated iPhone 13, stayed hidden after
   dismissing, and never showed on desktop.
+- **Icon redesign (November 3):** the mark is now "A26" in Plex Sans on the plum
+  tile, with soft plant-like threads behind it. `public/favicon.svg` is the
+  source, and `scripts/make-icons.cjs` renders the PNGs from it with Plex
+  embedded. The earlier favicon never rendered: its comment held a double
+  hyphen ("--accent"), which XML forbids.
