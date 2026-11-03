@@ -87,6 +87,41 @@ class PageWins(unittest.TestCase):
         _, changes = be.apply_event_pages([row()], pages(status="cancelled"))
         self.assertIn(("status", "cancelled"), [(c["field"], c["page"]) for c in changes])
 
+    def test_venue_only_row_is_removed_when_page_has_no_location(self):
+        (r,), changes = be.apply_event_pages([row(address="", venue="Secret Rooftop")], pages(venue=None, address=None))
+        self.assertEqual((r["venue"], r["address"]), ("", ""))
+        self.assertEqual(len(changes), 1)
+
+    def test_city_only_or_venue_only_page_keeps_our_address(self):
+        for page_loc in ({"venue": None, "address": "Houston, TX"}, {"venue": "Ion District", "address": None}):
+            (r,), changes = be.apply_event_pages([row()], pages(**page_loc))
+            self.assertEqual((r["venue"], r["address"]), ("The Ion", "4201 Main St, Houston, TX 77002"))
+            self.assertEqual(changes, [])
+
+    def test_convention_center_keeps_its_venue(self):
+        grb = row(venue="George R. Brown Convention Center", address="1001 Avenida de las Americas, Houston, TX")
+        (r,), _ = be.apply_event_pages([grb], pages(venue="GRB", address="1001 Avenida De Las Américas, Houston"))
+        self.assertEqual(r["venue"], "George R. Brown Convention Center")
+
+    def test_missing_address_is_filled_quietly(self):
+        (r,), changes = be.apply_event_pages([row(address="")], pages())
+        self.assertEqual(r["address"], "4201 Main Street, Houston, TX 77002")
+        self.assertEqual(changes, [])
+
+    def test_new_start_without_end_drops_our_end(self):
+        (r,), _ = be.apply_event_pages([row()], pages(start="2026-11-04T22:00:00-06:00", end=None))
+        self.assertEqual((r["start"], r["end"]), ("10:00 PM", ""))
+
+    def test_page_outside_the_week_changes_nothing(self):
+        original = row(event="Old name")
+        (r,), changes = be.apply_event_pages([original], pages(title="New", start="2026-12-03T18:00:00-06:00"))
+        self.assertEqual(r, original)
+        self.assertIn("outside the week", changes[0]["page"])
+
+    def test_ticket_site_branding_is_dropped_from_names(self):
+        (r,), _ = be.apply_event_pages([row()], pages(title="Mixer | Eventbrite"))
+        self.assertEqual(r["event"], "Mixer")
+
 
 class LeftAlone(unittest.TestCase):
     def test_unread_page_or_no_event_block(self):

@@ -365,6 +365,11 @@ def apply_event_pages(rows, pages):
     CSV, and every change made, for a person to check.
     """
     out_rows, changes = [], []
+    # Pages can move an event within the week the lists cover, not beyond it:
+    # a page showing another month is a recurring event's next date.
+    list_days = sorted(r["date"] for r in rows) or [""]
+    first_day = (date.fromisoformat(list_days[0]) - timedelta(days=1)).isoformat() if list_days[0] else ""
+    last_day = (date.fromisoformat(list_days[-1]) + timedelta(days=1)).isoformat() if list_days[-1] else ""
     days_per_url = {}
     for r in rows:
         days_per_url.setdefault((r.get("rsvp") or "").strip(), set()).add(r["date"])
@@ -383,14 +388,21 @@ def apply_event_pages(rows, pages):
         if page.get("status"):
             change("status", "on", page["status"])
 
-        # Name.
-        if page.get("title") and not same_text(page["title"], r["event"]):
-            r2["event"] = page["title"]
-            change("name", r["event"].strip(), page["title"])
-
-        # Date and times.
         page_start = page.get("start")
         page_day = (page_start or page.get("startDay") or "")[:10]
+        if page_day and not (first_day <= page_day <= last_day):
+            # Another occurrence, not this one: change nothing, but list it.
+            change("date", r["date"], f"{page_day} (outside the week; not applied)")
+            out_rows.append(r)
+            continue
+
+        # Name, without a ticket site's branding ("… | Eventbrite").
+        title = re.sub(r"\s*[|–-]\s*(eventbrite|posh|luma|partiful)\s*$", "", page.get("title") or "", flags=re.I)
+        if title and not same_text(title, r["event"]):
+            r2["event"] = title
+            change("name", r["event"].strip(), title)
+
+        # Date and times.
         if page_day and page_day != r["date"]:
             r2["date"] = page_day
             change("date", r["date"], page_day)
@@ -400,32 +412,45 @@ def apply_event_pages(rows, pages):
                 r2["start"] = start_clock
                 change("start", r["start"].strip(), start_clock)
             page_end = page.get("end")
-            if page_end:
-                length = datetime.fromisoformat(page_end) - datetime.fromisoformat(page_start)
+            length = (datetime.fromisoformat(page_end) - datetime.fromisoformat(page_start)) if page_end else None
+            if length is not None and timedelta(0) < length <= timedelta(hours=24):
                 end_clock = clock(datetime.fromisoformat(page_end))
-                if timedelta(0) < length <= timedelta(hours=24) and first_time(r["end"]) != end_clock:
+                if first_time(r["end"]) != end_clock:
                     r2["end"] = end_clock
                     change("end", r["end"].strip(), end_clock)
+            elif r2["start"] != r["start"] and r["end"].strip():
+                # A new start with no usable end: our old end may now come first.
+                r2["end"] = ""
+                change("end", r["end"].strip(), "")
 
-        # Location: the page's, or none if the page gives none.
+        # Location: the page's, or none if the page gives none. A page that
+        # gives less than we have (only a city, or a venue name without an
+        # address, as many show until you RSVP) doesn't replace our address.
         venue, address = page.get("venue") or "", page.get("address") or ""
         if venue == "Online":
             venue, address = "Online", ""
         ours_venue, ours_address = r["venue"].strip(), r["address"].strip()
-        same_place = (
-            (address and ours_address and street(address) and street(address) == street(ours_address))
-            or (not address and not ours_address and (not venue or same_text(venue, ours_venue)))
-        )
-        if not same_place:
-            if not venue and not address:
+        ours = " · ".join(x for x in (ours_venue, ours_address) if x)
+        theirs = " · ".join(x for x in (venue, address) if x)
+        on_site = "george r. brown" in ours.lower() or "grb" in ours.lower().split()
+        vague = venue != "Online" and not street(address or "") and bool(street(ours_address))
+        if not venue and not address:
+            if ours:
                 r2["venue"], r2["address"] = "", ""
-                change("location", " · ".join(x for x in (ours_venue, ours_address) if x), "none on the page (removed)")
-            else:
-                r2["venue"], r2["address"] = venue, address
-                change("location", " · ".join(x for x in (ours_venue, ours_address) if x),
-                       " · ".join(x for x in (venue, address) if x))
-        elif address and not ours_address:
-            r2["address"] = address
+                change("location", ours, "none on the page (removed)")
+        elif on_site or vague:
+            pass  # keep ours: the convention center's map spot, or a fuller address
+        elif address and street(address) and street(address) == street(ours_address):
+            pass  # same place, written differently
+        elif address and not ours_address and (not ours_venue or same_text(venue, ours_venue)):
+            r2["address"] = address  # a gap, not a disagreement
+            if venue and not ours_venue:
+                r2["venue"] = venue
+        elif not address and not ours_address and same_text(venue, ours_venue):
+            pass
+        else:
+            r2["venue"], r2["address"] = venue, address
+            change("location", ours, theirs)
 
         # Gaps only.
         for field in ("price", "description"):
