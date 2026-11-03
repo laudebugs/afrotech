@@ -6,6 +6,7 @@
 // merged plan back; the latest change per event wins on the server.
 import { applySyncedPlan, forgetSentChanges, readChanges, readPlan, type PlanChange } from "../lib/plan";
 import { SIGNED_IN, getItem as get, setItem as set } from "../lib/storage";
+import { api } from "./api";
 import { accountId as whoAmI, forgetAccount } from "./whoami";
 
 const MERGED = "afrotech:plan-merged"; // the account this device's old stars were merged into
@@ -37,12 +38,7 @@ async function sync(): Promise<void> {
       for (const id of readPlan()) if (!sent[id]) changes.push({ eventId: id, starred: true, updatedAt: 1 });
     }
 
-    const res = await fetch("/api/plan", {
-      method: "POST",
-      credentials: "same-origin",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ changes }),
-    });
+    const res = await api("POST", "/api/plan", { changes });
     if (res.status === 401) {
       set(SIGNED_IN, null);
       accountId = null;

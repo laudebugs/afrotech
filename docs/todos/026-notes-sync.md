@@ -37,6 +37,20 @@ Built on November 3:
     step.
   - A 409 (note limit) stops retries for the page, and sign-out explains it.
   - Plan 0001 and the storage helpers are updated.
+- **Second review** (all nine findings fixed):
+  - A note's session id is checked before saving and sending, so a bad
+    `?event=` link can't block every other note from syncing.
+  - An editor open in another tab locks when you sign out, so it can't write
+    the note back.
+  - When a session expires without signing out, notes already in the
+    account leave the device.
+  - A device whose fast clock the server clamped takes the server's copy, so
+    later edits from other devices still reach it.
+  - Done without typing saves nothing.
+  - The server counts live notes rather than reading every row on each sync,
+    and a multi-request upload asks for a page of notes only once.
+  - A local change clears the note-limit stop.
+  - Client scripts share one API helper (`src/scripts/api.ts`).
 - **Ties:** the device uses the server's rule (newer time, then a deletion,
   then the greater body), so both settle on the same version.
 - **Tested** with two browsers against `wrangler dev`:

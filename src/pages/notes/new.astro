@@ -45,7 +45,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
 
   const params = new URLSearchParams(location.search);
   const editing = getNote(params.get("id") ?? "");
-  const eventId = editing?.eventId ?? params.get("event") ?? "";
+  // A new note links to a session only if the link names a real one.
+  const asked = params.get("event") ?? "";
+  const eventId = editing?.eventId ?? (noteEvent(asked) ? asked : "");
   const info = noteEvent(eventId);
 
   const form = document.querySelector<HTMLFormElement>("[data-editor]")!;
@@ -67,8 +69,24 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   bodyInput.value = editing?.body ?? NOTE_TEMPLATE;
   removeButton.hidden = !noteId;
 
+  // Signing out in another tab removes notes from this device; this editor
+  // must not write its note back afterwards.
+  let closed = false;
+  window.addEventListener("storage", (e) => {
+    if ((e.key === "afrotech:notes" || e.key === null) && e.newValue === null && !closed) {
+      closed = true;
+      clearTimeout(timer);
+      timer = 0;
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>("input, textarea, button").forEach(
+        (el) => (el.disabled = true),
+      );
+      saved.textContent = "You signed out in another tab, so this note was removed from this device.";
+    }
+  });
+
   function save() {
     timer = 0;
+    if (closed) return;
     const note = saveNote({ id: noteId, eventId, title: titleInput.value, body: bodyInput.value });
     // A new note, or this one was deleted elsewhere and saved as a new note.
     if (note.id !== noteId) {
@@ -102,9 +120,10 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     e.preventDefault();
     clearTimeout(timer);
     timer = 0;
-    // Done on an untouched new note backs out without saving the template.
-    if (!noteId && !typed) {
-      location.href = eventId ? `/event/${eventId}/` : "/notes/";
+    // Done without typing saves nothing: a new note backs out, and an
+    // existing one keeps its time (and stays deleted if that happened elsewhere).
+    if (!typed) {
+      location.href = noteId ? `/notes/view/?id=${encodeURIComponent(noteId)}` : eventId ? `/event/${eventId}/` : "/notes/";
       return;
     }
     save();
