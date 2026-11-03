@@ -142,8 +142,13 @@ def address_of(location):
         return name, text_of(addr)
     if not isinstance(addr, dict):
         return name, ""
-    region = " ".join(p for p in (text_of(addr.get("addressRegion")), text_of(addr.get("postalCode"))) if p)
-    parts = [text_of(addr.get("streetAddress")), text_of(addr.get("addressLocality")), region]
+    street_line = text_of(addr.get("streetAddress"))
+    parts = [street_line]
+    # Some sites put the whole address in streetAddress; don't repeat the city.
+    for extra in (text_of(addr.get("addressLocality")),
+                  " ".join(p for p in (text_of(addr.get("addressRegion")), text_of(addr.get("postalCode"))) if p)):
+        if extra and extra.lower() not in street_line.lower():
+            parts.append(extra)
     return name, ", ".join(p for p in parts if p)
 
 

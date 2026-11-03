@@ -120,6 +120,12 @@ class ReadEvent(unittest.TestCase):
                                '"description":"Questions? Email jane.doe@gmail.com or text (713) 555-0142, ok."}'))
         self.assertEqual(e["description"], "Questions? Email or text, ok.")
 
+    def test_street_address_holding_the_city_is_not_repeated(self):
+        e = ee.read_event(page('{"@type":"Event","name":"x","startDate":"2026-11-02T12:00:00-06:00",'
+                               '"location":{"@type":"Place","name":"Us","address":{"streetAddress":'
+                               '"808 Travis Street, Houston, TX 77002","addressLocality":"Houston","addressRegion":"TX"}}}'))
+        self.assertEqual(e["address"], "808 Travis Street, Houston, TX 77002")
+
 
 class Cache(unittest.TestCase):
     def test_stale_handles_missing_naive_and_bad_times(self):

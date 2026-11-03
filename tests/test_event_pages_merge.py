@@ -122,12 +122,32 @@ class PageWins(unittest.TestCase):
         (r,), _ = be.apply_event_pages([row()], pages(title="Mixer | Eventbrite"))
         self.assertEqual(r["event"], "Mixer")
 
+    def test_city_only_page_never_replaces_a_location(self):
+        for ours in (dict(venue="", address="1954 1ST AVE"), dict(venue="Houston (shared on approval)", address="")):
+            (r,), changes = be.apply_event_pages([row(**ours)], pages(venue="Houston, TX", address="Houston, Texas"))
+            self.assertEqual((r["venue"], r["address"]), (ours["venue"], ours["address"]))
+            self.assertEqual(changes, [])
+
+    def test_city_only_page_fills_an_empty_location(self):
+        (r,), _ = be.apply_event_pages([row(venue="", address="")], pages(venue="Houston, TX", address="Houston, Texas"))
+        self.assertEqual((r["venue"], r["address"]), ("Houston, TX", "Houston, Texas"))
+
+    def test_repeated_city_is_tidied(self):
+        self.assertEqual(be.tidy_address("808 Travis Street, #Suite 400, Houston, TX 77002, Houston, TX"),
+                         "808 Travis Street, #Suite 400, Houston, TX 77002")
+
 
 class LeftAlone(unittest.TestCase):
     def test_unread_page_or_no_event_block(self):
         original = row()
         self.assertEqual(be.apply_event_pages([original], {})[0], [original])
         self.assertEqual(be.apply_event_pages([original], {URL: {"event": None}})[0], [original])
+
+    def test_missing_page_is_listed_but_changes_nothing(self):
+        original = row()
+        out, changes = be.apply_event_pages([original], {URL: {"lastError": "HTTP Error 404: Not Found"}})
+        self.assertEqual(out, [original])
+        self.assertEqual(changes[0]["page"], "event page not found (404)")
 
     def test_series_link_on_several_days(self):
         rows = [row(), row(date="2026-11-05")]
