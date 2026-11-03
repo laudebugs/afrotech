@@ -1,5 +1,8 @@
 ---
-// Credits every list the site draws on, as docs/sources.md asks.
+// Credits every list the site draws on, as docs/sources.md asks, and says when
+// the site last changed.
+import { UPDATED_AT } from "../lib/build-info";
+import { formatDate, formatTime } from "../lib/time";
 // The explicit {" "} keep spaces around the links: Astro drops line breaks
 // between text and tags.
 ---
@@ -20,6 +23,9 @@
     <a href="https://nominatim.org/">Nominatim</a>. The convention center plan is our own tracing of the{" "}
     <a href="https://www.grbhouston.com/planners/floor-plans/">GRB's floor plans</a>.
   </p>
+  <p class="updated">
+    Last updated <time datetime={UPDATED_AT.toISOString()}>{formatDate(UPDATED_AT)}, {formatTime(UPDATED_AT)}</time>.
+  </p>
 </footer>
 
 <style>
@@ -29,6 +35,10 @@
     border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: var(--text-xs);
+  }
+  .sources .updated {
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
   }
   .sources p {
     margin: 0;

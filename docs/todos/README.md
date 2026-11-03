@@ -35,7 +35,7 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers).
 | [010](010-near-me.md) | Near me (geolocation + "I'm at…") | 3 | todo |
 | [011](011-notes-on-site.md) | Public notes: write in the browser, publish through GitHub | 1 | done |
 | [012](012-auto-refresh-data.md) | Scheduled data refresh | 3 | done |
-| [013](013-offline-pwa.md) | Service worker: precache, per-request rules and offline page | 3 | todo |
+| [013](013-offline-pwa.md) | Service worker: precache, per-request rules and offline page | 3 | done |
 | [014](014-worker-and-d1.md) | Worker and D1 skeleton | 4 | waiting on you |
 | [015](015-google-sign-in.md) | Google sign-in and sessions | 4 | waiting on you |
 | [016](016-plan-sync.md) | Sync My plan across devices | 4 | todo |
@@ -44,5 +44,5 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers).
 | [019](019-speaker-research-pilot.md) | Speaker research format and a 20-speaker pilot | 4 | todo |
 | [020](020-speaker-research-batches.md) | Remaining speaker research batches | 4 | todo |
 | [021](021-speaker-corrections.md) | "Ask for a change" and how profiles are made | 4 | todo |
-| [022](022-install-and-updates.md) | Install to home screen, icons and update note | 3 | todo |
-| [023](023-offline-banner.md) | Data stamp and offline banner | 3 | todo |
+| [022](022-install-and-updates.md) | Install to home screen, icons and update note | 3 | done |
+| [023](023-offline-banner.md) | Data stamp and offline banner | 3 | done |

@@ -54,6 +54,9 @@ npm run deploy    # manual deploy; needs a one-time `npx wrangler login`
 
 Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
 
+The build also writes `dist/sw.js` (the offline service worker) from
+`src/sw/sw.template.js`; edit the template, not the output.
+
 ## Review rules
 
 - **Plans before code.** Write or update a plan in `docs/plans/` and wait for the
@@ -94,8 +97,9 @@ Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
   details out of the site.
 - **UI:** mobile-first, IBM Plex Sans and Plex Mono (self-hosted via
   `@fontsource`; Mono for times and short labels), design tokens only (no hard-coded colors;
-  the favicon and the `theme-color` meta tags are the exceptions, since they
-  can't read page CSS),
+  the favicon, the `theme-color` meta tags, the web app manifest and the
+  app icons (`scripts/make-icons.cjs`) are the exceptions, since they can't read
+  page CSS),
   44 px touch targets, works with `localStorage` blocked, respects
   `prefers-reduced-motion`.
 - **Site stack:** Astro 7 static output on Cloudflare (Workers static assets),
