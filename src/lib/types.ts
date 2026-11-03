@@ -42,17 +42,26 @@ export type ScheduleEvent = {
   sources: string[];
 };
 
+export type AreaKind = "hall" | "stage" | "room" | "lobby" | "balcony" | "outside" | "hotel" | "corridor";
+
+export type MapArea = {
+  level: number;
+  label: string;
+  kind: AreaKind;
+  /** Middle of the shape, in map feet. */
+  center: [number, number];
+  /** True when the shape's position is a best guess (e.g. The Grove). */
+  approximate: boolean;
+};
+
 /** data/floor-plan.json, written by scripts/build_floor_plan.py. */
 export type FloorPlan = {
-  units: string;
+  units: "feet";
   frame: { width: number; length: number; note: string };
   /** Building corners: latitude/longitude ↔ map x/y, for placing a GPS fix. */
   controlPoints: { name: string; lat: number; lng: number; x: number; y: number }[];
   levels: Record<string, { title: string; svg: string }>;
-  areas: Record<
-    string,
-    { level: number; label: string; kind: string; center: number[]; approximate: boolean }
-  >;
+  areas: Record<string, MapArea>;
 };
 
 export type VenueKind = "grb" | "marriott" | "outdoor" | "offsite" | "unplaced";
@@ -61,10 +70,11 @@ export type Venue = {
   label: string;
   kind: VenueKind;
   address?: string;
-  /** Floor-plan level (1–3) and area id in data/floor-plan.json (todo 007). */
-  level?: number;
+  /** Area id in data/floor-plan.json (todo 007). Its level comes from the area. */
   areaId?: string;
-  /** True when the spot is a best guess, e.g. an expo area inside the halls. */
+  /** Floor-plan level (1–3), only for venues without an area (e.g. expo areas). */
+  level?: number;
+  /** True when the venue's spot within its area or level is unknown. */
   approximate?: boolean;
   /** Shown instead of a map spot, e.g. "In the exhibit halls; … hasn't published where." */
   note?: string;

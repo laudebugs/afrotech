@@ -40,7 +40,8 @@ VIEW = (-430, -70, 920, 1700)
 NORTH = ("N", 440, -30, {"size": 28})
 
 # One tappable place on the map. kind: hall, stage, room, lobby, balcony,
-# outside, hotel or corridor. opts: approximate, and label placement.
+# outside, hotel or corridor; keep these in step with AreaKind in
+# src/lib/types.ts. opts: approximate, and label placement.
 Area = namedtuple("Area", "id label kind x y w h opts", defaults=[None])
 
 # Areas are listed as Area(...) fields; later shapes paint (and take taps) on

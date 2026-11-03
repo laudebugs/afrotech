@@ -2,6 +2,7 @@
 import officialJson from "../../data/events/official.json";
 import sideJson from "../../data/events/side.json";
 import venuesJson from "../../data/venues.json";
+import { floorPlan } from "./floor-plan";
 import type { ScheduleEvent, Venue } from "./types";
 
 // Every key a ScheduleEvent has. `satisfies` makes TypeScript reject this list
@@ -34,6 +35,16 @@ function checkEvents(list: unknown[], file: string): ScheduleEvent[] {
 export const officialEvents = checkEvents(officialJson, "data/events/official.json");
 export const sideEvents = checkEvents(sideJson, "data/events/side.json");
 export const venues = venuesJson as Record<string, Venue>;
+
+// Every page loads this module, so the map data is always checked at build
+// time, and every venue's map area must exist on the map.
+for (const [key, venue] of Object.entries(venues)) {
+  if (venue.areaId && !(venue.areaId in floorPlan.areas)) {
+    throw new Error(
+      `data/venues.json: ${key} points at map area ${venue.areaId}, which data/floor-plan.json doesn't have.`,
+    );
+  }
+}
 
 /** Every event, sorted by start time; events without a time come last. */
 export const allEvents: ScheduleEvent[] = [...officialEvents, ...sideEvents].sort((a, b) =>
