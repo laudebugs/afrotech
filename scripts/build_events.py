@@ -7,8 +7,10 @@ The shape matches the `ScheduleEvent` type in src/lib/types.ts.
 
 data/venues.json is partly hand-maintained: this script only adds places it
 hasn't seen and refreshes their label, kind and address. Fields added later
-by hand or by other scripts (level, areaId, approximate, note, lat, lng) are
-kept.
+by hand or by other scripts (areaId, level, approximate, note, lat, lng) are
+kept. A venue with an areaId takes its level from the map, so it never sets
+`level` itself; `approximate` on a venue means its spot within its area or
+level is unknown, while the map marks areas whose shape is a guess.
 """
 import csv
 import hashlib
@@ -202,8 +204,10 @@ def validate(events, venues):
         if v.get("areaId"):
             area = areas.get(v["areaId"])
             assert area, f"venue {key} points at unknown map area {v['areaId']}"
-            assert v.get("level") == area["level"], (
-                f"venue {key} says level {v.get('level')}, but area {v['areaId']} is on level {area['level']}"
+            # The area is the one source for these; the venue doesn't repeat them.
+            assert "level" not in v, f"venue {key} has an area, so its level comes from the map; drop 'level'"
+            assert not (area["approximate"] and v.get("approximate")), (
+                f"venue {key}: area {v['areaId']} is already approximate; drop 'approximate'"
             )
     # New on-site places need a map spot or a note in data/venues.json; warn
     # rather than fail, so a new room in a source can't stop the refresh.

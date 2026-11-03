@@ -93,8 +93,7 @@
   "balconies-c-avenida-balcony": {
     "areaId": "avenida-balcony",
     "kind": "grb",
-    "label": "Balconies C - Avenida Balcony",
-    "level": 2
+    "label": "Balconies C - Avenida Balcony"
   },
   "bald-kitty": {
     "address": "1113 Providence, Houston, TX 77002",
@@ -160,8 +159,7 @@
     "address": "1500 McKinney St, Houston, TX 77010, USA",
     "areaId": "discovery-green",
     "kind": "outdoor",
-    "label": "Discovery Green",
-    "level": 1
+    "label": "Discovery Green"
   },
   "discovery-green-afrotech": {
     "address": "1500 McKinney St, Houston, TX 77010, USA",
@@ -192,8 +190,7 @@
   "exhibit-hall-e-1st-floor": {
     "areaId": "hall-e",
     "kind": "grb",
-    "label": "Exhibit Hall E (1st Floor)",
-    "level": 1
+    "label": "Exhibit Hall E (1st Floor)"
   },
   "expo-hall": {
     "approximate": true,
@@ -248,34 +245,29 @@
     "address": "1001 Avenida De Las Americas, Houston, TX 77010",
     "areaId": "avenida-balcony",
     "kind": "grb",
-    "label": "George R. Brown Convention Center — Balconies C, Avenida Balcony",
-    "level": 2
+    "label": "George R. Brown Convention Center — Balconies C, Avenida Balcony"
   },
   "george-r-brown-convention-center-exhibit-hall-e-1st-floor": {
     "address": "1001 Avenida De Las Americas, Houston, TX 77010",
     "areaId": "hall-e",
     "kind": "grb",
-    "label": "George R. Brown Convention Center — Exhibit Hall E (1st Floor)",
-    "level": 1
+    "label": "George R. Brown Convention Center — Exhibit Hall E (1st Floor)"
   },
   "george-r-brown-convention-center-meeting-room-310": {
     "address": "1001 Avenida De Las Americas, Houston, TX 77010",
     "areaId": "room-310",
     "kind": "grb",
-    "label": "George R. Brown Convention Center — Meeting Room 310",
-    "level": 3
+    "label": "George R. Brown Convention Center — Meeting Room 310"
   },
   "grand-ballroom-a": {
     "areaId": "ballroom-a",
     "kind": "grb",
-    "label": "Grand Ballroom A",
-    "level": 3
+    "label": "Grand Ballroom A"
   },
   "grand-ballroom-c": {
     "areaId": "ballroom-c",
     "kind": "grb",
-    "label": "Grand Ballroom C",
-    "level": 3
+    "label": "Grand Ballroom C"
   },
   "grb-avenida-balcony": {
     "address": "1001 Avenida de las Americas, Houston, TX 77010",
@@ -316,8 +308,7 @@
     "approximate": true,
     "areaId": "marriott",
     "kind": "marriott",
-    "label": "HealthStack General Session (Marriott)",
-    "level": 1
+    "label": "HealthStack General Session (Marriott)"
   },
   "healthstack-pavillion": {
     "approximate": true,
@@ -330,8 +321,7 @@
     "approximate": true,
     "areaId": "marriott",
     "kind": "marriott",
-    "label": "HealthStack Seminar Room (Marriott)",
-    "level": 1
+    "label": "HealthStack Seminar Room (Marriott)"
   },
   "heights-house-hotel": {
     "address": "100 W Cavalcade St, Houston, TX",
@@ -443,20 +433,17 @@
   "main-stage-exhibit-hall-e-1st-floor": {
     "areaId": "hall-e",
     "kind": "grb",
-    "label": "Main Stage (Exhibit Hall E 1st Floor)",
-    "level": 1
+    "label": "Main Stage (Exhibit Hall E 1st Floor)"
   },
   "meeting-room-310": {
     "areaId": "room-310",
     "kind": "grb",
-    "label": "Meeting Room 310",
-    "level": 3
+    "label": "Meeting Room 310"
   },
   "meeting-room-320": {
     "areaId": "room-320",
     "kind": "grb",
-    "label": "Meeting Room 320",
-    "level": 3
+    "label": "Meeting Room 320"
   },
   "mo-brunch-brews": {
     "address": "1201 Southmore Blvd Houston, TX 77004",
@@ -536,8 +523,7 @@
   "product-innovation-stage-exhibit-hall-c-d-1st-floor": {
     "areaId": "halls-c-d",
     "kind": "grb",
-    "label": "Product & Innovation Stage (Exhibit Hall C&D (1st Floor))",
-    "level": 1
+    "label": "Product & Innovation Stage (Exhibit Hall C&D (1st Floor))"
   },
   "project-row-houses": {
     "address": "2521 Holman Street, Houston, TX 77004",
@@ -572,8 +558,7 @@
   "registration-grand-lobby": {
     "areaId": "grand-lobby",
     "kind": "grb",
-    "label": "Registration - Grand Lobby",
-    "level": 1
+    "label": "Registration - Grand Lobby"
   },
   "reserve-101": {
     "address": "1201 Caroline St",
@@ -734,11 +719,9 @@
   },
   "the-grove": {
     "address": "1611 Lamar St, Houston, TX 77010, USA",
-    "approximate": true,
     "areaId": "the-grove",
     "kind": "outdoor",
-    "label": "The Grove",
-    "level": 1
+    "label": "The Grove"
   },
   "the-ion": {
     "address": "4201 Main St, Houston, TX 77002",

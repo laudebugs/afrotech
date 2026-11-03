@@ -1,11 +1,15 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+// Importing the map data runs its shape check during the build.
+import { floorPlan } from "../../lib/floor-plan";
+
+const levelCount = Object.keys(floorPlan.levels).length;
 ---
 
 <BaseLayout title="Map · AfroTech 2026 Planner" active="map">
   <h1>Map</h1>
   <p>
-    The convention center map arrives later this week. Until then, every event shows its room or
+    The convention center map ({levelCount} levels) arrives later this week. Until then, every event shows its room or
     venue, and side events link to their RSVP page for directions.
   </p>
 </BaseLayout>
