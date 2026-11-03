@@ -323,7 +323,7 @@ def side_venue_key(label, address, venues):
 def street(address):
     """House number and street name, e.g. "2119-leeland", so "2119 Leeland St"
     and "2119 Leeland Street 77003" count as one place. None without a number."""
-    m = re.search(r"\b(\d+)\s+([a-z]+)", address.lower())
+    m = re.search(r"\b(\d+)\s+([a-z0-9]+)", address.lower())
     return f"{m[1]}-{m[2]}" if m else None
 
 
@@ -346,6 +346,18 @@ def same_text(a, b):
     """Equal apart from case, spacing and punctuation."""
     norm = lambda t: re.sub(r"[^a-z0-9]+", " ", (t or "").lower()).strip()
     return norm(a) == norm(b)
+
+
+def tidy_address(address):
+    """Drops parts that repeat earlier ones: "808 Travis St, Houston, TX 77002, Houston, TX"
+    becomes "808 Travis St, Houston, TX 77002"."""
+    kept = []
+    for part in (p.strip() for p in (address or "").split(",")):
+        low = part.lower()
+        # A repeat is the same part, or the start of one ("TX" after "TX 77002").
+        if part and not any(k.lower() == low or k.lower().startswith(low + " ") for k in kept):
+            kept.append(part)
+    return ", ".join(kept)
 
 
 def apply_event_pages(rows, pages):
@@ -375,7 +387,12 @@ def apply_event_pages(rows, pages):
         days_per_url.setdefault((r.get("rsvp") or "").strip(), set()).add(r["date"])
     for r in rows:
         url = (r.get("rsvp") or "").strip()
-        page = (pages.get(url) or {}).get("event")
+        entry = pages.get(url) or {}
+        page = entry.get("event")
+        if "404" in (entry.get("lastError") or "") and not page:
+            # The page is gone: perhaps taken down. Listed for a person to check.
+            changes.append({"date": r["date"], "title": r["event"].strip(), "url": url,
+                            "field": "status", "list": "on", "page": "event page not found (404)"})
         if not page or len(days_per_url.get(url, ())) > 1:
             out_rows.append(r)
             continue
@@ -426,31 +443,38 @@ def apply_event_pages(rows, pages):
         # Location: the page's, or none if the page gives none. A page that
         # gives less than we have (only a city, or a venue name without an
         # address, as many show until you RSVP) doesn't replace our address.
-        venue, address = page.get("venue") or "", page.get("address") or ""
+        venue, address = page.get("venue") or "", tidy_address(page.get("address"))
         if venue == "Online":
             venue, address = "Online", ""
         ours_venue, ours_address = r["venue"].strip(), r["address"].strip()
         ours = " · ".join(x for x in (ours_venue, ours_address) if x)
         theirs = " · ".join(x for x in (venue, address) if x)
         on_site = "george r. brown" in ours.lower() or "grb" in ours.lower().split()
-        vague = venue != "Online" and not street(address or "") and bool(street(ours_address))
+        # A page with a street address is specific. One with only a city, a
+        # venue name or "shared after approval" says less than any location
+        # we already have, so it only fills an empty one.
+        page_specific = bool(street(address))
         if not venue and not address:
             if ours:
                 r2["venue"], r2["address"] = "", ""
                 change("location", ours, "none on the page (removed)")
-        elif on_site or vague:
-            pass  # keep ours: the convention center's map spot, or a fuller address
-        elif address and street(address) and street(address) == street(ours_address):
+        elif on_site:
+            pass  # the convention center keeps its map spot
+        elif not page_specific:
+            if not ours and venue != "Online":
+                r2["venue"], r2["address"] = venue, address
+        elif street(address) == street(ours_address):
             pass  # same place, written differently
-        elif address and not ours_address and (not ours_venue or same_text(venue, ours_venue)):
+        elif not ours_address and (not ours_venue or same_text(venue, ours_venue)):
             r2["address"] = address  # a gap, not a disagreement
             if venue and not ours_venue:
                 r2["venue"] = venue
-        elif not address and not ours_address and same_text(venue, ours_venue):
-            pass
         else:
             r2["venue"], r2["address"] = venue, address
             change("location", ours, theirs)
+        if venue == "Online" and ours and ours != "Online":
+            r2["venue"], r2["address"] = "Online", ""
+            change("location", ours, "Online")
 
         # Gaps only.
         for field in ("price", "description"):

@@ -435,7 +435,7 @@
     "timeLabel": null,
     "locationKey": "the-us-space-808-travis",
     "locationLabel": "The Us Space",
-    "address": "808 Travis Street, #Suite 400, Houston, TX 77002, Houston, TX",
+    "address": "808 Travis Street, #Suite 400, Houston, TX 77002",
     "track": null,
     "categories": [
       "Networking"
@@ -462,9 +462,9 @@
     "start": "2026-11-03T09:30:00-06:00",
     "end": "2026-11-03T11:30:00-06:00",
     "timeLabel": null,
-    "locationKey": "houston-tx",
-    "locationLabel": "Houston, TX",
-    "address": "Houston, Texas",
+    "locationKey": "houston-shared-on-approval",
+    "locationLabel": "Houston (shared on approval)",
+    "address": "Shared on approval",
     "track": null,
     "categories": [],
     "speakers": [],
@@ -627,9 +627,9 @@
     "start": "2026-11-03T16:00:00-06:00",
     "end": "2026-11-03T18:00:00-06:00",
     "timeLabel": null,
-    "locationKey": "houston-tx",
-    "locationLabel": "Houston, TX",
-    "address": "Houston, Texas",
+    "locationKey": "shared-after-approval",
+    "locationLabel": "Shared after approval",
+    "address": "Shared after approval",
     "track": null,
     "categories": [
       "Social"
@@ -644,8 +644,7 @@
     "description": "Join Build in Tulsa for an Afternoon of drinks, conversation, and community during AfroTech 2026 in Houston.\n\n​Build in Tulsa is hosting a networking happy hour to connect Build in Tulsa, prospective founders, AfroTech attendees, and members of the entrepreneurial community.\n\n​Come meet the Build in Tulsa team, connect with founders and entrepreneurs, and learn more about opportunities to get involved with ARCH, our accelerator for high-growth technology startups.\n\n​This will be a relaxed, networking-focused event with opportunities for meaningful conversations, new connections, and recruitment conversations around Build in Tulsa’s programs.\n\n​Hors d’oeuvres, alcoholic, and non-alcoholic drinks will be available.\n\n​Come for a drink. Stay for the conversation. Meet the Build in Tulsa team and learn more about ARCH our new accelerator.\n\n​Hosted by Build in Tulsa.",
     "sources": [
       "afrotech.guide",
-      "google-sheet",
-      "event page"
+      "google-sheet"
     ]
   },
   {
@@ -768,9 +767,9 @@
     "start": "2026-11-03T17:30:00-06:00",
     "end": "2026-11-03T19:30:00-06:00",
     "timeLabel": null,
-    "locationKey": "houston-tx",
-    "locationLabel": "Houston, TX",
-    "address": "Houston, Texas",
+    "locationKey": "1954-1st-ave",
+    "locationLabel": "1954 1ST AVE",
+    "address": "1954 1ST AVE",
     "track": null,
     "categories": [
       "Networking"
@@ -1359,9 +1358,9 @@
     "start": "2026-11-04T09:30:00-06:00",
     "end": "2026-11-04T11:30:00-06:00",
     "timeLabel": null,
-    "locationKey": "houston-tx",
-    "locationLabel": "Houston, TX",
-    "address": "Houston, Texas",
+    "locationKey": "10-mins-from-convention-center-exact-location-shared-to-appr",
+    "locationLabel": "10 mins from Convention Center (exact location shared to approved registrants)",
+    "address": null,
     "track": null,
     "categories": [
       "Founder"
@@ -1816,7 +1815,7 @@
     "timeLabel": null,
     "locationKey": "location-provided-upon-rsvp",
     "locationLabel": "Location Provided Upon RSVP",
-    "address": "Houston, TX, USA",
+    "address": null,
     "track": null,
     "categories": [
       "Career"
@@ -2473,7 +2472,7 @@
     "timeLabel": null,
     "locationKey": "houston",
     "locationLabel": "Houston",
-    "address": "Address in info section, Houston, TX 77003, Houston, TX",
+    "address": "Address in info section 77003, Houston, TX",
     "track": null,
     "categories": [],
     "speakers": [],
@@ -3401,7 +3400,7 @@
     "timeLabel": null,
     "locationKey": "velvet-rail",
     "locationLabel": "Velvet Rail",
-    "address": "505 Main Street, Houston, TX 77002, Houston, TX",
+    "address": "505 Main Street, Houston, TX 77002",
     "track": null,
     "categories": [],
     "speakers": [],
@@ -3966,7 +3965,7 @@
     "timeLabel": null,
     "locationKey": "the-ion",
     "locationLabel": "The Ion",
-    "address": "The Ion, Houston, Texas",
+    "address": "The Ion",
     "track": null,
     "categories": [
       "Networking"
@@ -4053,7 +4052,7 @@
     "timeLabel": null,
     "locationKey": "privilege-rooftop-lounge",
     "locationLabel": "Privilege Rooftop & Lounge",
-    "address": "808 Anita Street, Houston, TX 77006, Houston, TX",
+    "address": "808 Anita Street, Houston, TX 77006",
     "track": null,
     "categories": [
       "Networking",
@@ -4195,7 +4194,7 @@
     "timeLabel": null,
     "locationKey": "the-podium-at-porsche-river-oaks",
     "locationLabel": "The Podium at Porsche River Oaks",
-    "address": "The Podium at Porsche River Oaks, Houston, Texas",
+    "address": "4007B Greenbriar Dr, Houston, TX 77098",
     "track": null,
     "categories": [
       "Networking"
@@ -4306,7 +4305,7 @@
     "timeLabel": null,
     "locationKey": "eyeconic-studios",
     "locationLabel": "Eyeconic Studios",
-    "address": "6115 Skyline Drive, C, Houston, TX 77057, Houston, TX",
+    "address": "6115 Skyline Drive, C, Houston, TX 77057",
     "track": null,
     "categories": [],
     "speakers": [],
