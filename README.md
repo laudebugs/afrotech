@@ -47,6 +47,8 @@ record and certificate on the first deploy.
 ## Docs
 
 - [Plan: events site](docs/plans/0001-events-site.md) — what we're building and why
+- [Plan: optional Google sign-in](docs/plans/0002-google-sign-in.md) — sync My plan across devices (draft)
+- [Plan: speaker profiles](docs/plans/0003-speaker-profiles.md) — bios, sourced fun facts and links (draft)
 - [To-dos](docs/todos/README.md) — tasks, one file each
 - [Design language](docs/design/design-language.md)
 - [Research: interactive SVG floor plan](docs/research/svg-floor-plan.md)
