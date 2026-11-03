@@ -264,9 +264,10 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   .toolbar-slot[hidden] {
     display: none;
   }
+  /* The slot does the pinning; the toolbar sits at its top (an offset here
+     would push it a header's height below the header). */
   .toolbar {
     position: relative;
-    top: var(--sticky-offset, 0px);
     z-index: 6;
     background: var(--bg);
   }
