@@ -5,24 +5,10 @@
 // server confirms the session. Each sync sends the logged changes and gets the
 // merged plan back; the latest change per event wins on the server.
 import { applySyncedPlan, forgetSentChanges, readChanges, readPlan, type PlanChange } from "../lib/plan";
+import { SIGNED_IN, getItem as get, setItem as set } from "../lib/storage";
 import { accountId as whoAmI, forgetAccount } from "./whoami";
 
-const SIGNED_IN = "afrotech:signed-in";
 const MERGED = "afrotech:plan-merged"; // the account this device's old stars were merged into
-
-const get = (key: string) => {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
-};
-const set = (key: string, value: string | null) => {
-  try {
-    if (value === null) localStorage.removeItem(key);
-    else localStorage.setItem(key, value);
-  } catch {}
-};
 
 let accountId: string | null = null;
 let running = false;

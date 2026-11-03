@@ -25,6 +25,18 @@ Built on November 3:
   device, so private notes don't stay on a shared phone. If some changes
   haven't reached the account, it asks before signing out. Delete my data
   keeps the device's copy, as it does for My plan.
+- **Review fixes:**
+  - Another account's notes never upload: if a device's notes came from a
+    different account (its session ended without signing out), the next
+    sign-in clears them from the device first. Notes written while signed
+    out in between go too; privacy wins over keeping them.
+  - Sign-out clears the device only after the server ends the session, and
+    stops any sync still running so nothing is written back.
+  - When a change loses on the server, the response carries the winning
+    version (`conflicts`), so a device with a slow clock can't stay out of
+    step.
+  - A 409 (note limit) stops retries for the page, and sign-out explains it.
+  - Plan 0001 and the storage helpers are updated.
 - **Ties:** the device uses the server's rule (newer time, then a deletion,
   then the greater body), so both settle on the same version.
 - **Tested** with two browsers against `wrangler dev`:
@@ -33,3 +45,7 @@ Built on November 3:
   - a note written offline syncs when the connection returns
   - sign-out clears the device while the account keeps the notes
   - signed out, no API requests are sent
+  - a second account signing in on the device gets none of the first
+    account's notes
+  - a device with a lagging clock takes the newer version
+  - signing out offline keeps you signed in, with your notes, and says why

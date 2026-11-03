@@ -1,20 +1,13 @@
 // The account panel on My plan: Google's sign-in button, or who you are with
 // Sign out and Delete my data. Google's script loads only here, only when needed.
 import { clearLocalNotes, readNoteChanges } from "../lib/notes";
-import { forgetNotesAccount, syncNotesNow } from "./notes-sync";
+import { SIGNED_IN, setItem as store } from "../lib/storage";
+import { forgetNotesAccount, notesSyncProblem, stopNotesSync, syncNotesNow } from "./notes-sync";
 
-const SIGNED_IN = "afrotech:signed-in";
 const MERGED = "afrotech:plan-merged";
 
 const root = document.querySelector<HTMLElement>("[data-account]");
 const accountNote = root?.querySelector<HTMLElement>("[data-account-status]");
-
-const store = (key: string, value: string | null) => {
-  try {
-    if (value === null) localStorage.removeItem(key);
-    else localStorage.setItem(key, value);
-  } catch {}
-};
 
 function show(state: "signed-out" | "signed-in" | "unavailable") {
   root?.querySelectorAll<HTMLElement>("[data-state]").forEach((el) => (el.hidden = el.dataset.state !== state));
@@ -118,14 +111,29 @@ async function init() {
     if (accountNote) accountNote.textContent = "Saving your notes…";
     const synced = await syncNotesNow();
     const waiting = Object.keys(readNoteChanges()).length;
-    if (!synced && waiting && !confirm(
-      `${waiting === 1 ? "1 note hasn't" : `${waiting} notes haven't`} reached your account yet (are you offline?). ` +
-        "Signing out removes notes from this device, so these changes would be lost. Sign out anyway?",
-    )) {
-      if (accountNote) accountNote.textContent = "Still signed in. Try again once you're online.";
+    if (!synced && waiting) {
+      const count = waiting === 1 ? "1 note hasn't" : `${waiting} notes haven't`;
+      const why =
+        notesSyncProblem() === "limit"
+          ? "Your account already holds 1,000 notes, the most it can keep."
+          : "Are you offline?";
+      const ok = confirm(
+        `${count} reached your account yet. ${why} Signing out removes notes from this device, ` +
+          "so these changes would be lost. Sign out anyway?",
+      );
+      if (!ok) {
+        if (accountNote) accountNote.textContent = "Still signed in.";
+        return;
+      }
+    }
+    // Only clear the device once the server has ended the session; otherwise
+    // the next visit would sign straight back in and download every note.
+    const res = await api("POST", "/api/auth/signout", {}).catch(() => null);
+    if (!res?.ok) {
+      if (accountNote) accountNote.textContent = "Couldn't sign out right now. Check your connection and try again.";
       return;
     }
-    await api("POST", "/api/auth/signout", {}).catch(() => undefined);
+    await stopNotesSync(); // no sync may write notes back after this
     store(SIGNED_IN, null);
     store(MERGED, null);
     forgetNotesAccount();

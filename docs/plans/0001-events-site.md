@@ -22,8 +22,8 @@ same code can serve AfroTech 2027 with new sources.
 ## Two kinds of user, and no sign-in
 
 The site serves two kinds of user. First, **you**: building a plan, writing
-notes and getting around. You are the only author of notes. Second, **everyone else**: browsing the schedule,
-copying a plan from a share link and reading your notes, which are public.
+notes and getting around. (Since plan 0005, anyone can keep private notes.) Second, **everyone else**: browsing the schedule,
+copying a plan from a share link and keeping their own private notes (plan 0005).
 Sign-in would delay Phase 1 and put a login in front of a site people check for
 a few seconds at a time. So the site has no accounts. Each browser keeps its own
 plan in `localStorage`, and a share link copies a plan to another device.
@@ -49,7 +49,7 @@ plan in `localStorage`, and a share link copies a plan to another device.
   share link.
 - **Now:** events happening now and starting within the hour, with your picks
   listed first.
-- **Notes:** a public `/notes` page lists every published note, and each event
+- **Notes:** (now private; see plan 0005) a public `/notes` page lists every published note, and each event
   page shows its notes. A "Write a note" button on any session opens an editor;
   the next section explains how a note gets published.
 
@@ -194,7 +194,7 @@ level or a latitude and longitude once todos 007 and 009 add them.
 | `/event/[id]` | One event's details |
 | `/map` | Convention center floor plan; `/map/city` for side events |
 | `/plan` | My plan, clash warnings, export and share |
-| `/notes` | Public notes, newest first; `/notes/new` is the editor |
+| `/notes` | My notes, private to you (plan 0005); `/notes/new` is the editor |
 
 ## Six risks and how the plan handles them
 
@@ -212,7 +212,7 @@ level or a latitude and longitude once todos 007 and 009 add them.
 You settled four questions on November 3:
 
 1. **No sign-in.** Each browser stores its plan in `localStorage`.
-2. **Public notes.** You write every note and publish it through GitHub.
+2. **Public notes.** (Replaced by plan 0005: notes are private.) You write every note and publish it through GitHub.
 3. **Cloudflare deploys.** You connect the repo to Cloudflare Workers Builds.
 4. **Domain.** The site lives at **`afrotech26.laudebugs.me`**.
 
