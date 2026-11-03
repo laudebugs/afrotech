@@ -15,6 +15,8 @@ export type ScheduleEvent = {
   id: string;
   kind: EventKind;
   title: string;
+  /** Houston calendar day, "2026-11-04". Set even when the time is TBA. */
+  date: string;
   /** ISO 8601 with Houston's offset, e.g. "2026-11-04T19:00:00-06:00". */
   start: string | null;
   end: string | null;

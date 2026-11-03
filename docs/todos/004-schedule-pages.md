@@ -31,3 +31,5 @@ Browse all official sessions and side events by day.
   pages that render it.
 - **Hour headers** come from each event's start time, so a 4-hour workshop sits
   under the hour it starts.
+- **`date` field:** events now carry their Houston date, so an event whose
+  time is TBA still lists on its day, under "Time TBA" at the end.

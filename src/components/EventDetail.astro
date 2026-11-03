@@ -4,7 +4,8 @@
 import "../styles/event-detail.css";
 import Star from "./Star.astro";
 import { venues } from "../lib/events";
-import { formatLongDate, formatRange } from "../lib/time";
+import { knownPrice } from "../lib/schedule";
+import { formatDate, formatRange } from "../lib/time";
 import type { ScheduleEvent } from "../lib/types";
 
 interface Props {
@@ -15,15 +16,15 @@ const { event, headingLevel = "h1" } = Astro.props;
 const Heading = headingLevel;
 
 const when = event.start
-  ? `${formatLongDate(event.start)} · ${formatRange(event.start, event.end)}`
-  : (event.timeLabel ?? "Time TBA");
+  ? `${formatDate(event.start)} · ${formatRange(event.start, event.end)}`
+  : `${formatDate(`${event.date}T12:00:00-06:00`)} · ${event.timeLabel ?? "Time TBA"}`;
 const venue = event.locationKey ? venues[event.locationKey] : undefined;
 const address = event.address ?? venue?.address ?? null;
 const mapsUrl = address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}` : null;
 const facts = [
   event.kind === "official" ? "Official session" : "Side event",
   event.track,
-  event.price,
+  knownPrice(event.price),
   event.access,
   event.founderInvestorPick ? "Founder & investor pick" : null,
 ].filter(Boolean);

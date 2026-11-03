@@ -73,8 +73,8 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
           <TimeHeader label={group.label} />
           {group.events.map((event) => (
             <TimelineRow
-              time={formatClock(event.start!)}
-              datetime={event.start!}
+              time={event.start ? formatClock(event.start) : (event.timeLabel ?? "TBA")}
+              datetime={event.start ?? undefined}
               data-row
               data-event-id={event.id}
               data-kind={event.kind}
@@ -192,21 +192,40 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   // Open event details in the bottom sheet; the link still works without JS.
   const sheet = document.querySelector<HTMLDialogElement>("#event-sheet")!;
   const body = sheet.querySelector<HTMLElement>("[data-sheet-body]")!;
+  let request = 0;
+
   document.querySelector(".timeline")!.addEventListener("click", async (e) => {
     const link = (e.target as Element).closest<HTMLAnchorElement>('a[href^="/event/"]');
     const click = e as MouseEvent;
     if (!link || click.metaKey || click.ctrlKey || click.shiftKey || click.button !== 0) return;
     e.preventDefault();
+
+    // Open at once with a loading line, so a slow network still feels responsive.
+    const mine = ++request;
+    const loading = document.createElement("p");
+    loading.className = "muted";
+    loading.textContent = "Loading…";
+    body.replaceChildren(loading);
+    if (!sheet.open) sheet.showModal();
+
     try {
       const res = await fetch(link.href);
       if (!res.ok) throw new Error(String(res.status));
       const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+      if (mine !== request) return; // a later tap won
       const detail = doc.querySelector("[data-event-detail]");
       if (!detail) throw new Error("no detail");
+      // The page's h1 becomes an h2 here, under this page's own h1.
+      const title = detail.querySelector("h1");
+      if (title) {
+        const h2 = document.createElement("h2");
+        h2.className = title.className;
+        h2.append(...title.childNodes);
+        title.replaceWith(h2);
+      }
       body.replaceChildren(document.importNode(detail, true));
-      sheet.showModal();
     } catch {
-      location.href = link.href;
+      if (mine === request) location.href = link.href;
     }
   });
 </script>
