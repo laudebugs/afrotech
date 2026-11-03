@@ -103,10 +103,11 @@ const routes: Record<string, Handler> = {
     return json(await readNotes(env, user, parseSince(url.searchParams.get("since"))));
   },
 
-  /** Body: { since, changes: [{ id, eventId, title, body, createdAt, updatedAt, deleted }] }.
+  /** Body: { since?, changes: [{ id, eventId, title, body, createdAt, updatedAt, deleted }] }.
    *  Applies the changes, then returns { notes, cursor, more, conflicts }: the
-   *  first page of notes written after `since`, minus the versions this request
-   *  just sent, and the stored version of any sent note whose change lost. */
+   *  first page of notes written after `since` (none when `since` is left out),
+   *  minus the versions this request just sent, and the stored version of any
+   *  sent note whose change didn't stick. */
   "POST /api/notes": async (request, env, url) => {
     if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
     const user = await currentUser(request, env);
@@ -121,8 +122,11 @@ const routes: Record<string, Handler> = {
     if (typeof changes === "string") return json({ error: changes }, 400);
     if (!(await applyNoteChanges(env, user, changes))) return json({ error: "note limit reached" }, 409);
     const echo = new Map(changes.map((c) => [c.id, c]));
-    const page = await readNotes(env, user, parseSince((body as { since?: unknown }).since), echo);
-    return json({ ...page, conflicts: await readConflicts(env, user, echo) });
+    const conflicts = await readConflicts(env, user, echo);
+    // A device uploading in several requests asks for the page only on the last.
+    const since = (body as { since?: unknown }).since;
+    if (since === undefined) return json({ notes: [], cursor: 0, more: false, conflicts });
+    return json({ ...(await readNotes(env, user, parseSince(since), echo)), conflicts });
   },
 };
 

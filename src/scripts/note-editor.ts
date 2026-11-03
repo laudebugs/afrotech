@@ -60,6 +60,8 @@ export type NoteEditor = {
   /** The text without Markdown syntax, for counting words. */
   getText(): string;
   focus(): void;
+  /** Makes the editor read-only, for good (signed out in another tab). */
+  lock(): void;
 };
 
 /** Words in plain text: runs of letters or digits ("don't" and "AI-first" count once). */
@@ -96,5 +98,6 @@ export function createNoteEditor(opts: {
     setMarkdown: (markdown) => editor.commands.setContent(markdown, { contentType: "markdown", emitUpdate: false }),
     getText: () => editor.getText({ blockSeparator: "\n" }),
     focus: () => editor.commands.focus(),
+    lock: () => editor.setEditable(false),
   };
 }
