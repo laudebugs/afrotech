@@ -68,8 +68,10 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   removeButton.hidden = !noteId;
 
   function save() {
+    timer = 0;
     const note = saveNote({ id: noteId, eventId, title: titleInput.value, body: bodyInput.value });
-    if (!noteId) {
+    // A new note, or this one was deleted elsewhere and saved as a new note.
+    if (note.id !== noteId) {
       noteId = note.id;
       removeButton.hidden = false;
       // Reloading the page edits this note instead of starting another.
@@ -81,7 +83,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   }
 
   let timer = 0;
+  let typed = false;
   form.addEventListener("input", () => {
+    typed = true;
     clearTimeout(timer);
     timer = window.setTimeout(save, 400);
   });
@@ -98,6 +102,11 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     e.preventDefault();
     clearTimeout(timer);
     timer = 0;
+    // Done on an untouched new note backs out without saving the template.
+    if (!noteId && !typed) {
+      location.href = eventId ? `/event/${eventId}/` : "/notes/";
+      return;
+    }
     save();
     location.href = `/notes/view/?id=${encodeURIComponent(noteId!)}`;
   });

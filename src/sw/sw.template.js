@@ -49,10 +49,17 @@ async function put(cacheName, request, response) {
   return response;
 }
 
+/** Pages are static, so a query string (?id=, ?area=) never changes the HTML:
+ *  save one copy per path rather than one per note or room. */
+const pageKey = (request) => {
+  const url = new URL(request.url);
+  return url.origin + url.pathname;
+};
+
 /** Pages: the network when it answers within 3 seconds, else the saved copy. */
 async function networkFirst(event) {
   const request = event.request;
-  const network = fetch(request).then((res) => put(PAGES, request, res));
+  const network = fetch(request).then((res) => put(PAGES, pageKey(request), res));
   // Keep the cache write alive even if the saved copy wins the race.
   event.waitUntil(network.catch(() => undefined));
   const timeout = new Promise((resolve) => setTimeout(resolve, NETWORK_TIMEOUT, "timeout"));
@@ -74,7 +81,7 @@ async function cacheFirst(request) {
 async function staleWhileRevalidate(event) {
   const cached = await saved(event.request);
   const fresh = fetch(event.request)
-    .then((res) => put(PAGES, event.request, res))
+    .then((res) => put(PAGES, pageKey(event.request), res))
     .catch(() => undefined);
   event.waitUntil(fresh);
   return cached ?? (await fresh) ?? (await match(OFFLINE)) ?? Response.error();

@@ -1,7 +1,7 @@
 // Lists your notes on each session's detail (plan 0005). Loaded on every page;
 // it only touches sections marked data-my-notes, including ones the schedule's
 // bottom sheet adds later.
-import { listNotes, watchOtherTabsNotes } from "../lib/notes";
+import { adoptOldDrafts, listNotes, watchOtherTabsNotes } from "../lib/notes";
 
 function fill(root: ParentNode = document) {
   root.querySelectorAll<HTMLElement>("[data-my-notes]").forEach((section) => {
@@ -20,9 +20,15 @@ function fill(root: ParentNode = document) {
 }
 
 document.addEventListener("notes-change", () => fill());
+// Only content that brings a notes section (the schedule's bottom sheet) needs filling.
 new MutationObserver((records) => {
-  for (const r of records) r.addedNodes.forEach((n) => n instanceof Element && fill(n));
+  for (const r of records) {
+    r.addedNodes.forEach((n) => {
+      if (n instanceof Element && (n.matches("[data-my-notes]") || n.querySelector("[data-my-notes]"))) fill(n.parentNode ?? n);
+    });
+  }
 }).observe(document.body, { childList: true, subtree: true });
 window.addEventListener("pageshow", (e) => e.persisted && fill());
 watchOtherTabsNotes();
+adoptOldDrafts(); // drafts from the old GitHub editor become notes, on any page
 fill();

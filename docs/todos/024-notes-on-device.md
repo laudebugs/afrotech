@@ -26,6 +26,13 @@ Built on November 3:
   become notes the first time My notes opens.
 - **Repo link:** `NOTES_REPO` became `REPO`, because the speaker pages still
   open GitHub issues for change requests.
+- **Review fixes:** a note deleted in another tab stays deleted, and further
+  typing starts a new note. Done on an untouched new note saves nothing. Old
+  drafts move on any page, and only once they're saved. The service worker now
+  saves one copy of each notes page, whatever the query string.
+- **Not changed:** the session lookup is inlined in all three notes pages
+  (about 75 KB each before compression), like the old editor did, so they work
+  offline with no extra file.
 - **Tested** in a browser: write, view, "Your notes" on the event page and the
   bottom sheet, delete, the missing-note message, a pasted `<script>` shown as
   text, and blocked storage. Signed out, the pages send no API requests.

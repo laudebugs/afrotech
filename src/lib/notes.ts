@@ -21,6 +21,7 @@ const CHANGES_KEY = "afrotech:notes-changes";
 /** Drafts from before plan 0005, one per event; moved into notes once. */
 const OLD_DRAFT_PREFIX = "afrotech:note-draft:";
 
+/** Limits in characters (JavaScript string length); the Worker checks the same. */
 export const MAX_TITLE = 200;
 export const MAX_BODY = 100_000;
 
@@ -36,8 +37,22 @@ function readJson<T>(key: string, fallback: T): T {
   }
 }
 
+let storageOk: boolean | null = null;
+
 /** False when the browser blocks storage, so notes last only while the page is open. */
-export const notesPersist = () => memory === null;
+export function notesPersist(): boolean {
+  if (memory !== null) return false; // a write already failed
+  if (storageOk === null) {
+    try {
+      localStorage.setItem("afrotech:probe", "1");
+      localStorage.removeItem("afrotech:probe");
+      storageOk = true;
+    } catch {
+      storageOk = false;
+    }
+  }
+  return storageOk;
+}
 
 /** Every note, tombstones included, by id. */
 export function readAllNotes(): Record<string, Note> {
@@ -95,9 +110,12 @@ function newId(): string {
 export function saveNote(fields: { id?: string; eventId: string; title: string; body: string }): Note {
   const all = readAllNotes();
   const now = Date.now();
-  const existing = fields.id ? all[fields.id] : undefined;
+  // A note deleted elsewhere (another tab, or a sync) stays deleted: further
+  // typing in its editor starts a new note instead of bringing it back.
+  const found = fields.id ? all[fields.id] : undefined;
+  const existing = found && !found.deleted ? found : undefined;
   const note: Note = {
-    id: existing?.id ?? fields.id ?? newId(),
+    id: existing?.id ?? (found ? newId() : (fields.id ?? newId())),
     eventId: existing?.eventId ?? fields.eventId,
     title: fields.title.slice(0, MAX_TITLE),
     body: fields.body.slice(0, MAX_BODY),
@@ -153,6 +171,7 @@ export function adoptOldDrafts(): void {
     const eventId = key.slice(OLD_DRAFT_PREFIX.length);
     if (draft.title || draft.body) {
       saveNote({ eventId: eventId === "untitled" ? "" : eventId, title: draft.title ?? "", body: draft.body ?? "" });
+      if (!notesPersist()) return; // keep the old draft until the note itself is saved
     }
     try {
       localStorage.removeItem(key);

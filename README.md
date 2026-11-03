@@ -1,6 +1,6 @@
 # AfroTech 2026 — Events & Notes
 
-Shared tracker for AfroTech Conference 2026 events and the notes we take at them.
+Shared tracker for AfroTech Conference 2026 events, with a site for planning your week and taking private notes.
 
 **When:** November 2–6, 2026 · **Where:** George R. Brown Convention Center, Houston, TX
 
@@ -72,19 +72,14 @@ record and certificate on the first deploy.
 | [`schedule/side-events.md`](schedule/side-events.md) | About 170 side events (parties, mixers, dinners, workshops) with RSVP links and founder/investor picks |
 | [`data/sessions.csv`](data/sessions.csv) / [`.json`](data/sessions.json) | Official agenda as data, with descriptions, ticket levels and calendar links |
 | [`data/side-events.csv`](data/side-events.csv) | Side events as data, with addresses and descriptions |
-| [`notes/`](notes/) | One file per session we attend — copy [`notes/_template.md`](notes/_template.md) |
 | [`scripts/`](scripts/) | Re-pull the official agenda and side events |
 
-## Adding notes
+## Taking notes
 
-The quickest way is on the site: open any session, tap **Write a note**, and
-tap **Publish on GitHub** when you're done. GitHub opens with the file filled
-in; tap **Commit changes**, and the note appears at
-[/notes](https://afrotech26.laudebugs.me/notes/) about two minutes later.
-
-To write one by hand, copy `notes/_template.md` to
-`notes/YYYY-MM-DD-short-title.md`, set `eventId` to the id in the session's URL
-(`/event/<id>/`), and commit it.
+Open any session on the site and tap **Write a note**. Notes save on your
+device as you type, and only you can see them. Sign in with Google on **My
+plan** to keep them on all your devices. **Share** and **Copy Markdown** on a
+note pass it on.
 
 ## Refreshing the schedules
 

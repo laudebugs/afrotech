@@ -22,7 +22,7 @@ import NoteEventLookup from "../../components/NoteEventLookup.astro";
 </BaseLayout>
 
 <script>
-  import { adoptOldDrafts, listNotes } from "../../lib/notes";
+  import { listNotes } from "../../lib/notes";
   import { noteEvent } from "../../lib/note-events";
   import { formatDate } from "../../lib/time";
 
@@ -46,7 +46,6 @@ import NoteEventLookup from "../../components/NoteEventLookup.astro";
     document.querySelector<HTMLElement>("[data-empty]")!.hidden = notes.length > 0;
   }
 
-  adoptOldDrafts();
   document.addEventListener("notes-change", render);
   window.addEventListener("pageshow", (e) => e.persisted && render());
   render();
