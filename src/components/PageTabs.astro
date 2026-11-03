@@ -1,0 +1,66 @@
+---
+// Tabs across the top of a section (plan 0007): the map's Convention center
+// and City, and Saved's Plan and Notes. Each tab is a link to its own page,
+// so back, forward and offline work as for any page.
+interface Props {
+  label: string;
+  tabs: { href: string; label: string; current: boolean; count?: string }[];
+}
+const { label, tabs } = Astro.props;
+---
+
+<nav class="page-tabs" aria-label={label}>
+  {
+    tabs.map((t) => (
+      <a href={t.href} aria-current={t.current ? "page" : undefined}>
+        {t.label}
+        {t.count && <span class="count" data-tab-count={t.count} hidden />}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .page-tabs {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-3);
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: var(--tap);
+    margin-bottom: -1px; /* the underline sits on the line */
+    padding: 0 var(--space-1);
+    border-bottom: 2px solid transparent;
+    color: var(--muted);
+    font-size: var(--text-md);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  a:hover {
+    color: var(--ink);
+  }
+  a[aria-current="page"] {
+    border-bottom-color: var(--accent);
+    color: var(--accent);
+  }
+  .count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 400;
+  }
+  .count:not([hidden])::before {
+    content: "· ";
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    a {
+      transition: color 0.15s, border-color 0.15s;
+    }
+  }
+</style>

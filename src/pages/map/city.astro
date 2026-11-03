@@ -48,10 +48,8 @@ const shortDay = (d: string) => formatDate(dayNoon(d)).replace(/,.*?(\d+)$/, " $
 
 <BaseLayout title="City map · AfroTech 2026 Planner" active="map">
   <header class="page-head sticky-head">
-    <div class="title-row">
-      <h1>Side events</h1>
-      <MapSwitch current="city" />
-    </div>
+    <h1>Map</h1>
+    <MapSwitch current="city" />
     <div class="chips" role="group" aria-label="Show">
       <button type="button" class="chip" data-day="all" aria-pressed="false">All week</button>
       {
@@ -373,13 +371,6 @@ const shortDay = (d: string) => formatDate(dayNoon(d)).replace(/,.*?(\d+)$/, " $
 </script>
 
 <style>
-  .title-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2);
-  }
   h1 {
     margin: 0;
     font-size: var(--text-2xl);
