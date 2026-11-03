@@ -8,6 +8,10 @@
     "directory": "./dist",
     "not_found_handling": "404-page"
   },
+  // Keep the workers.dev address and branch preview URLs on; setting routes
+  // would otherwise switch both off.
+  "workers_dev": true,
+  "preview_urls": true,
   "routes": [
     { "pattern": "afrotech26.laudebugs.me", "custom_domain": true }
   ]

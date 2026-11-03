@@ -36,6 +36,7 @@ python3 scripts/update_side_events.py   # side events → data/side-events.csv, 
 npm run dev       # Astro dev server
 npm run build     # astro check + build to dist/
 npm run preview   # build, then serve with wrangler dev (like production)
+npm run deploy    # manual deploy; needs a one-time `npx wrangler login`
 ```
 
 Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
@@ -67,7 +68,8 @@ Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
 - **Sources:** credit each community list on the site. Don't republish the GRB
   floor-plan PDFs; we trace our own SVG. Keep organisers' personal contact
   details out of the site.
-- **UI:** mobile-first, system fonts, design tokens only (no hard-coded colors),
+- **UI:** mobile-first, system fonts, design tokens only (no hard-coded colors;
+  the favicon is the one exception, since it can't read page CSS),
   44 px touch targets, works with `localStorage` blocked, respects
   `prefers-reduced-motion`.
 - **Site stack:** Astro 7 static output on Cloudflare (Workers static assets),

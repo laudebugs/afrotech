@@ -21,7 +21,9 @@ npm run dev       # local dev server at http://localhost:4321
 npm run preview   # build, then serve it the way Cloudflare does
 ```
 
-`npm run build` type-checks and builds into `dist/`. Node 22.23.4 or later is
+`npm run build` type-checks and builds into `dist/`. `npm run deploy` deploys
+by hand, after a one-time `npx wrangler login`; normally Cloudflare deploys on
+push. Node 22.23.4 or later is
 required (`.node-version` pins it for Cloudflare).
 
 ### Cloudflare setup (one time)
@@ -36,7 +38,9 @@ repository**, choose `laudebugs/afrotech` and use these settings:
 | Build command | `npm run build` |
 | Deploy command | `npx wrangler deploy` |
 
-Every push to `main` then goes live, and other branches get preview URLs.
+Every push to `main` then goes live. For preview URLs on other branches, also
+turn on **Builds for non-production branches** in the project's Build
+settings.
 `wrangler.jsonc` attaches the custom domain, so Cloudflare creates its DNS
 record and certificate on the first deploy.
 

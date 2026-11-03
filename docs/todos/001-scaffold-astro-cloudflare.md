@@ -10,7 +10,8 @@ Get an empty Astro site building and live on Cloudflare, so every later task shi
 
 - [x] Astro 7 project at the repo root (`src/`, `public/`, `astro.config.mjs`), static output, TypeScript strict
 - [x] `wrangler.jsonc` serving `./dist` as static assets, custom 404
-- [x] `npm run dev`, `npm run build`, `npm run preview`, `npm run deploy` work
+- [x] `npm run dev`, `npm run build` and `npm run preview` work
+- [ ] `npm run deploy` works (needs `wrangler login`, so untested here; `wrangler deploy --dry-run` passes)
 - [x] Workers Builds settings written down in the README: build `npm run build`, deploy `npx wrangler deploy`, production branch `main`
 - [ ] You connect the repo in the Cloudflare dashboard (Workers & Pages → Create → Import a repository)
 - [x] `wrangler.jsonc` attaches the custom domain `afrotech26.laudebugs.me`
