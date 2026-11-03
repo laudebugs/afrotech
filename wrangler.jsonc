@@ -3,11 +3,23 @@
   // Must match the Worker name in the Cloudflare dashboard.
   "name": "afrotech2026",
   "compatibility_date": "2026-11-01",
-  // Static site: no Worker script, Cloudflare serves the built files directly.
+  // A small Worker answers /api/* (sign-in and plan sync, plan 0002); every
+  // other request is a static file from dist/, served without running it.
+  "main": "worker/index.ts",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "afrotech",
+      "database_id": "45965e56-ece8-462d-b699-164835ebeca3",
+      "migrations_dir": "worker/migrations"
+    }
+  ],
   // Keep the workers.dev address and branch preview URLs on; setting routes
   // would otherwise switch both off.
   "workers_dev": true,

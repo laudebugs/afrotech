@@ -50,6 +50,7 @@ npm run dev       # Astro dev server
 npm run build     # astro check + build to dist/
 npm run preview   # build, then serve with wrangler dev (like production)
 npm run deploy    # manual deploy; needs a one-time `npx wrangler login`
+npm run db:migrate:local    # apply worker/migrations/ to a local D1 (preview does this too)
 ```
 
 Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
@@ -105,7 +106,10 @@ The build also writes `dist/sw.js` (the offline service worker) from
 - **Site stack:** Astro 7 static output on Cloudflare (Workers static assets),
   deployed by Cloudflare Workers Builds on every push (`main` is production;
   other branches get preview URLs). Live at
-  https://afrotech26.laudebugs.me.
+  https://afrotech26.laudebugs.me. A small Worker in `worker/` answers only
+  `/api/*` (`run_worker_first`), backed by the D1 database `afrotech`; schema
+  changes are new files in `worker/migrations/`, never edits to old ones, and
+  only the production deploy applies them.
   Plain Astro components + small client scripts; ask before adding a UI framework.
 - **No sign-in.** Per-user state (My plan, note drafts) lives in `localStorage`.
   Notes are public and publish by committing Markdown to `notes/` through GitHub.

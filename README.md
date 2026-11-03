@@ -21,7 +21,9 @@ npm run dev       # local dev server at http://localhost:4321
 npm run preview   # build, then serve it the way Cloudflare does
 ```
 
-`npm run build` type-checks and builds into `dist/`. `npm run deploy` deploys
+`npm run build` type-checks the site and the Worker (`worker/`, which answers
+`/api/*`) and builds into `dist/`. `npm run preview` also applies the database
+migrations to a local D1, so sign-in code runs offline too. `npm run deploy` deploys
 by hand, after a one-time `npx wrangler login`; normally Cloudflare deploys on
 push. Node 22.23.4 or later is
 required (`.node-version` pins it for Cloudflare).
@@ -36,7 +38,13 @@ repository**, choose `laudebugs/afrotech` and use these settings:
 | Project name | `afrotech2026` (must match `name` in `wrangler.jsonc`) |
 | Production branch | `main` |
 | Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy` |
+| Deploy command | `npx wrangler d1 migrations apply afrotech --remote && npx wrangler deploy` |
+
+The deploy command first brings the D1 database (`afrotech`) up to date with
+`worker/migrations/`, then deploys. Keep migrations out of the branch-build
+command: preview builds share the live database, so only `main` may change it.
+If the migration step fails with a permissions error, give the build's API
+token **D1: Edit** under **Manage account → API tokens**.
 
 Every push to `main` then goes live. For preview URLs on other branches, also
 turn on **Builds for non-production branches** in the project's Build
