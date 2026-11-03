@@ -15,7 +15,8 @@ self.addEventListener("install", (event) => {
       const cache = await caches.open(CORE);
       // One failed file shouldn't stop the rest from saving.
       await Promise.allSettled(PRECACHE.map((url) => cache.add(new Request(url, { cache: "reload" }))));
-      await self.skipWaiting();
+      // A first install takes over at once. An update waits until the page's
+      // "tap to reload" note asks it to (see the "skip-waiting" message).
     })(),
   );
 });
@@ -94,9 +95,14 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-// Pages send the starred event ids, so their pages and calendar files open offline.
+// Pages send the starred event ids, so their pages and calendar files open offline,
+// and "skip-waiting" when you tap the update note.
 self.addEventListener("message", (event) => {
   const data = event.data;
+  if (data && data.type === "skip-waiting") {
+    self.skipWaiting();
+    return;
+  }
   if (!data || data.type !== "save-events" || !Array.isArray(data.ids)) return;
   event.waitUntil(
     (async () => {

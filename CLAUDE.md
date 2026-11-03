@@ -96,8 +96,9 @@ The build also writes `dist/sw.js` (the offline service worker) from
   details out of the site.
 - **UI:** mobile-first, IBM Plex Sans and Plex Mono (self-hosted via
   `@fontsource`; Mono for times and short labels), design tokens only (no hard-coded colors;
-  the favicon and the `theme-color` meta tags are the exceptions, since they
-  can't read page CSS),
+  the favicon, the `theme-color` meta tags, the web app manifest and the
+  app icons (`scripts/make-icons.cjs`) are the exceptions, since they can't read
+  page CSS),
   44 px touch targets, works with `localStorage` blocked, respects
   `prefers-reduced-motion`.
 - **Site stack:** Astro 7 static output on Cloudflare (Workers static assets),

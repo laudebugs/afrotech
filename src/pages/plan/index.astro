@@ -15,6 +15,14 @@ import { formatClock, formatDate } from "../../lib/time";
     <p class="muted" data-summary>Star events on the schedule to build your plan.</p>
   </header>
 
+  <p class="ios-hint" data-ios-hint hidden>
+    <span>
+      <strong>Keep your plan safe:</strong> on iPhone, tap Share, then “Add to Home Screen”. Safari can clear a
+      site's saved data after a week away, but not for home-screen apps.
+    </span>
+    <button type="button" data-ios-hint-dismiss>Got it</button>
+  </p>
+
   <section class="shared" data-shared hidden aria-labelledby="shared-title">
     <h2 id="shared-title" data-shared-title>Shared plan</h2>
     <ul data-shared-list></ul>
@@ -61,6 +69,23 @@ import { formatClock, formatDate } from "../../lib/time";
 
 <script>
   import { addToPlan, readPlan, setPlan } from "../../lib/plan";
+
+  // One-time "Add to Home Screen" hint on iPhones and iPads, outside the installed app.
+  const HINT_KEY = "afrotech:ios-hint-dismissed";
+  const hint = document.querySelector<HTMLElement>("[data-ios-hint]")!;
+  const isApple = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const installed = (navigator as Navigator & { standalone?: boolean }).standalone === true || matchMedia("(display-mode: standalone)").matches;
+  let dismissed = false;
+  try {
+    dismissed = localStorage.getItem(HINT_KEY) === "1";
+  } catch {}
+  if (isApple && !installed && !dismissed) hint.hidden = false;
+  document.querySelector("[data-ios-hint-dismiss]")!.addEventListener("click", () => {
+    hint.hidden = true;
+    try {
+      localStorage.setItem(HINT_KEY, "1");
+    } catch {}
+  });
 
   const rows = [...document.querySelectorAll<HTMLElement>("[data-row]")];
   const known = new Map(rows.map((r) => [r.dataset.eventId!, r]));
@@ -213,6 +238,28 @@ import { formatClock, formatDate } from "../../lib/time";
     margin: 0;
     font-size: var(--text-sm);
     overflow-wrap: anywhere;
+  }
+  .ios-hint {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: var(--space-4) 0 0;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    font-size: var(--text-sm);
+  }
+  .ios-hint button {
+    flex: none;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 600;
+    cursor: pointer;
   }
   .shared {
     margin-top: var(--space-4);
