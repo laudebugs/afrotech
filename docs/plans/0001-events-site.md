@@ -198,17 +198,21 @@ area and level or a latitude and longitude.
 | Sources include organisers' personal details | The site publishes only what an event listing needs. |
 | A browser clears `localStorage` | My plan and note drafts disappear on that device. The share link and "Export to calendar" double as backups. |
 
-## Decided, and one decision left
+## Decided: four choices, ready for review
 
-You settled three questions on November 3:
+You settled four questions on November 3:
 
 1. **No sign-in.** Each browser stores its plan in `localStorage`.
 2. **Public notes.** You write every note and publish it through GitHub.
 3. **GitHub deploys.** You add a Cloudflare API token, and GitHub Actions deploys.
+4. **Domain.** The site lives at **`afrotech26.laudebugs.me`**.
 
-One question remains: should the site launch on a free `*.workers.dev` address,
-or on a domain you own? A `workers.dev` address works on day one, and a custom
-domain can replace it later without code changes.
+Wrangler attaches the domain as a Workers custom domain, set in
+`wrangler.jsonc` with `"routes": [{ "pattern": "afrotech26.laudebugs.me",
+"custom_domain": true }]`. Cloudflare then creates the DNS record and the
+certificate itself. This setup needs `laudebugs.me` on the same Cloudflare
+account as the token, and the token needs access to that zone. Until the domain
+resolves, the site also answers on its `*.workers.dev` address.
 
 Once you approve this plan and add the two secrets, todo 001 starts the build,
 and Phase 1 can be live within a day.
