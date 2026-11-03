@@ -68,7 +68,7 @@ plan in `localStorage`, and a share link copies a plan to another device.
   upcoming events by distance. Your location stays on your device.
 - **Offline use:** the site keeps working when convention Wi-Fi drops.
 - **Fresh data:** a scheduled GitHub Action re-runs the update scripts during
-  the conference, and Cloudflare rebuilds the site on each change.
+  the conference and redeploys the site whenever the data changes.
 
 Two features wait for a later year: syncing a plan across devices, and group
 plans showing who is going where.
@@ -88,8 +88,8 @@ Publishing a note from a phone takes four steps:
 2. **Publish.** Tap "Publish". The site opens GitHub's "new file" page for
    `notes/`, with the file name and the note already filled in.
 3. **Commit.** On GitHub, signed in as yourself, tap "Commit changes".
-4. **Live.** Cloudflare rebuilds the site, and the note appears on `/notes`
-   and on its session's page about a minute later.
+4. **Live.** Your commit starts the deploy workflow, and the note appears on
+   `/notes` and on its session's page about two minutes later.
 
 Each note file starts with a short header that links it to its session:
 
@@ -133,8 +133,23 @@ Five more choices complete the stack:
   whatever the viewer's time zone.
 - **Maps:** `@panzoom/panzoom` for the floor plan and `maplibre-gl` for the
   city map, loaded only on the map pages.
-- **Deploys:** Cloudflare Workers Builds, connected to the GitHub repo, builds
-  each push and gives every branch a preview URL.
+- **Deploys:** GitHub Actions, using a Cloudflare API token. The next section
+  covers the workflow.
+
+### GitHub Actions deploys every push to `main`
+
+One workflow, `.github/workflows/deploy.yml`, builds the site and runs
+`wrangler deploy` on every push to `main`. On a pull request, the same workflow
+runs `wrangler versions upload` instead, which publishes a preview URL without
+touching the live site, and writes that URL to the run's summary. The workflow
+reads two repository secrets: `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID`.
+
+One GitHub rule shapes the data refresh. Commits pushed by a workflow's built-in
+token never start other workflows, so a data commit from the refresh job would
+leave the site stale. The refresh workflow therefore calls the deploy workflow
+itself (`workflow_call`) after committing new data. Notes you commit on GitHub
+come from your own account, so they start the deploy workflow as usual.
 
 ### One event format for every source
 
@@ -183,17 +198,17 @@ area and level or a latitude and longitude.
 | Sources include organisers' personal details | The site publishes only what an event listing needs. |
 | A browser clears `localStorage` | My plan and note drafts disappear on that device. The share link and "Export to calendar" double as backups. |
 
-## Decided, and two decisions left
+## Decided, and one decision left
 
-You settled two questions on November 3. The site has **no sign-in**, and each
-browser stores its plan in `localStorage`. **Notes are public**, published
-through GitHub as described above.
+You settled three questions on November 3:
 
-Two questions remain before building starts:
+1. **No sign-in.** Each browser stores its plan in `localStorage`.
+2. **Public notes.** You write every note and publish it through GitHub.
+3. **GitHub deploys.** You add a Cloudflare API token, and GitHub Actions deploys.
 
-1. **Domain:** a free `*.workers.dev` address for now, or a domain you own?
-2. **Cloudflare access:** will you connect the repo to Workers Builds, or give
-   GitHub Actions an API token to deploy?
+One question remains: should the site launch on a free `*.workers.dev` address,
+or on a domain you own? A `workers.dev` address works on day one, and a custom
+domain can replace it later without code changes.
 
-Once you approve this plan and answer these two questions, todo 001 starts the
-build, and Phase 1 can be live within a day.
+Once you approve this plan and add the two secrets, todo 001 starts the build,
+and Phase 1 can be live within a day.
