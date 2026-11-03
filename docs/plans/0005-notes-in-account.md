@@ -1,6 +1,6 @@
 # Plan 0005: Notes save to your account, not to GitHub
 
-**Status:** approved 2026-11-03 with the recommended answers (private only, no redirects, keep the template) · **Created:** 2026-11-03
+**Status:** built 2026-11-03 (todos 024–026), with the recommended answers (private only, no redirects, keep the template) · **Created:** 2026-11-03
 
 Today a note becomes public only after you commit it on GitHub. That works for
 one author with a GitHub account, but nobody else can keep notes, and every

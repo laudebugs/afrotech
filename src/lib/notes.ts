@@ -139,9 +139,17 @@ export function deleteNote(id: string): void {
   writeAll(all, "local");
 }
 
+/** The server's rule for which version of a note wins (worker/notes.ts):
+ *  the newer updatedAt; on a tie a deletion, then the greater body. */
+function beats(a: Note, b: Note): boolean {
+  if (a.updatedAt !== b.updatedAt) return a.updatedAt > b.updatedAt;
+  if (Boolean(a.deleted) !== Boolean(b.deleted)) return Boolean(a.deleted);
+  return a.body > b.body;
+}
+
 /**
  * Takes the server's notes after a sync. A note changed here since the sync
- * started keeps the local version; otherwise the newer version wins.
+ * started keeps the local version; otherwise the winning version is kept.
  */
 export function applySyncedNotes(server: Note[]): void {
   const all = readAllNotes();
@@ -150,12 +158,23 @@ export function applySyncedNotes(server: Note[]): void {
   for (const s of server) {
     const mine = all[s.id];
     if (pending[s.id] !== undefined) continue;
-    if (!mine || s.updatedAt > mine.updatedAt) {
+    if (!mine || beats(s, mine)) {
       all[s.id] = s;
       changed = true;
     }
   }
   if (changed) writeAll(all, "sync");
+}
+
+/** Removes every note from this device (after signing out; they stay in the account). */
+export function clearLocalNotes(): void {
+  try {
+    localStorage.removeItem(KEY);
+    localStorage.removeItem(CHANGES_KEY);
+  } catch {}
+  memory = null;
+  memoryChanges = null;
+  document.dispatchEvent(new CustomEvent("notes-change", { detail: { source: "sync" } }));
 }
 
 /** Moves drafts saved by the old GitHub editor into notes, once. */

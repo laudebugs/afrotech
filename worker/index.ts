@@ -1,7 +1,7 @@
 // The site's only server code (plan 0002). Cloudflare sends /api/* here
 // (`run_worker_first` in wrangler.jsonc); every other request is a static file.
 import { deleteAccount, signIn, signOut, verifyGoogleToken, type AuthEnv } from "./auth";
-import { applyNoteChanges, parseNoteChanges, parseSince, readNotes } from "./notes";
+import { applyNoteChanges, parseNoteChanges, parseSince, readConflicts, readNotes } from "./notes";
 import { applyChanges, parseChanges, readItems } from "./plan";
 import { COOKIE, currentUser, readCookie } from "./session";
 
@@ -104,8 +104,9 @@ const routes: Record<string, Handler> = {
   },
 
   /** Body: { since, changes: [{ id, eventId, title, body, createdAt, updatedAt, deleted }] }.
-   *  Applies the changes, then returns { notes, cursor, more }: the first page of
-   *  notes written after `since`, minus the versions this request just sent. */
+   *  Applies the changes, then returns { notes, cursor, more, conflicts }: the
+   *  first page of notes written after `since`, minus the versions this request
+   *  just sent, and the stored version of any sent note whose change lost. */
   "POST /api/notes": async (request, env, url) => {
     if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
     const user = await currentUser(request, env);
@@ -120,7 +121,8 @@ const routes: Record<string, Handler> = {
     if (typeof changes === "string") return json({ error: changes }, 400);
     if (!(await applyNoteChanges(env, user, changes))) return json({ error: "note limit reached" }, 409);
     const echo = new Map(changes.map((c) => [c.id, c]));
-    return json(await readNotes(env, user, parseSince((body as { since?: unknown }).since), echo));
+    const page = await readNotes(env, user, parseSince((body as { since?: unknown }).since), echo);
+    return json({ ...page, conflicts: await readConflicts(env, user, echo) });
   },
 };
 
