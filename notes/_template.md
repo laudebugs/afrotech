@@ -4,7 +4,6 @@
 - **Stage / location:**
 - **Track:**
 - **Speakers:**
-- **Note taker:**
 
 ## Key takeaways
 

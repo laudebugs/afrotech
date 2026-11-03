@@ -22,7 +22,7 @@ same code can serve AfroTech 2027 with new sources.
 ## Two kinds of user, and no sign-in
 
 The site serves two kinds of user. First, **you**: building a plan, writing
-notes and getting around. Second, **everyone else**: browsing the schedule,
+notes and getting around. You are the only author of notes. Second, **everyone else**: browsing the schedule,
 copying a plan from a share link and reading your notes, which are public.
 Sign-in would delay Phase 1 and put a login in front of a site people check for
 a few seconds at a time. So the site has no accounts. Each browser keeps its own
@@ -97,10 +97,13 @@ Each note file starts with a short header that links it to its session:
 ---
 eventId: 37935c43-4927-478a-a1f3-78ce7f779172
 title: "Takeaways: Building AfroTech.guide"
-author: your-name
 published: 2026-11-04T15:30:00-06:00
 ---
 ```
+
+Because you write every note, the header skips an author field. One site
+setting, `SITE_AUTHOR` in `src/config.ts`, holds your name, and every note shows
+it. The setting starts as your GitHub handle, `laudebugs`.
 
 GitHub's "new file" link carries the note inside the URL, which fits notes up
 to about a thousand words. For a longer note, the site copies the text to the

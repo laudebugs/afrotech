@@ -9,7 +9,8 @@ Let you write a note on any session from your phone and publish it to a public
 
 ## Done when
 
-- [ ] Astro content collection for `notes/*.md`, with frontmatter `eventId`, `title`, `author` and `published`
+- [ ] Astro content collection for `notes/*.md`, with frontmatter `eventId`, `title` and `published`
+- [ ] Every note shows the single author from `SITE_AUTHOR` in `src/config.ts`
 - [ ] `/notes` lists published notes, newest first; each note has its own page
 - [ ] Each event page links to its notes
 - [ ] "Write a note" on every session opens `/notes/new?event=<id>`, prefilled with the session's title, time and room
