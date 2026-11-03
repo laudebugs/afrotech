@@ -3,7 +3,8 @@
 // computer opens in a new tab. On Android, a tap opens a geo: link, so the
 // system offers every maps app. On iPhone and iPad, a sheet asks which app
 // to use, with the last choice first.
-import { MAPS_APPS, geoLink, type MapsApp } from "../lib/directions";
+import "../styles/maps-chooser.css";
+import { MAPS_APPS, geoLink, googleDirections, type MapsApp } from "../lib/directions";
 import { getItem, setItem } from "../lib/storage";
 
 const LAST_APP = "afrotech:maps-app";
@@ -38,6 +39,8 @@ function chooser(address: string) {
     const a = document.createElement("a");
     a.className = "button";
     a.href = app.link(address);
+    // Without the app, the maps website opens in a new tab, not over this page.
+    a.target = "_blank";
     a.rel = "noopener";
     a.textContent = app.label;
     a.addEventListener("click", () => {
@@ -52,7 +55,10 @@ function chooser(address: string) {
   cancel.textContent = "Cancel";
   cancel.addEventListener("click", () => dialog.close());
 
-  dialog.append(title, where, list, cancel);
+  const inner = document.createElement("div");
+  inner.className = "inner";
+  inner.append(title, where, list, cancel);
+  dialog.append(inner);
   // Tapping outside the sheet closes it.
   dialog.addEventListener("click", (e) => e.target === dialog && dialog.close());
   dialog.addEventListener("close", () => dialog.remove());
@@ -61,13 +67,30 @@ function chooser(address: string) {
   (list.firstElementChild as HTMLElement | null)?.focus();
 }
 
+/** Android: hand the address to the system's maps apps; if nothing takes it
+ *  (no maps app, or a browser that blocks geo:), fall back to Google Maps. */
+function openGeo(address: string) {
+  let left = false;
+  const away = () => (left = true);
+  window.addEventListener("blur", away, { once: true });
+  window.addEventListener("pagehide", away, { once: true });
+  document.addEventListener("visibilitychange", away, { once: true });
+  location.href = geoLink(address);
+  setTimeout(() => {
+    window.removeEventListener("blur", away);
+    window.removeEventListener("pagehide", away);
+    document.removeEventListener("visibilitychange", away);
+    if (!left && document.visibilityState === "visible") window.open(googleDirections(address), "_blank", "noopener");
+  }, 1500);
+}
+
 document.addEventListener("click", (e) => {
   const link = (e.target as Element).closest<HTMLAnchorElement>("a[data-directions]");
-  if (!link || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
   const address = link.dataset.directions!;
   if (isAndroid()) {
     e.preventDefault();
-    location.href = geoLink(address);
+    openGeo(address);
   } else if (isApple()) {
     e.preventDefault();
     chooser(address);

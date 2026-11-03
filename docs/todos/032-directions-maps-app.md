@@ -20,9 +20,17 @@ Built on November 3:
 - **Code:** `src/lib/directions.ts` builds each app's link, and
   `src/scripts/directions.ts` takes over taps on links marked
   `data-directions`.
-- **Changed from the plan:** links send the street address, not our
-  coordinates, because maps apps place an address more accurately than the
-  free geocoder behind the city map.
+- **Plan updated:** the plan first said to use the city map's coordinates.
+  The links send the street address instead, because maps apps place an
+  address more accurately than our free geocoder; plan 0008 now says so.
+- **Review fixes:**
+  - Taps in the sheet's own padding no longer close it.
+  - App choices open in a new tab when the app isn't installed.
+  - Alt-clicks and non-primary clicks are left alone.
+  - Android falls back to Google Maps on the web when no app takes the
+    `geo:` link.
+  - The sheet's styles live in `src/styles/maps-chooser.css`, loaded with
+    the script.
 - **Tested** with Playwright's iPhone 13 and Pixel 7 profiles and a desktop:
   - iPhone shows the sheet, moves the last choice to the top, and Escape
     closes it
