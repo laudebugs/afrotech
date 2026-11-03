@@ -1,0 +1,26 @@
+/* Speaker headshots. Shared by profiles and event details (including the
+   schedule's bottom sheet, which loads details from another page). */
+  .speaker-photo {
+    position: relative;
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--area-stage);
+    color: var(--accent);
+  }
+  .speaker-photo .initials {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: calc(var(--size) * 0.36);
+  }
+  .speaker-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }

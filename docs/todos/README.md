@@ -40,7 +40,7 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers).
 | [015](015-google-sign-in.md) | Google sign-in and sessions | 4 | waiting on you |
 | [016](016-plan-sync.md) | Sync My plan across devices | 4 | todo |
 | [017](017-account-and-privacy.md) | Account controls and privacy page | 4 | todo |
-| [018](018-speaker-pages.md) | Speaker pages from the official schedule | 4 | todo |
+| [018](018-speaker-pages.md) | Speaker pages from the official schedule | 4 | done |
 | [019](019-speaker-research-pilot.md) | Speaker research format and a 20-speaker pilot | 4 | todo |
 | [020](020-speaker-research-batches.md) | Remaining speaker research batches | 4 | todo |
 | [021](021-speaker-corrections.md) | "Ask for a change" and how profiles are made | 4 | todo |

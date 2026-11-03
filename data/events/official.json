@@ -77,7 +77,8 @@
       {
         "name": "Shanique Liz Yates",
         "title": "Independent Journalist with bylines in AfroTech, Madamenoire, Blavity",
-        "company": "Host of Black Culture in Motion on aspireTV"
+        "company": "Host of Black Culture in Motion on aspireTV",
+        "slug": "shanique-liz-yates"
       }
     ],
     "host": null,
@@ -115,7 +116,8 @@
       {
         "name": "Shanique Liz Yates",
         "title": "Independent Journalist with bylines in AfroTech, Madamenoire, Blavity",
-        "company": "Host of Black Culture in Motion on aspireTV"
+        "company": "Host of Black Culture in Motion on aspireTV",
+        "slug": "shanique-liz-yates"
       }
     ],
     "host": null,
@@ -183,17 +185,20 @@
       {
         "name": "Etoulia Salas-Burnett",
         "title": "Executive Director",
-        "company": "Howard University Center for Digital Business"
+        "company": "Howard University Center for Digital Business",
+        "slug": "etoulia-salas-burnett"
       },
       {
         "name": "Jenard Moore",
         "title": "Director of Student Success and Retention",
-        "company": "Willie A. Deese College of Business and Economics at North Carolina Agricultural and Technical State University"
+        "company": "Willie A. Deese College of Business and Economics at North Carolina Agricultural and Technical State University",
+        "slug": "jenard-moore"
       },
       {
         "name": "Christopher Hinton",
         "title": "Professor",
-        "company": "Willie A. Deese College of Business and Economics at North Carolina Agricultural and Technical State University"
+        "company": "Willie A. Deese College of Business and Economics at North Carolina Agricultural and Technical State University",
+        "slug": "christopher-hinton"
       }
     ],
     "host": null,
@@ -230,17 +235,20 @@
       {
         "name": "Bryce Badger",
         "title": "Manager, Technology Strategy",
-        "company": "PwC"
+        "company": "PwC",
+        "slug": "bryce-badger"
       },
       {
         "name": "Jaida Day",
         "title": "Senior Associate, AI Engineering, Commercial Technology and Innovation Office",
-        "company": "PwC"
+        "company": "PwC",
+        "slug": "jaida-day"
       },
       {
         "name": "Tevin Slaughter",
         "title": "Director, Risk and Regulatory",
-        "company": "PwC"
+        "company": "PwC",
+        "slug": "tevin-slaughter"
       }
     ],
     "host": null,
@@ -273,7 +281,8 @@
       {
         "name": "Keith Azodeh",
         "title": "Principal AI Consultant",
-        "company": "Asaday Consulting"
+        "company": "Asaday Consulting",
+        "slug": "keith-azodeh"
       }
     ],
     "host": null,
@@ -310,17 +319,20 @@
       {
         "name": "Michelle John",
         "title": "Vice President for Research and Innovation",
-        "company": "Texas Southern University"
+        "company": "Texas Southern University",
+        "slug": "michelle-john"
       },
       {
         "name": "LaRico Treadwell",
         "title": "CEO",
-        "company": "E4 Power Consulting"
+        "company": "E4 Power Consulting",
+        "slug": "larico-treadwell"
       },
       {
         "name": "Lawrence Miller",
         "title": "Deputy Program Manager for Acquisitions and Procurement Oversight,",
-        "company": "NASA"
+        "company": "NASA",
+        "slug": "lawrence-miller"
       }
     ],
     "host": null,
@@ -442,7 +454,8 @@
       {
         "name": "Jeff Nelson",
         "title": "Co-Founder & COO",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "jeff-nelson"
       }
     ],
     "host": null,
@@ -475,7 +488,8 @@
       {
         "name": "Kenneth Walsh",
         "title": "Senior AI Acceleration Architect",
-        "company": "Amazon Web Services (AWS)"
+        "company": "Amazon Web Services (AWS)",
+        "slug": "kenneth-walsh"
       }
     ],
     "host": null,
@@ -597,7 +611,8 @@
       {
         "name": "Shane Bernard",
         "title": null,
-        "company": null
+        "company": null,
+        "slug": "shane-bernard"
       }
     ],
     "host": null,
@@ -633,7 +648,8 @@
       {
         "name": "Jonathan Yeldell",
         "title": "Solutions Architect",
-        "company": "AWS (Amazon Web Services)"
+        "company": "AWS (Amazon Web Services)",
+        "slug": "jonathan-yeldell"
       }
     ],
     "host": null,
@@ -729,7 +745,8 @@
       {
         "name": "Daphne Charles",
         "title": "Senior Software Engineer",
-        "company": "Salesforce"
+        "company": "Salesforce",
+        "slug": "daphne-charles"
       }
     ],
     "host": null,
@@ -762,7 +779,8 @@
       {
         "name": "Gregory Green",
         "title": "Principal Solutions Architecture",
-        "company": "VMware by Broadcom"
+        "company": "VMware by Broadcom",
+        "slug": "gregory-green"
       }
     ],
     "host": null,
@@ -799,7 +817,8 @@
       {
         "name": "Tetiana Anderson",
         "title": "Managing Partner",
-        "company": "Starfield Media"
+        "company": "Starfield Media",
+        "slug": "tetiana-anderson"
       }
     ],
     "host": null,
@@ -836,12 +855,14 @@
       {
         "name": "Dr. Louis Carr",
         "title": "President",
-        "company": "BET"
+        "company": "BET",
+        "slug": "dr-louis-carr"
       },
       {
         "name": "Joi-Marie McKenzie",
         "title": "Editor in chief, Life",
-        "company": "Business Insider"
+        "company": "Business Insider",
+        "slug": "joi-marie-mckenzie"
       }
     ],
     "host": null,
@@ -878,7 +899,8 @@
       {
         "name": "Kofo Akosile",
         "title": "Financial Planner",
-        "company": "Prudential Advisors"
+        "company": "Prudential Advisors",
+        "slug": "kofo-akosile"
       }
     ],
     "host": null,
@@ -916,7 +938,8 @@
       {
         "name": "Melvin Hillsman",
         "title": "Principal Software Engineer",
-        "company": "Red Hat"
+        "company": "Red Hat",
+        "slug": "melvin-hillsman"
       }
     ],
     "host": null,
@@ -980,7 +1003,8 @@
       {
         "name": "Olukunle Owolabi",
         "title": "AI Engineer",
-        "company": "Meta"
+        "company": "Meta",
+        "slug": "olukunle-owolabi"
       }
     ],
     "host": null,
@@ -1017,17 +1041,20 @@
       {
         "name": "DeLonzo Rhodes",
         "title": "VP, Talent Development, Culture & Belonging",
-        "company": "People Inc"
+        "company": "People Inc",
+        "slug": "delonzo-rhodes"
       },
       {
         "name": "Nabil Ahmad",
         "title": "Chief Technology Officer",
-        "company": "People Inc."
+        "company": "People Inc.",
+        "slug": "nabil-ahmad"
       },
       {
         "name": "Janine Rubenstein",
         "title": "Editor-at-Large and Host at PEOPLE",
-        "company": "People Inc."
+        "company": "People Inc.",
+        "slug": "janine-rubenstein"
       }
     ],
     "host": null,
@@ -1063,12 +1090,14 @@
       {
         "name": "Olivia Jefferson",
         "title": "Vice President of Social Impact",
-        "company": "Best Buy"
+        "company": "Best Buy",
+        "slug": "olivia-jefferson"
       },
       {
         "name": "Lindsay K. Smith",
         "title": "Director of Philanthropic Partnerships & Stewardship",
-        "company": "Best Buy"
+        "company": "Best Buy",
+        "slug": "lindsay-k-smith"
       }
     ],
     "host": null,
@@ -1101,7 +1130,8 @@
       {
         "name": "Dr. Nicole Murray",
         "title": "Chief Neuropsychologist",
-        "company": "Durham Region Center for Cognitive Health"
+        "company": "Durham Region Center for Cognitive Health",
+        "slug": "dr-nicole-murray"
       }
     ],
     "host": null,
@@ -1134,17 +1164,20 @@
       {
         "name": "Imisi Agbaniyaka",
         "title": "Program Manager, Inclusive Culture",
-        "company": "DoorDash, Inc."
+        "company": "DoorDash, Inc.",
+        "slug": "imisi-agbaniyaka"
       },
       {
         "name": "Felicia Williams",
         "title": "Senior Director of Product Design",
-        "company": "Deliveroo"
+        "company": "Deliveroo",
+        "slug": "felicia-williams"
       },
       {
         "name": "Alyssa Wisdom",
         "title": "Director of Analytics",
-        "company": "DoorDash"
+        "company": "DoorDash",
+        "slug": "alyssa-wisdom"
       }
     ],
     "host": null,
@@ -1177,7 +1210,8 @@
       {
         "name": "Rosa Moss",
         "title": "Senior Solutions Engineer",
-        "company": "Salesforce"
+        "company": "Salesforce",
+        "slug": "rosa-moss"
       }
     ],
     "host": null,
@@ -1246,12 +1280,14 @@
       {
         "name": "Jason Bennett",
         "title": "Vice President, Worldwide Startups and Venture Capital",
-        "company": "Amazon Web Services (AWS)"
+        "company": "Amazon Web Services (AWS)",
+        "slug": "jason-bennett"
       },
       {
         "name": "Cody Coleman",
         "title": "Founder and CEO",
-        "company": "Coactive AI"
+        "company": "Coactive AI",
+        "slug": "cody-coleman"
       }
     ],
     "host": null,
@@ -1286,7 +1322,8 @@
       {
         "name": "Rachel Rodgers",
         "title": "Founder & CEO",
-        "company": "Hello Seven"
+        "company": "Hello Seven",
+        "slug": "rachel-rodgers"
       }
     ],
     "host": null,
@@ -1323,12 +1360,14 @@
       {
         "name": "J. Elle",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "j-elle"
       },
       {
         "name": "Vagney Hampshire",
         "title": "Journalist, Writer, & Digital Creator",
-        "company": null
+        "company": null,
+        "slug": "vagney-hampshire"
       }
     ],
     "host": null,
@@ -1392,12 +1431,14 @@
       {
         "name": "Denise Bailey-Castro",
         "title": "CFO & COO",
-        "company": "Westbrook"
+        "company": "Westbrook",
+        "slug": "denise-bailey-castro"
       },
       {
         "name": "Thai Randolph",
         "title": "Founder and CEO",
-        "company": "NILE & Co."
+        "company": "NILE & Co.",
+        "slug": "thai-randolph"
       }
     ],
     "host": null,
@@ -1434,12 +1475,14 @@
       {
         "name": "Jerrell Tate",
         "title": "Technical Trainer II",
-        "company": "Amazon Web Services"
+        "company": "Amazon Web Services",
+        "slug": "jerrell-tate"
       },
       {
         "name": "Elvira Che Atehwah",
         "title": "Solution Architect",
-        "company": "Amazon Web Services (AWS)"
+        "company": "Amazon Web Services (AWS)",
+        "slug": "elvira-che-atehwah"
       }
     ],
     "host": null,
@@ -1475,7 +1518,8 @@
       {
         "name": "Nicole Murray",
         "title": "Sr. Solutions Architect, DGX Cloud (AI Platform Engineering)",
-        "company": "NVIDIA"
+        "company": "NVIDIA",
+        "slug": "nicole-murray"
       }
     ],
     "host": null,
@@ -1543,7 +1587,8 @@
       {
         "name": "Simone Tyler",
         "title": "SVP, AfroTech and Live Events",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "simone-tyler"
       }
     ],
     "host": null,
@@ -1576,12 +1621,14 @@
       {
         "name": "Michael A. Tinsley",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "michael-a-tinsley"
       },
       {
         "name": "Vagney Hampshire",
         "title": "Journalist, Writer, & Digital Creator",
-        "company": null
+        "company": null,
+        "slug": "vagney-hampshire"
       }
     ],
     "host": null,
@@ -1618,7 +1665,8 @@
       {
         "name": "Araine Greer",
         "title": "SR. Cloud Solution Architect Engineering Data & AI",
-        "company": "Microsoft"
+        "company": "Microsoft",
+        "slug": "araine-greer"
       }
     ],
     "host": null,
@@ -1651,17 +1699,20 @@
       {
         "name": "Keena Grigsby",
         "title": "Chief Marketing Officer, Mobile eXperience",
-        "company": "Samsung Electronics America"
+        "company": "Samsung Electronics America",
+        "slug": "keena-grigsby"
       },
       {
         "name": "Shannon Womack",
         "title": "Head of Global Brand and Creative",
-        "company": "Delta Air Lines"
+        "company": "Delta Air Lines",
+        "slug": "shannon-womack"
       },
       {
         "name": "Tetiana Anderson",
         "title": "Managing Partner",
-        "company": "Starfield Media"
+        "company": "Starfield Media",
+        "slug": "tetiana-anderson"
       }
     ],
     "host": null,
@@ -1695,7 +1746,8 @@
       {
         "name": "Arlan Hamilton",
         "title": "Author and Founder",
-        "company": "Backstage Capital"
+        "company": "Backstage Capital",
+        "slug": "arlan-hamilton"
       }
     ],
     "host": null,
@@ -1733,12 +1785,14 @@
       {
         "name": "Rani Johnson",
         "title": "Chief Information Officer",
-        "company": "Workday"
+        "company": "Workday",
+        "slug": "rani-johnson"
       },
       {
         "name": "Michelle Grover",
         "title": "Enterprise Technology Executive & Board Member",
-        "company": null
+        "company": null,
+        "slug": "michelle-grover"
       }
     ],
     "host": null,
@@ -1775,17 +1829,20 @@
       {
         "name": "J. Elle",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "j-elle"
       },
       {
         "name": "Michael A. Tinsley",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "michael-a-tinsley"
       },
       {
         "name": "Vagney Hampshire",
         "title": "Journalist, Writer, & Digital Creator",
-        "company": null
+        "company": null,
+        "slug": "vagney-hampshire"
       }
     ],
     "host": null,
@@ -1853,12 +1910,14 @@
       {
         "name": "Chauncéa Carothers",
         "title": "Author, Brand Strategist, and Next-Generation Leadership Advisor",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "chaunc-a-carothers"
       },
       {
         "name": "Vagney Hampshire",
         "title": "Journalist, Writer, & Digital Creator",
-        "company": null
+        "company": null,
+        "slug": "vagney-hampshire"
       }
     ],
     "host": null,
@@ -1927,7 +1986,8 @@
       {
         "name": "Morgan Debaun",
         "title": "Founder, CEO and Chairman",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "morgan-debaun"
       }
     ],
     "host": null,
@@ -1964,12 +2024,14 @@
       {
         "name": "Dr. Timnit Gebru",
         "title": "Founder & Executive Director",
-        "company": "Distributed Artificial Intelligence Research Institute – DAIR"
+        "company": "Distributed Artificial Intelligence Research Institute – DAIR",
+        "slug": "dr-timnit-gebru"
       },
       {
         "name": "X Eyee",
         "title": "Partner",
-        "company": "Offline Research"
+        "company": "Offline Research",
+        "slug": "x-eyee"
       }
     ],
     "host": null,
@@ -2006,7 +2068,8 @@
       {
         "name": "Esosa Osa",
         "title": "Founder and CEO",
-        "company": "Onyx Impact"
+        "company": "Onyx Impact",
+        "slug": "esosa-osa"
       }
     ],
     "host": null,
@@ -2043,7 +2106,8 @@
       {
         "name": "King Willonius",
         "title": "AI Story-teller, Filmmaker, Comedian",
-        "company": "AI & The Culture"
+        "company": "AI & The Culture",
+        "slug": "king-willonius"
       }
     ],
     "host": null,
@@ -2080,7 +2144,8 @@
       {
         "name": "Dr. Timnit Gebru",
         "title": "Founder & Executive Director",
-        "company": "Distributed Artificial Intelligence Research Institute – DAIR"
+        "company": "Distributed Artificial Intelligence Research Institute – DAIR",
+        "slug": "dr-timnit-gebru"
       }
     ],
     "host": null,
@@ -2145,7 +2210,8 @@
       {
         "name": "Simone Tyler",
         "title": "SVP, AfroTech and Live Events",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "simone-tyler"
       }
     ],
     "host": null,
@@ -2213,12 +2279,14 @@
       {
         "name": "King Willonius",
         "title": "AI Story-teller, Filmmaker, Comedian",
-        "company": "AI & The Culture"
+        "company": "AI & The Culture",
+        "slug": "king-willonius"
       },
       {
         "name": "Will Lucas",
         "title": "Brand Manager",
-        "company": "AfroTech and Black Tech Green Money"
+        "company": "AfroTech and Black Tech Green Money",
+        "slug": "will-lucas"
       }
     ],
     "host": null,
@@ -2370,12 +2438,14 @@
       {
         "name": "Tanya Sam",
         "title": "Co-founder",
-        "company": "Elizabeth & Minnie Publishing"
+        "company": "Elizabeth & Minnie Publishing",
+        "slug": "tanya-sam"
       },
       {
         "name": "Dr. Krystal Redman",
         "title": "Executive Director; Founder & CEO; Adjunct Professor",
-        "company": "SPARK RJ NOW, inc.; SEJH Institute; Emory Rollins School of Public Health"
+        "company": "SPARK RJ NOW, inc.; SEJH Institute; Emory Rollins School of Public Health",
+        "slug": "dr-krystal-redman"
       }
     ],
     "host": null,
@@ -2409,7 +2479,8 @@
       {
         "name": "Tanisha M. Sullivan",
         "title": "Head, External Engagement & Health Equity Strategy",
-        "company": "Sanofi"
+        "company": "Sanofi",
+        "slug": "tanisha-m-sullivan"
       }
     ],
     "host": null,
@@ -2443,7 +2514,8 @@
       {
         "name": "Candice Scarborough",
         "title": "Sr. Director, National Security Operations, Analytics & Engineering",
-        "company": "Parsons"
+        "company": "Parsons",
+        "slug": "candice-scarborough"
       }
     ],
     "host": null,
@@ -2511,7 +2583,8 @@
       {
         "name": "Reginald DesRoches",
         "title": "President",
-        "company": "Rice University"
+        "company": "Rice University",
+        "slug": "reginald-desroches"
       }
     ],
     "host": null,
@@ -2545,7 +2618,8 @@
       {
         "name": "Josh Rodgers",
         "title": "Writer and Content Creator",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "josh-rodgers"
       }
     ],
     "host": null,
@@ -2582,7 +2656,8 @@
       {
         "name": "Arielle Clay Poteau",
         "title": "Host & Content Creator",
-        "company": null
+        "company": null,
+        "slug": "arielle-clay-poteau"
       }
     ],
     "host": null,
@@ -2619,7 +2694,8 @@
       {
         "name": "Vernessa Pollard",
         "title": "Co-Founder and Board Executive",
-        "company": "MedTech Color"
+        "company": "MedTech Color",
+        "slug": "vernessa-pollard"
       }
     ],
     "host": null,
@@ -2652,22 +2728,26 @@
       {
         "name": "Cameron Wadley",
         "title": "SVP; Supervision Technology Executive",
-        "company": "Bank of America"
+        "company": "Bank of America",
+        "slug": "cameron-wadley"
       },
       {
         "name": "Mary Robinson Carter",
         "title": "First Vice President and Wealth Management Advisor",
-        "company": "Merrill Lynch"
+        "company": "Merrill Lynch",
+        "slug": "mary-robinson-carter"
       },
       {
         "name": "James Polk",
         "title": "AVP; Financial Solutions Advisor",
-        "company": "Merrill Lynch"
+        "company": "Merrill Lynch",
+        "slug": "james-polk"
       },
       {
         "name": "Takiesha Waites-Thierry",
         "title": "Chief Operating Officer and Planning, Controls & Governance Executive",
-        "company": "Bank of America"
+        "company": "Bank of America",
+        "slug": "takiesha-waites-thierry"
       }
     ],
     "host": null,
@@ -2765,7 +2845,8 @@
       {
         "name": "Folakemi Gbadamosi",
         "title": "Senior Regulatory Product Lead",
-        "company": "Airbnb"
+        "company": "Airbnb",
+        "slug": "folakemi-gbadamosi"
       }
     ],
     "host": null,
@@ -2802,7 +2883,8 @@
       {
         "name": "Sandra Crespo",
         "title": "CEO/Founder",
-        "company": "Unalome Consulting Group LLC"
+        "company": "Unalome Consulting Group LLC",
+        "slug": "sandra-crespo"
       }
     ],
     "host": null,
@@ -2839,7 +2921,8 @@
       {
         "name": "Nicole Dove",
         "title": "Head of Customer Value & Community",
-        "company": "Frame Security"
+        "company": "Frame Security",
+        "slug": "nicole-dove"
       }
     ],
     "host": null,
@@ -2876,7 +2959,8 @@
       {
         "name": "Irlna Tantchou",
         "title": "Colon & Rectal Surgeon",
-        "company": "Mercy Health"
+        "company": "Mercy Health",
+        "slug": "irlna-tantchou"
       }
     ],
     "host": null,
@@ -2910,12 +2994,14 @@
       {
         "name": "Dr. Kevin B. Johnson MD, MS",
         "title": "David L. Cohen University Professor of Pediatrics, Biomedical Informatics, and Communication",
-        "company": "University of Pennsylvania"
+        "company": "University of Pennsylvania",
+        "slug": "dr-kevin-b-johnson-md-ms"
       },
       {
         "name": "Kirk Barnes",
         "title": "CEO",
-        "company": "TransPharMed, Digital Health Sales Institute"
+        "company": "TransPharMed, Digital Health Sales Institute",
+        "slug": "kirk-barnes"
       }
     ],
     "host": null,
@@ -2949,7 +3035,8 @@
       {
         "name": "DeShawn Spellman",
         "title": "Program Architect",
-        "company": "NextGen | Tech"
+        "company": "NextGen | Tech",
+        "slug": "deshawn-spellman"
       }
     ],
     "host": null,
@@ -3016,7 +3103,8 @@
       {
         "name": "Tope Iluyomade",
         "title": "AI & Enterprise Advisor",
-        "company": "Entrepreneur"
+        "company": "Entrepreneur",
+        "slug": "tope-iluyomade"
       }
     ],
     "host": null,
@@ -3050,7 +3138,8 @@
       {
         "name": "Esosa Osa",
         "title": "Founder and CEO",
-        "company": "Onyx Impact"
+        "company": "Onyx Impact",
+        "slug": "esosa-osa"
       }
     ],
     "host": null,
@@ -3087,17 +3176,20 @@
       {
         "name": "Devon Rollins",
         "title": "Managing Director, Global Head of Security Response and AI Security",
-        "company": "Morgan Stanley"
+        "company": "Morgan Stanley",
+        "slug": "devon-rollins"
       },
       {
         "name": "Sherette Constant",
         "title": "Managing Director, Head of North America Firm Resilience and Global Head of Third-Party Technology Risk and Resilience",
-        "company": "Morgan Stanley"
+        "company": "Morgan Stanley",
+        "slug": "sherette-constant"
       },
       {
         "name": "Millicent Auma",
         "title": "Director, Generative AI Enablement Lead",
-        "company": "Morgan Stanley"
+        "company": "Morgan Stanley",
+        "slug": "millicent-auma"
       }
     ],
     "host": null,
@@ -3133,7 +3225,8 @@
       {
         "name": "Mike Jones",
         "title": "VP, Cybersecurity Platforms",
-        "company": "Nationwide"
+        "company": "Nationwide",
+        "slug": "mike-jones"
       }
     ],
     "host": null,
@@ -3170,7 +3263,8 @@
       {
         "name": "Dr. Charles DeShazer",
         "title": "Founder & Managing Partner",
-        "company": "Nuvanta Consulting Group"
+        "company": "Nuvanta Consulting Group",
+        "slug": "dr-charles-deshazer"
       }
     ],
     "host": null,
@@ -3204,7 +3298,8 @@
       {
         "name": "Dr. Chris Pernell",
         "title": "Health Equity Director",
-        "company": "NAACP"
+        "company": "NAACP",
+        "slug": "dr-chris-pernell"
       }
     ],
     "host": null,
@@ -3237,7 +3332,8 @@
       {
         "name": "Rachel Rodgers",
         "title": "Founder & CEO",
-        "company": "Hello Seven"
+        "company": "Hello Seven",
+        "slug": "rachel-rodgers"
       }
     ],
     "host": null,
@@ -3274,7 +3370,8 @@
       {
         "name": "Erica Terry Derryck",
         "title": "Vice President, Global Communications | Global Business Solutions Group",
-        "company": "Intuit"
+        "company": "Intuit",
+        "slug": "erica-terry-derryck"
       }
     ],
     "host": null,
@@ -3307,12 +3404,14 @@
       {
         "name": "Alex Allen",
         "title": "Director,  Social Impact & Inclusion",
-        "company": "Cisco"
+        "company": "Cisco",
+        "slug": "alex-allen"
       },
       {
         "name": "Christelle Mombo-Zigah",
         "title": "Global Strategy and Planning in AI Infrastructure",
-        "company": "Cisco"
+        "company": "Cisco",
+        "slug": "christelle-mombo-zigah"
       }
     ],
     "host": null,
@@ -3348,12 +3447,14 @@
       {
         "name": "Tim Jurka",
         "title": "VP, Flagship Engineering",
-        "company": "LinkedIn"
+        "company": "LinkedIn",
+        "slug": "tim-jurka"
       },
       {
         "name": "Travis Hutchinson",
         "title": "Senior Product Manager",
-        "company": "LinkedIn"
+        "company": "LinkedIn",
+        "slug": "travis-hutchinson"
       }
     ],
     "host": null,
@@ -3389,7 +3490,8 @@
       {
         "name": "Waverly Rose Brim",
         "title": "Research Engineer",
-        "company": "The John's Hopkins University"
+        "company": "The John's Hopkins University",
+        "slug": "waverly-rose-brim"
       }
     ],
     "host": null,
@@ -3423,7 +3525,8 @@
       {
         "name": "King Willonius",
         "title": "AI Story-teller, Filmmaker, Comedian",
-        "company": "AI & The Culture"
+        "company": "AI & The Culture",
+        "slug": "king-willonius"
       }
     ],
     "host": null,
@@ -3460,12 +3563,14 @@
       {
         "name": "Denise Young Smith",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "denise-young-smith"
       },
       {
         "name": "Dr. Lauire Hamilton",
         "title": "Educator, Scholar & Keynote Speaker",
-        "company": null
+        "company": null,
+        "slug": "dr-lauire-hamilton"
       }
     ],
     "host": null,
@@ -3502,7 +3607,8 @@
       {
         "name": "Carrol Chang",
         "title": "CEO",
-        "company": "Andela"
+        "company": "Andela",
+        "slug": "carrol-chang"
       }
     ],
     "host": null,
@@ -3537,7 +3643,8 @@
       {
         "name": "Dr. Tiffani Bright",
         "title": "Co-Director, Center for Artificial Intelligence Research and Education Assistant Professor of Computational Biomedicine, Cedars-Sinai Medical Center",
-        "company": "Cedars-Sinai Health Sciences University"
+        "company": "Cedars-Sinai Health Sciences University",
+        "slug": "dr-tiffani-bright"
       }
     ],
     "host": null,
@@ -3571,7 +3678,8 @@
       {
         "name": "Wayne Dennis",
         "title": "Global CISO - Operational Technology",
-        "company": "Solventum"
+        "company": "Solventum",
+        "slug": "wayne-dennis"
       }
     ],
     "host": null,
@@ -3608,12 +3716,14 @@
       {
         "name": "Kevin Simmonds",
         "title": "Principal",
-        "company": "PwC"
+        "company": "PwC",
+        "slug": "kevin-simmonds"
       },
       {
         "name": "Karthik Ramakrishnan",
         "title": "Director",
-        "company": "PwC"
+        "company": "PwC",
+        "slug": "karthik-ramakrishnan"
       }
     ],
     "host": null,
@@ -3680,7 +3790,8 @@
       {
         "name": "Lamarr Henry",
         "title": "Security Engineer",
-        "company": "Figma"
+        "company": "Figma",
+        "slug": "lamarr-henry"
       }
     ],
     "host": null,
@@ -3717,7 +3828,8 @@
       {
         "name": "Brandon Z. Hoff",
         "title": "Chief AI Officer",
-        "company": "RUDI (Responsible Use of Digital Intelligence)"
+        "company": "RUDI (Responsible Use of Digital Intelligence)",
+        "slug": "brandon-z-hoff"
       }
     ],
     "host": null,
@@ -3752,12 +3864,14 @@
       {
         "name": "Dave Salvant",
         "title": "Co-Founder & President",
-        "company": "SQUIRE"
+        "company": "SQUIRE",
+        "slug": "dave-salvant"
       },
       {
         "name": "Monica Melton",
         "title": "Assistant Editor",
-        "company": "New York Public Radio/WNYC"
+        "company": "New York Public Radio/WNYC",
+        "slug": "monica-melton"
       }
     ],
     "host": null,
@@ -3794,17 +3908,20 @@
       {
         "name": "Elaine Meryl Brown",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "elaine-meryl-brown"
       },
       {
         "name": "Rhonda Joy McLean",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "rhonda-joy-mclean"
       },
       {
         "name": "Dr. Cheryl Polote Williamson",
         "title": "Editor-in-Chief",
-        "company": "Cheryl Magazine"
+        "company": "Cheryl Magazine",
+        "slug": "dr-cheryl-polote-williamson"
       }
     ],
     "host": null,
@@ -3841,12 +3958,14 @@
       {
         "name": "Candice Coletrane",
         "title": "Executive Director - ISG Product Release Operations",
-        "company": "Lenovo"
+        "company": "Lenovo",
+        "slug": "candice-coletrane"
       },
       {
         "name": "Benjamin Bennett",
         "title": "Executive Director - ISG Operations and Transformation",
-        "company": "Lenovo"
+        "company": "Lenovo",
+        "slug": "benjamin-bennett"
       }
     ],
     "host": null,
@@ -3879,17 +3998,20 @@
       {
         "name": "Caroline De Marco",
         "title": "Community Impact Ambassador, Population Health Center of Excellence, Genentech",
-        "company": "Genentech"
+        "company": "Genentech",
+        "slug": "caroline-de-marco"
       },
       {
         "name": "Davidek Herron",
         "title": "Chief Digital Experience Officer, Genentech",
-        "company": "Genentech"
+        "company": "Genentech",
+        "slug": "davidek-herron"
       },
       {
         "name": "Jewel Jones Truxon",
         "title": "EVP, Executive Director, Inclusive Health",
-        "company": "Real Chemistry"
+        "company": "Real Chemistry",
+        "slug": "jewel-jones-truxon"
       }
     ],
     "host": null,
@@ -3926,12 +4048,14 @@
       {
         "name": "Brian Tippens",
         "title": "Senior Vice President and Chief Social Impact & Sustainability Officer",
-        "company": "Cisco"
+        "company": "Cisco",
+        "slug": "brian-tippens"
       },
       {
         "name": "Damien Hooper-Campbell",
         "title": "Former Chief Impact Officer",
-        "company": "StockX"
+        "company": "StockX",
+        "slug": "damien-hooper-campbell"
       }
     ],
     "host": null,
@@ -3965,12 +4089,14 @@
       {
         "name": "Albaner C. Eugene Jr.",
         "title": "Founder and President of ACE Productions and Let’s Move, and author of Momentum",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "albaner-c-eugene-jr"
       },
       {
         "name": "Dr. Lauire Hamilton",
         "title": "Educator, Scholar & Keynote Speaker",
-        "company": null
+        "company": null,
+        "slug": "dr-lauire-hamilton"
       }
     ],
     "host": null,
@@ -4007,17 +4133,20 @@
       {
         "name": "Dr. Uché Blackstock",
         "title": "Founder & CEO, Advancing Health Equity; Author, Legacy: A Black Physician Reckons with Racism in Medicine, New York Times Bestseller",
-        "company": "Advancing Health Equity"
+        "company": "Advancing Health Equity",
+        "slug": "dr-uch-blackstock"
       },
       {
         "name": "Dr. Charles R. Rogers",
         "title": "Founder & Chief Advisor, Rogers Solutions Group; Founder & President, Colorectal Cancer Equity Foundation",
-        "company": "Rogers Solutions Group"
+        "company": "Rogers Solutions Group",
+        "slug": "dr-charles-r-rogers"
       },
       {
         "name": "Segun Oduolowu",
         "title": "Emmy Award-winning broadcast journalist & Communications Specialist",
-        "company": "SAA & Associates"
+        "company": "SAA & Associates",
+        "slug": "segun-oduolowu"
       }
     ],
     "host": null,
@@ -4079,7 +4208,8 @@
       {
         "name": "Nicole Dove",
         "title": "Head of Customer Value & Community",
-        "company": "Frame Security"
+        "company": "Frame Security",
+        "slug": "nicole-dove"
       }
     ],
     "host": null,
@@ -4116,7 +4246,8 @@
       {
         "name": "Rosa Moss",
         "title": "Senior Solutions Engineer",
-        "company": "Salesforce"
+        "company": "Salesforce",
+        "slug": "rosa-moss"
       }
     ],
     "host": null,
@@ -4181,17 +4312,20 @@
       {
         "name": "Korri Jackson",
         "title": "Senior Program Manager, Environment, Policy and Social Initiatives",
-        "company": "Apple"
+        "company": "Apple",
+        "slug": "korri-jackson"
       },
       {
         "name": "Harriette Burrell",
         "title": "President and Chief of Strategy",
-        "company": "PROPEL Center"
+        "company": "PROPEL Center",
+        "slug": "harriette-burrell"
       },
       {
         "name": "Osita Odunze",
         "title": "Quality Assurance Automation Engineer",
-        "company": "Prometric"
+        "company": "Prometric",
+        "slug": "osita-odunze"
       }
     ],
     "host": null,
@@ -4228,17 +4362,20 @@
       {
         "name": "Anthony Kerr",
         "title": "Senior Product Marketing Manager",
-        "company": "Microsoft"
+        "company": "Microsoft",
+        "slug": "anthony-kerr"
       },
       {
         "name": "Chris Smellie",
         "title": "Director of Product Marketing for Copilot Frontier",
-        "company": "Microsoft"
+        "company": "Microsoft",
+        "slug": "chris-smellie"
       },
       {
         "name": "Nyaradzo “Naya” Bere",
         "title": "Founder",
-        "company": "The Black Female Engineer"
+        "company": "The Black Female Engineer",
+        "slug": "nyaradzo-naya-bere"
       }
     ],
     "host": null,
@@ -4275,22 +4412,26 @@
       {
         "name": "Denise Young Smith",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "denise-young-smith"
       },
       {
         "name": "Elaine Meryl Brown",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "elaine-meryl-brown"
       },
       {
         "name": "Rhonda Joy McLean",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "rhonda-joy-mclean"
       },
       {
         "name": "Dr. Cheryl Polote Williamson",
         "title": "Editor-in-Chief",
-        "company": "Cheryl Magazine"
+        "company": "Cheryl Magazine",
+        "slug": "dr-cheryl-polote-williamson"
       }
     ],
     "host": null,
@@ -4355,7 +4496,8 @@
       {
         "name": "Dr. Andrew Forde",
         "title": "Partner, Head of AI Research",
-        "company": "KPMG"
+        "company": "KPMG",
+        "slug": "dr-andrew-forde"
       }
     ],
     "host": null,
@@ -4390,7 +4532,8 @@
       {
         "name": "Monica Bowie",
         "title": "Product Marketing Director",
-        "company": "Salesforce"
+        "company": "Salesforce",
+        "slug": "monica-bowie"
       }
     ],
     "host": null,
@@ -4427,12 +4570,14 @@
       {
         "name": "Andrew Yang",
         "title": "Entrepreneur, Bestselling Author & Co-Founder",
-        "company": "Forward Party"
+        "company": "Forward Party",
+        "slug": "andrew-yang"
       },
       {
         "name": "Will Lucas",
         "title": "Brand Manager",
-        "company": "AfroTech and Black Tech Green Money"
+        "company": "AfroTech and Black Tech Green Money",
+        "slug": "will-lucas"
       }
     ],
     "host": null,
@@ -4466,12 +4611,14 @@
       {
         "name": "Kelly Buchanan Spillers",
         "title": "VP, Brand & Product Marketing",
-        "company": "Rocket"
+        "company": "Rocket",
+        "slug": "kelly-buchanan-spillers"
       },
       {
         "name": "Papanii Okai",
         "title": "Executive Vice President, Engineering",
-        "company": "Rocket"
+        "company": "Rocket",
+        "slug": "papanii-okai"
       }
     ],
     "host": null,
@@ -4508,12 +4655,14 @@
       {
         "name": "Loida Nicolas Lewis",
         "title": "Author",
-        "company": "TLC Beatrice, LLC"
+        "company": "TLC Beatrice, LLC",
+        "slug": "loida-nicolas-lewis"
       },
       {
         "name": "Dr. Cheryl Polote Williamson",
         "title": "Editor-in-Chief",
-        "company": "Cheryl Magazine"
+        "company": "Cheryl Magazine",
+        "slug": "dr-cheryl-polote-williamson"
       }
     ],
     "host": null,
@@ -4550,17 +4699,20 @@
       {
         "name": "Alexis Johnson",
         "title": "Head of Social Impact - Beats by Dre",
-        "company": "Apple"
+        "company": "Apple",
+        "slug": "alexis-johnson"
       },
       {
         "name": "Shateera Israel",
         "title": "Brand Manager",
-        "company": "Beats by Dre"
+        "company": "Beats by Dre",
+        "slug": "shateera-israel"
       },
       {
         "name": "Ganiu Ladipo",
         "title": "Sports Marketing",
-        "company": "Beats by Dre"
+        "company": "Beats by Dre",
+        "slug": "ganiu-ladipo"
       }
     ],
     "host": null,
@@ -4597,7 +4749,8 @@
       {
         "name": "Naima Whitted",
         "title": "Student",
-        "company": "Howard University Fine Arts"
+        "company": "Howard University Fine Arts",
+        "slug": "naima-whitted"
       }
     ],
     "host": null,
@@ -4634,12 +4787,14 @@
       {
         "name": "Sam Spaulding",
         "title": "Enterprise Cloud Engineering Director",
-        "company": "AbbVie"
+        "company": "AbbVie",
+        "slug": "sam-spaulding"
       },
       {
         "name": "Karyn Quick",
         "title": "Director of IT Quality and Regulatory Compliance",
-        "company": "AbbVie"
+        "company": "AbbVie",
+        "slug": "karyn-quick"
       }
     ],
     "host": null,
@@ -4673,17 +4828,20 @@
       {
         "name": "Stéphane Nyombayire",
         "title": "MVP, Software Engineer  •  CD Tech",
-        "company": "Capital One"
+        "company": "Capital One",
+        "slug": "st-phane-nyombayire"
       },
       {
         "name": "Yanizka French",
         "title": "Sr. Director, Technical Program Management",
-        "company": "Capital One"
+        "company": "Capital One",
+        "slug": "yanizka-french"
       },
       {
         "name": "Awah Teh",
         "title": "VP, Software Engineering",
-        "company": "Capital One"
+        "company": "Capital One",
+        "slug": "awah-teh"
       }
     ],
     "host": null,
@@ -4719,7 +4877,8 @@
       {
         "name": "Miles Braxton",
         "title": "Chief Executive Officer",
-        "company": "Okovate Sustainable Energy"
+        "company": "Okovate Sustainable Energy",
+        "slug": "miles-braxton"
       }
     ],
     "host": null,
@@ -4756,12 +4915,14 @@
       {
         "name": "Selena Crummie",
         "title": "Lead Cybersecurity Architect",
-        "company": "JP Morgan Chase"
+        "company": "JP Morgan Chase",
+        "slug": "selena-crummie"
       },
       {
         "name": "Candice Biamby",
         "title": "Vice President, Product Manager of Cyber Threat Intelligence",
-        "company": "JPMorganChase & Co"
+        "company": "JPMorganChase & Co",
+        "slug": "candice-biamby"
       }
     ],
     "host": null,
@@ -4798,7 +4959,8 @@
       {
         "name": "Jeff Nelson",
         "title": "Co-Founder & COO",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "jeff-nelson"
       }
     ],
     "host": null,
@@ -4831,12 +4993,14 @@
       {
         "name": "Davidek Herron",
         "title": "Chief Digital Experience Officer, Genentech",
-        "company": "Genentech"
+        "company": "Genentech",
+        "slug": "davidek-herron"
       },
       {
         "name": "Michael Penn, Jr., MD, PhD",
         "title": "Head of External Engagement, Population Health Center of Excellence",
-        "company": "Genentech"
+        "company": "Genentech",
+        "slug": "michael-penn-jr-md-phd"
       }
     ],
     "host": null,
@@ -4870,12 +5034,14 @@
       {
         "name": "Dr. Sharon Malone",
         "title": "Author & Chief Medical Advisor, Alloy",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "dr-sharon-malone"
       },
       {
         "name": "Desirée Mayon",
         "title": "CEO and Founder",
-        "company": "She & HER, Inc"
+        "company": "She & HER, Inc",
+        "slug": "desir-e-mayon"
       }
     ],
     "host": null,
@@ -4974,12 +5140,14 @@
       {
         "name": "Dr. Jessica Shepherd",
         "title": "Chief Medical Officer",
-        "company": "Hers"
+        "company": "Hers",
+        "slug": "dr-jessica-shepherd"
       },
       {
         "name": "Dr. Chemen Neal MD, CPCC, FACOG",
         "title": "Vice President Academic Medicine & Strategic Integration, Associate Professor OBGYN",
-        "company": "IU Health Medical Group & IU School of Medicine"
+        "company": "IU Health Medical Group & IU School of Medicine",
+        "slug": "dr-chemen-neal-md-cpcc-facog"
       }
     ],
     "host": null,
@@ -5013,17 +5181,20 @@
       {
         "name": "Loida Nicolas Lewis",
         "title": "Author",
-        "company": "TLC Beatrice, LLC"
+        "company": "TLC Beatrice, LLC",
+        "slug": "loida-nicolas-lewis"
       },
       {
         "name": "Dr. Sharon Malone",
         "title": "Author & Chief Medical Advisor, Alloy",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "dr-sharon-malone"
       },
       {
         "name": "Desirée Mayon",
         "title": "CEO and Founder",
-        "company": "She & HER, Inc"
+        "company": "She & HER, Inc",
+        "slug": "desir-e-mayon"
       }
     ],
     "host": null,
@@ -5060,17 +5231,20 @@
       {
         "name": "Jordan Taylor",
         "title": "CEO",
-        "company": "SynergyGrid"
+        "company": "SynergyGrid",
+        "slug": "jordan-taylor"
       },
       {
         "name": "Emiola Banwo",
         "title": "Founder",
-        "company": "Monuments"
+        "company": "Monuments",
+        "slug": "emiola-banwo"
       },
       {
         "name": "Alexis Cureton",
         "title": "E2 Fellow; Clean Energy Consultant",
-        "company": "Energy IoT"
+        "company": "Energy IoT",
+        "slug": "alexis-cureton"
       }
     ],
     "host": null,
@@ -5106,17 +5280,20 @@
       {
         "name": "Sonya Sessons",
         "title": "Manager, QuickBooks Live",
-        "company": "Intuit"
+        "company": "Intuit",
+        "slug": "sonya-sessons"
       },
       {
         "name": "Alonzo Weatherby",
         "title": "Senior Manager, Mid Market",
-        "company": "Intuit"
+        "company": "Intuit",
+        "slug": "alonzo-weatherby"
       },
       {
         "name": "Shaireen West",
         "title": "Manager, Quick Books Advanced",
-        "company": "Intuit"
+        "company": "Intuit",
+        "slug": "shaireen-west"
       }
     ],
     "host": null,
@@ -5153,17 +5330,20 @@
       {
         "name": "Adrian Groos",
         "title": "CEO",
-        "company": "Nimbus Aerospace"
+        "company": "Nimbus Aerospace",
+        "slug": "adrian-groos"
       },
       {
         "name": "Akim Niyonzima",
         "title": "Chief Technology Officer",
-        "company": "Nimbus Aerospace"
+        "company": "Nimbus Aerospace",
+        "slug": "akim-niyonzima"
       },
       {
         "name": "Eno Oduok",
         "title": "Chief Marketing Officer",
-        "company": "Nimbus Aerospace"
+        "company": "Nimbus Aerospace",
+        "slug": "eno-oduok"
       }
     ],
     "host": null,
@@ -5200,7 +5380,8 @@
       {
         "name": "Subhash Kodnad",
         "title": "Senior Vice President, Engineering Network Security",
-        "company": "Palo Alto Networks"
+        "company": "Palo Alto Networks",
+        "slug": "subhash-kodnad"
       }
     ],
     "host": null,
@@ -5237,12 +5418,14 @@
       {
         "name": "Devin Jenkins",
         "title": "Global Markets Commercial IT Business Partner",
-        "company": "GE HealthCare"
+        "company": "GE HealthCare",
+        "slug": "devin-jenkins"
       },
       {
         "name": "Kossi Houngbedji",
         "title": "Academic Imaging Account Manager",
-        "company": "GE HealthCare"
+        "company": "GE HealthCare",
+        "slug": "kossi-houngbedji"
       }
     ],
     "host": null,
@@ -5307,12 +5490,14 @@
       {
         "name": "Tiffany Bentham",
         "title": "Franchise Candidate Manager",
-        "company": "McDonalds"
+        "company": "McDonalds",
+        "slug": "tiffany-bentham"
       },
       {
         "name": "Hazel K. Smith",
         "title": "Owner/Operator",
-        "company": "McDonald’s"
+        "company": "McDonald’s",
+        "slug": "hazel-k-smith"
       }
     ],
     "host": null,
@@ -5348,12 +5533,14 @@
       {
         "name": "Symoné Berry",
         "title": "Principal Radar Systems Engineer and Founder",
-        "company": "GovTech Academy"
+        "company": "GovTech Academy",
+        "slug": "symon-berry"
       },
       {
         "name": "Dr. Christine Izuakor",
         "title": "Founder and CEO",
-        "company": "Rauk AI"
+        "company": "Rauk AI",
+        "slug": "dr-christine-izuakor"
       }
     ],
     "host": null,
@@ -5390,12 +5577,14 @@
       {
         "name": "Lee Merritt",
         "title": "National Civil Rights Attorney & Community Organizer for Landmark Cases | Adjunct Professor at Harvard | Forbes Power 100 Attorney | Congressional Black Caucus Nation Builder | Top 10 Influential Leader |",
-        "company": "Merritt Law"
+        "company": "Merritt Law",
+        "slug": "lee-merritt"
       },
       {
         "name": "Shanique Liz Yates",
         "title": "Independent Journalist with bylines in AfroTech, Madamenoire, Blavity",
-        "company": "Host of Black Culture in Motion on aspireTV"
+        "company": "Host of Black Culture in Motion on aspireTV",
+        "slug": "shanique-liz-yates"
       }
     ],
     "host": null,
@@ -5432,7 +5621,8 @@
       {
         "name": "Dr. Uché Blackstock",
         "title": "Founder & CEO, Advancing Health Equity; Author, Legacy: A Black Physician Reckons with Racism in Medicine, New York Times Bestseller",
-        "company": "Advancing Health Equity"
+        "company": "Advancing Health Equity",
+        "slug": "dr-uch-blackstock"
       }
     ],
     "host": null,
@@ -5524,12 +5714,14 @@
       {
         "name": "Aaron Russell",
         "title": "Director, Network Infrastructure",
-        "company": "Meta"
+        "company": "Meta",
+        "slug": "aaron-russell"
       },
       {
         "name": "Janeen Uzzell",
         "title": "CEO of the National Society of Black Engineers",
-        "company": "National Society of Black Engineers"
+        "company": "National Society of Black Engineers",
+        "slug": "janeen-uzzell"
       }
     ],
     "host": null,
@@ -5566,22 +5758,26 @@
       {
         "name": "Brittini Abiolu",
         "title": "Program Manager",
-        "company": "Michigan Founders Fund"
+        "company": "Michigan Founders Fund",
+        "slug": "brittini-abiolu"
       },
       {
         "name": "Darren Riley",
         "title": "CEO + Co-Founder",
-        "company": "Just Air"
+        "company": "Just Air",
+        "slug": "darren-riley"
       },
       {
         "name": "Alexa Turnage",
         "title": "Co-Founder",
-        "company": "Black Tech Saturdays"
+        "company": "Black Tech Saturdays",
+        "slug": "alexa-turnage"
       },
       {
         "name": "Shalanda Armstrong",
         "title": "Founder and Managing Partner",
-        "company": "100 KM Ventures"
+        "company": "100 KM Ventures",
+        "slug": "shalanda-armstrong"
       }
     ],
     "host": null,
@@ -5711,17 +5907,20 @@
       {
         "name": "Jennifer Sinclair Hankerson",
         "title": "Director, Real Estate & Construction",
-        "company": "DoorDash"
+        "company": "DoorDash",
+        "slug": "jennifer-sinclair-hankerson"
       },
       {
         "name": "Alyssa Wisdom",
         "title": "Director of Analytics",
-        "company": "DoorDash"
+        "company": "DoorDash",
+        "slug": "alyssa-wisdom"
       },
       {
         "name": "Kara Jones",
         "title": "People Business Partner Director",
-        "company": "DoorDash"
+        "company": "DoorDash",
+        "slug": "kara-jones"
       }
     ],
     "host": null,
@@ -5812,7 +6011,8 @@
       {
         "name": "Haywood Perry",
         "title": "Investor",
-        "company": "Mark Cuban Companies"
+        "company": "Mark Cuban Companies",
+        "slug": "haywood-perry"
       }
     ],
     "host": null,
@@ -5987,7 +6187,8 @@
       {
         "name": "Brandon Z. Hoff",
         "title": "Chief AI Officer",
-        "company": "RUDI (Responsible Use of Digital Intelligence)"
+        "company": "RUDI (Responsible Use of Digital Intelligence)",
+        "slug": "brandon-z-hoff"
       }
     ],
     "host": null,
@@ -6053,12 +6254,14 @@
       {
         "name": "Kevin Williams",
         "title": "Vice President, Digital Strategy & Experience External Affairs",
-        "company": "Planned Parenthood Federation of America Planned Parenthood Action Fund"
+        "company": "Planned Parenthood Federation of America Planned Parenthood Action Fund",
+        "slug": "kevin-williams"
       },
       {
         "name": "Cheryl Contee",
         "title": "Co-Founder",
-        "company": "BrightWorks AI and Change Agent AI"
+        "company": "BrightWorks AI and Change Agent AI",
+        "slug": "cheryl-contee"
       }
     ],
     "host": null,
@@ -6092,27 +6295,32 @@
       {
         "name": "Tanisha M. Sullivan",
         "title": "Head, External Engagement & Health Equity Strategy",
-        "company": "Sanofi"
+        "company": "Sanofi",
+        "slug": "tanisha-m-sullivan"
       },
       {
         "name": "Dr. Nicol Turner Lee",
         "title": "Director, Center for Technology Innovation (CTI) and Senior Fellow, Governance Studies",
-        "company": "Brookings Institute"
+        "company": "Brookings Institute",
+        "slug": "dr-nicol-turner-lee"
       },
       {
         "name": "Derrick Johnson",
         "title": "President and CEO",
-        "company": "NAACP"
+        "company": "NAACP",
+        "slug": "derrick-johnson"
       },
       {
         "name": "Ashley Allison",
         "title": "CEO and Founder",
-        "company": "Watering Hole Media"
+        "company": "Watering Hole Media",
+        "slug": "ashley-allison"
       },
       {
         "name": "Christian Menefee",
         "title": "Texas’s 18th Congressional District",
-        "company": "U.S. House of Representatives"
+        "company": "U.S. House of Representatives",
+        "slug": "christian-menefee"
       }
     ],
     "host": null,
@@ -6145,7 +6353,8 @@
       {
         "name": "Reggie Marable",
         "title": "Chief Customer Officer",
-        "company": "Sierra"
+        "company": "Sierra",
+        "slug": "reggie-marable"
       }
     ],
     "host": null,
@@ -6181,12 +6390,14 @@
       {
         "name": "Adam Holton",
         "title": "Chief People Officer",
-        "company": "GE HealthCare"
+        "company": "GE HealthCare",
+        "slug": "adam-holton"
       },
       {
         "name": "Jahid Khandaker",
         "title": "Chief Information Officer",
-        "company": "GE HealthCare"
+        "company": "GE HealthCare",
+        "slug": "jahid-khandaker"
       }
     ],
     "host": null,
@@ -6220,12 +6431,14 @@
       {
         "name": "Youssef Idelcaid",
         "title": "Executive Director and Head of the AI Research Center",
-        "company": "Gilead Sciences"
+        "company": "Gilead Sciences",
+        "slug": "youssef-idelcaid"
       },
       {
         "name": "Stephanie Jones",
         "title": "Associate Director, Vendor Relationship Management",
-        "company": "Gilead Sciences"
+        "company": "Gilead Sciences",
+        "slug": "stephanie-jones"
       }
     ],
     "host": null,
@@ -6350,7 +6563,8 @@
       {
         "name": "Vanessa Riley",
         "title": "CEO, American Board of Nursing Artificial Intelligence Founder, KhonsuAI & VytalFlow AI President, Global Nursing AI Alliance",
-        "company": "Global Nursing AI Alliance, Khonsu AI"
+        "company": "Global Nursing AI Alliance, Khonsu AI",
+        "slug": "vanessa-riley"
       }
     ],
     "host": null,
@@ -6384,7 +6598,8 @@
       {
         "name": "Larry Jones",
         "title": "CEO",
-        "company": "Stock Up! With Larry Jones"
+        "company": "Stock Up! With Larry Jones",
+        "slug": "larry-jones"
       }
     ],
     "host": null,
@@ -6420,12 +6635,14 @@
       {
         "name": "Larry Quinlan",
         "title": "Fortune 500 & Private Equity Company Board Director",
-        "company": "Former Global Chief Information Officer, Deloitte"
+        "company": "Former Global Chief Information Officer, Deloitte",
+        "slug": "larry-quinlan"
       },
       {
         "name": "Jeff Nelson",
         "title": "Co-Founder & COO",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "jeff-nelson"
       }
     ],
     "host": null,
@@ -6459,7 +6676,8 @@
       {
         "name": "Dr. Dineo Khabele",
         "title": "Mitchell & Elaine Yanow Professor and Chair, Department of Obstetrics and Gynecology",
-        "company": "WashU Medicine"
+        "company": "WashU Medicine",
+        "slug": "dr-dineo-khabele"
       }
     ],
     "host": null,
@@ -6493,7 +6711,8 @@
       {
         "name": "Rod Stokes",
         "title": "Principal Solutions Sales Executive",
-        "company": "Connection"
+        "company": "Connection",
+        "slug": "rod-stokes"
       }
     ],
     "host": null,
@@ -6529,7 +6748,8 @@
       {
         "name": "Brandon Z. Hoff",
         "title": "Chief AI Officer",
-        "company": "RUDI (Responsible Use of Digital Intelligence)"
+        "company": "RUDI (Responsible Use of Digital Intelligence)",
+        "slug": "brandon-z-hoff"
       }
     ],
     "host": null,
@@ -6565,12 +6785,14 @@
       {
         "name": "Tony West",
         "title": "Chief Legal Officer",
-        "company": "Uber"
+        "company": "Uber",
+        "slug": "tony-west"
       },
       {
         "name": "Keir Gumbs",
         "title": "Principal, Chief Legal Officer",
-        "company": "Edward Jones"
+        "company": "Edward Jones",
+        "slug": "keir-gumbs"
       }
     ],
     "host": null,
@@ -6636,7 +6858,8 @@
       {
         "name": "Lucas Isaza",
         "title": "Product Lead",
-        "company": "Block"
+        "company": "Block",
+        "slug": "lucas-isaza"
       }
     ],
     "host": null,
@@ -6672,12 +6895,14 @@
       {
         "name": "Congresswoman Ayanna Pressley (MA-07)",
         "title": "Massachusetts' 7th Congressional District",
-        "company": "U.S. House of Representatives"
+        "company": "U.S. House of Representatives",
+        "slug": "congresswoman-ayanna-pressley-ma-07"
       },
       {
         "name": "X Eyee",
         "title": "Partner",
-        "company": "Offline Research"
+        "company": "Offline Research",
+        "slug": "x-eyee"
       }
     ],
     "host": null,
@@ -6713,7 +6938,8 @@
       {
         "name": "Rai Basharat",
         "title": "CNXN Helix: Fractional Chief Data & AI Officer | Enterprise AI Strategy, Platforms & Governance",
-        "company": "Connection"
+        "company": "Connection",
+        "slug": "rai-basharat"
       }
     ],
     "host": null,
@@ -6749,7 +6975,8 @@
       {
         "name": "Dr. Félix Manuel Chinea",
         "title": "Senior Director, Health Equity",
-        "company": "Doximity"
+        "company": "Doximity",
+        "slug": "dr-f-lix-manuel-chinea"
       }
     ],
     "host": null,
@@ -6813,12 +7040,14 @@
       {
         "name": "Dr. Tamiko Foster",
         "title": "CEO & Founder",
-        "company": "2 E.D.I.F.Y., LLC"
+        "company": "2 E.D.I.F.Y., LLC",
+        "slug": "dr-tamiko-foster"
       },
       {
         "name": "Dr. Aparna Ahuja",
         "title": "CEO & Founder",
-        "company": "AJA LifeSciences Advisory LLC"
+        "company": "AJA LifeSciences Advisory LLC",
+        "slug": "dr-aparna-ahuja"
       }
     ],
     "host": null,
@@ -6852,17 +7081,20 @@
       {
         "name": "Dr. Brandi K. Freeman",
         "title": "President",
-        "company": "National Medical Association"
+        "company": "National Medical Association",
+        "slug": "dr-brandi-k-freeman"
       },
       {
         "name": "Michellene Davis",
         "title": "President and CEO",
-        "company": "National Medical Fellowships"
+        "company": "National Medical Fellowships",
+        "slug": "michellene-davis"
       },
       {
         "name": "Tanya Sam",
         "title": "Co-founder",
-        "company": "Elizabeth & Minnie Publishing"
+        "company": "Elizabeth & Minnie Publishing",
+        "slug": "tanya-sam"
       }
     ],
     "host": null,
@@ -6923,12 +7155,14 @@
       {
         "name": "Captain Nia Gilliam",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "captain-nia-gilliam"
       },
       {
         "name": "Dr. Alexis Haynes",
         "title": "Behavioral Health Scientist",
-        "company": null
+        "company": null,
+        "slug": "dr-alexis-haynes"
       }
     ],
     "host": null,
@@ -6964,17 +7198,20 @@
       {
         "name": "Troy Millings",
         "title": "Co-Founder & CEO",
-        "company": "Earn Your Leisure"
+        "company": "Earn Your Leisure",
+        "slug": "troy-millings"
       },
       {
         "name": "Rashad Bilal",
         "title": "Co-Founder & CEO",
-        "company": "Earn Your Leisure"
+        "company": "Earn Your Leisure",
+        "slug": "rashad-bilal"
       },
       {
         "name": "Morgan Debaun",
         "title": "Founder, CEO and Chairman",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "morgan-debaun"
       }
     ],
     "host": null,
@@ -7010,17 +7247,20 @@
       {
         "name": "Sriram Thiagarajan",
         "title": "EVP & Chief Technology Officer",
-        "company": "Ancestry"
+        "company": "Ancestry",
+        "slug": "sriram-thiagarajan"
       },
       {
         "name": "Lisa Glover-Gardin",
         "title": "Vice President, Associate General Counsel, Privacy and Product and Chief Privacy Officer",
-        "company": "Ancestry"
+        "company": "Ancestry",
+        "slug": "lisa-glover-gardin"
       },
       {
         "name": "Breana Jones",
         "title": "Principal Product Manager",
-        "company": "Ancestry"
+        "company": "Ancestry",
+        "slug": "breana-jones"
       }
     ],
     "host": null,
@@ -7056,7 +7296,8 @@
       {
         "name": "Raymond Brown",
         "title": "Principal Product Designer",
-        "company": "Microsoft"
+        "company": "Microsoft",
+        "slug": "raymond-brown"
       }
     ],
     "host": null,
@@ -7092,12 +7333,14 @@
       {
         "name": "Tamira Chapman",
         "title": "Publisher",
-        "company": "Storehouse Voices/Penguin Random House"
+        "company": "Storehouse Voices/Penguin Random House",
+        "slug": "tamira-chapman"
       },
       {
         "name": "Porscha Burke",
         "title": "Associate Publisher",
-        "company": "Storehouse Voices/Penguin Random House"
+        "company": "Storehouse Voices/Penguin Random House",
+        "slug": "porscha-burke"
       }
     ],
     "host": null,
@@ -7163,7 +7406,8 @@
       {
         "name": "Travis Cleaves",
         "title": "Deputy Director of Research Informatics and Data Science",
-        "company": "American Society of Hematology Research Collaborative"
+        "company": "American Society of Hematology Research Collaborative",
+        "slug": "travis-cleaves"
       }
     ],
     "host": null,
@@ -7197,12 +7441,14 @@
       {
         "name": "Toni Marshall",
         "title": "Head of Patient Insights & Engagement",
-        "company": "UCB"
+        "company": "UCB",
+        "slug": "toni-marshall"
       },
       {
         "name": "Dr. Vindell Washington",
         "title": "Chief Clinical Officer",
-        "company": "Verily"
+        "company": "Verily",
+        "slug": "dr-vindell-washington"
       }
     ],
     "host": null,
@@ -7236,7 +7482,8 @@
       {
         "name": "Cliff Worley",
         "title": "Founder & AI Consultant",
-        "company": "AI Playtime"
+        "company": "AI Playtime",
+        "slug": "cliff-worley"
       }
     ],
     "host": null,
@@ -7299,7 +7546,8 @@
       {
         "name": "Julia Weber",
         "title": "Space Manufacturing Engineer",
-        "company": "Planet Labs"
+        "company": "Planet Labs",
+        "slug": "julia-weber"
       }
     ],
     "host": null,
@@ -7335,7 +7583,8 @@
       {
         "name": "Shaïna Silva",
         "title": "CEO",
-        "company": "World Connected Media Ventures"
+        "company": "World Connected Media Ventures",
+        "slug": "sha-na-silva"
       }
     ],
     "host": null,
@@ -7371,12 +7620,14 @@
       {
         "name": "Roy Wood Jr.",
         "title": "Comedian, actor and author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "roy-wood-jr"
       },
       {
         "name": "Shelby Stewart",
         "title": "Manager of Content Operations",
-        "company": "ESSENCE"
+        "company": "ESSENCE",
+        "slug": "shelby-stewart"
       }
     ],
     "host": null,
@@ -7412,12 +7663,14 @@
       {
         "name": "Troy Millings",
         "title": "Co-Founder & CEO",
-        "company": "Earn Your Leisure"
+        "company": "Earn Your Leisure",
+        "slug": "troy-millings"
       },
       {
         "name": "Rashad Bilal",
         "title": "Co-Founder & CEO",
-        "company": "Earn Your Leisure"
+        "company": "Earn Your Leisure",
+        "slug": "rashad-bilal"
       }
     ],
     "host": null,
@@ -7453,12 +7706,14 @@
       {
         "name": "Evol Greaves",
         "title": "VP, Engineering",
-        "company": "Betterment"
+        "company": "Betterment",
+        "slug": "evol-greaves"
       },
       {
         "name": "Kyle McBrien",
         "title": "Sr. Financial Planner",
-        "company": "Betterment"
+        "company": "Betterment",
+        "slug": "kyle-mcbrien"
       }
     ],
     "host": null,
@@ -7494,12 +7749,14 @@
       {
         "name": "Zekarias Amsalu",
         "title": "Co-Founder & MD",
-        "company": "Africa Fintech Summit"
+        "company": "Africa Fintech Summit",
+        "slug": "zekarias-amsalu"
       },
       {
         "name": "Tetiana Anderson",
         "title": "Managing Partner",
-        "company": "Starfield Media"
+        "company": "Starfield Media",
+        "slug": "tetiana-anderson"
       }
     ],
     "host": null,
@@ -7535,12 +7792,14 @@
       {
         "name": "Robin Givhan",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "robin-givhan"
       },
       {
         "name": "Shelby Stewart",
         "title": "Manager of Content Operations",
-        "company": "ESSENCE"
+        "company": "ESSENCE",
+        "slug": "shelby-stewart"
       }
     ],
     "host": null,
@@ -7576,12 +7835,14 @@
       {
         "name": "Pierre Whatley",
         "title": "Principal",
-        "company": "FS Vector"
+        "company": "FS Vector",
+        "slug": "pierre-whatley"
       },
       {
         "name": "Josh Rodgers",
         "title": "Writer and Content Creator",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "josh-rodgers"
       }
     ],
     "host": null,
@@ -7615,7 +7876,8 @@
       {
         "name": "Dr. Shannon Barnes Martin",
         "title": "Principal Nurse Experience Manager",
-        "company": "Microsoft"
+        "company": "Microsoft",
+        "slug": "dr-shannon-barnes-martin"
       }
     ],
     "host": null,
@@ -7707,17 +7969,20 @@
       {
         "name": "Kasheef Wyzard",
         "title": "National Director of Economic Opportunity",
-        "company": "Dream.Org"
+        "company": "Dream.Org",
+        "slug": "kasheef-wyzard"
       },
       {
         "name": "Reginald Parker",
         "title": "CEO",
-        "company": "Green Power Ventures"
+        "company": "Green Power Ventures",
+        "slug": "reginald-parker-2"
       },
       {
         "name": "Jordan Taylor",
         "title": "CEO",
-        "company": "SynergyGrid"
+        "company": "SynergyGrid",
+        "slug": "jordan-taylor"
       }
     ],
     "host": null,
@@ -7753,17 +8018,20 @@
       {
         "name": "Arif Gursel",
         "title": "Managing Director",
-        "company": "8genC - UnCap Ventures"
+        "company": "8genC - UnCap Ventures",
+        "slug": "arif-gursel"
       },
       {
         "name": "Monique Idlett",
         "title": "Co-Founder & General Partner",
-        "company": "Reign Ventures"
+        "company": "Reign Ventures",
+        "slug": "monique-idlett"
       },
       {
         "name": "Kobie Fuller",
         "title": "General Partner",
-        "company": "Upfront Ventures"
+        "company": "Upfront Ventures",
+        "slug": "kobie-fuller"
       }
     ],
     "host": null,
@@ -7799,7 +8067,8 @@
       {
         "name": "Hon. Alexa Lightbourne JP, MP",
         "title": "Minister of Home Affairs",
-        "company": "Government of Bermuda"
+        "company": "Government of Bermuda",
+        "slug": "hon-alexa-lightbourne-jp-mp"
       }
     ],
     "host": null,
@@ -7863,22 +8132,26 @@
       {
         "name": "Roy Wood Jr.",
         "title": "Comedian, actor and author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "roy-wood-jr"
       },
       {
         "name": "Tareasa \"Reesa Teesa\" Johnson",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "tareasa-reesa-teesa-johnson"
       },
       {
         "name": "Robin Givhan",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "robin-givhan"
       },
       {
         "name": "Shelby Stewart",
         "title": "Manager of Content Operations",
-        "company": "ESSENCE"
+        "company": "ESSENCE",
+        "slug": "shelby-stewart"
       }
     ],
     "host": null,
@@ -7914,12 +8187,14 @@
       {
         "name": "Darin Florenz",
         "title": "Director, Segment Marketing",
-        "company": "MassMutual"
+        "company": "MassMutual",
+        "slug": "darin-florenz"
       },
       {
         "name": "Achu Akum,",
         "title": "Financial Planner",
-        "company": "Vista Wealth Solutions"
+        "company": "Vista Wealth Solutions",
+        "slug": "achu-akum"
       }
     ],
     "host": null,
@@ -7985,12 +8260,14 @@
       {
         "name": "René Peters Jr.",
         "title": "Sr. Product Manager, AI/XR/Telecom",
-        "company": "NVIDIA"
+        "company": "NVIDIA",
+        "slug": "ren-peters-jr"
       },
       {
         "name": "Kandia Milton",
         "title": "Government Affairs Director",
-        "company": "Dream.Org"
+        "company": "Dream.Org",
+        "slug": "kandia-milton"
       }
     ],
     "host": null,
@@ -8026,17 +8303,20 @@
       {
         "name": "TK Petersen",
         "title": "Co-Founder",
-        "company": "The Gathering Spot"
+        "company": "The Gathering Spot",
+        "slug": "tk-petersen"
       },
       {
         "name": "Ryan Wilson",
         "title": "CEO & Co-Founder",
-        "company": "The Gathering Spot"
+        "company": "The Gathering Spot",
+        "slug": "ryan-wilson"
       },
       {
         "name": "Arielle Clay Poteau",
         "title": "Host & Content Creator",
-        "company": null
+        "company": null,
+        "slug": "arielle-clay-poteau"
       }
     ],
     "host": null,
@@ -8072,12 +8352,14 @@
       {
         "name": "Shana Simmons",
         "title": "Chief Legal Officer",
-        "company": "Zendesk"
+        "company": "Zendesk",
+        "slug": "shana-simmons"
       },
       {
         "name": "Yemi Akisanya",
         "title": "Vice President of Culture and People Experience",
-        "company": "Axon"
+        "company": "Axon",
+        "slug": "yemi-akisanya"
       }
     ],
     "host": null,
@@ -8113,12 +8395,14 @@
       {
         "name": "Anwar White",
         "title": "Dating Coach and Author",
-        "company": "Get Your Guy Coaching"
+        "company": "Get Your Guy Coaching",
+        "slug": "anwar-white"
       },
       {
         "name": "Dr. Lauire Hamilton",
         "title": "Educator, Scholar & Keynote Speaker",
-        "company": null
+        "company": null,
+        "slug": "dr-lauire-hamilton"
       }
     ],
     "host": null,
@@ -8185,17 +8469,20 @@
       {
         "name": "Brandon William Jones",
         "title": "Founder & CEO",
-        "company": "Gravy Wealth"
+        "company": "Gravy Wealth",
+        "slug": "brandon-william-jones"
       },
       {
         "name": "Frank Tramble",
         "title": "Vice President for Communications, Marketing and Public Affairs",
-        "company": "Duke University"
+        "company": "Duke University",
+        "slug": "frank-tramble"
       },
       {
         "name": "Kweli Zukeri",
         "title": "Assistant Vice President of Web Innovation and Strategy",
-        "company": "Howard University"
+        "company": "Howard University",
+        "slug": "kweli-zukeri"
       }
     ],
     "host": null,
@@ -8231,27 +8518,32 @@
       {
         "name": "Jonathan Polo",
         "title": "Sustainability Manager",
-        "company": "CoreWeave"
+        "company": "CoreWeave",
+        "slug": "jonathan-polo"
       },
       {
         "name": "Alexis Cureton",
         "title": "E2 Fellow, Principal Community Partnerships and Grants Consultant",
-        "company": "Energy IoT"
+        "company": "Energy IoT",
+        "slug": "alexis-cureton-2"
       },
       {
         "name": "Walter Powell",
         "title": "CEO and Founder",
-        "company": "Unity Cloud"
+        "company": "Unity Cloud",
+        "slug": "walter-powell"
       },
       {
         "name": "Derrick Rainey",
         "title": "Mayor",
-        "company": "City of Wrightsville, Arkansas"
+        "company": "City of Wrightsville, Arkansas",
+        "slug": "derrick-rainey"
       },
       {
         "name": "Johnelle Brown",
         "title": "Operations Chief of Staff and Vice President of Operations",
-        "company": "American Clean Power Association"
+        "company": "American Clean Power Association",
+        "slug": "johnelle-brown"
       }
     ],
     "host": null,
@@ -8287,12 +8579,14 @@
       {
         "name": "Vic Mensa",
         "title": "Musician, Actor, Filmmaker, Founder, Philanthropist",
-        "company": null
+        "company": null,
+        "slug": "vic-mensa"
       },
       {
         "name": "Simone Tyler",
         "title": "SVP, AfroTech and Live Events",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "simone-tyler"
       }
     ],
     "host": null,
@@ -8328,12 +8622,14 @@
       {
         "name": "Tareasa \"Reesa Teesa\" Johnson",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "tareasa-reesa-teesa-johnson"
       },
       {
         "name": "Dr. Lauire Hamilton",
         "title": "Educator, Scholar & Keynote Speaker",
-        "company": null
+        "company": null,
+        "slug": "dr-lauire-hamilton"
       }
     ],
     "host": null,
@@ -8369,12 +8665,14 @@
       {
         "name": "Vanessa E. Wyche",
         "title": "Director",
-        "company": "NASA’s Johnson Space Center"
+        "company": "NASA’s Johnson Space Center",
+        "slug": "vanessa-e-wyche"
       },
       {
         "name": "Monica Melton",
         "title": "Assistant Editor",
-        "company": "New York Public Radio/WNYC"
+        "company": "New York Public Radio/WNYC",
+        "slug": "monica-melton"
       }
     ],
     "host": null,
@@ -8410,12 +8708,14 @@
       {
         "name": "Steve Stoute",
         "title": "Founder & CEO",
-        "company": "UnitedMasters + Translation"
+        "company": "UnitedMasters + Translation",
+        "slug": "steve-stoute"
       },
       {
         "name": "Chris Lyons",
         "title": "President a16z Halo",
-        "company": "Andreessen Horowitz"
+        "company": "Andreessen Horowitz",
+        "slug": "chris-lyons"
       }
     ],
     "host": null,
@@ -8451,17 +8751,20 @@
       {
         "name": "Anwar White",
         "title": "Dating Coach and Author",
-        "company": "Get Your Guy Coaching"
+        "company": "Get Your Guy Coaching",
+        "slug": "anwar-white"
       },
       {
         "name": "Tareasa \"Reesa Teesa\" Johnson",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "tareasa-reesa-teesa-johnson"
       },
       {
         "name": "Dr. Lauire Hamilton",
         "title": "Educator, Scholar & Keynote Speaker",
-        "company": null
+        "company": null,
+        "slug": "dr-lauire-hamilton"
       }
     ],
     "host": null,
@@ -8497,17 +8800,20 @@
       {
         "name": "Kasheef Wyzard",
         "title": "National Director of Economic Opportunity",
-        "company": "Dream.Org"
+        "company": "Dream.Org",
+        "slug": "kasheef-wyzard"
       },
       {
         "name": "Reginald Parker",
         "title": "CEO",
-        "company": "Freedmen Green Bank and Trust"
+        "company": "Freedmen Green Bank and Trust",
+        "slug": "reginald-parker"
       },
       {
         "name": "Jordan Taylor",
         "title": "CEO",
-        "company": "SynergyGrid"
+        "company": "SynergyGrid",
+        "slug": "jordan-taylor"
       }
     ],
     "host": null,
@@ -8573,12 +8879,14 @@
       {
         "name": "Damario Solomon-Simmons",
         "title": "National Civil Rights Attorney, Founder and Chief Legal Counsel, Justice for Greenwood; Author, Redeem a Nation",
-        "company": "Justice for Greenwood"
+        "company": "Justice for Greenwood",
+        "slug": "damario-solomon-simmons"
       },
       {
         "name": "Brooklyn Williams",
         "title": "Chief of Administration",
-        "company": "Antioch Missionary Baptist Church"
+        "company": "Antioch Missionary Baptist Church",
+        "slug": "brooklyn-williams"
       }
     ],
     "host": null,
@@ -8644,22 +8952,26 @@
       {
         "name": "Ashley D. Farmer",
         "title": "Author",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "ashley-d-farmer"
       },
       {
         "name": "Damario Solomon-Simmons",
         "title": "National Civil Rights Attorney, Founder and Chief Legal Counsel, Justice for Greenwood; Author, Redeem a Nation",
-        "company": "Justice for Greenwood"
+        "company": "Justice for Greenwood",
+        "slug": "damario-solomon-simmons"
       },
       {
         "name": "Arian Simone",
         "title": "Author & Founder, Fearless Fund",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "arian-simone"
       },
       {
         "name": "Brooklyn Williams",
         "title": "Chief of Administration",
-        "company": "Antioch Missionary Baptist Church"
+        "company": "Antioch Missionary Baptist Church",
+        "slug": "brooklyn-williams"
       }
     ],
     "host": null,
@@ -8695,12 +9007,14 @@
       {
         "name": "Arian Simone",
         "title": "Author & Founder, Fearless Fund",
-        "company": "Penguin Random House"
+        "company": "Penguin Random House",
+        "slug": "arian-simone"
       },
       {
         "name": "Shelby Stewart",
         "title": "Manager of Content Operations",
-        "company": "ESSENCE"
+        "company": "ESSENCE",
+        "slug": "shelby-stewart"
       }
     ],
     "host": null,
@@ -8991,17 +9305,20 @@
       {
         "name": "John Payne",
         "title": "CFO",
-        "company": "Dream.Org"
+        "company": "Dream.Org",
+        "slug": "john-payne"
       },
       {
         "name": "Noble Madu",
         "title": "Managing Partner and Founder",
-        "company": "Plente Group"
+        "company": "Plente Group",
+        "slug": "noble-madu"
       },
       {
         "name": "Ryan Taylor",
         "title": "Innovation Navigator",
-        "company": "Bakar Labs for Energy & Materials"
+        "company": "Bakar Labs for Energy & Materials",
+        "slug": "ryan-taylor"
       }
     ],
     "host": null,
@@ -9037,7 +9354,8 @@
       {
         "name": "Jeff Nelson",
         "title": "Co-Founder & COO",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "jeff-nelson"
       }
     ],
     "host": null,
@@ -9073,12 +9391,14 @@
       {
         "name": "Jodie Taylor",
         "title": "Corporate Senior Director and Digital Creator",
-        "company": "-"
+        "company": "-",
+        "slug": "jodie-taylor"
       },
       {
         "name": "Jenee Naylor",
         "title": "Creator & Founder",
-        "company": "12PM Studios"
+        "company": "12PM Studios",
+        "slug": "jenee-naylor"
       }
     ],
     "host": null,
@@ -9114,7 +9434,8 @@
       {
         "name": "Morgan Debaun",
         "title": "Founder, CEO and Chairman",
-        "company": "Blavity, Inc."
+        "company": "Blavity, Inc.",
+        "slug": "morgan-debaun"
       }
     ],
     "host": null,
@@ -9207,12 +9528,14 @@
       {
         "name": "Leah Anise",
         "title": "Creator Partnerships, Consumer and Growth",
-        "company": "OpenAI"
+        "company": "OpenAI",
+        "slug": "leah-anise"
       },
       {
         "name": "Dani Bauer",
         "title": "Developer Content Lead",
-        "company": "OpenAI"
+        "company": "OpenAI",
+        "slug": "dani-bauer"
       }
     ],
     "host": null,
@@ -9248,22 +9571,26 @@
       {
         "name": "Nneka Uzoh Kibuule",
         "title": "Founder and CEO",
-        "company": "Kino Cove"
+        "company": "Kino Cove",
+        "slug": "nneka-uzoh-kibuule"
       },
       {
         "name": "Sequoia Riley",
         "title": "Independent Climate Consultant",
-        "company": "N/A"
+        "company": "N/A",
+        "slug": "sequoia-riley"
       },
       {
         "name": "Jasmine Davenport",
         "title": "Vice President of Program Strategy",
-        "company": "Dream.Org"
+        "company": "Dream.Org",
+        "slug": "jasmine-davenport"
       },
       {
         "name": "Chantel Greene",
         "title": "Chief of Tribal Relations, UnityCloud; Founder and CEO, Xexus Greene Energy",
-        "company": "UnityCloud; Xexus Greene Energy"
+        "company": "UnityCloud; Xexus Greene Energy",
+        "slug": "chantel-greene"
       }
     ],
     "host": null,
@@ -9299,17 +9626,20 @@
       {
         "name": "Sean Wilson",
         "title": "National Director of Organizing and Partnerships",
-        "company": "Dream.Org"
+        "company": "Dream.Org",
+        "slug": "sean-wilson"
       },
       {
         "name": "J Paul Johnson",
         "title": "Founder",
-        "company": "BlackEverything.com"
+        "company": "BlackEverything.com",
+        "slug": "j-paul-johnson"
       },
       {
         "name": "Michael Hawthorne Jr",
         "title": "Co-Founder",
-        "company": "Klean Energy Entertainment"
+        "company": "Klean Energy Entertainment",
+        "slug": "michael-hawthorne-jr"
       }
     ],
     "host": null,
@@ -9345,12 +9675,14 @@
       {
         "name": "Stacey Abrams",
         "title": "Author, Entrepreneur, and Voting Rights Activist",
-        "company": "10 Steps Campaign & American Pride Rises Network"
+        "company": "10 Steps Campaign & American Pride Rises Network",
+        "slug": "stacey-abrams"
       },
       {
         "name": "Brooklyn Williams",
         "title": "Chief of Administration",
-        "company": "Antioch Missionary Baptist Church"
+        "company": "Antioch Missionary Baptist Church",
+        "slug": "brooklyn-williams"
       }
     ],
     "host": null,
@@ -9386,7 +9718,8 @@
       {
         "name": "Roxy Couse",
         "title": "Founder",
-        "company": "Sloefy"
+        "company": "Sloefy",
+        "slug": "roxy-couse"
       }
     ],
     "host": null,
@@ -9422,12 +9755,14 @@
       {
         "name": "Kasheef Wyzard",
         "title": "National Director of Economic Opportunity",
-        "company": "Dream.Org"
+        "company": "Dream.Org",
+        "slug": "kasheef-wyzard"
       },
       {
         "name": "Reginald Parker",
         "title": "CEO",
-        "company": "Green Power Ventures"
+        "company": "Green Power Ventures",
+        "slug": "reginald-parker-2"
       }
     ],
     "host": null,
@@ -9463,7 +9798,8 @@
       {
         "name": "Marcello Farrell",
         "title": "Sales Engineer",
-        "company": "Descript"
+        "company": "Descript",
+        "slug": "marcello-farrell"
       }
     ],
     "host": null,
@@ -9499,17 +9835,20 @@
       {
         "name": "Francis Roberts",
         "title": "Head of Creator Partnerships, Americas",
-        "company": "Snap Inc."
+        "company": "Snap Inc.",
+        "slug": "francis-roberts"
       },
       {
         "name": "Norissa Samuels",
         "title": "Creator Partnerships Lead",
-        "company": "Snap Inc."
+        "company": "Snap Inc.",
+        "slug": "norissa-samuels"
       },
       {
         "name": "Kyle Leverett",
         "title": "Creator Partnerships Lead",
-        "company": "Snap Inc."
+        "company": "Snap Inc.",
+        "slug": "kyle-leverett"
       }
     ],
     "host": null,

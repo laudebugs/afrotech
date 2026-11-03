@@ -31,7 +31,7 @@ Start with [`docs/plans/0001-events-site.md`](docs/plans/0001-events-site.md).
 ```bash
 python3 scripts/update_schedule.py      # official sessions → data/sessions.*, schedule/official.md
 python3 scripts/update_side_events.py   # side events → data/side-events.csv, schedule/side-events.md
-python3 scripts/build_events.py         # both → data/events/*.json and data/venues.json (the update scripts run it too)
+python3 scripts/build_events.py         # both → data/events/*.json, data/venues.json and data/speakers.json (the update scripts run it too)
 python3 scripts/build_floor_plan.py     # traced map → src/assets/maps/grb-level-*.svg and data/floor-plan.json
 ```
 

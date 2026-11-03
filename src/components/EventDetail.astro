@@ -3,6 +3,8 @@
 // bottom sheet loads it from that page.
 import "../styles/event-detail.css";
 import Star from "./Star.astro";
+import SpeakerPhoto from "./SpeakerPhoto.astro";
+import { speakerBySlug } from "../lib/speakers";
 import { venues } from "../lib/events";
 import { knownPrice } from "../lib/schedule";
 import { formatDate, formatRange } from "../lib/time";
@@ -73,12 +75,19 @@ const facts = [
       <section>
         <h3>Speakers</h3>
         <ul class="speakers">
-          {event.speakers.map((s) => (
-            <li>
-              <strong>{s.name}</strong>
-              {(s.title || s.company) && <span class="muted"> · {[s.title, s.company].filter(Boolean).join(", ")}</span>}
-            </li>
-          ))}
+          {event.speakers.map((s) => {
+            const profile = speakerBySlug(s.slug);
+            const role = [s.title, s.company].filter(Boolean).join(", ");
+            return (
+              <li>
+                <SpeakerPhoto name={s.name} url={profile?.photoUrl ?? null} size={40} />
+                <span class="who">
+                  {profile ? <a href={`/speakers/${profile.slug}/`}><strong>{s.name}</strong></a> : <strong>{s.name}</strong>}
+                  {role && <span class="muted">{role}</span>}
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </section>
     )

@@ -2,7 +2,8 @@
 """Turn the merged schedules into the site's event format.
 
 Reads data/sessions.json (official) and data/side-events.csv (side events) and
-writes data/events/official.json, data/events/side.json and data/venues.json.
+writes data/events/official.json, data/events/side.json, data/venues.json and
+data/speakers.json (minus anyone listed in data/sources/speaker-suppressions.json).
 The shape matches the `ScheduleEvent` type in src/lib/types.ts.
 
 data/venues.json is partly hand-maintained: this script only adds places it
@@ -14,9 +15,11 @@ level is unknown, while the map marks areas whose shape is a guess.
 """
 import csv
 import hashlib
+import html
 import json
 import re
 import sys
+from urllib.parse import urlparse
 from datetime import date, datetime, timedelta
 
 from common import ROOT, TZ, first_time, write_text
@@ -64,7 +67,162 @@ def official_kind(location):
     return "grb"
 
 
-def official_events(sessions, venues):
+# ---- Speakers -------------------------------------------------------------
+
+SUPPRESSIONS = ROOT / "data/sources/speaker-suppressions.json"
+LINK_LABELS = {"linkedin": "LinkedIn", "twitter": "X", "facebook": "Facebook", "instagram": "Instagram"}
+HANDLE_HOSTS = {"twitter": "x.com", "instagram": "instagram.com", "facebook": "facebook.com", "linkedin": "linkedin.com/in"}
+BRIEF_MAX = 200
+
+
+def plain_bio(raw):
+    """Sessionboard bios are HTML; keep paragraphs, drop tags and entities."""
+    text = re.sub(r"(?i)<br\s*/?>|</(p|li|div|h\d)>", "\n", raw or "")
+    text = html.unescape(re.sub(r"<[^>]+>", "", text)).replace("\u00a0", " ")
+    paragraphs = [re.sub(r"[ \t]+", " ", p).strip() for p in text.split("\n")]
+    return "\n\n".join(p for p in paragraphs if p)
+
+
+# A full stop after these isn't the end of a sentence ("Dr. Jane", "Charles R. Drew").
+NOT_SENTENCE_END = re.compile(r"(?:\b[A-Z]|\b(?:Dr|Mr|Mrs|Ms|Mx|Prof|Jr|Sr|St|Rev|Hon|Inc|Co|Corp|Ltd|vs|No))\.$")
+
+
+def sentences_of(text):
+    parts, current = [], ""
+    for piece in re.split(r"(?<=[.!?])\s+(?=[A-Z0-9“\"])", text):
+        current = f"{current} {piece}".strip()
+        if not NOT_SENTENCE_END.search(current):
+            parts.append(current)
+            current = ""
+    if current:
+        parts.append(current)
+    return parts
+
+
+def brief(bio):
+    """The bio's first sentence or two, up to about 200 characters."""
+    first = bio.split("\n\n")[0] if bio else ""
+    sentences = sentences_of(first)
+    out = ""
+    for s in sentences:
+        if out and len(out) + 1 + len(s) > BRIEF_MAX:
+            break
+        out = f"{out} {s}".strip()
+    if len(out) > BRIEF_MAX:
+        out = out[: BRIEF_MAX - 1].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+    return out or None
+
+
+def safe_url(value, kind):
+    """A usable https link from a URL or a bare handle; None for anything else."""
+    value = (value or "").strip()
+    if not value:
+        return None
+    if not re.match(r"(?i)^https?://", value):
+        if "." in value.split("/")[0]:
+            value = f"https://{value}"
+        else:
+            value = f"https://{HANDLE_HOSTS[kind]}/{value.lstrip('@')}"
+    parsed = urlparse(value)
+    if parsed.scheme not in ("http", "https") or not parsed.netloc or " " in value:
+        return None
+    return value.replace("http://", "https://", 1)
+
+
+# Social sites by host; anything else is labelled as a website.
+SITE_LABELS = {
+    "linkedin.com": ("linkedin", "LinkedIn"),
+    "x.com": ("x", "X"),
+    "twitter.com": ("x", "X"),
+    "facebook.com": ("facebook", "Facebook"),
+    "instagram.com": ("instagram", "Instagram"),
+    "tiktok.com": ("tiktok", "TikTok"),
+    "youtube.com": ("youtube", "YouTube"),
+    "github.com": ("github", "GitHub"),
+}
+
+
+def classify_link(url):
+    """Label a link by where it actually points, since source fields get mixed up.
+    Drops bare home pages such as https://linkedin.com that name no one."""
+    if not url:
+        return None
+    url = url.split("#google_vignette")[0]  # an ad-script fragment, not part of the page
+    parsed = urlparse(url)
+    host = parsed.netloc.lower().removeprefix("www.")
+    kind, label = SITE_LABELS.get(host, ("website", "Website"))
+    if kind != "website" and parsed.path.strip("/") == "":
+        return None
+    return {"kind": kind, "label": label, "url": url}
+
+
+def load_suppressions():
+    if not SUPPRESSIONS.exists():
+        return set()
+    data = json.loads(SUPPRESSIONS.read_text(encoding="utf-8"))
+    return {entry["id"] for entry in data.get("removed", [])}
+
+
+def build_speakers(sessions):
+    """One profile per speaker id, from the speaker records on each session."""
+    suppressed = load_suppressions()
+    records, session_ids = {}, {}
+    for s in sessions:
+        for sp in s.get("speaker_list", []):
+            if not sp.get("id") or not sp.get("name"):
+                continue
+            records.setdefault(sp["id"], sp)
+            session_ids.setdefault(sp["id"], []).append(s["id"])
+
+    speakers, taken = [], set()
+    for sid, sp in sorted(records.items(), key=lambda kv: (kv[1]["name"].lower(), kv[0])):
+        if sid in suppressed:
+            continue
+        base = slug(sp["name"]) or "speaker"
+        s_slug, n = base, 2
+        while s_slug in taken:
+            s_slug, n = f"{base}-{n}", n + 1
+        taken.add(s_slug)
+        bio = plain_bio(sp.get("about"))
+        photo = safe_url(sp.get("image"), "linkedin")
+        links = []
+        for field in LINK_LABELS:
+            link = classify_link(safe_url(sp.get(field), field))
+            if link and link["url"] not in {l["url"] for l in links}:
+                links.append(link)
+        speakers.append({
+            "id": sid,
+            "slug": s_slug,
+            "name": sp["name"].strip(),
+            "title": sp.get("title") or None,
+            "company": sp.get("company") or None,
+            "brief": brief(bio),
+            "bio": bio or None,
+            "photoUrl": photo if photo and photo.startswith("https://") else None,
+            "links": links,
+            "sessionIds": session_ids[sid],
+        })
+    return speakers
+
+
+def validate_speakers(speakers, events):
+    event_ids = {e["id"] for e in events}
+    slugs = set()
+    for sp in speakers:
+        assert sp["slug"] not in slugs, f"duplicate speaker slug {sp['slug']}"
+        slugs.add(sp["slug"])
+        assert sp["name"], sp["id"]
+        assert all(i in event_ids for i in sp["sessionIds"]), f"unknown session for {sp['name']}"
+        for link in sp["links"]:
+            assert link["url"].startswith("https://"), f"unsafe link for {sp['name']}"
+
+
+# ---- Events ---------------------------------------------------------------
+
+
+def official_events(sessions, venues, speaker_slugs=None):
+    speaker_slugs = speaker_slugs or {}
+    events = []
     events = []
     for s in sessions:
         start, end = iso_range(s["date"], s["start"], s["end"])
@@ -86,7 +244,12 @@ def official_events(sessions, venues):
             "track": s["track"] or None,
             "categories": [],
             "speakers": [
-                {"name": sp["name"], "title": sp["title"] or None, "company": sp["company"] or None}
+                {
+                    "name": sp["name"],
+                    "title": sp["title"] or None,
+                    "company": sp["company"] or None,
+                    "slug": speaker_slugs.get(sp.get("id")),
+                }
                 for sp in s.get("speaker_list", [])
                 if sp.get("name")
             ],
@@ -234,23 +397,27 @@ def build(sessions=None, side_rows=None):
     venues_path = ROOT / "data/venues.json"
     venues = json.loads(venues_path.read_text(encoding="utf-8")) if venues_path.exists() else {}
 
-    official = sorted(official_events(sessions, venues), key=sort_key)
+    speakers = build_speakers(sessions)
+    slugs = {sp["id"]: sp["slug"] for sp in speakers}
+    official = sorted(official_events(sessions, venues, slugs), key=sort_key)
     side = sorted(side_events(side_rows, venues), key=sort_key)
     try:
         validate(official + side, venues)
+        validate_speakers(speakers, official)
     except AssertionError as err:
         raise ValueError(f"Event data failed validation: {err}") from err
-    return official, side, venues
+    return official, side, venues, speakers
 
 
-def write(official, side, venues):
+def write(official, side, venues, speakers):
     def dump(obj):
         return json.dumps(obj, indent=2, ensure_ascii=False, sort_keys=isinstance(obj, dict)) + "\n"
 
     write_text("data/events/official.json", dump(official))
     write_text("data/events/side.json", dump(side))
     write_text("data/venues.json", dump(venues))
-    print(f"Wrote {len(official)} official and {len(side)} side events, {len(venues)} venues.")
+    write_text("data/speakers.json", dump(speakers))
+    print(f"Wrote {len(official)} official and {len(side)} side events, {len(venues)} venues, {len(speakers)} speakers.")
 
 
 def main():

@@ -1,0 +1,122 @@
+---
+// Every speaker A–Z, with search by name, company or title. No photos, to keep
+// the list light on convention Wi-Fi.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+import { speakers } from "../../lib/speakers";
+
+const letterOf = (name: string) => {
+  const c = name.normalize("NFD").replace(/[^A-Za-z]/g, "")[0]?.toUpperCase();
+  return c ?? "#";
+};
+const groups = new Map<string, typeof speakers>();
+for (const s of speakers) {
+  const key = letterOf(s.name);
+  groups.set(key, [...(groups.get(key) ?? []), s]);
+}
+const role = (s: (typeof speakers)[number]) => [s.title, s.company].filter(Boolean).join(" · ");
+---
+
+<BaseLayout title="Speakers · AfroTech 2026 Planner" active="none">
+  <header class="page-head">
+    <h1>Speakers</h1>
+    <label class="search">
+      <span class="visually-hidden">Search speakers by name, company or title</span>
+      <input type="search" placeholder="Search by name, company or title" data-speaker-search />
+    </label>
+    <p class="muted count" aria-live="polite" data-speaker-count>{speakers.length} speakers</p>
+  </header>
+
+  {
+    [...groups].map(([letter, list]) => (
+      <section class="letter" data-letter aria-labelledby={`l-${letter}`}>
+        <h2 id={`l-${letter}`} class="mono">{letter}</h2>
+        <ul>
+          {list.map((s) => (
+            <li data-speaker data-search={`${s.name} ${s.title ?? ""} ${s.company ?? ""}`.toLowerCase()}>
+              <a href={`/speakers/${s.slug}/`}>
+                <strong>{s.name}</strong>
+                {role(s) && <span class="muted">{role(s)}</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+  <p class="empty" data-speaker-empty hidden>No speakers match that search.</p>
+  <SourcesFooter />
+</BaseLayout>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>("[data-speaker-search]")!;
+  const items = [...document.querySelectorAll<HTMLElement>("[data-speaker]")];
+  const letters = [...document.querySelectorAll<HTMLElement>("[data-letter]")];
+  const count = document.querySelector<HTMLElement>("[data-speaker-count]")!;
+  const empty = document.querySelector<HTMLElement>("[data-speaker-empty]")!;
+
+  function apply() {
+    const words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+    let shown = 0;
+    for (const li of items) {
+      const ok = words.every((w) => li.dataset.search!.includes(w));
+      li.hidden = !ok;
+      if (ok) shown++;
+    }
+    letters.forEach((l) => (l.hidden = !l.querySelector("[data-speaker]:not([hidden])")));
+    count.textContent = `${shown} ${shown === 1 ? "speaker" : "speakers"}`;
+    empty.hidden = shown > 0;
+  }
+  input.addEventListener("input", apply);
+</script>
+
+<style>
+  .page-head {
+    padding-top: var(--space-6);
+  }
+  h1 {
+    margin: 0 0 var(--space-3);
+    font-size: var(--text-2xl);
+  }
+  input {
+    width: 100%;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+  }
+  .count {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+  }
+  .letter h2 {
+    margin: var(--space-6) 0 var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--muted);
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  li a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: var(--tap);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  li .muted {
+    font-size: var(--text-sm);
+  }
+  .empty {
+    padding: var(--space-8) 0;
+  }
+</style>
