@@ -46,6 +46,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
         <Chip pressed data-kind-filter="all">Everything</Chip>
         <Chip data-kind-filter="official">Official</Chip>
         <Chip data-kind-filter="side">Side events</Chip>
+        <Chip data-flag-filter="plan">My plan</Chip>
         <Chip data-flag-filter="free">Free</Chip>
         <Chip data-flag-filter="picks">Founder picks</Chip>
       </div>
@@ -77,6 +78,8 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
               datetime={event.start ?? undefined}
               data-row
               data-event-id={event.id}
+              data-start={event.start ?? undefined}
+              data-end={event.end ?? undefined}
               data-kind={event.kind}
               data-track={event.track ?? ""}
               data-free={isFree(event) ? "1" : undefined}
@@ -104,7 +107,10 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 </BaseLayout>
 
 <script>
-  type Filters = { kind: string; free: boolean; picks: boolean; track: string; q: string };
+  import { readPlan } from "../../lib/plan";
+
+  type Flag = "plan" | "free" | "picks";
+  type Filters = { kind: string; plan: boolean; free: boolean; picks: boolean; track: string; q: string };
 
   const rows = [...document.querySelectorAll<HTMLElement>("[data-row]")];
   const groups = [...document.querySelectorAll<HTMLElement>("[data-group]")];
@@ -120,6 +126,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     const kind = p.get("kind");
     return {
       kind: kind === "official" || kind === "side" ? kind : "all",
+      plan: p.get("plan") === "1",
       free: p.get("free") === "1",
       picks: p.get("picks") === "1",
       track: p.get("track") ?? "",
@@ -130,6 +137,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   function write(f: Filters) {
     const p = new URLSearchParams();
     if (f.kind !== "all") p.set("kind", f.kind);
+    if (f.plan) p.set("plan", "1");
     if (f.free) p.set("free", "1");
     if (f.picks) p.set("picks", "1");
     if (f.track) p.set("track", f.track);
@@ -144,16 +152,18 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 
   function apply(f: Filters) {
     kindChips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.kindFilter === f.kind)));
-    flagChips.forEach((c) => c.setAttribute("aria-pressed", String(f[c.dataset.flagFilter as "free" | "picks"])));
+    flagChips.forEach((c) => c.setAttribute("aria-pressed", String(f[c.dataset.flagFilter as Flag])));
     trackSelect.value = f.track;
     if (searchInput.value !== f.q) searchInput.value = f.q;
 
     const words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
+    const planned = new Set(readPlan());
     let shown = 0;
     for (const row of rows) {
       const d = row.dataset;
       const visible =
         (f.kind === "all" || d.kind === f.kind) &&
+        (!f.plan || planned.has(d.eventId!)) &&
         (!f.free || d.free === "1") &&
         (!f.picks || d.pick === "1") &&
         (!f.track || d.track === f.track) &&
@@ -175,15 +185,17 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   kindChips.forEach((c) => c.addEventListener("click", () => update({ kind: c.dataset.kindFilter! })));
   flagChips.forEach((c) =>
     c.addEventListener("click", () => {
-      const key = c.dataset.flagFilter as "free" | "picks";
+      const key = c.dataset.flagFilter as Flag;
       update({ [key]: !read()[key] });
     }),
   );
   trackSelect.addEventListener("change", () => update({ track: trackSelect.value }));
   searchInput.addEventListener("input", () => update({ q: searchInput.value.trim() }));
   document.querySelector("[data-reset]")!.addEventListener("click", () =>
-    update({ kind: "all", free: false, picks: false, track: "", q: "" }),
+    update({ kind: "all", plan: false, free: false, picks: false, track: "", q: "" }),
   );
+  // Starring or unstarring changes what the My plan filter shows.
+  document.addEventListener("plan-change", () => apply(read()));
 
   const initial = read();
   write(initial);

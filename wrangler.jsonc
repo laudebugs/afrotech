@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   // Must match the Worker name in the Cloudflare dashboard.
-  "name": "afrotech26",
+  "name": "afrotech",
   "compatibility_date": "2026-11-01",
   // Static site: no Worker script, Cloudflare serves the built files directly.
   "assets": {
