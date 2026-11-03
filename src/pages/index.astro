@@ -27,7 +27,8 @@ const timed = allEvents.filter((e) => e.start);
       <Chip data-show="plan">My plan</Chip>
       <Chip data-show="side">Side events</Chip>
     </div>
-    <p class="status muted" aria-live="polite" data-status>Loading what's on…</p>
+    <!-- Not aria-live: it rewrites itself every minute. -->
+    <p class="status muted" data-status>Loading what's on…</p>
   </header>
 
   <Timeline label="Happening now and next">
@@ -118,15 +119,15 @@ const timed = allEvents.filter((e) => e.start);
     }
 
     // Live events: your picks first, then sessions, then all-day items such as
-    // "Expo Hall Hours" (3 hours or more), each by most recent start.
+    // "Expo Hall Hours" (3 hours or more), each in start order.
     const rank = (s: (typeof span)[number]) =>
       (planned.has(s.row.dataset.eventId!) ? 0 : 2) + (s.end - s.start >= 3 * HOUR ? 1 : 0);
-    const order = [...live].sort((a, b) => rank(a) - rank(b) || b.start - a.start);
+    const order = [...live].sort((a, b) => rank(a) - rank(b) || a.start - b.start);
+    // Lay out the visible sequence explicitly at the top: live, marker, upcoming.
+    // Hidden rows follow in whatever order they're in.
     if (timeline) {
-      order.forEach((s) => timeline.insertBefore(s.row, markerSlot));
-      timeline.insertBefore(markerSlot, upcoming[0]?.row ?? null);
-      // Upcoming rows keep their time order after the marker.
-      upcoming.forEach((s) => timeline.appendChild(s.row));
+      const sequence = [...order.map((s) => s.row), markerSlot, ...upcoming.map((s) => s.row)];
+      timeline.prepend(...sequence);
     }
     markerSlot.hidden = !live.length && !soon.length;
     markerLabel.textContent = formatClock(new Date(t));

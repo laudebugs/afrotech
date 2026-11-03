@@ -19,7 +19,7 @@ Home page answering "what's on now and next?"
   what to show each minute: events live now, then those starting within the
   hour, after the green now marker.
 - **Live order:** your picks come first, then sessions, then all-day items
-  such as Expo Hall Hours (3 hours or more), each by most recent start. Ordering
+  such as Expo Hall Hours (3 hours or more), each in start order. Ordering
   by start time alone buried the sessions under a dozen all-day listings.
 - **Quiet hours:** overnight, before the week and after it, the page shows the
   next six events with "Nothing on right now. Next up: …", or a closing note
@@ -30,3 +30,6 @@ Home page answering "what's on now and next?"
 - **Fix to todo 004:** a global `[hidden] { display: none !important }` rule.
   Components that set `display` were overriding the browser's own hiding, so
   rows the filters hid could still show.
+- **Page weight:** the page ships all 430 cards (about 53 KB compressed) to show
+  the 10–30 that matter. That's fine this week; rendering only today onward
+  would trim it for 2027.
