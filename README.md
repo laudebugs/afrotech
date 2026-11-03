@@ -4,6 +4,42 @@ Shared tracker for AfroTech Conference 2026 events and the notes we take at them
 
 **When:** November 2–6, 2026 · **Where:** George R. Brown Convention Center, Houston, TX
 
+## Website
+
+The planner site lives at **https://afrotech26.laudebugs.me**. It's an Astro
+site in this repo that Cloudflare builds and deploys on every push.
+
+```bash
+npm install
+```
+
+```bash
+npm run dev       # local dev server at http://localhost:4321
+```
+
+```bash
+npm run preview   # build, then serve it the way Cloudflare does
+```
+
+`npm run build` type-checks and builds into `dist/`. Node 22.23.4 or later is
+required (`.node-version` pins it for Cloudflare).
+
+### Cloudflare setup (one time)
+
+In the Cloudflare dashboard, open **Workers & Pages → Create → Import a
+repository**, choose `laudebugs/afrotech` and use these settings:
+
+| Setting | Value |
+|---------|-------|
+| Project name | `afrotech26` (must match `name` in `wrangler.jsonc`) |
+| Production branch | `main` |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+
+Every push to `main` then goes live, and other branches get preview URLs.
+`wrangler.jsonc` attaches the custom domain, so Cloudflare creates its DNS
+record and certificate on the first deploy.
+
 ## Docs
 
 - [Plan: events site](docs/plans/0001-events-site.md) — what we're building and why

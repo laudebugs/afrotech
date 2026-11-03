@@ -1,6 +1,6 @@
 # Plan 0001: A mobile site to plan AfroTech week and find events on a map
 
-**Status:** draft, awaiting review · **Created:** 2026-11-03
+**Status:** approved 2026-11-03 · **Created:** 2026-11-03
 
 AfroTech 2026 lists 433 events across four sources: 259 official sessions and
 174 community side events. None of those sources answers the three questions

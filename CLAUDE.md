@@ -32,7 +32,13 @@ python3 scripts/update_schedule.py      # official sessions → data/sessions.*,
 python3 scripts/update_side_events.py   # side events → data/side-events.csv, schedule/side-events.md
 ```
 
-Site commands (`npm run dev | build | preview | deploy`) arrive with todo 001.
+```bash
+npm run dev       # Astro dev server
+npm run build     # astro check + build to dist/
+npm run preview   # build, then serve with wrangler dev (like production)
+```
+
+Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
 
 ## Review rules
 
