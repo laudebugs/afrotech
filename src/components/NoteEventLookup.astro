@@ -1,8 +1,14 @@
 ---
 // Session titles and times for the notes pages, which read notes in the
 // browser and need to name the session each note is about.
+// The editor also asks for each session's speakers, for its Insert menu.
 import { allEvents } from "../lib/events";
 import { formatDate, formatRange } from "../lib/time";
+
+interface Props {
+  withSpeakers?: boolean;
+}
+const { withSpeakers = false } = Astro.props;
 
 const lookup = Object.fromEntries(
   allEvents.map((e) => [
@@ -11,6 +17,9 @@ const lookup = Object.fromEntries(
       title: e.title,
       when: e.start ? `${formatDate(e.start)}, ${formatRange(e.start, e.end)}` : `${e.date} (time TBA)`,
       place: e.locationLabel,
+      ...(withSpeakers && e.speakers.length
+        ? { speakers: e.speakers.map((s) => ({ name: s.name, slug: s.slug, role: [s.title, s.company].filter(Boolean).join(", ") })) }
+        : {}),
     },
   ]),
 );

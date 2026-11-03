@@ -90,7 +90,7 @@
 }
 .note-prose ul[data-type="taskList"] li {
   display: flex;
-  gap: var(--space-2);
+  gap: 0; /* the box's 44 px target already spaces the text */
   align-items: flex-start;
 }
 /* The box is small, but its label is a 44 px target around it. */
@@ -100,7 +100,7 @@
   place-items: center;
   width: var(--tap);
   height: var(--tap);
-  margin: calc((1.55em - var(--tap)) / 2) 0 calc((1.55em - var(--tap)) / 2) calc(var(--space-2) * -1);
+  margin: calc((1.55em - var(--tap)) / 2) 0 calc((1.55em - var(--tap)) / 2) -12px;
   cursor: pointer;
 }
 .note-prose ul[data-type="taskList"] li > div {

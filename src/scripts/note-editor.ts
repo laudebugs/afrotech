@@ -55,6 +55,8 @@ export function noteExtensions() {
 }
 
 export type NoteEditor = {
+  /** Tiptap itself, for the toolbar's commands. */
+  editor: Editor;
   getMarkdown(): string;
   setMarkdown(markdown: string): void;
   /** The text without Markdown syntax, for counting words. */
@@ -92,6 +94,7 @@ export function createNoteEditor(opts: {
   });
 
   return {
+    editor,
     getMarkdown: () => editor.getMarkdown(),
     setMarkdown: (markdown) => editor.commands.setContent(markdown, { contentType: "markdown", emitUpdate: false }),
     getText: () => editor.getText({ blockSeparator: "\n" }),

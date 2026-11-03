@@ -28,7 +28,11 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
           <span id="note-label">Note</span>
           <button type="button" class="mode" aria-pressed="false" data-source-toggle>Markdown</button>
         </div>
-        <div class="body-editor" data-body-editor></div>
+        <div class="toolbar" role="toolbar" aria-label="Formatting" aria-controls="note-editor" data-toolbar>
+          <div class="tools" data-tools></div>
+          <div class="panel" data-panel hidden></div>
+        </div>
+        <div class="body-editor" id="note-editor" data-body-editor></div>
         <textarea
           class="source"
           rows="16"
@@ -50,7 +54,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       </p>
     </form>
   </div>
-  <NoteEventLookup />
+  <NoteEventLookup withSpeakers />
 </BaseLayout>
 
 <script>
@@ -58,6 +62,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   import { noteEvent } from "../../lib/note-events";
   import { formatTime } from "../../lib/time";
   import { countWords, createNoteEditor } from "../../scripts/note-editor";
+  import { attachToolbar } from "../../scripts/note-toolbar";
 
   const params = new URLSearchParams(location.search);
   const editing = getNote(params.get("id") ?? "");
@@ -92,6 +97,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     onChange: changed,
   });
 
+  const toolbar = document.querySelector<HTMLElement>("[data-toolbar]")!;
+  attachToolbar({ root: toolbar, editor: body.editor, eventId });
+
   // The Markdown view edits the raw text. Switching back re-reads it only if
   // you changed it, so a look at the Markdown never rewrites the note.
   let showingSource = false;
@@ -103,6 +111,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     else if (source.value !== shownMarkdown) body.setMarkdown(source.value);
     source.hidden = !showingSource;
     editorBox.hidden = showingSource;
+    toolbar.hidden = showingSource; // its tools act on the formatted view
     sourceToggle.setAttribute("aria-pressed", String(showingSource));
     if (showingSource) source.focus();
     else body.focus();
@@ -222,6 +231,128 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     background: var(--accent);
     color: var(--on-accent);
   }
+  /* The toolbar pins under the page header as you scroll a long note; on a
+     phone with the keyboard up, it rides just above the keyboard instead. */
+  .toolbar {
+    position: sticky;
+    top: var(--sticky-offset, 0px);
+    z-index: 6;
+    background: var(--bg);
+  }
+  .toolbar[hidden] {
+    display: none;
+  }
+  .toolbar[data-floating] {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    padding: 0 var(--space-2);
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+  .tools {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    padding: var(--space-1) 0;
+    scrollbar-width: none;
+  }
+  .tools :global(.tool) {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: var(--tap);
+    height: var(--tap);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .tools :global(.tool[hidden]) {
+    display: none;
+  }
+  .tools :global(.tool[aria-disabled="true"]) {
+    color: var(--muted);
+    opacity: 0.5;
+    cursor: default;
+  }
+  .tools :global(.tool[aria-pressed="true"]),
+  .tools :global(.tool[aria-expanded="true"]) {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .tools :global(.tool:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+  .panel {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: var(--space-2) 0;
+    border-top: 1px solid var(--line);
+  }
+  .panel[hidden] {
+    display: none;
+  }
+  .panel :global(.panel-title) {
+    margin: 0 0 var(--space-1);
+    color: var(--muted);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .panel :global(.panel-item) {
+    min-height: var(--tap);
+    padding: var(--space-2) var(--space-3);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    text-align: left;
+    cursor: pointer;
+  }
+  .panel :global(.panel-item:hover),
+  .panel :global(.panel-item:focus-visible) {
+    background: var(--line);
+    outline: none;
+  }
+  .panel :global(.panel-form) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .panel :global(.panel-form input) {
+    flex: 1 1 12rem;
+  }
+  .panel :global(.panel-action) {
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .panel :global(.panel-action.primary) {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .panel :global(.panel-results) {
+    display: flex;
+    flex-direction: column;
+  }
   .body-editor[hidden] {
     display: none;
   }
@@ -258,7 +389,8 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     font-size: var(--text-sm);
   }
   input,
-  textarea {
+  textarea,
+  .panel :global(input) {
     width: 100%;
     min-height: var(--tap);
     padding: var(--space-2) var(--space-3);
