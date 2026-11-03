@@ -353,7 +353,9 @@ def tidy_address(address):
     becomes "808 Travis St, Houston, TX 77002"."""
     kept = []
     for part in (p.strip() for p in (address or "").split(",")):
-        if part and not any(part.lower() in k.lower() for k in kept):
+        low = part.lower()
+        # A repeat is the same part, or the start of one ("TX" after "TX 77002").
+        if part and not any(k.lower() == low or k.lower().startswith(low + " ") for k in kept):
             kept.append(part)
     return ", ".join(kept)
 

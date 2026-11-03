@@ -135,6 +135,8 @@ class PageWins(unittest.TestCase):
     def test_repeated_city_is_tidied(self):
         self.assertEqual(be.tidy_address("808 Travis Street, #Suite 400, Houston, TX 77002, Houston, TX"),
                          "808 Travis Street, #Suite 400, Houston, TX 77002")
+        self.assertEqual(be.tidy_address("6115 Skyline Drive, C, Houston, TX 77057"),
+                         "6115 Skyline Drive, C, Houston, TX 77057")
 
 
 class LeftAlone(unittest.TestCase):
