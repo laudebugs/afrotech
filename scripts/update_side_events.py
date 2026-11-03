@@ -201,13 +201,6 @@ def main():
             old_count = sum(1 for _ in csv.DictReader(f))
         guard_shrink("Side events", len(events), old_count)
 
-    # Read each event's own page (once a day per page) so the build can fill
-    # gaps from it. A failure here only means no new page data this run.
-    try:
-        enrich_events.main([])
-    except Exception as err:  # noqa: BLE001 - never block the side-event refresh
-        print(f"Event pages not read this run: {err!r}", file=sys.stderr)
-
     # Validate the site's event data first, so a failure writes nothing.
     try:
         built = build_events.build(side_rows=events)
@@ -249,15 +242,27 @@ def main():
             star = "⭐ " if e["founder_investor_pick"] == "yes" else ""
             out.append(f"| {cell(time)} | {star}**{cell(e['event'])}** | {cell(e['host'])} | "
                        f"{cell(e['venue'])} | {cell(e['price'])} | {cell(e['registration'])} | {rsvp} |")
-    out += page_differences(events)
     write_text("schedule/side-events.md", "\n".join(out) + "\n")
     print(f"Wrote {len(events)} side events across {len(by_day)} days.")
     build_events.write(*built)
 
+    # Then read each event's own page (at most once a day per page), from the
+    # list just written, and rebuild with it. Everything above is already
+    # saved, so a problem here costs only this run's page data.
+    try:
+        enrich_events.main([])
+        pages = build_events.load_event_pages()
+        rebuilt = build_events.build(side_rows=events, pages=pages)
+    except Exception as err:  # noqa: BLE001 - never undo the side-event refresh
+        print(f"Event pages not used this run: {err!r}", file=sys.stderr)
+        return
+    build_events.write(*rebuilt)
+    write_text("schedule/side-events.md", "\n".join(out + page_differences(events, pages)) + "\n")
 
-def page_differences(events):
+
+def page_differences(events, pages):
     """Where an event's own page disagrees with the lists, for a person to check (plan 0008)."""
-    _, diffs = build_events.apply_event_pages(events, build_events.load_event_pages())
+    _, diffs = build_events.apply_event_pages(events, pages)
     if not diffs:
         return []
     names = {"status": "Status", "date": "Date", "start": "Start time"}

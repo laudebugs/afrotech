@@ -33,7 +33,7 @@ SIDE_CSV = ROOT / "data/side-events.csv"
 FRESH_FOR = timedelta(days=1)
 PAUSE_SECONDS = 1.0
 FETCH_TIMEOUT = 20  # seconds per page
-RUN_BUDGET = timedelta(minutes=15)  # the refresh Action runs every two hours
+RUN_BUDGET = timedelta(minutes=5)  # the refresh job has 15 minutes for every source
 MAX_DESCRIPTION = 2000
 
 # Hosts whose pages carry no Event block worth reading: AfroTech's own partner
@@ -44,6 +44,10 @@ LD_JSON = re.compile(
     r"<script[^>]+type=[\"']application/ld\+json[\"'][^>]*>(.*?)</script>", re.I | re.S
 )
 # Only real HTML tags, so text such as "Bring <your laptop>" keeps its words.
+# Organisers' contact details stay off the site (CLAUDE.md): emails and phone
+# numbers in a page's description are removed.
+EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+PHONE = re.compile(r"(?<!\d)(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}(?!\d)")
 TAG = re.compile(r"</?(?:p|br|div|span|b|strong|i|em|u|a|ul|ol|li|h[1-6]|blockquote|img)\b[^>]*>", re.I)
 
 
@@ -205,7 +209,8 @@ def read_event(page):
     if not event:
         return None
     venue, address = address_of(event.get("location"))
-    description = text_of(event.get("description"))
+    description = PHONE.sub("", EMAIL.sub("", text_of(event.get("description"))))
+    description = re.sub(r"\s+([,.;:])", r"\1", re.sub(r"\s{2,}", " ", description)).strip()
     if len(description) > MAX_DESCRIPTION:
         description = description[:MAX_DESCRIPTION].rsplit(" ", 1)[0] + "…"
     found = {

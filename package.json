@@ -15,7 +15,7 @@
     "db:migrate:remote": "wrangler d1 migrations apply afrotech --remote",
     "deploy": "npm run build && wrangler d1 migrations apply afrotech --remote && wrangler deploy",
     "astro": "astro",
-    "test": "node --experimental-strip-types --no-warnings --test tests/*.test.ts"
+    "test": "node --experimental-strip-types --no-warnings --test tests/*.test.ts && python3 -m unittest discover -s tests -p 'test_*.py'"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",

@@ -27,12 +27,27 @@ Built on November 3:
   `schedule/side-events.md` lists different days, different start times and
   cancellations.
 - **Changed from the plan:** `update_side_events.py` calls
-  `enrich_events.py` itself, so the refresh Action needs no workflow change.
+  `enrich_events.py` itself, after writing the lists and building, then
+  rebuilds with the page data. The refresh Action needs no workflow change,
+  and a problem with the pages can't undo the side-event refresh.
   This session can't push workflow files anyway. Geocoding already reads
   the built events, so filled addresses get map pins.
 - **Credit:** `docs/sources.md` and the site footer now mention each event's
   own page.
-- **Tests:** `tests/test_event_pages_merge.py`, 10 cases.
+- **Review fixes:**
+  - A page with a date but no time can't crash the build.
+  - Reading pages gets 5 minutes, inside the job's 15.
+  - Pages are read from the list just written, after the build passes.
+  - Emails and phone numbers are removed from page descriptions.
+  - A venue name fills only with an address, so hand-added map fields stay
+    attached.
+  - Links shared across several days are left alone.
+  - A broken `data/event-pages.json` is ignored.
+  - `npm test` now runs the Python tests too.
+- **Tests:** 25 Python tests across `tests/test_enrich_events.py` and
+  `tests/test_event_pages_merge.py`. A full `update_side_events.py` run here
+  wrote the lists, failed to reach the 137 pages as expected, and rebuilt
+  cleanly with no data change.
 - **Not yet seen with real data:** the first Action run after this merges
   will write `data/event-pages.json`. Its log line ("event pages: … with an
   event block") shows how many pages the sites let a script read.

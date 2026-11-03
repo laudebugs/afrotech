@@ -77,6 +77,30 @@ class Merge(unittest.TestCase):
         self.assertEqual(e["address"], "4201 Main St, Houston, TX 77002")
         self.assertIn("event page", e["sources"])
 
+    def test_date_only_page_with_timed_end_does_not_crash(self):
+        (r,), _ = be.apply_event_pages([row(start="")], {URL: {"event": {"startDay": "2026-11-04",
+                                                                          "end": "2026-11-04T21:00:00-06:00"}}})
+        self.assertEqual((r["start"], r["end"]), ("", ""))
+
+    def test_venue_fills_only_with_the_address(self):
+        (r,), _ = be.apply_event_pages([row(address="4201 Main St")], pages())
+        self.assertEqual(r["venue"], "")
+
+    def test_series_link_on_several_days_is_left_alone(self):
+        rows = [row(), row(date="2026-11-05")]
+        out, diffs = be.apply_event_pages(rows, pages())
+        self.assertEqual(out, rows)
+        self.assertEqual(diffs, [])
+
+    def test_broken_pages_file_is_ignored(self):
+        path = be.EVENT_PAGES
+        saved = path.read_text() if path.exists() else None
+        try:
+            path.write_text("{ not json")
+            self.assertEqual(be.load_event_pages(), {})
+        finally:
+            path.write_text(saved) if saved is not None else path.unlink()
+
 
 if __name__ == "__main__":
     unittest.main()

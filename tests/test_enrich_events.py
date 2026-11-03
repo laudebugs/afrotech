@@ -115,6 +115,11 @@ class ReadEvent(unittest.TestCase):
                                '"description":"Bring <your laptop> and <b>ideas</b>"}'))
         self.assertEqual(e["description"], "Bring <your laptop> and ideas")
 
+    def test_contact_details_are_removed(self):
+        e = ee.read_event(page('{"@type":"Event","name":"x","startDate":"2026-11-02T12:00:00-06:00",'
+                               '"description":"Questions? Email jane.doe@gmail.com or text (713) 555-0142, ok."}'))
+        self.assertEqual(e["description"], "Questions? Email or text, ok.")
+
 
 class Cache(unittest.TestCase):
     def test_stale_handles_missing_naive_and_bad_times(self):
