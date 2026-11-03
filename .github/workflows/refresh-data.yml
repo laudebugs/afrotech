@@ -1,0 +1,74 @@
+# Refreshes the official schedule and side events every two hours during
+# AfroTech week, and commits any change. Cloudflare Workers Builds deploys the
+# commit. A broken source fails the run (GitHub emails the repo owner) and the
+# last good data stays in place.
+name: Refresh event data
+
+on:
+  schedule:
+    # Every 2 hours, Nov 1–7 (UTC). The week runs Nov 2–6 in Houston.
+    - cron: "17 */2 1-7 11 *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # Always work on main, which is what Cloudflare deploys.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch the official schedule
+        run: python3 scripts/update_schedule.py
+
+      - name: Fetch side events
+        run: python3 scripts/update_side_events.py
+
+      - name: Stop if nothing changed
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain -- data schedule)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes to the event data."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git status --short -- data schedule
+          fi
+
+      # Build the site before committing, so new data that breaks the build
+      # never reaches main.
+      - uses: actions/setup-node@v4
+        if: steps.diff.outputs.changed == 'true'
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Check the site still builds
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit the new data
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data schedule
+          git commit -m "Refresh event data ($(TZ=America/Chicago date '+%a %b %-d, %-I:%M %p') Houston)"
+          # Someone may have pushed (a note, say) while this ran.
+          git pull --rebase origin main
+          git push origin HEAD:main
