@@ -47,5 +47,5 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plan 000
 | [022](022-install-and-updates.md) | Install to home screen, icons and update note | 3 | done |
 | [023](023-offline-banner.md) | Data stamp and offline banner | 3 | done |
 | [024](024-notes-on-device.md) | Notes on the device; GitHub publishing removed | 5 | done |
-| [025](025-notes-api.md) | Notes table and API | 5 | todo |
+| [025](025-notes-api.md) | Notes table and API | 5 | done (deploy command applies the migration) |
 | [026](026-notes-sync.md) | Sync notes across devices | 5 | todo |

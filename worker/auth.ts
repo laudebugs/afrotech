@@ -69,6 +69,7 @@ export async function signOut(env: Env, token: string | null): Promise<string> {
 export async function deleteAccount(env: Env, userId: string): Promise<void> {
   await env.DB.batch([
     env.DB.prepare("DELETE FROM plan_items WHERE user_id = ?1").bind(userId),
+    env.DB.prepare("DELETE FROM notes WHERE user_id = ?1").bind(userId),
     env.DB.prepare("DELETE FROM sessions WHERE user_id = ?1").bind(userId),
     env.DB.prepare("DELETE FROM users WHERE id = ?1").bind(userId),
   ]);

@@ -1,6 +1,7 @@
 // The site's only server code (plan 0002). Cloudflare sends /api/* here
 // (`run_worker_first` in wrangler.jsonc); every other request is a static file.
 import { deleteAccount, signIn, signOut, verifyGoogleToken, type AuthEnv } from "./auth";
+import { applyNoteChanges, parseNoteChanges, parseSince, readNotes } from "./notes";
 import { applyChanges, parseChanges, readItems } from "./plan";
 import { COOKIE, currentUser, readCookie } from "./session";
 
@@ -63,7 +64,7 @@ const routes: Record<string, Handler> = {
     return json({ signedIn: false }, 200, { "Set-Cookie": cookie });
   },
 
-  /** "Delete my data": the account, its sessions and its saved stars. */
+  /** "Delete my data": the account, its sessions, its saved stars and its notes. */
   "DELETE /api/me": async (request, env, url) => {
     if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
     const user = await currentUser(request, env);
@@ -93,6 +94,31 @@ const routes: Record<string, Handler> = {
     if (typeof changes === "string") return json({ error: changes }, 400);
     await applyChanges(env, user, changes);
     return json({ items: await readItems(env, user) });
+  },
+
+  /** ?since=<cursor> returns notes written since that sync; no cursor returns all. */
+  "GET /api/notes": async (request, env, url) => {
+    const user = await currentUser(request, env);
+    if (!user) return json({ error: "sign in first" }, 401);
+    return json(await readNotes(env, user, parseSince(url.searchParams.get("since"))));
+  },
+
+  /** Body: { since, changes: [{ id, eventId, title, body, createdAt, updatedAt, deleted }] }.
+   *  Returns { notes, cursor }: every note written since `since`, this request's included. */
+  "POST /api/notes": async (request, env, url) => {
+    if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
+    const user = await currentUser(request, env);
+    if (!user) return json({ error: "sign in first" }, 401);
+    let body: unknown;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: "body must be JSON" }, 400);
+    }
+    const changes = parseNoteChanges(body);
+    if (typeof changes === "string") return json({ error: changes }, 400);
+    if (!(await applyNoteChanges(env, user, changes))) return json({ error: "note limit reached" }, 409);
+    return json(await readNotes(env, user, parseSince((body as { since?: unknown }).since)));
   },
 };
 
