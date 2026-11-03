@@ -24,8 +24,8 @@ Of 259 official sessions, 233 happen in the George R. Brown Convention Center
 | Outdoors | Discovery Green (1), The Grove (2) |
 | No fixed room | Private (10), Partner Events (6), Naming Rights Events (4), Blavity House Party Events (3) |
 
-Side events differ. Only 8 of the 170 take place in the GRB; the rest spread
-across 122 addresses in Houston. So side events belong on a city map, and the
+Side events differ. Only 8 of the 174 take place in the GRB; the rest spread
+across 123 addresses in Houston. So side events belong on a city map, and the
 floor plan serves the official sessions.
 
 ## Drawing our own plan beats converting the GRB's PDFs

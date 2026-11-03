@@ -5,31 +5,26 @@ Usage:
     python3 scripts/update_schedule.py            # fetch from afrotechconference.com
     python3 scripts/update_schedule.py payload.json  # use a saved _payload.json
 """
-import csv
 import json
 import re
 import sys
-import urllib.request
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
-from zoneinfo import ZoneInfo
+
+from common import TZ, cell, clock, fetch, write_csv, write_text
 
 SITE = "https://afrotechconference.com"
-TZ = ZoneInfo("America/Chicago")  # Houston
-ROOT = Path(__file__).resolve().parent.parent
 WRAPPERS = {"ShallowReactive", "Reactive", "Ref", "ShallowRef", "EmptyRef", "EmptyShallowRef"}
-
-
-def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "afrotech-notes/1.0"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return r.read().decode("utf-8")
+# devalue encodes special values as negative indexes.
+SENTINELS = {-1: None, -2: None, -3: float("nan"), -4: float("inf"), -5: float("-inf"), -6: -0.0}
+FIELDS = ["id", "date", "start", "end", "title", "track", "location", "speakers",
+          "ticket_levels", "description", "calendar_url"]
 
 
 def load_payload(argv):
     if len(argv) > 1:
-        return json.loads(Path(argv[1]).read_text())
+        return json.loads(Path(argv[1]).read_text(encoding="utf-8"))
     html = fetch(f"{SITE}/schedule")
     m = re.search(r'id="__NUXT_DATA__"[^>]*data-src="([^"]+)"', html) or re.search(
         r'data-src="([^"]+)"[^>]*id="__NUXT_DATA__"', html
@@ -44,12 +39,14 @@ def decode(flat):
     memo = {}
 
     def resolve(i):
+        if i < 0:
+            return SENTINELS.get(i)
         if i in memo:
             return memo[i]
         v = flat[i]
         if isinstance(v, list):
             if v and isinstance(v[0], str) and v[0] in WRAPPERS:
-                out = resolve(v[1]) if len(v) > 1 else None
+                out = resolve(v[1]) if len(v) > 1 and isinstance(v[1], int) else None
             else:
                 out = [resolve(x) if isinstance(x, int) else x for x in v]
         elif isinstance(v, dict):
@@ -66,14 +63,6 @@ def local(ts):
     return datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(TZ)
 
 
-def clock(dt):
-    return dt.strftime("%-I:%M %p")
-
-
-def cell(text):
-    return (text or "").replace("|", "\\|").replace("\n", " ").strip()
-
-
 def speaker_label(sp):
     extra = ", ".join(x for x in (sp.get("title"), sp.get("company")) if x)
     return f"{sp['name']} ({extra})" if extra else sp["name"]
@@ -81,18 +70,21 @@ def speaker_label(sp):
 
 def main():
     data = decode(load_payload(sys.argv))
-    sessions = sorted(data["sessions"], key=lambda s: (s["startTime"], s["endTime"], s["title"]))
+    sessions = sorted(data["sessions"], key=lambda s: (s["startTime"], s["endTime"] or "", s["title"]))
+    if not sessions:
+        sys.exit("The schedule payload had no sessions; keeping the existing files.")
     days = {d["key"]: d for d in data["days"]}
 
     # Trimmed data for spreadsheets / other tools.
     rows = []
     for s in sessions:
-        start, end = local(s["startTime"]), local(s["endTime"])
+        start = local(s["startTime"])
+        end = local(s["endTime"]) if s.get("endTime") else None
         rows.append({
             "id": s["id"],
             "date": s["dayKey"],
             "start": clock(start),
-            "end": clock(end),
+            "end": clock(end) if end else "",
             "title": s["title"],
             "track": s.get("track") or "",
             "location": s.get("location") or "",
@@ -101,12 +93,8 @@ def main():
             "description": s.get("plainDescription") or "",
             "calendar_url": SITE + s["calendarUrl"] if s.get("calendarUrl") else "",
         })
-    (ROOT / "data").mkdir(exist_ok=True)
-    (ROOT / "data/sessions.json").write_text(json.dumps(rows, indent=2, ensure_ascii=False) + "\n")
-    with open(ROOT / "data/sessions.csv", "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0]))
-        w.writeheader()
-        w.writerows(rows)
+    write_text("data/sessions.json", json.dumps(rows, indent=2, ensure_ascii=False) + "\n")
+    write_csv("data/sessions.csv", rows, FIELDS)
 
     by_day = defaultdict(list)
     for r in rows:
@@ -129,10 +117,10 @@ def main():
                 "|------|---------|-------|----------|----------|"]
         for r in by_day[key]:
             out.append(
-                f"| {r['start']}–{r['end']} | **{cell(r['title'])}** | {cell(r['track'])} | "
+                f"| {cell('–'.join(x for x in (r['start'], r['end']) if x))} | **{cell(r['title'])}** | {cell(r['track'])} | "
                 f"{cell(r['location'])} | {cell(r['speakers'])} |"
             )
-    (ROOT / "schedule/official.md").write_text("\n".join(out) + "\n")
+    write_text("schedule/official.md", "\n".join(out) + "\n")
     print(f"Wrote {len(rows)} sessions across {len(by_day)} days.")
 
 

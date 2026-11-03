@@ -2,8 +2,8 @@
 
 **Status:** draft, awaiting review · **Created:** 2026-11-03
 
-AfroTech 2026 lists 429 events across four sources: 259 official sessions and
-170 community side events. None of those sources answers the three questions
+AfroTech 2026 lists 433 events across four sources: 259 official sessions and
+174 community side events. None of those sources answers the three questions
 you ask on the conference floor: what's on now, which of your picks clash, and
 where is the next one? Each source covers only some of the events, so planning
 means switching between a schedule page, two spreadsheets and a website. This plan

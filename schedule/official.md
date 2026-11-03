@@ -18,7 +18,7 @@ put session notes in `notes/` instead.
 | Time | Session | Track | Location | Speakers |
 |------|---------|-------|----------|----------|
 | 9:00 AM–5:00 PM | **Attendee Registration** | Operations | Registration - Grand Lobby |  |
-| 11:30 AM–3:30 PM | **Student Promptathon \|  A PROPEL Center HBCU Challenge at AfroTech** | Product&Design | Meeting Room 310 |  |
+| 11:30 AM–3:30 PM | **Student Promptathon \| A PROPEL Center HBCU Challenge at AfroTech** | Product&Design | Meeting Room 310 |  |
 | 12:00 PM–12:30 PM | **AFROTECH U Doors Open** |  | Meeting Room 320 | Shanique Liz Yates (Independent Journalist with bylines in AfroTech, Madamenoire, Blavity , Host of Black Culture in Motion on aspireTV) |
 | 12:30 PM–1:00 PM | **Student Orientation** | Networking | Meeting Room 320 | Shanique Liz Yates (Independent Journalist with bylines in AfroTech, Madamenoire, Blavity , Host of Black Culture in Motion on aspireTV) |
 | 1:00 PM–1:30 PM | **Preparing to be Remembered: Build Your Unique Professional Presence Presented by Howard University** | Global | Meeting Room 320 | Etoulia Salas-Burnett (Executive Director, Howard University Center for Digital Business); Jenard Moore (Director of Student Success and Retention, Willie A. Deese College of Business and Economics at North Carolina Agricultural and Technical State University); Christopher Hinton (Professor, Willie A. Deese College of Business and Economics at North Carolina Agricultural and Technical State University) |
@@ -43,7 +43,7 @@ put session notes in `notes/` instead.
 | 9:00 AM–5:00 PM | **Executive Lounge Hours** | Networking | Executive Lounge |  |
 | 9:30 AM–10:00 AM | **AFROTECH™ Conference Attendee Orientation** | Networking | Meeting Room 320 | Shane Bernard |
 | 9:30 AM–10:00 AM | **From APIs to Agents: How Agentic AI Handles Ambiguity (Live Demo)** | Artificial Intelligence | Grand Ballroom A | Jonathan Yeldell (Solutions Architect, AWS (Amazon Web Services)) |
-| 9:30 AM–11:30 AM | **Student Promptathon \|  A PROPEL Center HBCU Challenge at AfroTech** | Product&Design | Meeting Room 310 |  |
+| 9:30 AM–11:30 AM | **Student Promptathon \| A PROPEL Center HBCU Challenge at AfroTech** | Product&Design | Meeting Room 310 |  |
 | 9:30 AM–2:00 PM | **Human Centered AI for Leaders Summit** |  | Grand Ballroom A |  |
 | 9:50 AM–10:35 AM | **Responsible AI: Protecting the Business While Moving Fast** | AI Edge Training | Exhibit Hall E (1st Floor) | Daphne Charles (Senior Software Engineer, Salesforce) |
 | 10:15 AM–11:10 AM | **Achieving Low Latency AI-Data with Edge Computing** | Engineering | Grand Ballroom A | Gregory Green (Principal Solutions Architecture, VMware by Broadcom) |
@@ -97,7 +97,7 @@ put session notes in `notes/` instead.
 | 7:00 AM–5:00 PM | **Attendee Registration** | Operations | Registration - Grand Lobby |  |
 | 7:30 AM–8:30 AM | **[solidcore] x AfroTech Pop-Up at Discovery Green** | Networking | Discovery Green |  |
 | 7:45 AM–8:45 AM | **HealthStack Opening Breakfast** |  | HealthStack General Session (Marriott) |  |
-| 8:00 AM–8:05 AM | **Opening Welcome:  Why HealthStack, Why Now** | Equity, Bias and Clinical Trust | HealthStack General Session (Marriott) | Tanya Sam (Co-founder, Elizabeth & Minnie Publishing); Dr. Krystal Redman (Executive Director; Founder & CEO; Adjunct Professor, SPARK RJ NOW, inc.; SEJH Institute; Emory Rollins School of Public Health) |
+| 8:00 AM–8:05 AM | **Opening Welcome: Why HealthStack, Why Now** | Equity, Bias and Clinical Trust | HealthStack General Session (Marriott) | Tanya Sam (Co-founder, Elizabeth & Minnie Publishing); Dr. Krystal Redman (Executive Director; Founder & CEO; Adjunct Professor, SPARK RJ NOW, inc.; SEJH Institute; Emory Rollins School of Public Health) |
 | 8:05 AM–8:10 AM | **Opening Remarks Presented by Sanofi** | Equity, Bias and Clinical Trust | HealthStack General Session (Marriott) | Tanisha M. Sullivan (Head, External Engagement & Health Equity Strategy, Sanofi) |
 | 8:30 AM–8:31 AM | **Cybersecurity Summit Begins** | Cybersecurity | Meeting Room 320 |  |
 | 8:30 AM–8:45 AM | **How One University Is Transforming Medicine Through Engineering and Computing** | Data & Clinical AI | HealthStack General Session (Marriott) | Reginald DesRoches (President, Rice University) |
@@ -123,7 +123,7 @@ put session notes in `notes/` instead.
 | 10:00 AM–11:00 AM | **Access to Care Roundtable Presented by NAACP** | Networking | Private | Dr. Chris Pernell (Health Equity Director, NAACP) |
 | 10:00 AM–11:00 AM | **Book Signing with Rachel Rodgers** | Networking | Expo Hall / Book Nook | Rachel Rodgers (Founder & CEO, Hello Seven) |
 | 10:00 AM–11:00 AM | **Executive Innovation RoundTable Presented by Intuit** | Networking | Private | Erica Terry Derryck (Vice President, Global Communications \| Global Business Solutions Group, Intuit) |
-| 10:10 AM–10:30 AM | **Bridging the AI Divide: How Cisco Builds Trust Through Responsible AI and Reverse Mentorship Presented by Cisco** | Future of Work | Product & Innovation Stage (Exhibit Hall C&D (1st Floor)) | Alex Allen (Director,  Social Impact & Inclusion, Cisco); Christelle Mombo-Zigah (Global Strategy and Planning in AI Infrastructure, Cisco) |
+| 10:10 AM–10:30 AM | **Bridging the AI Divide: How Cisco Builds Trust Through Responsible AI and Reverse Mentorship Presented by Cisco** | Future of Work | Product & Innovation Stage (Exhibit Hall C&D (1st Floor)) | Alex Allen (Director, Social Impact & Inclusion, Cisco); Christelle Mombo-Zigah (Global Strategy and Planning in AI Infrastructure, Cisco) |
 | 10:10 AM–11:10 AM | **Getting Discovered in the LinkedIn Feed Presented by LinkedIn** | Future of Work | Grand Ballroom A | Tim Jurka (VP, Flagship Engineering , LinkedIn); Travis Hutchinson (Senior Product Manager, LinkedIn) |
 | 10:20 AM–11:20 AM | **Building Fairness Into the Data Supply Chain** | Data & Clinical AI | HealthStack Seminar Room (Marriott) | Waverly Rose Brim (Research Engineer, The John's Hopkins University ) |
 | 10:30 AM–10:55 AM | **From Apple to AI** | Future of Work | AfroTech Authors Pavilion Presented by Penguin Random House | Denise Young Smith (Author, Penguin Random House); Dr. Lauire Hamilton (Educator, Scholar & Keynote Speaker) |
@@ -158,7 +158,7 @@ put session notes in `notes/` instead.
 | 1:00 PM–1:30 PM | **The Intersection of Entertainment, Technology, & Storytelling** | Future of Marketing | Expo Hall / The Yard | Naima Whitted (Student, Howard University Fine Arts) |
 | 1:00 PM–2:00 PM | **The Beats Blueprint: Building the World Around the Product Presented by Apple** | Future of Marketing | Grand Ballroom C | Alexis Johnson (Head of Social Impact - Beats by Dre, Apple); Shateera Israel (Brand Manager, Beats by Dre); Ganiu Ladipo (Sports Marketing, Beats by Dre) |
 | 1:05 PM–1:35 PM | **Engineering, Compliance, and Accountable Innovation Presented by AbbVie** | Equity, Bias and Clinical Trust | HealthStack General Session (Marriott) | Sam Spaulding (Enterprise Cloud Engineering Director, AbbVie); Karyn Quick (Director of IT Quality and Regulatory Compliance, AbbVie) |
-| 1:15 PM–2:15 PM | **The Practical Technologist's Tech Stack Presented by Capital One** | Engineering | Grand Ballroom A | Stéphane Nyombayire (MVP, Software Engineer  •  CD Tech, Capital One); Yanizka French (Sr. Director, Technical Program Management, Capital One); Awah Teh (VP, Software Engineering, Capital One) |
+| 1:15 PM–2:15 PM | **The Practical Technologist's Tech Stack Presented by Capital One** | Engineering | Grand Ballroom A | Stéphane Nyombayire (MVP, Software Engineer • CD Tech, Capital One); Yanizka French (Sr. Director, Technical Program Management, Capital One); Awah Teh (VP, Software Engineering, Capital One) |
 | 1:20 PM–1:50 PM | **Engineering Scalable & Sustainable Infrastructure for the AI Era** | Smart Cities | Product & Innovation Stage (Exhibit Hall C&D (1st Floor)) | Miles Braxton (Chief Executive Officer, Okovate Sustainable Energy) |
 | 1:20 PM–2:30 PM | **Hardening AI-Assisted Development Against Modern Threat Actors** | Engineering | Meeting Room 320 | Selena Crummie (Lead Cybersecurity Architect, JP Morgan Chase); Candice Biamby (Vice President, Product Manager of Cyber Threat Intelligence, JPMorganChase & Co) |
 | 1:30 PM–2:30 PM | **Smart Cities Roundtable** | Networking | Private | Jeff Nelson (Co-Founder & COO, Blavity, Inc.) |
@@ -224,7 +224,7 @@ put session notes in `notes/` instead.
 | 10:00 AM–10:30 AM | **Accountability and the AI Economy with Congresswoman Ayanna Pressley** | GovTech&Civic | Main Stage (Exhibit Hall E 1st Floor) | Congresswoman Ayanna Pressley (MA-07) (Massachusetts' 7th Congressional District, U.S. House of Representatives); X Eyee (Partner, Offline Research) |
 | 10:00 AM–10:30 AM | **Connection Helix: GB10 in the Wild: Real-World AI Use Cases Presented by Connection** | Smart Cities | Meeting Room 320 | Rai Basharat (CNXN Helix: Fractional Chief Data & AI Officer \| Enterprise AI Strategy, Platforms & Governance, Connection) |
 | 10:00 AM–11:30 AM | **Founders Meetup** | Networking | Founders Pavillion |  |
-| 10:05 AM–10:45 AM | **Clinical Operations,  Policy & Care Delays** | Equity, Bias and Clinical Trust | HealthStack General Session (Marriott) | Dr. Tamiko Foster (CEO & Founder, 2 E.D.I.F.Y., LLC); Dr. Aparna Ahuja (CEO & Founder, AJA LifeSciences Advisory LLC) |
+| 10:05 AM–10:45 AM | **Clinical Operations, Policy & Care Delays** | Equity, Bias and Clinical Trust | HealthStack General Session (Marriott) | Dr. Tamiko Foster (CEO & Founder, 2 E.D.I.F.Y., LLC); Dr. Aparna Ahuja (CEO & Founder, AJA LifeSciences Advisory LLC) |
 | 10:15 AM–11:00 AM | **What National Health Institutions Can Actually Do For You** | HealthStack/ Medtech | HealthStack Seminar Room (Marriott) | Dr. Brandi K. Freeman (President, National Medical Association); Michellene Davis (President and CEO, National Medical Fellowships); Tanya Sam (Co-founder, Elizabeth & Minnie Publishing) |
 | 10:30 AM–10:55 AM | **Grounded, Then Cleared** | Entrepreneurship | AfroTech Authors Pavilion Presented by Penguin Random House | Captain Nia Gilliam (Author, Penguin Random House); Dr. Alexis Haynes (Behavioral Health Scientist) |
 | 10:30 AM–11:00 AM | **State of Black Business - Earn Your Leisure x Morgan DeBaun AMA** | Entrepreneurship | Main Stage (Exhibit Hall E 1st Floor) | Troy Millings (Co-Founder & CEO , Earn Your Leisure); Rashad Bilal (Co-Founder & CEO , Earn Your Leisure); Morgan Debaun (Founder, CEO and Chairman, Blavity, Inc.) |

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Merge community side-event lists into schedule/side-events.md + data/side-events.csv.
 
-Sources:
+Sources, in priority order (earlier sources win when the same event appears twice):
   - afrotech.guide public events API (has RSVP links, venues, addresses)
   - Keith Azodeh's AfroTech 2026 Google Sheet (adds events not yet on the guide)
   - Adaptive Foundation's side-events guide (OneDrive xlsx, saved as
@@ -13,39 +13,29 @@ import difflib
 import io
 import json
 import re
-import urllib.request
+import sys
 from collections import defaultdict
-from datetime import datetime
-from pathlib import Path
-from zoneinfo import ZoneInfo
+from datetime import date, datetime
+
+from common import ROOT, TZ, cell, clock, fetch, first_time, link, short_date, write_csv, write_text
 
 GUIDE_API = "https://afrotech.guide/api/events"
 SHEET_ID = "1PLDLOdFCuwDAy4fe5y09hb4KgYlX3bsgX60U2z2KE_0"
 SHEET_CSV = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv"
 SHEET_URL = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/edit"
-TZ = ZoneInfo("America/Chicago")
-YEAR = 2026
-ROOT = Path(__file__).resolve().parent.parent
 ADAPTIVE_CSV = ROOT / "data/sources/adaptive-foundation-side-events.csv"
 ADAPTIVE_URL = "https://1drv.ms/x/c/201780541da98428/IQAwneocjcw7RLgXigZPaCX-Afj6iRzSioL8HrnOZ6uMc-Y"
+YEAR = 2026
+FIELDS = ["date", "start", "end", "event", "host", "venue", "address", "price", "type",
+          "categories", "rsvp", "registration", "founder_investor_pick", "description", "source"]
 
 
-def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": "afrotech-notes/1.0"})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return r.read().decode("utf-8")
+def event(**kw):
+    return {f: kw.get(f, "") for f in FIELDS}
 
 
 def key(title):
     return re.sub(r"[^a-z0-9]", "", title.lower())
-
-
-def clock(dt):
-    return dt.strftime("%-I:%M %p")
-
-
-def cell(text):
-    return re.sub(r"\s+", " ", (text or "").replace("|", "\\|")).strip()
 
 
 def from_guide():
@@ -53,28 +43,28 @@ def from_guide():
     for e in json.loads(fetch(GUIDE_API))["items"]:
         start = datetime.fromisoformat(e["startAt"].replace("Z", "+00:00")).astimezone(TZ)
         end = datetime.fromisoformat(e["endAt"].replace("Z", "+00:00")).astimezone(TZ) if e.get("endAt") else None
-        events.append({
-            "date": start.date().isoformat(),
-            "start": e.get("timeLabel") or clock(start),
-            "end": clock(end) if end and end != start else "",
-            "event": e["title"].strip(),
-            "host": e.get("host") or "",
-            "venue": e.get("venueName") or "",
-            "address": e.get("address") or "",
-            "price": e.get("priceType") or "",
-            "type": e.get("kind") or "",
-            "categories": ", ".join(e.get("categories") or []),
-            "rsvp": e.get("ticketUrl") or e.get("sourceUrl") or "",
-            "registration": "",
-            "founder_investor_pick": "",
-            "description": e.get("description") or "",
-            "source": "afrotech.guide",
-        })
+        events.append(event(
+            date=start.date().isoformat(),
+            start=clock(start),
+            end=clock(end) if end and end != start else "",
+            event=e["title"].strip(),
+            host=e.get("host") or "",
+            venue=e.get("venueName") or "",
+            address=e.get("address") or "",
+            price=e.get("priceType") or "",
+            type=e.get("kind") or "",
+            categories=", ".join(e.get("categories") or []),
+            rsvp=e.get("ticketUrl") or e.get("sourceUrl") or "",
+            description=e.get("description") or "",
+            source="afrotech.guide",
+        ))
     return events
 
 
 def from_sheet():
     rows = list(csv.reader(io.StringIO(fetch(SHEET_CSV))))
+    if not rows:
+        return []
     # The first header cell is merged with the sheet's banner text.
     header = ["DATE"] + [h.strip() for h in rows[0][1:]]
     events = []
@@ -84,25 +74,22 @@ def from_sheet():
         if not m or not row.get("EVENT"):
             continue
         price = row.get("PRICE", "")
-        if re.fullmatch(r"[\d.]+", price):
+        if re.fullmatch(r"\d+(\.\d+)?", price):
             price = f"${float(price):,.2f}"
-        events.append({
-            "date": f"{YEAR}-{int(m[1]):02d}-{int(m[2]):02d}",
-            "start": row.get("START", ""),
-            "end": row.get("END", ""),
-            "event": row["EVENT"],
-            "host": row.get("HOST", ""),
-            "venue": "" if row.get("VENUE") == "TBD" else row.get("VENUE", ""),
-            "address": row.get("ADDRESS", ""),
-            "price": price,
-            "type": row.get("TYPE", ""),
-            "categories": row.get("CATEGORIES", ""),
-            "rsvp": "",
-            "registration": "",
-            "founder_investor_pick": "",
-            "description": row.get("DESCRIPTION", ""),
-            "source": "google-sheet",
-        })
+        events.append(event(
+            date=f"{YEAR}-{int(m[1]):02d}-{int(m[2]):02d}",
+            start=first_time(row.get("START", "")),
+            end=first_time(row.get("END", "")),
+            event=row["EVENT"],
+            host=row.get("HOST", ""),
+            venue="" if row.get("VENUE") == "TBD" else row.get("VENUE", ""),
+            address=row.get("ADDRESS", ""),
+            price=price,
+            type=row.get("TYPE", ""),
+            categories=row.get("CATEGORIES", ""),
+            description=row.get("DESCRIPTION", ""),
+            source="google-sheet",
+        ))
     return events
 
 
@@ -110,67 +97,81 @@ def from_adaptive():
     if not ADAPTIVE_CSV.exists():
         return []
     events = []
-    with open(ADAPTIVE_CSV, newline="") as f:
+    # utf-8-sig: Excel's "CSV UTF-8" export starts with a byte-order mark.
+    with open(ADAPTIVE_CSV, newline="", encoding="utf-8-sig") as f:
         for r in csv.DictReader(f):
-            events.append({
-                "date": r["date"], "start": r["start"], "end": r["end"], "event": r["event"],
-                "host": r["host"], "venue": r["venue"], "address": r["address"],
-                "price": r["cost"], "type": r["type"], "categories": "",
-                "rsvp": r["link"], "registration": r["registration"],
-                "founder_investor_pick": r["founder_investor_pick"],
-                "description": "", "source": "adaptive-foundation",
-            })
+            events.append(event(
+                date=r["date"], start=first_time(r["start"]), end=first_time(r["end"]),
+                event=r["event"], host=r["host"], venue=r["venue"], address=r["address"],
+                price=r["cost"], type=r["type"], rsvp=r["link"], registration=r["registration"],
+                founder_investor_pick="yes" if r["founder_investor_pick"].strip().lower() == "yes" else "",
+                source="adaptive-foundation",
+            ))
     return events
 
 
-def same_event(a, b):
-    """Titles differ a little between lists ("Pickleball Clinic" vs "AfroTech Pickleball Clinic")."""
+def match_score(a, b):
+    """How likely two listings on the same day are one event (0 = different).
+
+    Titles differ a little between lists ("Pickleball Clinic" vs "AfroTech
+    Pickleball Clinic"), so exact matches score highest, then containment, then
+    fuzzy matches. A loose fuzzy match also needs the same start time.
+    """
     if a["date"] != b["date"]:
-        return False
+        return 0
     ka, kb = key(a["event"]), key(b["event"])
-    if ka == kb or (min(len(ka), len(kb)) >= 12 and (ka in kb or kb in ka)):
-        return True
+    if ka == kb:
+        return 2
+    if min(len(ka), len(kb)) >= 12 and (ka in kb or kb in ka):
+        return 1.5
     ratio = difflib.SequenceMatcher(None, ka, kb).ratio()
-    same_start = first_time(a["start"]) and first_time(a["start"]) == first_time(b["start"])
-    return ratio >= 0.85 or (same_start and ratio >= 0.6)
+    same_start = a["start"] and a["start"] == b["start"]
+    return ratio if ratio >= 0.85 or (same_start and ratio >= 0.6) else 0
 
 
-def first_time(text):
-    m = re.search(r"\d{1,2}:\d{2}\s*[AP]M", text or "", re.I)
-    return m.group(0).upper().replace(" ", "") if m else ""
+def merge(sources):
+    """Merge lists in priority order.
 
-
-def merge(events):
+    Each incoming list is matched against what's merged so far, best matches
+    first, and each merged event absorbs at most one row from a list. Rows from
+    the same list never merge with each other.
+    """
     merged = []
-    for e in events:
-        match = next((m for m in merged if same_event(m, e)), None)
-        if match is None:
-            merged.append(dict(e))
-            continue
-        # Earlier sources win; later ones only fill gaps.
-        for k, v in e.items():
-            if v and not match.get(k):
-                match[k] = v
-        if e["source"] not in match["source"]:
-            match["source"] += f", {e['source']}"
+    for rows in sources:
+        pairs = sorted(
+            ((match_score(m, r), mi, ri) for mi, m in enumerate(merged) for ri, r in enumerate(rows)),
+            reverse=True,
+        )
+        used_m, used_r = set(), set()
+        for score, mi, ri in pairs:
+            if score == 0:
+                break
+            if mi in used_m or ri in used_r:
+                continue
+            used_m.add(mi)
+            used_r.add(ri)
+            m, r = merged[mi], rows[ri]
+            for k, v in r.items():  # earlier sources win; later ones fill gaps
+                if v and not m.get(k):
+                    m[k] = v
+            m["source"] += f", {r['source']}"
+        merged += [dict(r) for ri, r in enumerate(rows) if ri not in used_r]
     return merged
 
 
 def sort_key(e):
-    try:
-        t = datetime.strptime(first_time(e["start"]), "%I:%M%p").time().isoformat()
-    except ValueError:
-        t = "99"  # unknown times last
-    return (e["date"], t, e["event"].lower())
+    t = first_time(e["start"])
+    when = datetime.strptime(t, "%I:%M %p").time().isoformat() if t else "99"  # unknown times last
+    return (e["date"], when, e["event"].lower())
 
 
 def main():
-    events = sorted(merge(from_guide() + from_sheet() + from_adaptive()), key=sort_key)
+    sources = [from_guide(), from_sheet(), from_adaptive()]
+    events = sorted(merge(sources), key=sort_key)
+    if not events:
+        sys.exit("No side events found in any source; keeping the existing files.")
 
-    with open(ROOT / "data/side-events.csv", "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(events[0]))
-        w.writeheader()
-        w.writerows(events)
+    write_csv("data/side-events.csv", events, FIELDS)
 
     by_day = defaultdict(list)
     for e in events:
@@ -180,7 +181,7 @@ def main():
         "# Side events",
         "",
         f"{len(events)} community events around AfroTech 2026 (parties, mixers, dinners, workshops).",
-        "Times are Houston time (CST). Always confirm on the RSVP page — details change.",
+        "Times are Houston time (CST). Always confirm on the RSVP page, since details change.",
         "",
         "Sources, merged and de-duplicated:",
         f"- [afrotech.guide]({GUIDE_API.rsplit('/api', 1)[0]}) events list",
@@ -194,20 +195,18 @@ def main():
         "",
     ]
     for d in sorted(by_day):
-        label = datetime.fromisoformat(d).strftime("%a, %b %-d")
-        out.append(f"- [{label}](#{d}) — {len(by_day[d])} events")
+        out.append(f"- [{short_date(date.fromisoformat(d))}](#{d}) — {len(by_day[d])} events")
     for d in sorted(by_day):
-        label = datetime.fromisoformat(d).strftime("%A, %B %-d")
-        out += ["", f'<a id="{d}"></a>', "", f"## {label}", "",
+        out += ["", f'<a id="{d}"></a>', "", f"## {short_date(date.fromisoformat(d))}", "",
                 "| Time | Event | Host | Venue | Price | Access | RSVP |",
                 "|------|-------|------|-------|-------|--------|------|"]
         for e in by_day[d]:
-            time = "–".join(x for x in (e["start"], e["end"]) if x) or "TBD"
-            rsvp = f"[RSVP]({e['rsvp']})" if e["rsvp"] else "_No link_"
-            star = "⭐ " if e["founder_investor_pick"] else ""
-            out.append(f"| {time} | {star}**{cell(e['event'])}** | {cell(e['host'])} | "
+            time = "–".join(x for x in (e["start"], e["end"]) if x) or "TBA"
+            rsvp = link("RSVP", e["rsvp"]) or "_No link_"
+            star = "⭐ " if e["founder_investor_pick"] == "yes" else ""
+            out.append(f"| {cell(time)} | {star}**{cell(e['event'])}** | {cell(e['host'])} | "
                        f"{cell(e['venue'])} | {cell(e['price'])} | {cell(e['registration'])} | {rsvp} |")
-    (ROOT / "schedule/side-events.md").write_text("\n".join(out) + "\n")
+    write_text("schedule/side-events.md", "\n".join(out) + "\n")
     print(f"Wrote {len(events)} side events across {len(by_day)} days.")
 
 

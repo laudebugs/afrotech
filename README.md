@@ -17,7 +17,7 @@ Shared tracker for AfroTech Conference 2026 events and the notes we take at them
 | Path | What's in it |
 |------|--------------|
 | [`schedule/official.md`](schedule/official.md) | Full official agenda, by day (259 sessions, Houston time) |
-| [`schedule/side-events.md`](schedule/side-events.md) | 170 side events (parties, mixers, dinners, workshops) with RSVP links and founder/investor picks |
+| [`schedule/side-events.md`](schedule/side-events.md) | 174 side events (parties, mixers, dinners, workshops) with RSVP links and founder/investor picks |
 | [`data/sessions.csv`](data/sessions.csv) / [`.json`](data/sessions.json) | Official agenda as data, with descriptions, ticket levels and calendar links |
 | [`data/side-events.csv`](data/side-events.csv) | Side events as data, with addresses and descriptions |
 | [`notes/`](notes/) | One file per session we attend — copy [`notes/_template.md`](notes/_template.md) |
