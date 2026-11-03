@@ -1,6 +1,6 @@
 # Plan 0008: Fill side-event gaps from their own pages, and open Directions in a maps app
 
-**Status:** approved 2026-11-03: iPhone asks which maps app; event pages are read in the GitHub Action · **Created:** 2026-11-03
+**Status:** built 2026-11-03 (todos 032–034): iPhone asks which maps app; event pages are read in the GitHub Action · **Created:** 2026-11-03
 
 The community lists give each side event a link to its own page on posh.vip,
 Eventbrite, Luma or a few other sites, but the lists themselves leave gaps.
@@ -48,7 +48,7 @@ city map.
 
 This sandbox can't reach posh.vip, Eventbrite or Luma. The **refresh-data**
 GitHub Action can, and it already runs every two hours, so the script runs
-there, after `update_side_events.py`. Its parser is tested here on sample
+there, called by `update_side_events.py` before it builds the events. Its parser is tested here on sample
 pages shaped like the sites' published `Event` blocks; the first run against
 the real pages is the Action's, and its results get a review before the site
 relies on them.

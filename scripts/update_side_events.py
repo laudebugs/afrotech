@@ -18,6 +18,7 @@ from collections import defaultdict
 from datetime import date, datetime
 
 import build_events
+import enrich_events
 from common import ROOT, TZ, cell, clock, fetch, first_time, guard_shrink, link, short_date, write_csv, write_text
 
 GUIDE_API = "https://afrotech.guide/api/events"
@@ -244,6 +245,36 @@ def main():
     write_text("schedule/side-events.md", "\n".join(out) + "\n")
     print(f"Wrote {len(events)} side events across {len(by_day)} days.")
     build_events.write(*built)
+
+    # Then read each event's own page (at most once a day per page), from the
+    # list just written, and rebuild with it. Everything above is already
+    # saved, so a problem here costs only this run's page data.
+    try:
+        enrich_events.main([])
+        pages = build_events.load_event_pages()
+        rebuilt = build_events.build(side_rows=events, pages=pages)
+    except Exception as err:  # noqa: BLE001 - never undo the side-event refresh
+        print(f"Event pages not used this run: {err!r}", file=sys.stderr)
+        return
+    build_events.write(*rebuilt)
+    write_text("schedule/side-events.md", "\n".join(out + page_differences(events, pages)) + "\n")
+
+
+def page_differences(events, pages):
+    """Where an event's own page disagrees with the lists, for a person to check (plan 0008)."""
+    _, diffs = build_events.apply_event_pages(events, pages)
+    if not diffs:
+        return []
+    names = {"status": "Status", "date": "Date", "start": "Start time"}
+    out = ["", "## Event pages that disagree", "",
+           "Each event's own page was read for missing details. These rows differ from the",
+           "lists, which the site keeps; check the page and fix the list if it's out of date.", "",
+           "| Date | Event | What | List says | Page says |",
+           "|------|-------|------|-----------|-----------|"]
+    for d in sorted(diffs, key=lambda d: (d["date"], d["title"])):
+        out.append(f"| {d['date']} | {link(cell(d['title']), d['url'])} | {names.get(d['field'], d['field'])} | "
+                   f"{cell(d['list'])} | {cell(d['page'])} |")
+    return out
 
 
 if __name__ == "__main__":
