@@ -1,0 +1,43 @@
+/* Shared by the notes pages (plan 0005). */
+.notes-page .back a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  font-weight: 600;
+  text-decoration: none;
+}
+.notes-page h1 {
+  margin: 0;
+  font-size: var(--text-2xl);
+}
+.notes-page .buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.notes-page .button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.notes-page .button[hidden] {
+  display: none;
+}
+.notes-page .button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.notes-page .small {
+  margin: 0;
+  font-size: var(--text-sm);
+}

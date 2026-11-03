@@ -1,48 +1,58 @@
 ---
+// My notes (plan 0005): your notes from this device and, when you're signed
+// in, your account. Nothing about them is in the built page.
+import "../../styles/notes.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import SourcesFooter from "../../components/SourcesFooter.astro";
-import { getNotes } from "../../lib/notes";
-import { allEvents } from "../../lib/events";
-import { formatDate } from "../../lib/time";
-import { SITE_AUTHOR } from "../../config";
-
-const notes = await getNotes();
-const eventTitle = new Map(allEvents.map((e) => [e.id, e.title]));
+import NoteEventLookup from "../../components/NoteEventLookup.astro";
 ---
 
-<BaseLayout title="Notes · AfroTech 2026 Planner" active="none">
-  <header class="page-head sticky-head">
-    <h1>Session notes</h1>
-    <p class="muted">Notes from AfroTech 2026 sessions by {SITE_AUTHOR}, newest first.</p>
-  </header>
-
-  {
-    notes.length ? (
-      <ul class="list">
-        {notes.map((n) => (
-          <li>
-            <a href={`/notes/${n.id}/`}>
-              <strong>{n.data.title}</strong>
-              <span class="muted">
-                {formatDate(n.data.published)}
-                {eventTitle.get(n.data.eventId) && <> · {eventTitle.get(n.data.eventId)}</>}
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p>No notes yet. Open any session and tap “Write a note”.</p>
-    )
-  }
-  <SourcesFooter />
+<BaseLayout title="My notes · AfroTech 2026 Planner" active="none">
+  <div class="notes-page">
+    <header class="page-head sticky-head">
+      <h1>My notes</h1>
+      <p class="muted small">Only you can see these. Sign in on <a href="/plan/">My plan</a> to keep them on all your devices.</p>
+    </header>
+    <ul class="list" data-list></ul>
+    <p data-empty hidden>No notes yet. Open any session and tap “Write a note”.</p>
+    <div class="buttons new">
+      <a class="button" href="/notes/new/">Write a note</a>
+    </div>
+  </div>
+  <NoteEventLookup />
 </BaseLayout>
 
-<style>
-  h1 {
-    margin: 0;
-    font-size: var(--text-2xl);
+<script>
+  import { adoptOldDrafts, listNotes } from "../../lib/notes";
+  import { noteEvent } from "../../lib/note-events";
+  import { formatDate } from "../../lib/time";
+
+  function render() {
+    const notes = listNotes();
+    const items = notes.map((n) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `/notes/view/?id=${encodeURIComponent(n.id)}`;
+      const title = document.createElement("strong");
+      title.textContent = n.title.trim() || "Untitled note";
+      const meta = document.createElement("span");
+      meta.className = "muted";
+      const about = noteEvent(n.eventId)?.title;
+      meta.textContent = `${formatDate(new Date(n.updatedAt).toISOString())}${about ? ` · ${about}` : ""}`;
+      a.append(title, meta);
+      li.append(a);
+      return li;
+    });
+    document.querySelector("[data-list]")!.replaceChildren(...items);
+    document.querySelector<HTMLElement>("[data-empty]")!.hidden = notes.length > 0;
   }
+
+  adoptOldDrafts();
+  document.addEventListener("notes-change", render);
+  window.addEventListener("pageshow", (e) => e.persisted && render());
+  render();
+</script>
+
+<style>
   .list {
     display: flex;
     flex-direction: column;
@@ -51,7 +61,7 @@ const eventTitle = new Map(allEvents.map((e) => [e.id, e.title]));
     padding: 0;
     list-style: none;
   }
-  .list a {
+  .list :global(a) {
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
@@ -62,7 +72,10 @@ const eventTitle = new Map(allEvents.map((e) => [e.id, e.title]));
     color: var(--ink);
     text-decoration: none;
   }
-  .list .muted {
+  .list :global(.muted) {
     font-size: var(--text-sm);
+  }
+  .new {
+    margin-top: var(--space-4);
   }
 </style>

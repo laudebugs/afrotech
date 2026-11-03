@@ -1,254 +1,117 @@
 ---
-// Write a note in the browser, then publish it through GitHub.
-// Drafts save to localStorage as you type; publishing opens GitHub's
-// "new file" page, so GitHub's sign-in decides who can publish.
+// Write or edit a note (plan 0005). /notes/new/?event=<id> starts a note on a
+// session; /notes/new/?id=<note> edits one. Notes save on the device as you
+// type, and sync to your account when you're signed in.
+import "../../styles/notes.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { allEvents } from "../../lib/events";
-import { formatDate, formatRange } from "../../lib/time";
-import { NOTES_REPO } from "../../config";
-
-// Just what the editor needs to prefill a note, keyed by event id.
-const lookup = Object.fromEntries(
-  allEvents.map((e) => [
-    e.id,
-    {
-      title: e.title,
-      date: e.date,
-      when: e.start ? `${formatDate(e.start)}, ${formatRange(e.start, e.end)}` : `${e.date} (time TBA)`,
-      place: e.locationLabel,
-    },
-  ]),
-);
+import NoteEventLookup from "../../components/NoteEventLookup.astro";
+import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
 ---
 
 <BaseLayout title="Write a note · AfroTech 2026 Planner" active="none">
-  <header class="page-head sticky-head">
-    <p class="back"><a href="/notes/">← Notes</a></p>
-    <h1>Write a note</h1>
-    <p class="muted" data-about>Pick a session from the schedule and tap “Write a note”.</p>
-  </header>
+  <div class="notes-page">
+    <header class="page-head sticky-head">
+      <p class="back"><a href="/notes/">← My notes</a></p>
+      <h1 data-heading>Write a note</h1>
+      <p class="muted small" data-about></p>
+    </header>
 
-  <form class="editor" data-editor>
-    <label>
-      <span>Title</span>
-      <input name="title" required data-title />
-    </label>
-    <label>
-      <span>Note (Markdown)</span>
-      <textarea name="body" rows="16" data-body></textarea>
-    </label>
-    <p class="muted saved" aria-live="polite" data-saved></p>
-    <div class="buttons">
-      <button type="submit" class="button primary">Publish on GitHub</button>
-      <button type="button" class="button" data-copy>Copy Markdown</button>
-      <button type="button" class="button" data-discard>Discard draft</button>
-    </div>
-    <p class="status" role="status" data-status></p>
-    <a class="button primary" href="#" target="_blank" rel="noopener" data-open-github hidden>Open GitHub</a>
-    <p class="muted help">
-      Publishing opens GitHub with the file filled in. Tap “Commit changes” there, and the note appears
-      on the site about two minutes later. To change a published note, use “Edit on GitHub” on its page.
-    </p>
-  </form>
+    <form class="editor" data-editor>
+      <label>
+        <span>Title</span>
+        <input name="title" maxlength={MAX_TITLE} data-title />
+      </label>
+      <label>
+        <span>Note (Markdown)</span>
+        <textarea name="body" rows="16" maxlength={MAX_BODY} data-body></textarea>
+      </label>
+      <p class="muted small" aria-live="polite" data-saved></p>
+      <div class="buttons">
+        <button type="submit" class="button primary">Done</button>
+        <button type="button" class="button" data-delete hidden>Delete note</button>
+      </div>
+      <p class="muted small">
+        Only you can see your notes. They save on this device as you type; sign in on
+        <a href="/plan/">My plan</a> to keep them on all your devices.
+      </p>
+    </form>
+  </div>
+  <NoteEventLookup />
 </BaseLayout>
 
-<script
-  is:inline
-  type="application/json"
-  id="event-lookup"
-  set:html={JSON.stringify(lookup).replace(/</g, "\\u003c")}
-/>
-<script is:inline type="application/json" id="notes-repo" set:html={JSON.stringify(NOTES_REPO).replace(/</g, "\\u003c")} />
-
 <script>
-  type Info = { title: string; date: string; when: string; place: string };
-  const lookup: Record<string, Info> = JSON.parse(document.getElementById("event-lookup")!.textContent!);
-  const repo = JSON.parse(document.getElementById("notes-repo")!.textContent!) as {
-    owner: string;
-    repo: string;
-    branch: string;
-    dir: string;
-  };
+  import { NOTE_TEMPLATE, deleteNote, getNote, notesPersist, saveNote } from "../../lib/notes";
+  import { noteEvent } from "../../lib/note-events";
 
-  const eventId = new URLSearchParams(location.search).get("event") ?? "";
-  const info = lookup[eventId];
-  const draftKey = `afrotech:note-draft:${eventId || "untitled"}`;
+  const params = new URLSearchParams(location.search);
+  const editing = getNote(params.get("id") ?? "");
+  const eventId = editing?.eventId ?? params.get("event") ?? "";
+  const info = noteEvent(eventId);
 
   const form = document.querySelector<HTMLFormElement>("[data-editor]")!;
   const titleInput = document.querySelector<HTMLInputElement>("[data-title]")!;
   const bodyInput = document.querySelector<HTMLTextAreaElement>("[data-body]")!;
   const saved = document.querySelector<HTMLElement>("[data-saved]")!;
-  const status = document.querySelector<HTMLElement>("[data-status]")!;
-  const openGithub = document.querySelector<HTMLAnchorElement>("[data-open-github]")!;
+  const removeButton = document.querySelector<HTMLButtonElement>("[data-delete]")!;
 
-  if (info) {
-    const about = document.querySelector<HTMLElement>("[data-about]")!;
-    about.textContent = `${info.title} · ${info.when} · ${info.place}`;
+  if (info) document.querySelector("[data-about]")!.textContent = `${info.title} · ${info.when} · ${info.place}`;
+  if (editing) {
+    document.querySelector("[data-heading]")!.textContent = "Edit note";
+    document.title = `Edit note · AfroTech 2026 Planner`;
   }
 
-  const template = [
-    "## Key takeaways",
-    "",
-    "- ",
-    "",
-    "## Notable quotes",
-    "",
-    "> ",
-    "",
-    "## Resources and links mentioned",
-    "",
-    "- ",
-    "",
-    "## People to follow up with",
-    "",
-    "- ",
-    "",
-    "## Action items",
-    "",
-    "- [ ] ",
-    "",
-  ].join("\n");
+  // The note gets an id on its first save, so opening the editor and leaving
+  // creates nothing.
+  let noteId = editing?.id;
+  titleInput.value = editing?.title ?? (info ? `Takeaways: ${info.title}` : "");
+  bodyInput.value = editing?.body ?? NOTE_TEMPLATE;
+  removeButton.hidden = !noteId;
 
-  // Storage may be blocked; then the draft lives only while the page is open.
-  function loadDraft(): { title: string; body: string } | null {
-    try {
-      const raw = localStorage.getItem(draftKey);
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
+  function save() {
+    const note = saveNote({ id: noteId, eventId, title: titleInput.value, body: bodyInput.value });
+    if (!noteId) {
+      noteId = note.id;
+      removeButton.hidden = false;
+      // Reloading the page edits this note instead of starting another.
+      history.replaceState(null, "", `/notes/new/?id=${encodeURIComponent(noteId)}`);
     }
+    saved.textContent = notesPersist()
+      ? "Saved on this device."
+      : "This browser blocks saving; your note lasts only while this page is open.";
   }
-  function saveDraft() {
-    try {
-      localStorage.setItem(draftKey, JSON.stringify({ title: titleInput.value, body: bodyInput.value }));
-      saved.textContent = "Draft saved on this device.";
-    } catch {
-      saved.textContent = "Drafts can't be saved in this browser; keep this page open.";
-    }
-  }
-
-  const draft = loadDraft();
-  titleInput.value = draft?.title ?? (info ? `Takeaways: ${info.title}` : "");
-  bodyInput.value = draft?.body ?? template;
-  if (draft) saved.textContent = "Restored your draft.";
 
   let timer = 0;
   form.addEventListener("input", () => {
     clearTimeout(timer);
-    timer = window.setTimeout(saveDraft, 400);
+    timer = window.setTimeout(save, 400);
+  });
+  // Leaving the page mid-pause still saves the last few keystrokes.
+  window.addEventListener("pagehide", () => {
+    if (timer) {
+      clearTimeout(timer);
+      timer = 0;
+      save();
+    }
   });
 
-  const slug = (text: string) =>
-    text
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .slice(0, 60)
-      .replace(/^-+|-+$/g, "");
-
-  /** "2026-11-04T15:30:00-06:00" in Houston time. */
-  function houstonNow(): string {
-    const parts = Object.fromEntries(
-      new Intl.DateTimeFormat("en-CA", {
-        timeZone: "America/Chicago",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hourCycle: "h23",
-        timeZoneName: "longOffset",
-      })
-        .formatToParts(new Date())
-        .map((p) => [p.type, p.value]),
-    );
-    const offset = (parts.timeZoneName ?? "GMT-06:00").replace("GMT", "") || "+00:00";
-    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}${offset}`;
-  }
-
-  function markdown(): { path: string; text: string } {
-    const title = titleInput.value.trim();
-    const published = houstonNow();
-    const frontmatter = [
-      "---",
-      `eventId: ${JSON.stringify(eventId)}`,
-      `title: ${JSON.stringify(title)}`,
-      `published: ${published}`,
-      "---",
-      "",
-    ].join("\n");
-    // Date and publish time keep two notes with the same title apart.
-    const stamp = `${published.slice(0, 10)}-${published.slice(11, 13)}${published.slice(14, 16)}`;
-    const name = `${stamp}-${slug(title) || "note"}.md`;
-    return { path: `${repo.dir}/${name}`, text: `${frontmatter}\n${bodyInput.value.trim()}\n` };
-  }
-
-  async function copy(text: string): Promise<boolean> {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  // Longer URLs risk being cut off, so long notes go by clipboard instead.
-  const MAX_URL = 7000;
-
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    if (!eventId || !info) {
-      status.textContent = "Open a session first, then tap “Write a note”, so the note links to it.";
-      return;
-    }
-    saveDraft();
-    const { path, text } = markdown();
-    const base = `https://github.com/${repo.owner}/${repo.repo}/new/${repo.branch}`;
-    const full = `${base}?filename=${encodeURIComponent(path)}&value=${encodeURIComponent(text)}`;
-    if (full.length <= MAX_URL) {
-      window.open(full, "_blank", "noopener");
-      status.textContent = "Opened GitHub. Tap “Commit changes” there to publish.";
-      return;
-    }
-    // Too long for a link: copy it, then let the user open GitHub with a fresh
-    // tap (browsers block pop-ups opened after an await).
-    const copied = await copy(text);
-    openGithub.href = `${base}?filename=${encodeURIComponent(path)}`;
-    openGithub.hidden = false;
-    status.textContent = copied
-      ? "This note is long, so it's on your clipboard. Tap “Open GitHub”, paste it in, then tap “Commit changes”."
-      : "This note is too long for a link. Tap “Copy Markdown”, then “Open GitHub” and paste it in.";
+    clearTimeout(timer);
+    timer = 0;
+    save();
+    location.href = `/notes/view/?id=${encodeURIComponent(noteId!)}`;
   });
 
-  document.querySelector("[data-copy]")!.addEventListener("click", async () => {
-    status.textContent = (await copy(markdown().text))
-      ? "Markdown copied."
-      : "Couldn't copy here; select the text and copy it yourself.";
-  });
-
-  document.querySelector("[data-discard]")!.addEventListener("click", () => {
-    if (!confirm("Discard this draft?")) return;
-    try {
-      localStorage.removeItem(draftKey);
-    } catch {}
-    titleInput.value = info ? `Takeaways: ${info.title}` : "";
-    bodyInput.value = template;
-    saved.textContent = "Draft discarded.";
+  removeButton.addEventListener("click", () => {
+    if (!noteId || !confirm("Delete this note?")) return;
+    clearTimeout(timer);
+    timer = 0;
+    deleteNote(noteId);
+    location.href = "/notes/";
   });
 </script>
 
 <style>
-  .back a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap);
-    font-weight: 600;
-    text-decoration: none;
-  }
-  h1 {
-    margin: 0;
-    font-size: var(--text-2xl);
-  }
   .editor {
     display: flex;
     flex-direction: column;
@@ -278,36 +141,5 @@ const lookup = Object.fromEntries(
   textarea {
     resize: vertical;
     line-height: 1.5;
-  }
-  .saved,
-  .status,
-  .help {
-    margin: 0;
-    font-size: var(--text-sm);
-  }
-  .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-  .button {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap);
-    padding: 0 var(--space-4);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--surface);
-    color: var(--ink);
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .button[hidden] {
-    display: none;
-  }
-  .button.primary {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: var(--on-accent);
   }
 </style>

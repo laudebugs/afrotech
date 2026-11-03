@@ -6,8 +6,8 @@ import { readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
-/** Pages saved up front (plan 0004): Now, every day, My plan and the rest of the tabs. */
-const CORE_PAGES = ["/", "/schedule/", "/plan/", "/notes/", "/speakers/", "/map/", "/offline/"];
+/** Pages saved up front (plans 0004, 0005): Now, every day, My plan, the notes pages and the rest of the tabs. */
+const CORE_PAGES = ["/", "/schedule/", "/plan/", "/notes/", "/notes/new/", "/notes/view/", "/speakers/", "/map/", "/offline/"];
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });

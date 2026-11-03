@@ -9,7 +9,7 @@ import SourcesFooter from "../../components/SourcesFooter.astro";
 import { sessionsOf, speakers } from "../../lib/speakers";
 import { formatClock, formatDate, formatRange } from "../../lib/time";
 import type { SpeakerProfile } from "../../lib/types";
-import { NOTES_REPO, SITE_URL } from "../../config";
+import { REPO, SITE_URL } from "../../config";
 
 export function getStaticPaths() {
   return speakers.map((speaker) => ({ params: { slug: speaker.slug }, props: { speaker } }));
@@ -31,7 +31,7 @@ const kindLabel = { article: "Article", talk: "Talk", podcast: "Podcast" } as co
 // "Is this you?" opens the speaker-change issue form with the profile filled in.
 const profileUrl = `${SITE_URL}/speakers/${speaker.slug}/`;
 const changeUrl =
-  `https://github.com/${NOTES_REPO.owner}/${NOTES_REPO.repo}/issues/new?` +
+  `https://github.com/${REPO.owner}/${REPO.repo}/issues/new?` +
   new URLSearchParams({ template: "speaker-change.yml", title: `Speaker profile: ${speaker.name}`, speaker: profileUrl });
 // The full bio adds nothing when it's no longer than the brief.
 const hasMore = Boolean(speaker.bio && speaker.brief && speaker.bio.length > speaker.brief.length + 20);

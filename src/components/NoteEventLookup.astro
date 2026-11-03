@@ -1,0 +1,19 @@
+---
+// Session titles and times for the notes pages, which read notes in the
+// browser and need to name the session each note is about.
+import { allEvents } from "../lib/events";
+import { formatDate, formatRange } from "../lib/time";
+
+const lookup = Object.fromEntries(
+  allEvents.map((e) => [
+    e.id,
+    {
+      title: e.title,
+      when: e.start ? `${formatDate(e.start)}, ${formatRange(e.start, e.end)}` : `${e.date} (time TBA)`,
+      place: e.locationLabel,
+    },
+  ]),
+);
+---
+
+<script is:inline type="application/json" id="note-events" set:html={JSON.stringify(lookup).replace(/</g, "\\u003c")} />

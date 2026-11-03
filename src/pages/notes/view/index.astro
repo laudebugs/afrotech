@@ -1,0 +1,136 @@
+---
+// One note, rendered (plan 0005): /notes/view/?id=<note>. The note comes from
+// this device, so the page is the same for everyone and fills in here.
+import "../../../styles/notes.css";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import NoteEventLookup from "../../../components/NoteEventLookup.astro";
+---
+
+<BaseLayout title="Note · AfroTech 2026 Planner" active="none">
+  <div class="notes-page">
+    <p class="back sticky-head"><a href="/notes/">← My notes</a></p>
+    <article class="note" data-note hidden>
+      <header>
+        <h1 data-title></h1>
+        <p class="muted small" data-updated></p>
+        <p class="small" data-event hidden>About <a data-event-link></a> <span class="muted" data-event-when></span></p>
+      </header>
+      <div class="body" data-body></div>
+      <div class="buttons">
+        <a class="button primary" data-edit>Edit</a>
+        <button type="button" class="button" data-share hidden>Share</button>
+        <button type="button" class="button" data-copy>Copy Markdown</button>
+        <button type="button" class="button" data-delete>Delete</button>
+      </div>
+      <p class="small" role="status" data-status></p>
+    </article>
+    <div data-missing hidden>
+      <h1>Note not found</h1>
+      <p>This note isn't on this device. If you wrote it on another device, sign in on <a href="/plan/">My plan</a> to sync your notes.</p>
+    </div>
+  </div>
+  <NoteEventLookup />
+</BaseLayout>
+
+<script>
+  import MarkdownIt from "markdown-it";
+  import { deleteNote, getNote } from "../../../lib/notes";
+  import { noteEvent } from "../../../lib/note-events";
+  import { formatDate, formatTime } from "../../../lib/time";
+
+  // Raw HTML stays text, so a pasted <script> can't run; markdown-it's own
+  // link check already refuses javascript: and similar URLs.
+  const md = new MarkdownIt({ html: false, linkify: true, breaks: true });
+  const defaultLink = md.renderer.rules.link_open ?? ((t, i, o, _e, self) => self.renderToken(t, i, o));
+  md.renderer.rules.link_open = (tokens, i, options, env, self) => {
+    tokens[i].attrSet("rel", "noopener nofollow");
+    return defaultLink(tokens, i, options, env, self);
+  };
+
+  const id = new URLSearchParams(location.search).get("id") ?? "";
+  const article = document.querySelector<HTMLElement>("[data-note]")!;
+  const status = document.querySelector<HTMLElement>("[data-status]")!;
+
+  function markdown(): string {
+    const note = getNote(id);
+    return note ? `# ${note.title}\n\n${note.body.trim()}\n` : "";
+  }
+
+  function render() {
+    const note = getNote(id);
+    article.hidden = !note;
+    document.querySelector<HTMLElement>("[data-missing]")!.hidden = Boolean(note);
+    if (!note) return;
+    const title = note.title.trim() || "Untitled note";
+    document.title = `${title} · AfroTech 2026 Planner`;
+    document.querySelector("[data-title]")!.textContent = title;
+    const iso = new Date(note.updatedAt).toISOString();
+    document.querySelector("[data-updated]")!.textContent = `Saved ${formatDate(iso)}, ${formatTime(iso)}`;
+    const info = noteEvent(note.eventId);
+    document.querySelector<HTMLElement>("[data-event]")!.hidden = !info;
+    if (info) {
+      const link = document.querySelector<HTMLAnchorElement>("[data-event-link]")!;
+      link.href = `/event/${note.eventId}/`;
+      link.textContent = info.title;
+      document.querySelector("[data-event-when]")!.textContent = `· ${info.when}`;
+    }
+    document.querySelector("[data-body]")!.innerHTML = md.render(note.body);
+    document.querySelector<HTMLAnchorElement>("[data-edit]")!.href = `/notes/new/?id=${encodeURIComponent(id)}`;
+  }
+
+  const share = document.querySelector<HTMLButtonElement>("[data-share]")!;
+  share.hidden = typeof navigator.share !== "function";
+  share.addEventListener("click", async () => {
+    const note = getNote(id);
+    if (!note) return;
+    try {
+      await navigator.share({ title: note.title, text: markdown() });
+    } catch {
+      // Cancelled, or the share sheet failed; nothing to undo.
+    }
+  });
+
+  document.querySelector("[data-copy]")!.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(markdown());
+      status.textContent = "Markdown copied.";
+    } catch {
+      status.textContent = "Couldn't copy here; open Edit and copy the text yourself.";
+    }
+  });
+
+  document.querySelector("[data-delete]")!.addEventListener("click", () => {
+    if (!confirm("Delete this note?")) return;
+    deleteNote(id);
+    location.href = "/notes/";
+  });
+
+  document.addEventListener("notes-change", render);
+  window.addEventListener("pageshow", (e) => e.persisted && render());
+  render();
+</script>
+
+<style>
+  .note header p {
+    margin: var(--space-1) 0 0;
+  }
+  .body {
+    margin: var(--space-6) 0;
+    overflow-wrap: anywhere;
+  }
+  .body :global(h1),
+  .body :global(h2),
+  .body :global(h3) {
+    margin-top: var(--space-6);
+    font-size: var(--text-lg);
+  }
+  .body :global(blockquote) {
+    margin: 0;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--accent);
+    color: var(--muted);
+  }
+  .body :global(pre) {
+    overflow-x: auto;
+  }
+</style>
