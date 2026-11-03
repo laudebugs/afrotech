@@ -9,13 +9,16 @@ export type NoteEvent = {
 
 let cached: Record<string, NoteEvent> | null = null;
 
-export function noteEvent(id: string): NoteEvent | undefined {
+function lookup(): Record<string, NoteEvent> {
   cached ??= JSON.parse(document.getElementById("note-events")?.textContent ?? "{}") as Record<string, NoteEvent>;
-  return id ? cached[id] : undefined;
+  return cached;
+}
+
+export function noteEvent(id: string): NoteEvent | undefined {
+  return id ? lookup()[id] : undefined;
 }
 
 /** Every session, for searching by title. */
 export function allNoteEvents(): [string, NoteEvent][] {
-  noteEvent("");
-  return Object.entries(cached!);
+  return Object.entries(lookup());
 }

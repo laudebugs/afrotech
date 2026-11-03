@@ -3,6 +3,7 @@
 // browser and need to name the session each note is about.
 // The editor also asks for each session's speakers, for its Insert menu.
 import { allEvents } from "../lib/events";
+import { speakerBySlug } from "../lib/speakers";
 import { formatDate, formatRange } from "../lib/time";
 
 interface Props {
@@ -18,7 +19,14 @@ const lookup = Object.fromEntries(
       when: e.start ? `${formatDate(e.start)}, ${formatRange(e.start, e.end)}` : `${e.date} (time TBA)`,
       place: e.locationLabel,
       ...(withSpeakers && e.speakers.length
-        ? { speakers: e.speakers.map((s) => ({ name: s.name, slug: s.slug, role: [s.title, s.company].filter(Boolean).join(", ") })) }
+        ? {
+            speakers: e.speakers.map((s) => ({
+              name: s.name,
+              // Linked only when the profile page exists, as on event pages.
+              slug: speakerBySlug(s.slug) ? s.slug : null,
+              role: [s.title, s.company].filter(Boolean).join(", "),
+            })),
+          }
         : {}),
     },
   ]),

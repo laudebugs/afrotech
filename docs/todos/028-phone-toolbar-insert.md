@@ -1,6 +1,6 @@
 # 028 — Phone toolbar and Insert menu
 
-**Status:** done (plan in draft) · **Plan:** [Plan 0006](../plans/0006-notes-editor.md) · **Depends on:** 027
+**Status:** done · **Plan:** [Plan 0006](../plans/0006-notes-editor.md) · **Depends on:** 027
 
 ## Goal
 
@@ -33,9 +33,16 @@ Built on November 3:
     (`pointerdown` is cancelled).
 - **Position:** the toolbar pins under the page header as you scroll. While
   you type on a phone, with the keyboard covering more than 120 px, it fixes
-  itself just above the keyboard (`visualViewport`). This was tested with a
-  simulated keyboard; it still needs a check on a real iPhone and Android
-  phone.
+  itself just above the keyboard (`visualViewport`).
+  - **Panels:** an open panel grows upward from the buttons.
+  - **No jump:** a placeholder keeps the toolbar's space, so the note stays
+    still when the toolbar starts floating.
+  - **Pinch-zoom:** it's ignored, since zooming also shrinks the visible area.
+  - **Not yet on a real phone:** this was tested with a simulated keyboard,
+    and still needs a check on a real iPhone and Android phone.
+- **Panels close** on Escape (from the panel or the buttons), on a tap
+  outside, or when the Table button hides. Session search results are
+  announced through a status line.
 - **Link:** a small form takes the address, adds `https://` if it's missing,
   and puts the cursor after the link. With nothing selected, the address
   becomes the link text.

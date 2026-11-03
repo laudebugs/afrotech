@@ -100,7 +100,7 @@
   place-items: center;
   width: var(--tap);
   height: var(--tap);
-  margin: calc((1.55em - var(--tap)) / 2) 0 calc((1.55em - var(--tap)) / 2) -12px;
+  margin: calc((1.55em - var(--tap)) / 2) 0 calc((1.55em - var(--tap)) / 2) calc(var(--space-3) * -1);
   cursor: pointer;
 }
 .note-prose ul[data-type="taskList"] li > div {

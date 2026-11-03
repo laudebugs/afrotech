@@ -28,9 +28,11 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
           <span id="note-label">Note</span>
           <button type="button" class="mode" aria-pressed="false" data-source-toggle>Markdown</button>
         </div>
-        <div class="toolbar" role="toolbar" aria-label="Formatting" aria-controls="note-editor" data-toolbar>
-          <div class="tools" data-tools></div>
-          <div class="panel" data-panel hidden></div>
+        <div class="toolbar-slot">
+          <div class="toolbar" role="toolbar" aria-label="Formatting" aria-controls="note-editor" data-toolbar>
+            <div class="tools" data-tools></div>
+            <div class="panel" id="toolbar-panel" data-panel hidden></div>
+          </div>
         </div>
         <div class="body-editor" id="note-editor" data-body-editor></div>
         <textarea
@@ -111,7 +113,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     else if (source.value !== shownMarkdown) body.setMarkdown(source.value);
     source.hidden = !showingSource;
     editorBox.hidden = showingSource;
-    toolbar.hidden = showingSource; // its tools act on the formatted view
+    toolbar.parentElement!.hidden = showingSource; // its tools act on the formatted view
     sourceToggle.setAttribute("aria-pressed", String(showingSource));
     if (showingSource) source.focus();
     else body.focus();
@@ -233,28 +235,37 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   }
   /* The toolbar pins under the page header as you scroll a long note; on a
      phone with the keyboard up, it rides just above the keyboard instead. */
-  .toolbar {
+  .toolbar-slot {
     position: sticky;
+    top: var(--sticky-offset, 0px);
+    z-index: 6;
+  }
+  .toolbar-slot[hidden] {
+    display: none;
+  }
+  .toolbar {
+    position: relative;
     top: var(--sticky-offset, 0px);
     z-index: 6;
     background: var(--bg);
   }
-  .toolbar[hidden] {
-    display: none;
-  }
+  /* Floating above the keyboard, an open panel sits above the buttons. */
   .toolbar[data-floating] {
     position: fixed;
-    left: 0;
-    right: 0;
     z-index: 30;
+    display: flex;
+    flex-direction: column-reverse;
     padding: 0 var(--space-2);
     border-top: 1px solid var(--line);
     background: var(--surface);
-    box-shadow: var(--shadow);
+  }
+  .toolbar[data-floating] .panel {
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
   }
   .tools {
     display: flex;
-    gap: 2px;
+    gap: var(--space-1);
     overflow-x: auto;
     padding: var(--space-1) 0;
     scrollbar-width: none;
@@ -291,7 +302,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   .panel {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--space-1);
     max-height: 50vh;
     overflow-y: auto;
     padding: var(--space-2) 0;
@@ -303,10 +314,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   .panel :global(.panel-title) {
     margin: 0 0 var(--space-1);
     color: var(--muted);
+    font-family: var(--font-mono);
     font-size: var(--text-xs);
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
   .panel :global(.panel-item) {
     min-height: var(--tap);
@@ -352,6 +362,16 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   .panel :global(.panel-results) {
     display: flex;
     flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .panel :global(.panel-results .panel-item) {
+    width: 100%;
+  }
+  .panel :global(.panel-results li.muted) {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
   }
   .body-editor[hidden] {
     display: none;
