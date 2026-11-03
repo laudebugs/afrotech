@@ -33,6 +33,8 @@ python3 scripts/update_side_events.py   # side events → data/side-events.csv, 
 python3 scripts/build_events.py         # both → data/events/*.json, data/venues.json and data/speakers.json (the update scripts run it too)
 python3 scripts/build_floor_plan.py     # traced map → src/assets/maps/grb-level-*.svg and data/floor-plan.json
 python3 scripts/geocode.py              # new side-event addresses → data/geocode.json (city map pins)
+python3 scripts/enrich_events.py        # side events' own pages (JSON-LD) → data/event-pages.json; needs posh.vip, Eventbrite, Luma reachable
+python3 -m unittest discover -s tests -p "test_*.py"   # Python script tests
 ```
 
 The update scripts refuse to write if a source returns nothing or the event
