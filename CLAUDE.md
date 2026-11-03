@@ -78,7 +78,8 @@ Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
   floor-plan PDFs; we trace our own SVG. Keep organisers' personal contact
   details out of the site.
 - **UI:** mobile-first, system fonts, design tokens only (no hard-coded colors;
-  the favicon is the one exception, since it can't read page CSS),
+  the favicon and the `theme-color` meta tags are the exceptions, since they
+  can't read page CSS),
   44 px touch targets, works with `localStorage` blocked, respects
   `prefers-reduced-motion`.
 - **Site stack:** Astro 7 static output on Cloudflare (Workers static assets),

@@ -29,14 +29,16 @@ const dayKeyFmt = new Intl.DateTimeFormat("en-CA", {
 
 const asDate = (value: string | Date) => (typeof value === "string" ? new Date(value) : value);
 
-/** "2:30 PM" */
-export const formatTime = (value: string | Date) => clockFmt.format(asDate(value));
+/** "2:30 PM". Browsers put a narrow no-break space before AM/PM; make it a plain one. */
+export const formatTime = (value: string | Date) =>
+  clockFmt.format(asDate(value)).replace(/[\u202f\u00a0]/g, " ");
 
 /** "2:30", for the timeline rail, where hour headers carry AM/PM. */
 export const formatClock = (value: string | Date) => formatTime(value).replace(/\s?[AP]M$/, "");
 
 /** "9 AM", for hour headers. */
-export const formatHour = (value: string | Date) => hourFmt.format(asDate(value));
+export const formatHour = (value: string | Date) =>
+  hourFmt.format(asDate(value)).replace(/[\u202f\u00a0]/g, " ");
 
 /** "Wed, Nov 4" */
 export const formatDate = (value: string | Date) => dateFmt.format(asDate(value));

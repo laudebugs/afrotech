@@ -17,9 +17,18 @@ import Icon from "./Icon.astro";
     dark: "Theme: dark",
   };
 
+  // The browser toolbar colour follows a manual choice too.
+  const metas = [...document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')];
+  metas.forEach((m) => (m.dataset.media = m.media));
+
   function apply(theme: ThemePref) {
     if (theme === "system") delete document.documentElement.dataset.theme;
     else document.documentElement.dataset.theme = theme;
+    const bg = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim();
+    metas.forEach((m) => {
+      m.media = theme === "system" ? (m.dataset.media ?? "") : "all";
+      if (theme !== "system" && bg) m.content = bg;
+    });
     document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((b) => {
       b.setAttribute("aria-label", labels[theme]);
     });

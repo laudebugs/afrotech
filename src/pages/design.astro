@@ -12,15 +12,15 @@ import ThemeToggle from "../components/ThemeToggle.astro";
 import { officialEvents } from "../lib/events";
 import { formatClock, formatTime, formatRange } from "../lib/time";
 
-const pick = (title: string) => {
-  const found = officialEvents.find((e) => e.title.startsWith(title));
-  if (!found) throw new Error(`Design page sample missing: ${title}`);
-  return found;
-};
-const agentic = pick("The Battle of Agentic AI");
-const hack = pick("How I’d Hack You");
-const products = pick("Building Products Rooted in Real Community Needs");
-const csuite = pick("The C-Suite Guide to Innovation");
+// Sample sessions by title; if the schedule renames one, fall back to another
+// timed session so the build never fails over a sample.
+const timed = officialEvents.filter((e) => e.start && e.end && e.speakers.length);
+const pick = (title: string, fallback: number) =>
+  officialEvents.find((e) => e.start && e.title.startsWith(title)) ?? timed[fallback]!;
+const agentic = pick("The Battle of Agentic AI", 0);
+const hack = pick("How I’d Hack You", 1);
+const products = pick("Building Products Rooted in Real Community Needs", 2);
+const csuite = pick("The C-Suite Guide to Innovation", 3);
 
 const tokens = ["bg", "surface", "ink", "muted", "line", "accent", "on-accent", "live", "warn"];
 const themes = ["light", "dark"] as const;

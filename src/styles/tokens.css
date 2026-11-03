@@ -14,6 +14,7 @@
   --live: #2b7a3b;
   --warn: #8a5a00;
   --shadow: 0 -4px 24px rgb(35 22 29 / 0.12);
+  --backdrop: rgb(35 22 29 / 0.4);
   color-scheme: light;
 }
 
@@ -28,6 +29,7 @@
   --live: #6ccb7f;
   --warn: #e8b04a;
   --shadow: 0 -4px 24px rgb(0 0 0 / 0.5);
+  --backdrop: rgb(0 0 0 / 0.6);
   color-scheme: dark;
 }
 
@@ -43,6 +45,7 @@
     --live: #6ccb7f;
     --warn: #e8b04a;
     --shadow: 0 -4px 24px rgb(0 0 0 / 0.5);
+    --backdrop: rgb(0 0 0 / 0.6);
     color-scheme: dark;
   }
 }
