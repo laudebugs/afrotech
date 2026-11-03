@@ -96,7 +96,7 @@ const routes: Record<string, Handler> = {
     return json({ items: await readItems(env, user) });
   },
 
-  /** ?since=<cursor> returns notes written since that sync; no cursor returns all. */
+  /** ?since=<cursor> returns a page of notes written after that cursor; none returns from the start. */
   "GET /api/notes": async (request, env, url) => {
     const user = await currentUser(request, env);
     if (!user) return json({ error: "sign in first" }, 401);
@@ -104,7 +104,8 @@ const routes: Record<string, Handler> = {
   },
 
   /** Body: { since, changes: [{ id, eventId, title, body, createdAt, updatedAt, deleted }] }.
-   *  Returns { notes, cursor }: every note written since `since`, this request's included. */
+   *  Applies the changes, then returns { notes, cursor, more }: the first page of
+   *  notes written after `since`, minus the versions this request just sent. */
   "POST /api/notes": async (request, env, url) => {
     if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
     const user = await currentUser(request, env);
@@ -118,7 +119,8 @@ const routes: Record<string, Handler> = {
     const changes = parseNoteChanges(body);
     if (typeof changes === "string") return json({ error: changes }, 400);
     if (!(await applyNoteChanges(env, user, changes))) return json({ error: "note limit reached" }, 409);
-    return json(await readNotes(env, user, parseSince((body as { since?: unknown }).since)));
+    const echo = new Map(changes.map((c) => [c.id, c]));
+    return json(await readNotes(env, user, parseSince((body as { since?: unknown }).since), echo));
   },
 };
 

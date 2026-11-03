@@ -3,9 +3,11 @@
 // deleted note stays as a row with deleted = 1 and empty text, so the deletion
 // reaches the account's other devices.
 //
-// synced_at is the server's time of the last write. A device sends the
-// cursor from its previous sync and gets back only notes written since.
+// Every write takes the next number from the account's notes_seq, inside the
+// write's own transaction, so seq order is commit order. A device keeps the
+// highest seq it has seen as its cursor and asks only for notes after it.
 import type { SignedInUser } from "./session";
+import { EVENT_ID, deviceTime } from "./sync";
 
 export type NoteRow = {
   id: string;
@@ -18,13 +20,13 @@ export type NoteRow = {
 };
 
 const NOTE_ID = /^[\w-]{1,64}$/;
-const EVENT_ID = /^[\w-]{0,64}$/;
 /** In characters (string length), like the limits in src/lib/notes.ts. */
 export const MAX_TITLE = 200;
 export const MAX_BODY = 100_000;
 export const MAX_NOTES = 1000;
 const MAX_CHANGES = 100;
-const CLOCK_SLACK_MS = 5 * 60_000;
+/** Notes per response; at the size limit, about 10 MB. */
+const PAGE = 50;
 
 type Raw = {
   id: string;
@@ -34,35 +36,55 @@ type Raw = {
   created_at: number;
   updated_at: number;
   deleted: number;
-  synced_at: number;
+  seq: number;
 };
 
-/** Notes written at or after `since` (server time), and the cursor for next time. */
-export async function readNotes(env: Env, user: SignedInUser, since: number): Promise<{ notes: NoteRow[]; cursor: number }> {
+export type NotesPage = { notes: NoteRow[]; cursor: number; more: boolean };
+
+/**
+ * One page of notes written after `since`, oldest write first. Notes stored
+ * exactly as the device just sent them (`echo`) are left out, since it
+ * already has them; they still move the cursor.
+ */
+export async function readNotes(
+  env: Env,
+  user: SignedInUser,
+  since: number,
+  echo: Map<string, NoteRow> = new Map(),
+): Promise<NotesPage> {
   const { results } = await env.DB.prepare(
-    `SELECT id, event_id, title, body, created_at, updated_at, deleted, synced_at
-       FROM notes WHERE user_id = ?1 AND synced_at >= ?2`,
+    `SELECT id, event_id, title, body, created_at, updated_at, deleted, seq
+       FROM notes WHERE user_id = ?1 AND seq > ?2 ORDER BY seq LIMIT ?3`,
   )
-    .bind(user.id, since)
+    .bind(user.id, since, PAGE)
     .all<Raw>();
-  // ">=" can return a note twice across syncs, which is harmless; ">" could
-  // miss one written in the same millisecond as the cursor.
-  const cursor = results.reduce((max, r) => Math.max(max, r.synced_at), since);
   return {
-    cursor,
-    notes: results.map((r) => ({
-      id: r.id,
-      eventId: r.event_id,
-      title: r.title,
-      body: r.body,
-      createdAt: r.created_at,
-      updatedAt: r.updated_at,
-      deleted: r.deleted === 1,
-    })),
+    cursor: results.length ? results[results.length - 1].seq : since,
+    more: results.length === PAGE,
+    notes: results
+      .filter((r) => {
+        const sent = echo.get(r.id);
+        return !(
+          sent &&
+          sent.updatedAt === r.updated_at &&
+          sent.deleted === (r.deleted === 1) &&
+          sent.title === r.title &&
+          sent.body === r.body
+        );
+      })
+      .map((r) => ({
+        id: r.id,
+        eventId: r.event_id,
+        title: r.title,
+        body: r.body,
+        createdAt: r.created_at,
+        updatedAt: r.updated_at,
+        deleted: r.deleted === 1,
+      })),
   };
 }
 
-/** Reads ?since= or a body's since: a non-negative number, else 0 (everything). */
+/** Reads ?since= or a body's since: a non-negative whole number, else 0 (everything). */
 export function parseSince(value: unknown): number {
   const n = typeof value === "string" ? Number(value) : value;
   return typeof n === "number" && Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
@@ -74,7 +96,6 @@ export function parseNoteChanges(body: unknown): NoteRow[] | string {
   if (!Array.isArray(changes)) return "expected { changes: [...] }";
   if (changes.length > MAX_CHANGES) return `at most ${MAX_CHANGES} changes per request`;
   const now = Date.now();
-  const clamp = (t: number) => Math.min(Math.floor(t), now + CLOCK_SLACK_MS);
   const out: NoteRow[] = [];
   const seen = new Set<string>();
   for (const c of changes) {
@@ -82,21 +103,21 @@ export function parseNoteChanges(body: unknown): NoteRow[] | string {
     if (typeof id !== "string" || !NOTE_ID.test(id)) return "bad id";
     if (seen.has(id)) return "duplicate id";
     seen.add(id);
-    if (typeof eventId !== "string" || !EVENT_ID.test(eventId)) return "bad eventId";
+    if (typeof eventId !== "string" || (eventId !== "" && !EVENT_ID.test(eventId))) return "bad eventId";
     if (deleted !== undefined && typeof deleted !== "boolean") return "bad deleted";
     const gone = deleted === true;
     if (!gone && (typeof title !== "string" || title.length > MAX_TITLE)) return "bad title";
     if (!gone && (typeof body !== "string" || body.length > MAX_BODY)) return "bad body";
-    for (const t of [createdAt, updatedAt]) {
-      if (typeof t !== "number" || !Number.isFinite(t) || t < 0) return "bad time";
-    }
+    const created = deviceTime(createdAt, now);
+    const updated = deviceTime(updatedAt, now);
+    if (created === null || updated === null) return "bad time";
     out.push({
       id,
       eventId,
       title: gone ? "" : (title as string),
       body: gone ? "" : (body as string),
-      createdAt: clamp(createdAt as number),
-      updatedAt: clamp(updatedAt as number),
+      createdAt: created,
+      updatedAt: updated,
       deleted: gone,
     });
   }
@@ -104,33 +125,56 @@ export function parseNoteChanges(body: unknown): NoteRow[] | string {
 }
 
 /**
- * Applies each change where it's newer than the stored note. Refuses the whole
- * request (returns false) if it would take the account past MAX_NOTES.
+ * Applies each change where it beats the stored note: a newer updatedAt wins;
+ * on a tie, a deletion wins, then the greater body, so every device settles on
+ * the same version. Deleting a note the server never had stores nothing.
+ *
+ * Returns false, changing nothing, if the request would take the account past
+ * MAX_NOTES live notes. Two devices adding notes at the same moment can
+ * overshoot by a few; the limit is there to stop abuse, not to be exact.
  */
 export async function applyNoteChanges(env: Env, user: SignedInUser, changes: NoteRow[]): Promise<boolean> {
   if (!changes.length) return true;
-  const adding = changes.filter((c) => !c.deleted);
-  if (adding.length) {
-    const live = await env.DB.prepare("SELECT id FROM notes WHERE user_id = ?1 AND deleted = 0")
-      .bind(user.id)
-      .all<{ id: string }>();
-    const have = new Set(live.results.map((r) => r.id));
-    const fresh = adding.filter((c) => !have.has(c.id)).length;
-    if (have.size + fresh > MAX_NOTES) return false;
+
+  const stored = await env.DB.prepare("SELECT id, deleted, updated_at FROM notes WHERE user_id = ?1")
+    .bind(user.id)
+    .all<{ id: string; deleted: number; updated_at: number }>();
+  const known = new Map(stored.results.map((r) => [r.id, r]));
+  const live = new Set(stored.results.filter((r) => r.deleted === 0).map((r) => r.id));
+  const before = live.size;
+  for (const c of changes) {
+    const row = known.get(c.id);
+    // A tie may or may not apply; counting it as losing is close enough here.
+    if (row && c.updatedAt <= row.updated_at) continue;
+    if (c.deleted) live.delete(c.id);
+    else live.add(c.id);
   }
-  const now = Date.now();
-  const stmt = env.DB.prepare(
-    `INSERT INTO notes (user_id, id, event_id, title, body, deleted, created_at, updated_at, synced_at)
-     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
+  if (live.size > MAX_NOTES && live.size > before) return false;
+
+  const nextSeq = "(SELECT notes_seq FROM users WHERE id = ?1) + ?2";
+  const upsert = env.DB.prepare(
+    `INSERT INTO notes (user_id, id, event_id, title, body, deleted, created_at, updated_at, seq)
+     VALUES (?1, ?3, ?4, ?5, ?6, 0, ?7, ?8, ${nextSeq})
      ON CONFLICT (user_id, id) DO UPDATE
        SET event_id = excluded.event_id, title = excluded.title, body = excluded.body,
-           deleted = excluded.deleted, updated_at = excluded.updated_at, synced_at = excluded.synced_at
-     WHERE excluded.updated_at > notes.updated_at`,
+           deleted = 0, updated_at = excluded.updated_at, seq = excluded.seq
+     WHERE excluded.updated_at > notes.updated_at
+        OR (excluded.updated_at = notes.updated_at AND notes.deleted = 0 AND excluded.body > notes.body)`,
   );
-  await env.DB.batch(
-    changes.map((c) =>
-      stmt.bind(user.id, c.id, c.eventId, c.title, c.body, c.deleted ? 1 : 0, c.createdAt, c.updatedAt, now),
+  const remove = env.DB.prepare(
+    `UPDATE notes SET title = '', body = '', deleted = 1, updated_at = ?4, seq = ${nextSeq}
+     WHERE user_id = ?1 AND id = ?3
+       AND (?4 > updated_at OR (?4 = updated_at AND deleted = 0))`,
+  );
+  // One transaction: each row takes notes_seq + its position, then the
+  // counter moves past them all. Rows that lose leave gaps, which is fine.
+  await env.DB.batch([
+    ...changes.map((c, i) =>
+      c.deleted
+        ? remove.bind(user.id, i + 1, c.id, c.updatedAt)
+        : upsert.bind(user.id, i + 1, c.id, c.eventId, c.title, c.body, c.createdAt, c.updatedAt),
     ),
-  );
+    env.DB.prepare("UPDATE users SET notes_seq = notes_seq + ?2 WHERE id = ?1").bind(user.id, changes.length),
+  ]);
   return true;
 }

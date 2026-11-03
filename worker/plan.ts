@@ -1,13 +1,11 @@
 // Plan sync (plan 0002, todo 016): each star is its own row, and the latest
 // change wins. Unstars are kept as starred = 0 so they reach other devices.
 import type { SignedInUser } from "./session";
+import { EVENT_ID, deviceTime } from "./sync";
 
 export type PlanItem = { eventId: string; starred: boolean; updatedAt: number };
 
-const EVENT_ID = /^[\w-]{1,64}$/;
 const MAX_CHANGES = 500;
-/** A device clock running fast mustn't win every future change; clamp to now. */
-const CLOCK_SLACK_MS = 5 * 60_000;
 
 export async function readItems(env: Env, user: SignedInUser): Promise<PlanItem[]> {
   const { results } = await env.DB.prepare(
@@ -29,8 +27,9 @@ export function parseChanges(body: unknown): PlanItem[] | string {
     const { eventId, starred, updatedAt } = (c ?? {}) as Record<string, unknown>;
     if (typeof eventId !== "string" || !EVENT_ID.test(eventId)) return "bad eventId";
     if (typeof starred !== "boolean") return "bad starred";
-    if (typeof updatedAt !== "number" || !Number.isFinite(updatedAt) || updatedAt < 0) return "bad updatedAt";
-    out.push({ eventId, starred, updatedAt: Math.min(Math.floor(updatedAt), now + CLOCK_SLACK_MS) });
+    const at = deviceTime(updatedAt, now);
+    if (at === null) return "bad updatedAt";
+    out.push({ eventId, starred, updatedAt: at });
   }
   return out;
 }
