@@ -206,7 +206,7 @@ def validate(events, venues):
             assert area, f"venue {key} points at unknown map area {v['areaId']}"
             # The area is the one source for these; the venue doesn't repeat them.
             assert "level" not in v, f"venue {key} has an area, so its level comes from the map; drop 'level'"
-            assert not (area["approximate"] and v.get("approximate")), (
+            assert not (area["approximate"] and "approximate" in v), (
                 f"venue {key}: area {v['areaId']} is already approximate; drop 'approximate'"
             )
     # New on-site places need a map spot or a note in data/venues.json; warn
