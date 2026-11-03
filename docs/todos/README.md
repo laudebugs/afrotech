@@ -52,3 +52,5 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plans 00
 | [027](027-tiptap-editor.md) | Tiptap editor with Markdown in and out (plan 0006) | 5 | done |
 | [028](028-phone-toolbar-insert.md) | Phone toolbar and Insert menu | 5 | todo |
 | [029](029-note-photos.md) | Photos in notes | 5 | todo |
+| [030](030-page-tabs.md) | Page tabs; the map switch uses them (plan 0007) | 5 | done |
+| [031](031-saved-tab.md) | The Saved tab: Plan and Notes (plan 0007) | 5 | todo |

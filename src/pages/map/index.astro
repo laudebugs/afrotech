@@ -50,10 +50,8 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
 
 <BaseLayout title="Map · AfroTech 2026 Planner" active="map">
   <header class="page-head sticky-head">
-    <div class="title-row">
-      <h1>Map</h1>
-      <MapSwitch current="venue" />
-    </div>
+    <h1>Map</h1>
+    <MapSwitch current="venue" />
     <p class="muted day" data-map-day></p>
     <div class="levels" role="group" aria-label="Level">
       {
@@ -520,13 +518,6 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
 </script>
 
 <style>
-  .title-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-2);
-  }
   h1 {
     margin: 0;
     font-size: var(--text-2xl);
