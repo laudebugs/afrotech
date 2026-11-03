@@ -1,6 +1,6 @@
 # 029 — Photos in notes
 
-**Status:** todo · **Plan:** [Plan 0006](../plans/0006-notes-editor.md) · **Depends on:** 027; uploading also needs 026
+**Status:** doing · **Plan:** [Plan 0006](../plans/0006-notes-editor.md) · **Depends on:** 027; uploading also needs 026
 
 ## Goal
 

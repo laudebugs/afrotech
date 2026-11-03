@@ -3,6 +3,7 @@
 // own session. No Google access token is ever stored.
 import { createLocalJWKSet, createRemoteJWKSet, jwtVerify, type JWTPayload } from "jose";
 import { COOKIE, sha256Hex } from "./session";
+import { deleteAllPhotos } from "./photos";
 
 const GOOGLE_KEYS = createRemoteJWKSet(new URL("https://www.googleapis.com/oauth2/v3/certs"));
 const SESSION_DAYS = 30;
@@ -65,8 +66,10 @@ export async function signOut(env: Env, token: string | null): Promise<string> {
   return `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`;
 }
 
-/** Deletes the account; sessions and stars go with it (ON DELETE CASCADE). */
+/** Deletes the account, with its sessions, stars, notes and photos. */
 export async function deleteAccount(env: Env, userId: string): Promise<void> {
+  // Photos first: once the account row is gone, nothing would find them.
+  await deleteAllPhotos(env, userId);
   await env.DB.batch([
     env.DB.prepare("DELETE FROM plan_items WHERE user_id = ?1").bind(userId),
     env.DB.prepare("DELETE FROM notes WHERE user_id = ?1").bind(userId),
