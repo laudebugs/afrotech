@@ -1,0 +1,76 @@
+---
+// How speaker profiles are made, and how to change or remove one (plan 0003, todo 021).
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SourcesFooter from "../../components/SourcesFooter.astro";
+import { NOTES_REPO } from "../../config";
+
+const issueUrl = `https://github.com/${NOTES_REPO.owner}/${NOTES_REPO.repo}/issues/new?template=speaker-change.yml`;
+---
+
+<BaseLayout title="About speaker profiles · AfroTech 2026 Planner" active="none" description="Where the planner's speaker profiles come from, and how to correct or remove one.">
+  <p class="back"><a href="/speakers/">← Speakers</a></p>
+  <article class="about">
+    <h1>Speaker profiles come from the official schedule, plus sourced facts we've reviewed</h1>
+    <p>
+      Every AfroTech 2026 speaker has a profile so you can decide which sessions to catch. Each profile has
+      two parts, and each part says where it came from.
+    </p>
+
+    <h2>From the official schedule</h2>
+    <p>
+      The name, title, company, photo, bio and links come from the official AfroTech 2026 schedule, as the
+      speaker or organisers entered them. Photos load from the schedule's own image service; we don't copy
+      them. The planner refreshes this data every two hours during the week.
+    </p>
+
+    <h2>Community-compiled: researched, cited and reviewed</h2>
+    <p>
+      Some profiles add a few fun facts and recent articles or talks, labelled
+      <strong>Community-compiled</strong>. The speaker didn't supply these; the planner's editors gathered
+      them from public sources. They follow four rules:
+    </p>
+    <ul>
+      <li><strong>Every line links to its source</strong>, preferably independent coverage such as news or award lists.</li>
+      <li><strong>Professional and public only:</strong> career moments, projects, awards, books and talks. Never family, health, age, home, religion or politics.</li>
+      <li><strong>Identity is checked</strong> with a second detail, such as the company, so same-named people aren't mixed up.</li>
+      <li><strong>Nothing appears until a person reviews it</strong> and has checked the quote on the source page.</li>
+    </ul>
+
+    <h2>Ask for a change or removal</h2>
+    <p>
+      If something is wrong, or you'd like your profile or a single fact removed,
+      <a href={issueUrl} rel="noopener">open a speaker profile request</a> on GitHub. You don't need to
+      give a reason for a removal. We act within 48 hours, and the same day during conference week. A removed
+      profile stays removed when the schedule refreshes.
+    </p>
+    <p class="muted">
+      The planner is a free community site, not affiliated with AfroTech or Blavity. See the
+      <a href="/privacy/">privacy page</a> for what else it stores.
+    </p>
+  </article>
+  <SourcesFooter />
+</BaseLayout>
+
+<style>
+  .back {
+    margin: var(--space-6) 0 var(--space-4);
+  }
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  h1 {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-2xl);
+  }
+  h2 {
+    margin: var(--space-6) 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+  li {
+    margin: var(--space-2) 0;
+  }
+</style>

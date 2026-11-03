@@ -9,7 +9,7 @@ import SourcesFooter from "../../components/SourcesFooter.astro";
 import { sessionsOf, speakers } from "../../lib/speakers";
 import { formatClock, formatDate, formatRange } from "../../lib/time";
 import type { SpeakerProfile } from "../../lib/types";
-import { SITE_URL } from "../../config";
+import { NOTES_REPO, SITE_URL } from "../../config";
 
 export function getStaticPaths() {
   return speakers.map((speaker) => ({ params: { slug: speaker.slug }, props: { speaker } }));
@@ -27,6 +27,12 @@ const links = research?.website
   ? [...speaker.links, { kind: "website" as const, label: "Website", url: research.website }]
   : speaker.links;
 const kindLabel = { article: "Article", talk: "Talk", podcast: "Podcast" } as const;
+
+// "Is this you?" opens the speaker-change issue form with the profile filled in.
+const profileUrl = `${SITE_URL}/speakers/${speaker.slug}/`;
+const changeUrl =
+  `https://github.com/${NOTES_REPO.owner}/${NOTES_REPO.repo}/issues/new?` +
+  new URLSearchParams({ template: "speaker-change.yml", title: `Speaker profile: ${speaker.name}`, speaker: profileUrl });
 // The full bio adds nothing when it's no longer than the brief.
 const hasMore = Boolean(speaker.bio && speaker.brief && speaker.bio.length > speaker.brief.length + 20);
 
@@ -154,9 +160,15 @@ const jsonLd = JSON.stringify({
     )
   }
 
-  <p class="credit muted">
-    Bio, photo and links from the official AfroTech 2026 schedule.
-  </p>
+  <aside class="credit">
+    <p class="muted">
+      Bio, photo and links from the official AfroTech 2026 schedule. <a href="/speakers/about/">How profiles are made</a>.
+    </p>
+    <p>
+      <strong>Is this you?</strong> <a href={changeUrl} rel="noopener">Ask for a change or removal</a>. We act within
+      48 hours.
+    </p>
+  </aside>
   <SourcesFooter />
 </BaseLayout>
 
@@ -260,6 +272,9 @@ const jsonLd = JSON.stringify({
     margin: var(--space-2) 0 0 calc(var(--rail-time) + var(--rail-dot) + var(--space-2));
     font-size: var(--text-sm);
     color: var(--muted);
+  }
+  .credit p {
+    margin: 0 0 var(--space-1);
   }
   .credit {
     margin-top: var(--space-8);
