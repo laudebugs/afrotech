@@ -9,10 +9,11 @@ Shared tracker for AfroTech Conference 2026 events and the notes we take at them
 | Path | What's in it |
 |------|--------------|
 | [`schedule/official.md`](schedule/official.md) | Full official agenda, by day (259 sessions, Houston time) |
-| [`schedule/side-events.md`](schedule/side-events.md) | Side events, parties and meetups from community lists |
+| [`schedule/side-events.md`](schedule/side-events.md) | 146 side events (parties, mixers, dinners, workshops) with RSVP links |
 | [`data/sessions.csv`](data/sessions.csv) / [`.json`](data/sessions.json) | Official agenda as data, with descriptions, ticket levels and calendar links |
+| [`data/side-events.csv`](data/side-events.csv) | Side events as data, with addresses and descriptions |
 | [`notes/`](notes/) | One file per session we attend — copy [`notes/_template.md`](notes/_template.md) |
-| [`scripts/update_schedule.py`](scripts/update_schedule.py) | Re-pulls the official agenda and rebuilds the files above |
+| [`scripts/`](scripts/) | Re-pull the official agenda and side events |
 
 ## Adding notes
 
@@ -20,10 +21,14 @@ Shared tracker for AfroTech Conference 2026 events and the notes we take at them
 2. Fill it in during or after the session.
 3. Add a link to it in the session list below.
 
-## Refreshing the official schedule
+## Refreshing the schedules
 
 ```bash
 python3 scripts/update_schedule.py
+```
+
+```bash
+python3 scripts/update_side_events.py
 ```
 
 No dependencies beyond Python 3.9+.
@@ -37,4 +42,4 @@ _None yet._
 - Official schedule: https://afrotechconference.com/schedule
 - AfroTech Guide: https://afrotech.guide/
 - Side events (Google Sheet): https://docs.google.com/spreadsheets/d/1PLDLOdFCuwDAy4fe5y09hb4KgYlX3bsgX60U2z2KE_0/edit
-- Side events (OneDrive): https://1drv.ms/x/c/201780541da98428/IQAwneocjcw7RLgXigZPaCX-Afj6iRzSioL8HrnOZ6uMc-Y
+- Side events (OneDrive, not imported yet — Microsoft blocks automated downloads): https://1drv.ms/x/c/201780541da98428/IQAwneocjcw7RLgXigZPaCX-Afj6iRzSioL8HrnOZ6uMc-Y
