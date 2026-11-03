@@ -34,6 +34,16 @@ python3 scripts/update_side_events.py   # side events → data/side-events.csv, 
 
 Site commands (`npm run dev | build | preview | deploy`) arrive with todo 001.
 
+## Review rules
+
+- **Plans before code.** Write or update a plan in `docs/plans/` and wait for the
+  user to review it before implementing. Don't start a todo whose plan is still a draft.
+- **Code review on every PR.** Run `/code-review` at least once before opening or
+  updating a pull request, and fix or explain what it finds.
+- **Writing.** For any prose people will read (docs, plans, READMEs, PR
+  descriptions, notes), draft with the `anthropic-skills:writing` skill, then
+  review the draft with `anthropic-skills:writing-review` and apply the fixes.
+
 ## Working on todos
 
 - When asked to "do todo NNN", read the todo, its plan, and anything it depends on.
