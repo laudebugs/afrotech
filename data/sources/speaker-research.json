@@ -1,0 +1,4 @@
+{
+  "_about": "Researched speaker facts (plan 0003, Phase B). Hand-maintained; the build reads it and never writes it. Only rows with status \"approved\" reach the site. Each fact needs a public source URL, a quote from that page that identifies the speaker (identity_quote), and a quote that supports the fact (claim_quote). scripts/check_research.py fetches each URL and confirms both quotes. Professional, public information only: no family, health, age, home, religion or politics. See reports/Speaker profile research sources.md.",
+  "speakers": {}
+}

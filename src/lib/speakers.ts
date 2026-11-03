@@ -5,7 +5,7 @@ import type { ScheduleEvent, SpeakerProfile } from "./types";
 
 const SPEAKER_KEYS = {
   id: true, slug: true, name: true, title: true, company: true, brief: true,
-  bio: true, photoUrl: true, links: true, sessionIds: true,
+  bio: true, photoUrl: true, links: true, sessionIds: true, research: true,
 } satisfies Record<keyof SpeakerProfile, true>;
 
 function checkSpeakers(list: unknown[]): SpeakerProfile[] {
