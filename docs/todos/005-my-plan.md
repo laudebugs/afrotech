@@ -25,7 +25,11 @@ Pick the events you want and see where they clash.
   page. Content added later, such as the schedule's bottom sheet, syncs
   through a MutationObserver.
 - **Clashes:** they show on the day pages too, not only in My plan. An event
-  without an end counts as an hour long, as in the calendar export.
+  without an end counts as an hour long, as in the calendar export. A day page
+  only compares that day's events, so a clash across midnight shows on /plan
+  but not on the day page.
+- **Cleanup:** /plan drops stored ids of events the sources no longer list, so
+  the tab badge matches the plan.
 - **Day pages:** they gained a **My plan** filter chip (`?plan=1`).
 - **/plan:** the page renders every event and CSS shows only the starred ones
   (53 KB compressed). Export merges each event's own `.ics` file into one

@@ -39,6 +39,11 @@ export function addToPlan(newIds: string[]): void {
   save([...readPlan(), ...newIds]);
 }
 
+/** Replaces the whole plan, e.g. to drop ids of events that no longer exist. */
+export function setPlan(ids: string[]): void {
+  save(ids);
+}
+
 /** Another tab changed the plan: tell this page. */
 export function watchOtherTabs(): void {
   window.addEventListener("storage", (e) => {

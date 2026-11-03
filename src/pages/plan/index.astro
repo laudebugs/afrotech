@@ -60,7 +60,7 @@ import { formatClock, formatDate } from "../../lib/time";
 </BaseLayout>
 
 <script>
-  import { addToPlan, readPlan } from "../../lib/plan";
+  import { addToPlan, readPlan, setPlan } from "../../lib/plan";
 
   const rows = [...document.querySelectorAll<HTMLElement>("[data-row]")];
   const known = new Map(rows.map((r) => [r.dataset.eventId!, r]));
@@ -71,6 +71,11 @@ import { formatClock, formatDate } from "../../lib/time";
   const status = document.querySelector<HTMLElement>("[data-status]")!;
 
   const titleOf = (id: string) => known.get(id)?.querySelector(".title")?.textContent?.trim() ?? id;
+
+  // This page lists every event, so ids it doesn't know belong to events the
+  // sources have since dropped or renamed. Clear them so the badge stays honest.
+  const stored = readPlan();
+  if (stored.some((id) => !known.has(id))) setPlan(stored.filter((id) => known.has(id)));
 
   function render() {
     const ids = readPlan().filter((id) => known.has(id));
@@ -89,9 +94,15 @@ import { formatClock, formatDate } from "../../lib/time";
 
   // A shared link: /plan/?add=id1,id2
   const params = new URLSearchParams(location.search);
-  const shared = (params.get("add") ?? "").split(",").filter((id) => known.has(id));
+  const requested = (params.get("add") ?? "").split(",").filter(Boolean);
+  const shared = requested.filter((id) => known.has(id));
   const box = document.querySelector<HTMLElement>("[data-shared]")!;
-  if (shared.length) {
+  if (requested.length && !shared.length) {
+    document.querySelector("[data-shared-title]")!.textContent =
+      "This shared plan's events are no longer listed.";
+    document.querySelector<HTMLElement>("[data-shared-add]")!.hidden = true;
+    box.hidden = false;
+  } else if (shared.length) {
     const fresh = shared.filter((id) => !readPlan().includes(id));
     document.querySelector("[data-shared-title]")!.textContent =
       `Shared plan: ${shared.length} ${shared.length === 1 ? "event" : "events"}` +
@@ -121,6 +132,10 @@ import { formatClock, formatDate } from "../../lib/time";
   // Export: merge each event's own .ics file into one calendar.
   document.querySelector("[data-export]")!.addEventListener("click", async () => {
     const ids = readPlan().filter((id) => known.get(id)?.dataset.hasIcs);
+    if (!ids.length) {
+      status.textContent = "None of these events has a time yet, so there's nothing to export.";
+      return;
+    }
     status.textContent = "Preparing your calendar…";
     try {
       const files = await Promise.all(
