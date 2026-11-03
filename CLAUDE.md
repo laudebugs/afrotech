@@ -82,7 +82,9 @@ Cloudflare Workers Builds runs `npm run build` and `npx wrangler deploy`.
   and `data/venues.json` takes hand-added map fields (`areaId`, `level`,
   `approximate`, `note`, `lat`, `lng`) that the scripts keep. A venue with an
   `areaId` gets its level from the map and doesn't repeat it. The map itself is
-  a table in `scripts/build_floor_plan.py`; edit that, not the SVGs.
+  a table in `scripts/build_floor_plan.py`; edit that, not the SVGs. Speakers
+  removed at their request go in `data/sources/speaker-suppressions.json`
+  (never delete entries); the build drops their profile.
 - **Sources:** credit each community list on the site. Don't republish the GRB
   floor-plan PDFs; we trace our own SVG. Keep organisers' personal contact
   details out of the site.

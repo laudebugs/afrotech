@@ -38,3 +38,5 @@ Built on November 3:
   the build drops their profile and unlinks their name on events.
 - **Navigation:** the footer links to `/speakers/`. The tab bar stays at four
   tabs.
+- **Slugs** come from names, A–Z, with `-2` for repeats. A newly added speaker who
+  shares a name could shift an existing `-2` slug; that's rare enough to leave.

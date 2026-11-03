@@ -14,7 +14,8 @@ interface Props {
 const { name, url, size, priority = false } = Astro.props;
 ---
 
-<span class="speaker-photo" style={`--size: ${size}px`} aria-hidden={url ? undefined : "true"}>
+<!-- Decorative: the name always sits beside it, so screen readers skip the initials. -->
+<span class="speaker-photo" style={`--size: ${size}px`} aria-hidden="true">
   <span class="initials">{initials(name)}</span>
   {
     url && (
