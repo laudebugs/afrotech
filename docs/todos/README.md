@@ -55,5 +55,5 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plans 00
 | [030](030-page-tabs.md) | Page tabs; the map switch uses them (plan 0007) | 5 | done |
 | [031](031-saved-tab.md) | The Saved tab: Plan and Notes (plan 0007) | 5 | done |
 | [032](032-directions-maps-app.md) | Directions open a maps app (plan 0008) | 5 | done |
-| [033](033-read-event-pages.md) | Read side-event pages (plan 0008) | 5 | todo |
+| [033](033-read-event-pages.md) | Read side-event pages (plan 0008) | 5 | done |
 | [034](034-merge-event-pages.md) | Merge event pages into events (plan 0008) | 5 | todo |

@@ -12,9 +12,9 @@ TZ = ZoneInfo("America/Chicago")  # Houston
 USER_AGENT = "afrotech-notes/1.0"
 
 
-def fetch(url):
+def fetch(url, timeout=60):
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=60) as r:
+    with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read().decode("utf-8")
 
 
