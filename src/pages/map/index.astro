@@ -500,7 +500,8 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && render());
   window.addEventListener("pageshow", (e) => e.persisted && render());
 
-  // /map/?area=room-310 (from "Show on map") opens at that room; ?level=3 at a level.
+  // /map/?area=room-310 (from "Show on map") zooms to that room and marks it,
+  // leaving the sheet closed so the map stays in view; ?level=3 at a level.
   const params = new URLSearchParams(location.search);
   const start = params.get("area");
   const startLevel = params.get("level");
@@ -509,7 +510,7 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
     // queue after it, or that pan would undo this one.
     setTimeout(() => {
       focusArea(start);
-      openArea(start);
+      select(start);
     });
   } else if (startLevel && hasLevel(startLevel)) {
     showLevel(startLevel);
