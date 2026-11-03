@@ -8,10 +8,10 @@ Draw our own simplified convention center plan, per the [SVG research](../resear
 
 ## Done when
 
-- [x] `src/assets/maps/grb-level-1.svg` and `grb-level-3.svg`, plus Marriott and Discovery Green insets
-- [x] Every location in the schedule maps to an area id or is marked off-map
+- [x] `src/assets/maps/grb-level-1.svg` and `grb-level-3.svg`, plus Marriott and Discovery Green insets (drawn across the street on Level 1)
+- [x] Every location in the schedule maps to an area id or is marked off-map (expo areas and lounges carry a note instead; see Notes)
 - [x] Shapes have stable ids, labels are `<text>`, no inline colours (CSS only)
-- [x] Three control points (lat/lng ↔ x/y) recorded in `data/venues.json`
+- [x] Three control points (lat/lng ↔ x/y) recorded (in `data/floor-plan.json`; see Notes)
 - [x] Each SVG under 30 KB
 
 ## Notes
@@ -48,6 +48,14 @@ Built on November 3:
     guess.
   - **Off-map:** Private, Partner Events, Naming Rights and Blavity House Party.
 - **Guards:** `build_events.py` fails if a venue points at an area the map
-  doesn't have, and warns (without failing) about new on-site venues with no
-  area or note yet.
+  doesn't have, or its level disagrees with the area's, and warns (without
+  failing) about new on-site venues with no area or note yet.
+- **Taps and keys:** every area is focusable with a button role and its name
+  as the label. Shapes don't overlap, except The Grove, which sits inside
+  Discovery Green and is drawn after it, so a tap on it reaches The Grove. The
+  concourse is split around the Grand Lobby, and the balconies are 40 ft wide.
+  At phone width they're still small, so todo 008's zoom matters.
+- **Placement fixes after review:** The Grove moved to the park's south edge
+  (1611 Lamar St), Discovery Green spans McKinney to Lamar, and Halls A3/B3
+  reach the west wall.
 

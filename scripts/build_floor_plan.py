@@ -19,6 +19,7 @@ Areas marked approximate are AfroTech set-ups whose exact spot inside the
 building isn't published.
 """
 import json
+from collections import namedtuple
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -34,20 +35,28 @@ CONTROL_POINTS = [
     {"name": "south-west corner", "lat": 29.750717, "lng": -95.359862, "x": 0, "y": L},
 ]
 
-# id, label, kind, x, y, width, height, extra options
-# kinds: hall, stage, room, lobby, balcony, outside, hotel, corridor
+# Every level uses the same view box (feet) and north arrow.
+VIEW = (-430, -70, 920, 1700)
+NORTH = ("N", 440, -30, {"size": 28})
+
+# One tappable place on the map. kind: hall, stage, room, lobby, balcony,
+# outside, hotel or corridor. opts: approximate, and label placement.
+Area = namedtuple("Area", "id label kind x y w h opts", defaults=[None])
+
+# Areas are listed as Area(...) fields; later shapes paint (and take taps) on
+# top of earlier ones, so a place inside another (The Grove inside Discovery
+# Green) comes after it.
 LEVELS = {
     1: {
         "title": "Level 1 · exhibit halls and concourse",
-        "view": (-430, -70, 920, 1700),
         "base": [
             ("outline", 0, 0, W, L),
             ("dock", 380, 0, 90, L),
         ],
         "labels": [
             ("Loading dock", 425, 784, {"rotate": 90, "size": 24}),
-            ("Avenida de las Americas", -105, 400, {"rotate": -90, "size": 26}),
-            ("N", 440, -30, {"size": 28}),
+            ("Avenida de las Americas", -100, 400, {"rotate": -90, "size": 26}),
+            NORTH,
         ],
         "areas": [
             ("hall-a", "Hall A", "hall", 86, 0, 294, 325),
@@ -55,18 +64,20 @@ LEVELS = {
             # AfroTech joins Halls C and D into one space (Product & Innovation Stage).
             ("halls-c-d", "Halls C–D", "stage", 86, 632, 294, 608),
             ("hall-e", "Hall E · Main Stage", "stage", 86, 1240, 294, 328),
-            ("concourse", "Concourse", "corridor", 0, 0, 86, L, {"label": {"x": 43, "y": 420, "rotate": 90}}),
+            ("concourse-north", "Concourse", "corridor", 0, 0, 86, 740, {"label": {"x": 43, "y": 420, "rotate": 90}}),
             ("grand-lobby", "Grand Lobby", "lobby", 0, 740, 86, 80),
+            ("concourse-south", "Concourse", "corridor", 0, 820, 86, L - 820, {"label": {"x": 43, "y": 1190, "rotate": 90}}),
             ("avenida-plaza", "Avenida Plaza", "outside", -60, 640, 60, 300),
             ("marriott", "Marriott Marquis", "hotel", -400, -20, 220, 320),
-            ("discovery-green", "Discovery Green", "outside", -400, 680, 250, 432),
-            ("the-grove", "The Grove", "outside", -390, 700, 110, 70, {"approximate": True}),
+            # The park runs from McKinney St (north) to Lamar St (south).
+            ("discovery-green", "Discovery Green", "outside", -420, 650, 290, 540),
+            # The Grove (1611 Lamar St) sits on the park's south edge, near Avenida.
+            ("the-grove", "The Grove", "outside", -240, 1105, 100, 70, {"approximate": True}),
             ("hilton", "Hilton Americas", "hotel", -400, 1320, 220, 250),
         ],
     },
     2: {
         "title": "Level 2 · mezzanine and balconies",
-        "view": (-430, -70, 920, 1700),
         "base": [
             ("outline", 0, 0, W, L),
             ("below", 86, 0, 384, L),
@@ -76,22 +87,21 @@ LEVELS = {
             ("Avenida de las Americas", -280, 784, {"rotate": -90, "size": 26}),
             ("Skybridge to Marriott", -200, 45, {"size": 20}),
             ("Skybridge to Hilton", -200, 1350, {"size": 20}),
-            ("N", 440, -30, {"size": 28}),
+            NORTH,
         ],
         "bridges": [(-180, 73, 180), (-180, 1366, 180)],
         "areas": [
-            ("mezzanine", "Mezzanine A–D", "corridor", 20, 30, 66, 1500),
-            ("rusk-balcony", "Rusk Balcony", "balcony", 0, 85, 26, 50, {"label": {"x": -14, "y": 110, "anchor": "end", "size": 20}}),
-            ("walker-balcony", "Walker Balcony", "balcony", 0, 330, 26, 92, {"label": {"x": -14, "y": 376, "anchor": "end", "size": 20}}),
-            ("mckinney-balcony", "McKinney Balcony", "balcony", 0, 602, 26, 92, {"label": {"x": -14, "y": 648, "anchor": "end", "size": 20}}),
-            ("avenida-balcony", "Avenida Balcony", "balcony", 0, 872, 26, 92, {"label": {"x": -14, "y": 918, "anchor": "end", "size": 20}}),
-            ("lamar-balcony", "Lamar Balcony", "balcony", 0, 1143, 26, 92, {"label": {"x": -14, "y": 1189, "anchor": "end", "size": 20}}),
-            ("polk-balcony", "Polk Balcony", "balcony", 0, 1470, 26, 56, {"label": {"x": -14, "y": 1498, "anchor": "end", "size": 20}}),
+            ("mezzanine", "Mezzanine A–D", "corridor", 40, 30, 60, 1500),
+            ("rusk-balcony", "Rusk Balcony", "balcony", 0, 85, 40, 50, {"label": {"x": -14, "y": 110, "anchor": "end", "size": 20}}),
+            ("walker-balcony", "Walker Balcony", "balcony", 0, 330, 40, 92, {"label": {"x": -14, "y": 376, "anchor": "end", "size": 20}}),
+            ("mckinney-balcony", "McKinney Balcony", "balcony", 0, 602, 40, 92, {"label": {"x": -14, "y": 648, "anchor": "end", "size": 20}}),
+            ("avenida-balcony", "Avenida Balcony", "balcony", 0, 872, 40, 92, {"label": {"x": -14, "y": 918, "anchor": "end", "size": 20}}),
+            ("lamar-balcony", "Lamar Balcony", "balcony", 0, 1143, 40, 92, {"label": {"x": -14, "y": 1189, "anchor": "end", "size": 20}}),
+            ("polk-balcony", "Polk Balcony", "balcony", 0, 1470, 40, 56, {"label": {"x": -14, "y": 1498, "anchor": "end", "size": 20}}),
         ],
     },
     3: {
         "title": "Level 3 · ballroom and meeting rooms",
-        "view": (-430, -70, 920, 1700),
         "base": [
             ("outline", 0, 0, W, L),
             ("dock", 424, 0, 46, L),
@@ -99,12 +109,12 @@ LEVELS = {
         "labels": [
             ("Avenida de las Americas", -280, 784, {"rotate": -90, "size": 26}),
             ("Skybridge to Hilton", -200, 1350, {"size": 20}),
-            ("N", 440, -30, {"size": 28}),
+            NORTH,
         ],
         "bridges": [(-180, 1363, 180)],
         "areas": [
-            ("hall-a3", "Hall A3", "hall", 93, 0, 331, 324),
-            ("hall-b3", "Hall B3", "hall", 93, 324, 331, 258),
+            ("hall-a3", "Hall A3", "hall", 20, 0, 404, 324),
+            ("hall-b3", "Hall B3", "hall", 20, 324, 404, 258),
             ("ballroom-a", "Ballroom A", "stage", 186, 691, 122, 92),
             ("ballroom-b", "Ballroom B", "room", 186, 783, 122, 93),
             ("ballroom-c", "Ballroom C", "stage", 186, 876, 122, 93),
@@ -138,11 +148,11 @@ def esc(text):
     return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def label_el(text, x, y, size=22, rotate=0, cls="label"):
+def label_el(text, x, y, size=22, rotate=0, cls="label", anchor="middle"):
     transform = f' transform="rotate({rotate} {fmt(x)} {fmt(y)})"' if rotate else ""
     return (
         f'<text class="{cls}" x="{fmt(x)}" y="{fmt(y)}" font-size="{size}"'
-        f' text-anchor="middle" dominant-baseline="middle"{transform}>{esc(text)}</text>'
+        f' text-anchor="{anchor}" dominant-baseline="middle"{transform}>{esc(text)}</text>'
     )
 
 
@@ -150,13 +160,9 @@ def area_label(label, x, y, w, h, place=None):
     """Fit a label inside its shape (rotated in tall, narrow shapes), or put it
     where `place` says, e.g. beside a shape too thin to hold text."""
     if place:
-        anchor = place.get("anchor", "middle")
-        rotate = place.get("rotate", 0)
-        transform = f' transform="rotate({rotate} {fmt(place["x"])} {fmt(place["y"])})"' if rotate else ""
-        return (
-            f'<text class="area-label" x="{fmt(place["x"])}" y="{fmt(place["y"])}"'
-            f' font-size="{place.get("size", 22)}" text-anchor="{anchor}" dominant-baseline="middle"'
-            f"{transform}>{esc(label)}</text>"
+        return label_el(
+            label, place["x"], place["y"], place.get("size", 22), place.get("rotate", 0),
+            "area-label", place.get("anchor", "middle"),
         )
     cx, cy = x + w / 2, y + h / 2
     tall = h > w * 1.6
@@ -165,8 +171,12 @@ def area_label(label, x, y, w, h, place=None):
     return label_el(label, cx, cy, round(size), 90 if tall else 0, "area-label")
 
 
+def areas_of(spec):
+    return [Area(*a) for a in spec["areas"]]
+
+
 def svg_for(level, spec):
-    vx, vy, vw, vh = spec["view"]
+    vx, vy, vw, vh = VIEW
     out = [
         f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vx} {vy} {vw} {vh}"'
         f' role="group" aria-label="George R. Brown Convention Center, {esc(spec["title"])}"'
@@ -181,14 +191,16 @@ def svg_for(level, spec):
         out.append(label_el(text, x, y, opts.get("size", 22), opts.get("rotate", 0)))
     out.append("</g>")
     out.append('<g id="layer-areas">')
-    for area in spec["areas"]:
-        area_id, label, kind, x, y, w, h = area[:7]
-        opts = area[7] if len(area) > 7 else {}
+    for a in areas_of(spec):
+        opts = a.opts or {}
         approx = ' data-approximate="true"' if opts.get("approximate") else ""
+        # Focusable with a spoken name, per docs/research/svg-floor-plan.md;
+        # the map page (todo 008) adds live counts to the label.
         out.append(
-            f'<g id="area-{area_id}" class="area area--{kind}" data-area="{area_id}"{approx}>'
-            f'<rect x="{fmt(x)}" y="{fmt(y)}" width="{fmt(w)}" height="{fmt(h)}"/>'
-            f"{area_label(label, x, y, w, h, opts.get('label'))}</g>"
+            f'<g id="area-{a.id}" class="area area--{a.kind}" data-area="{a.id}"{approx}'
+            f' tabindex="0" role="button" aria-label="{esc(a.label)}">'
+            f'<rect x="{fmt(a.x)}" y="{fmt(a.y)}" width="{fmt(a.w)}" height="{fmt(a.h)}"/>'
+            f"{area_label(a.label, a.x, a.y, a.w, a.h, opts.get('label'))}</g>"
         )
     out.append("</g>")
     out.append('<g id="layer-pins"></g>')
@@ -205,16 +217,14 @@ def main():
         path.write_text(text, encoding="utf-8")
         size = len(text.encode())
         assert size < 30_000, f"{path.name} is {size} bytes; keep it under 30 KB"
-        for area in spec["areas"]:
-            area_id, label, kind, x, y, w, h = area[:7]
-            opts = area[7] if len(area) > 7 else {}
-            assert area_id not in areas, f"duplicate area id {area_id}"
-            areas[area_id] = {
+        for a in areas_of(spec):
+            assert a.id not in areas, f"duplicate area id {a.id}"
+            areas[a.id] = {
                 "level": level,
-                "label": label,
-                "kind": kind,
-                "center": [round(x + w / 2), round(y + h / 2)],
-                "approximate": bool(opts.get("approximate")),
+                "label": a.label,
+                "kind": a.kind,
+                "center": [round(a.x + a.w / 2), round(a.y + a.h / 2)],
+                "approximate": bool((a.opts or {}).get("approximate")),
             }
         print(f"Wrote {path.relative_to(ROOT)} ({size:,} bytes, {len(spec['areas'])} areas)")
 

@@ -83,13 +83,13 @@
       ],
       "approximate": false
     },
-    "concourse": {
+    "concourse-north": {
       "level": 1,
       "label": "Concourse",
       "kind": "corridor",
       "center": [
         43,
-        784
+        370
       ],
       "approximate": false
     },
@@ -100,6 +100,16 @@
       "center": [
         43,
         780
+      ],
+      "approximate": false
+    },
+    "concourse-south": {
+      "level": 1,
+      "label": "Concourse",
+      "kind": "corridor",
+      "center": [
+        43,
+        1194
       ],
       "approximate": false
     },
@@ -129,7 +139,7 @@
       "kind": "outside",
       "center": [
         -275,
-        896
+        920
       ],
       "approximate": false
     },
@@ -138,8 +148,8 @@
       "label": "The Grove",
       "kind": "outside",
       "center": [
-        -335,
-        735
+        -190,
+        1140
       ],
       "approximate": true
     },
@@ -158,7 +168,7 @@
       "label": "Mezzanine A–D",
       "kind": "corridor",
       "center": [
-        53,
+        70,
         780
       ],
       "approximate": false
@@ -168,7 +178,7 @@
       "label": "Rusk Balcony",
       "kind": "balcony",
       "center": [
-        13,
+        20,
         110
       ],
       "approximate": false
@@ -178,7 +188,7 @@
       "label": "Walker Balcony",
       "kind": "balcony",
       "center": [
-        13,
+        20,
         376
       ],
       "approximate": false
@@ -188,7 +198,7 @@
       "label": "McKinney Balcony",
       "kind": "balcony",
       "center": [
-        13,
+        20,
         648
       ],
       "approximate": false
@@ -198,7 +208,7 @@
       "label": "Avenida Balcony",
       "kind": "balcony",
       "center": [
-        13,
+        20,
         918
       ],
       "approximate": false
@@ -208,7 +218,7 @@
       "label": "Lamar Balcony",
       "kind": "balcony",
       "center": [
-        13,
+        20,
         1189
       ],
       "approximate": false
@@ -218,7 +228,7 @@
       "label": "Polk Balcony",
       "kind": "balcony",
       "center": [
-        13,
+        20,
         1498
       ],
       "approximate": false
@@ -228,7 +238,7 @@
       "label": "Hall A3",
       "kind": "hall",
       "center": [
-        258,
+        222,
         162
       ],
       "approximate": false
@@ -238,7 +248,7 @@
       "label": "Hall B3",
       "kind": "hall",
       "center": [
-        258,
+        222,
         453
       ],
       "approximate": false
