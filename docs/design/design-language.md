@@ -60,7 +60,8 @@ line up.
   "Day 3 of 5". Weights 500 and 600; the `.mono` class applies it anywhere.
 - **Loading:** the fonts come from the `@fontsource` packages, Latin subset only
   (about 75 KB in four `woff2` files), served from our own domain with
-  `font-display: swap`. The system UI stack shows while they load and for any
+  `font-display: swap`. Every page preloads Sans 400 and Mono 500, the two weights
+  it always uses. The system UI stack shows while they load and for any
   character outside the Latin subset.
 - **Times:** `font-variant-numeric: tabular-nums` on everything else, so numbers
   in Sans line up too.
