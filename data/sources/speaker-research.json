@@ -1,4 +1,1168 @@
 {
   "_about": "Researched speaker facts (plan 0003, Phase B). Hand-maintained; the build reads it and never writes it. Only rows with status \"approved\" reach the site. Each fact needs a public source URL, a quote from that page that identifies the speaker (identity_quote), and a quote that supports the fact (claim_quote). scripts/check_research.py fetches each URL and confirms both quotes. Professional, public information only: no family, health, age, home, religion or politics. See reports/Speaker profile research sources.md.",
-  "speakers": {}
+  "speakers": {
+    "162ed903-2fab-436d-8b66-d271529fbbdc": {
+      "name": "Morgan Debaun",
+      "slug": "morgan-debaun",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Every source pairs the name with Blavity (founder/CEO), matching the official title and company",
+          "Distinctive bio fact (author; AfroTech CEO) matches book and AfroTech coverage"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Landed on the Forbes 30 Under 30 media list in 2016, two years after launching Blavity.",
+          "url": "https://www.niemanlab.org/2016/07/morgan-debaun-on-the-growth-of-blavity-covering-blacklivesmatter-and-the-state-of-black-owned-media/",
+          "publisher": "Nieman Lab",
+          "date": "2016-07",
+          "tier": 1,
+          "identity_quote": "Morgan DeBaun on the growth of Blavity",
+          "claim_quote": "30 Under 30 list for media",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "Her first book, Rewrite Your Rules, came out from Ballantine in April 2025, built on a three-part 'Master Yourself' framework.",
+          "url": "https://blackenterprise.com/blavity-morgan-debaun-rewrite-your-stars",
+          "publisher": "Black Enterprise",
+          "date": "2025",
+          "tier": 1,
+          "identity_quote": "Morgan Debraun, Blavity Inc., rewrite your rules",
+          "claim_quote": "Master Yourself",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Blavity CEO Morgan DeBaun on AfroTech and Black startup founders",
+          "url": "https://www.fortune.com/2024/11/22/blavity-ceo-morgan-debaun-afrotech-startup-founders-black-tech",
+          "publisher": "Fortune",
+          "date": "2024-11-22",
+          "kind": "article",
+          "identity_quote": "blavity ceo morgan debaun afrotech",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Morgan DeBaun on Earn Your Leisure: the #1 career to get into before it's too late",
+          "url": "https://omny.fm/shows/earn-your-leisure-1/morgan-debaun",
+          "publisher": "Earn Your Leisure (EYL Network)",
+          "date": "2025-04",
+          "kind": "podcast",
+          "identity_quote": "THE #1 CAREER TO GET INTO BEFORE IT’S TOO LATE",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Rewrite the Rules: Morgan DeBaun and Chamillionaire bring candid conversation to Houston",
+          "url": "https://www.forwardtimes.com/news/rewrite-the-rules-morgan-debaun-and-chamillionaire-bring-candid-conversation-to-houston/article_343178bf-8338-40d9-9266-83ad0e81ae6d.html",
+          "publisher": "Houston Forward Times",
+          "date": null,
+          "kind": "talk",
+          "identity_quote": "the Founder/CEO of Blavity Talk Strategy, Struggle, and Success",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. The search summary said the Black Enterprise page's title spells her name 'Debraun'; check it before relying on that identity quote. The Fortune and Earn Your Leisure identity quotes come from the URL slug and the episode title only. No dorm origin story was found. Wikipedia credits the 'black + gravity' lunch-table name story, but I found no fetchable editorial source for it, so it's left out. Website candidates that are unconfirmed and not linked from LinkedIn: morgandebaun.substack.com (her newsletter) and worksmartprogram.com/about. Both were left null. Skipped thebump.com (pregnancy/family)."
+    },
+    "07311775-dd72-4e02-8df3-9c5bfd571ed0": {
+      "name": "Dr. Timnit Gebru",
+      "slug": "dr-timnit-gebru",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Sources name her as founder and executive director of DAIR, matching the official title",
+          "Book title 'Deep Unlearning' matches the official bio"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Co-founded the Black in AI community before she ever joined Google.",
+          "url": "https://democracynow.org/2026/8/13/timnit_gebru",
+          "publisher": "Democracy Now!",
+          "date": "2026-08-13",
+          "tier": 1,
+          "identity_quote": "founder and executive director of the Distributed Artificial Intelligence Research Institute",
+          "claim_quote": "I co-founded Black in AI way before I even joined Google.",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "Co-wrote 'Gender Shades' (2018) with Joy Buolamwini, the study that exposed skin-tone and gender bias in face-analysis software.",
+          "url": "https://www.nbcnews.com/news/amp/rcna13339",
+          "publisher": "NBC News",
+          "date": null,
+          "tier": 1,
+          "identity_quote": "Timnit Gebru is part of a wave of Black women working to change AI",
+          "claim_quote": "Gender Shades",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Timnit Gebru interview",
+          "url": "https://democracynow.org/2026/8/13/timnit_gebru",
+          "publisher": "Democracy Now!",
+          "date": "2026-08-13",
+          "kind": "talk",
+          "identity_quote": "founder and executive director of the Distributed Artificial Intelligence Research Institute",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "How a Black Woman is Making AI a Force for Equity",
+          "url": "https://www.rwjf.org/en/grants/grantee-stories/2025/09/how-a-black-woman-is-making-ai-a-force-for-equity.html",
+          "publisher": "Robert Wood Johnson Foundation",
+          "date": "2025-09",
+          "kind": "article",
+          "identity_quote": "How a Black Woman is Making AI a Force for Equity",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Ethiopian-born computer scientist Timnit Gebru's debut book Deep Unlearning is now available for preorder",
+          "url": "https://brittlepaper.com/2026/08/ethiopian-born-computer-scientist-timnit-gebrus-debut-book-deep-unlearning-is-now-available-for-preorder/",
+          "publisher": "Brittle Paper",
+          "date": "2026-08",
+          "kind": "article",
+          "identity_quote": "Timnit Gebru's debut book Deep Unlearning",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. The NBC 'Gender Shades' row has an unknown date and a weak claim quote (only the paper title). Wikipedia and Ars Electronica also support it. RWJF identity rests on the page title alone; confirm it names her. Her TIME100 (2022) recognition appears only in secondary or aggregator sources, so it's left out until a time.com page confirms it. The book's publication date and subtitle conflict between listings (Atria/S&S, Feb 16, 2027 vs Verso, Feb 3, 2027), so no date is stated. I skipped birthplace, refugee background and the Carnegie 'Great Immigrants' honour as personal. The DAIR team page (dair-institute.org) is the organisation's site, not a personal one; website left null."
+    },
+    "d9c8b9cc-2cff-4cb0-b5b1-dda9f019120e": {
+      "name": "X Eyee",
+      "slug": "x-eyee",
+      "identity": {
+        "score": "medium",
+        "evidence": [
+          "Sources spell the name 'X. Eyeé', a variant of the official 'X Eyee'",
+          "SDCCD release's 'nearly two decades at Google, Microsoft, and the U.S. Department of Defense' matches the bio's 'two decades ... Google, Microsoft, and public sector'",
+          "Google responsible-AI and skin-tone research background matches the bio's two Google research teams",
+          "Note: other sources list her current role as CEO of Malo Santo and Senior Policy Advisor at UC Berkeley, not Offline Research, so the employer isn't confirmed for 2026"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Founded Google's Skin Tone research team, which built new techniques to reduce bias in AI systems.",
+          "url": "https://www.sdccd.edu/departments/communications/newscenter/articles/2026/ai-day-event.aspx",
+          "publisher": "San Diego Community College District",
+          "date": "2026-01-29",
+          "tier": 1,
+          "identity_quote": "Community college alumna, award-winning AI expert to headline second annual InnovAItion Day",
+          "claim_quote": "founded the Skin Tone research team",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "A California community college alum, she returned to keynote San Diego's 2026 InnovAItion Day on AI.",
+          "url": "https://www.sdccd.edu/departments/communications/newscenter/articles/2026/ai-day-event.aspx",
+          "publisher": "San Diego Community College District",
+          "date": "2026-01-29",
+          "tier": 1,
+          "identity_quote": "Over nearly two decades at Google, Microsoft, and the U.S. Department of Defense",
+          "claim_quote": "Community college alumna, award-winning AI expert to headline second annual InnovAItion Day",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Community college alumna, award-winning AI expert to headline second annual InnovAItion Day",
+          "url": "https://www.sdccd.edu/departments/communications/newscenter/articles/2026/ai-day-event.aspx",
+          "publisher": "San Diego Community College District",
+          "date": "2026-01-29",
+          "kind": "talk",
+          "identity_quote": "X. Eyeé will be Keynote Speaker at the District's 2026 AI Day",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Milken Institute Global Conference 2024 speaker: X Eyee",
+          "url": "https://milkeninstitute.org/events/global-conference-2024/speakers/x-eyee",
+          "publisher": "Milken Institute",
+          "date": "2024",
+          "kind": "talk",
+          "identity_quote": "x eyee",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Black History Month & Pride: Meet X Eyee",
+          "url": "https://www.bet.com/article/e4e7qz/black-history-month-pride-meet-x-eyee",
+          "publisher": "BET",
+          "date": null,
+          "kind": "article",
+          "identity_quote": "Product Manager and part of the Google Research Data and Media Understanding Team for Responsible AI",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. Score is medium because no source ties her to Offline Research, and speaker-bureau pages (allamericanspeakers.com) list her as CEO of Malo Santo. I didn't use those bureau pages. The Milken row's identity quote is only the page title. Read the page and confirm it's her (the employer listed should be Google). The BET article is undated. Its identity quote came from a search summary, and a second search for it found nothing. Google's Monk Skin Tone Scale coverage doesn't name her, so I didn't link her to it."
+    },
+    "1b1e67bd-4340-4263-b0b3-01ef35a49191": {
+      "name": "Esosa Osa",
+      "slug": "esosa-osa",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Axios and other sources name her as founder of Onyx Impact, matching the official title and company",
+          "Fair Fight Action deputy executive director history matches the bio"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Her Onyx Impact team mapped 2,500 online accounts spreading disinformation to Black communities over four months.",
+          "url": "https://www.nbcnews.com/news/nbcblk/black-americans-disinformation-election-social-media-rcna157096",
+          "publisher": "NBC News",
+          "date": "2024",
+          "tier": 1,
+          "identity_quote": "Onyx Impact",
+          "claim_quote": "2,500 online accounts creating, sharing or amplifying disinformation to Black communities over four months",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "In 2025 she launched Onyx's Information Integrity Lab, pairing influencers with legacy Black newspapers to fight disinformation.",
+          "url": "https://www.axios.com/2025/08/06/onyx-impact-disinformation-lab-black-communities",
+          "publisher": "Axios",
+          "date": "2025-08-06",
+          "tier": 1,
+          "identity_quote": "Esosa Osa",
+          "claim_quote": "Every day it gets harder and more expensive to access the truth — while the cost of spreading lies keeps getting cheaper.",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "Onyx backs its work with the Digital Green Book, an AI tool for spotting misinformation and finding verified Black content.",
+          "url": "https://blavity.com/digital-green-book-misinformation",
+          "publisher": "Blavity",
+          "date": null,
+          "tier": 1,
+          "identity_quote": "Onyx Impact",
+          "claim_quote": "Digital Green Book",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "SCOOP: Onyx Impact launches disinformation lab for Black communities",
+          "url": "https://www.axios.com/2025/08/06/onyx-impact-disinformation-lab-black-communities",
+          "publisher": "Axios",
+          "date": "2025-08-06",
+          "kind": "article",
+          "identity_quote": "Esosa Osa",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "New report reveals how disinformation targets Black communities",
+          "url": "https://www.wabe.org/new-report-reveals-how-disinformation-targets-black-communities/",
+          "publisher": "WABE",
+          "date": "2024",
+          "kind": "article",
+          "identity_quote": "Onyx Impact",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Black Americans and disinformation in the election",
+          "url": "https://www.nbcnews.com/news/nbcblk/black-americans-disinformation-election-social-media-rcna157096",
+          "publisher": "NBC News",
+          "date": "2024",
+          "kind": "article",
+          "identity_quote": "Onyx Impact",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [
+        "https://crunchbase.com/person/esosa-ighodaro",
+        "https://www.andyawards.com/?p=10073"
+      ],
+      "researchedAt": "2026-11-03",
+      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. Most identity quotes are just 'Onyx Impact'. The reviewer must confirm each page names Esosa Osa. Blavity is owned by Blavity Inc. (AfroTech's parent), so it isn't fully independent. The Blavity row is also undated with a weak claim quote. Rows 1 and 3 are facts about the organisation's work rather than about her personally. Possible podcast appearances not confirmed to feature her: Laura Flanders 'Democracy Under Siege' (2024) and Crooked Media 'Assembly Required' deepfakes episode. Both were left out. Other people named Esosa (Ighodaro, Osagiede) are logged under notThisPerson. Her Fair Fight work and Stacey Abrams' name are in the official bio, so no political-views content was added."
+    },
+    "0baf0d07-ab06-4aba-bc21-e1b58694af0b": {
+      "name": "King Willonius",
+      "slug": "king-willonius",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Sources use 'Willonius \"King Willonius\" Hatcher' / 'Will Hatcher, aka King Willonius', matching the bio name",
+          "BBL Drizzy, TIME100 AI and Ad Age Tech Power List all match the official bio"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Made the original 'BBL Drizzy' track with the AI music tool Udio in April 2024, before Metro Boomin sampled it.",
+          "url": "https://musictech.com/news/music/king-willonius-ai-bbl-drizzy-metro-boomin/",
+          "publisher": "MusicTech",
+          "date": "2024",
+          "tier": 1,
+          "identity_quote": "king willonius ai bbl drizzy metro boomin",
+          "claim_quote": "Created using AI and shared back in April",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "Metro Boomin's May 2024 'BBL Drizzy' beat sampled his track without knowing it was AI-made.",
+          "url": "https://www.xxlmag.com/udio-ai-sued-metro-boomin-bbl-drizzy-drake-diss-riaa/",
+          "publisher": "XXL",
+          "date": "2024",
+          "tier": 1,
+          "identity_quote": "Metro Boomin's \"BBL Drizzy\"",
+          "claim_quote": "Metro was unaware that the sampled track was AI-generated",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "Was the only comedian on TIME's 2024 TIME100 AI list, in the Innovators category.",
+          "url": "https://creativitysquared.beehiiv.com/p/king-willonius-knows-how-to-manifest-do-you",
+          "publisher": "Creativity Squared",
+          "date": "2024",
+          "tier": 1,
+          "identity_quote": "King Willonius",
+          "claim_quote": "ONLY comedian (and one of two artists!)",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "How Will Hatcher, aka King Willonius, created hit AI song about Drake",
+          "url": "https://adage.com/events-awards/tech-power-list/aa-willhatcher-tool",
+          "publisher": "Ad Age",
+          "date": "2025",
+          "kind": "article",
+          "identity_quote": "Will Hatcher, aka King Willonius",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "The genius behind “BBL Drizzy” on maximizing creativity with AI",
+          "url": "https://bigthink.com/series/legends/willonius-hatcher/",
+          "publisher": "Big Think",
+          "date": null,
+          "kind": "talk",
+          "identity_quote": "The genius behind “BBL Drizzy”",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "How to go viral: King Willonius on BBL Drizzy",
+          "url": "https://thenextweb.com/news/how-to-go-viral-king-willonius-bbl-drizzy",
+          "publisher": "The Next Web",
+          "date": "2025-05-09",
+          "kind": "article",
+          "identity_quote": "king willonius bbl drizzy",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Page fetching was blocked by the session's network policy (WebFetch/curl got 403/ENOTFOUND for every news host tried), so every quote comes from the search tool's result text, which is a synthesized summary with embedded excerpts, not raw snippets. Treat all quotes as unverified until the mechanical check (step 5) fetches the page. One search summary wrongly dated BBL Drizzy to summer 2023. The other sources agree on April 2024, so that's what we use. The MusicTech and XXL identity quotes come from URL slugs or summary text. The XXL page is mainly about the Udio lawsuit. Creativity Squared is the host's newsletter for their podcast interview, so the 'only comedian' claim should be checked against TIME's list. The Ebony Power 100 (2025) and Ad Age claims came from agency bios, not from Ebony's own pages, and are already in the official bio, so they weren't repeated. No personal website was found. toolofna.com and innovativeartists.com are agency pages. 'AI & The Culture' didn't appear in any source."
+    },
+    "5e8e85a1-8c29-4f38-a58e-dc68d5809095": {
+      "name": "Simone Tyler",
+      "slug": "simone-tyler",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "BMC speaker page names 'Simone Ashley Tyler' as Senior Vice President at Blavity, Inc. (full name matches official bio)",
+          "Howard HU2U podcast page lists her as SVP at Blavity and connects her to AfroTech",
+          "Essence 2024 quotes her as SVP of AfroTech + Live Events at Blavity, Inc. (exact current title)"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Beyond AfroTech, she's led Blavity's Talent Infusion and helped launch HealthStack, a newer initiative at the meeting point of tech and well-being.",
+          "url": "https://www.bmc.org/node/178523",
+          "publisher": "Boston Medical Center (BMC)",
+          "date": null,
+          "tier": 1,
+          "identity_quote": "Senior Vice President at Blavity, Inc.",
+          "claim_quote": "including AfroTech, Talent Infusion and most recently, the launch of HealthStack",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "A Howard alum, she has called AfroTech a \"tech homecoming\" for HBCU graduates on Howard's own HU2U podcast.",
+          "url": "https://howard.edu/podcast/s2/gen-ai-mini-series/e3/how-our-alumni-wielding-ai-entrepreneurship-big-tech",
+          "publisher": "Howard University (HU2U podcast)",
+          "date": null,
+          "tier": 1,
+          "identity_quote": "SVP of Revenue & Afrotech, Blavity",
+          "claim_quote": "tech homecoming",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "The GenAI Revolution, Ep 3: How our Alumni are Wielding AI in Entrepreneurship and Big Tech",
+          "url": "https://howard.edu/podcast/s2/gen-ai-mini-series/e3/how-our-alumni-wielding-ai-entrepreneurship-big-tech",
+          "publisher": "Howard University (HU2U podcast)",
+          "date": null,
+          "kind": "podcast",
+          "identity_quote": "SVP of Revenue & Afrotech, Blavity",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "What to expect at AfroTech 2024",
+          "url": "https://www.essence.com/news/money-career/what-to-expect-afrotech-2024/",
+          "publisher": "Essence",
+          "date": "2024",
+          "kind": "article",
+          "identity_quote": "Senior Vice President of AfroTech + Live Events at Blavity, Inc.",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "What you missed so far at AfroTech Conference 2025",
+          "url": "https://afrotech.com/what-you-missed-so-far-afrotech-conference-2025",
+          "publisher": "AfroTech (Blavity)",
+          "date": "2025",
+          "kind": "article",
+          "identity_quote": "Senior Vice President of AFROTECH™ and Live Events at Blavity Inc. Simone Ashley Tyler",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [
+        "https://en.wikipedia.org/wiki/Simone_Ashley"
+      ],
+      "researchedAt": "2026-11-03",
+      "notes": "Page fetches were blocked by the session network (bmc.org, howard.edu, essence.com etc. all failed), so every quote comes from the search tool's result text, which is partly summarised: verify each quote verbatim before publishing. The Howard page's title for her (SVP of Revenue) is older than her current title; the 'tech homecoming' quote may be the host's framing rather than hers - check. The AfroTech 2025 article is employer-owned (Blavity). Several 2022-2023 sources (Essence, Hype Magazine, EventMarketer) name 'Simone White' as AfroTech/Blavity SVP; her LinkedIn slug is 'simoneashleywhite', so this is likely an earlier name, but per the guardrail on former names I did not use those sources. Skipped the actress Simone Ashley (Bridgerton) results."
+    },
+    "386b1fd3-a57e-45be-89f2-5750615040e0": {
+      "name": "Troy Millings",
+      "slug": "troy-millings",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Every source pairs him with Rashad Bilal and Earn Your Leisure (distinctive co-founder pairing)",
+          "Publisher listings credit 'Rashad Bilal and Troy Millings' as co-authors, described as Earn Your Leisure co-founders",
+          "Black Enterprise describes him as an educator who taught in the Bronx, matching the 'former educator' bio"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "He co-wrote You Deserve to Be Rich with Rashad Bilal, which became an instant New York Times bestseller.",
+          "url": "https://profilebooks.com/work/you-deserve-to-be-rich/",
+          "publisher": "Profile Books",
+          "date": null,
+          "tier": 2,
+          "identity_quote": "Rashad Bilal and Troy Millings",
+          "claim_quote": "INSTANT NEW YORK TIMES BESTSELLER",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "A second book with Rashad Bilal, Get Rich From Relationships, is due from Penguin Random House's Crown Currency in January 2027.",
+          "url": "https://www.blackenterprise.com/earn-your-leisure-founders-announce-new-book/",
+          "publisher": "Black Enterprise",
+          "date": "2026",
+          "tier": 1,
+          "identity_quote": "Rashad Bilal, Troy Millings, Earn Your Leisure",
+          "claim_quote": "Get Rich From Relationships: Build Your Winner's Circle for Ultimate Success",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "Before EYL took off, he and Rashad Bilal taught financial literacy to public school students in the Bronx.",
+          "url": "https://www.blackenterprise.com/how-earn-your-leisure-financial-literacy-culture/",
+          "publisher": "Black Enterprise",
+          "date": null,
+          "tier": 1,
+          "identity_quote": "Hosted by financial advisor Rashad Bilal and educator Troy Millings",
+          "claim_quote": "Bilal and Millings taught financial literacy to public school students in the Bronx, New York",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Earn Your Leisure founders announce new book",
+          "url": "https://www.blackenterprise.com/earn-your-leisure-founders-announce-new-book/",
+          "publisher": "Black Enterprise",
+          "date": "2026",
+          "kind": "article",
+          "identity_quote": "Rashad Bilal, Troy Millings, Earn Your Leisure",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Earn Your Leisure, Steve Harvey and Invest Fest 2025",
+          "url": "https://www.vibe.com/news/events/earn-your-leisure-steve-harvey-invest-fest-2025-1235076421",
+          "publisher": "Vibe",
+          "date": "2025",
+          "kind": "article",
+          "identity_quote": "Earn Your Leisure",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Why financial literacy can't wait with Earn Your Leisure (Perspektives with Bank)",
+          "url": "https://omny.fm/shows/perspektives/why-financial-literacy-cant-wait-with-earn-your-leisure",
+          "publisher": "Perspektives with Bank",
+          "date": null,
+          "kind": "podcast",
+          "identity_quote": "Troy and Rashad's three-decade friendship and business partnership",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Page fetches were blocked by the session network; quotes are from search-tool result text and must be verified verbatim. The bestseller row's identity_quote is the author credit as shown in search listings, not confirmed on the Profile Books page itself; penguinrandomhouse.com/books/741593/ is an alternative source. Book release dates conflict across listings, so the fact avoids a year. Vibe article title is reconstructed from its URL slug and I did not see his name in its snippet: confirm the title and that he is named, or drop it. The Perspektives episode is undated. Skipped the 2023 Invest Fest $1M check from Sean Combs given the controversy around him."
+    },
+    "61fe31ae-7445-4497-bdcd-deaa73324637": {
+      "name": "Rashad Bilal",
+      "slug": "rashad-bilal",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Sources consistently name him as Earn Your Leisure co-founder alongside Troy Millings",
+          "Podcast show notes call him 'co-founder of Earn Your Leisure'",
+          "Black Enterprise calls him a financial advisor, consistent with the bio's wealth-management start"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "He co-wrote You Deserve to Be Rich with Troy Millings, which became an instant New York Times bestseller.",
+          "url": "https://profilebooks.com/work/you-deserve-to-be-rich/",
+          "publisher": "Profile Books",
+          "date": null,
+          "tier": 2,
+          "identity_quote": "Rashad Bilal and Troy Millings",
+          "claim_quote": "INSTANT NEW YORK TIMES BESTSELLER",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "His next book with Troy Millings, Get Rich From Relationships, is about building a winner's circle and lands in January 2027.",
+          "url": "https://www.blackenterprise.com/earn-your-leisure-founders-announce-new-book/",
+          "publisher": "Black Enterprise",
+          "date": "2026",
+          "tier": 1,
+          "identity_quote": "Rashad Bilal, Troy Millings, Earn Your Leisure",
+          "claim_quote": "Get Rich From Relationships: Build Your Winner's Circle for Ultimate Success",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "You Deserve to Be Rich with Earn Your Leisure's Rashad Bilal (The Money Mondays)",
+          "url": "https://podcastrex.com/shows/the-money-mondays/you-deserve-to-be-rich-with-earn-your-leisures-rashad-bilal-e155",
+          "publisher": "The Money Mondays (Dan Fleyshman)",
+          "date": null,
+          "kind": "podcast",
+          "identity_quote": "Dan Fleyshman sits down with Rashad Bilal, co-founder of Earn Your Leisure",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Earn Your Leisure founders announce new book",
+          "url": "https://www.blackenterprise.com/earn-your-leisure-founders-announce-new-book/",
+          "publisher": "Black Enterprise",
+          "date": "2026",
+          "kind": "article",
+          "identity_quote": "Rashad Bilal, Troy Millings, Earn Your Leisure",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Page fetches were blocked; quotes are from search-tool result text and need verbatim checks. Book facts are shared with Troy Millings (co-authors). The Money Mondays episode is on podcastrex.com (an aggregator); the original show page would be a better URL if the reviewer finds it. Skipped: Atlanta Black Star 2026-08-03 piece on his Breakfast Club comments about Atlanta and its mayor (involves a dispute with a politician; reviewer may add it); net-worth/height sites (blocked category); the 2023 Sean Combs $1M check. No source mentioned The Bilal Group."
+    },
+    "594a570a-5ff2-4221-bf52-5e121416b457": {
+      "name": "TK Petersen",
+      "slug": "tk-petersen",
+      "identity": {
+        "score": "medium",
+        "evidence": [
+          "The Consortium (VI outlet) headline names 'T.K. Petersen, Co-Founder Of Popular Private Membership Club In Atlanta'",
+          "Multiple outlets name him alongside Ryan Wilson as Gathering Spot co-founder (sometimes misspelled 'Peterson')",
+          "No source located that I could read in full; identity rests on headlines and search excerpts"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "The Gathering Spot, which he co-founded, has hosted more than 3,000 events for clients including Netflix, Google, Spotify and Coca-Cola.",
+          "url": "https://viconsortium.com/VIC/?p=72443",
+          "publisher": "The Virgin Islands Consortium",
+          "date": null,
+          "tier": 1,
+          "identity_quote": "T.K. Petersen, Co-Founder Of Popular Private Membership Club In Atlanta, Gets Forbes Feature",
+          "claim_quote": "over 3,000 events",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "How The Gathering Spot evolved over 10 years into an Atlanta civic hub",
+          "url": "https://www.ajc.com/business/2026/04/how-the-gathering-spot-evolved-over-10-years-into-an-atlanta-civic-hub/",
+          "publisher": "The Atlanta Journal-Constitution",
+          "date": "2026-04",
+          "kind": "article",
+          "identity_quote": "The Gathering Spot",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Thin results and fetches blocked. The Consortium headline also calls him a St. Croix native; I left hometown out of the fact text (home-location guardrail), and the reviewer can decide whether birthplace is fine. The claim quote 'over 3,000 events' is a short phrase from the search excerpt; verify on page (the article is c. 2019, undated in results). AJC article title is from the URL slug; the search tool said it presents him as a co-founder but I did not see a verbatim phrase naming him, so its identity_quote is weak: confirm he is named before publishing. Deliberately skipped: a People of Color in Tech item alleging he was fired and Greenwood lawsuit coverage (undated, contested, employment-dispute content); a 'USVI ambassador' video whose meaning I couldn't confirm; a search-excerpt claim that he was a former Fannie Mae portfolio manager (could not tie to a specific URL)."
+    },
+    "6c70d75f-7b27-447b-8b57-9fc739473584": {
+      "name": "Ryan Wilson",
+      "slug": "ryan-wilson",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Hope Global Forums speaker page: 'Co-Founder and CEO of TGS Holdings' and The Gathering Spot (distinctive company)",
+          "2019 A3C coverage names him as co-founder and CEO of The Gathering Spot",
+          "Common name; every row used requires The Gathering Spot in the same source"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "In 2019 The Gathering Spot and Paul Judge Media Group took a combined majority stake in A3C, Atlanta's long-running hip-hop festival and conference.",
+          "url": "https://respect-mag.com/2019/01/atlantas-a3c-festival-conference-finalize-strategic-investment-deal-with-the-gathering-spot-and-paul-judge-media-group-in-preparation-for-15th-anniversary",
+          "publisher": "Respect Magazine",
+          "date": "2019-01",
+          "tier": 1,
+          "identity_quote": "co-founder and chief executive officer of The Gathering Spot",
+          "claim_quote": "have a combined majority stake in the festival",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "He serves on Georgetown University's Board of Regents, giving back to the school where he earned both his undergrad and law degrees.",
+          "url": "https://hopeglobalforums.org/speaker/ryan-wilson/",
+          "publisher": "Hope Global Forums",
+          "date": null,
+          "tier": 1,
+          "identity_quote": "Co-Founder and CEO of TGS Holdings",
+          "claim_quote": "proudly serves on the Board of Regents at Georgetown",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "In 2025 The Gathering Spot raised $30 million, $25M equity and $5M debt, to grow its locations and programming.",
+          "url": "https://afrotech.com/the-gathering-spot-secures-new-strategic-funding",
+          "publisher": "AfroTech",
+          "date": "2025-07",
+          "tier": 1,
+          "identity_quote": "The Gathering Spot",
+          "claim_quote": "$25 million in equity and $5 million in debt financing",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "The Gathering Spot Secures Spot As A Leader In Social Clubs With $30M Investment And Heavy-Hitting Support",
+          "url": "https://www.blackenterprise.com/gathering-spot-secures-30m-funding",
+          "publisher": "Black Enterprise",
+          "date": "2025",
+          "kind": "article",
+          "identity_quote": "The Gathering Spot",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Ryan Wilson is on a mission to scale Black excellence",
+          "url": "https://www.revolt.tv/article/ryan-wilson-is-on-a-mission-to-scale-black-excellence",
+          "publisher": "Revolt",
+          "date": null,
+          "kind": "article",
+          "identity_quote": "Ryan Wilson",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "How The Gathering Spot evolved over 10 years into an Atlanta civic hub",
+          "url": "https://www.ajc.com/business/2026/04/how-the-gathering-spot-evolved-over-10-years-into-an-atlanta-civic-hub/",
+          "publisher": "The Atlanta Journal-Constitution",
+          "date": "2026-04",
+          "kind": "article",
+          "identity_quote": "The Gathering Spot",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [
+        "https://www.naag.org/person/ryan-wilson"
+      ],
+      "researchedAt": "2026-11-03",
+      "notes": "Common name; fetches blocked, so quotes come from search-tool result text and need verbatim checks. The $30M row and all three articles have weak identity_quotes (company name only, or his name with no company); confirm Ryan Wilson + The Gathering Spot appear on each page, or drop the row. AfroTech is a Blavity property and Blavity is reported as TGS's sales/activation partner, so the $30M source is not fully independent (Black Enterprise covers the same round). Revolt article title from URL slug, undated. Georgetown Board of Regents may be dated; check the speaker page year. NAAG 'Ryan Wilson' is a different person (attorney general association) and was not used. Skipped LA-location closure, Greenwood dispute and lawsuit coverage."
+    },
+    "3647b5d2-3a6b-40e9-ba1a-fa741b22a0a4": {
+      "name": "Arielle Clay Poteau",
+      "slug": "arielle-clay-poteau",
+      "identity": {
+        "score": "medium",
+        "evidence": [
+          "21Ninety (a Blavity Inc. brand) author page is titled 'Arielle Clay' but lives at the slug /author/arielle-poteau, joining both surnames",
+          "That page describes her as Deputy Editor for 21Ninety with Blavity Inc. since 2022, matching the bio's 'editorial leadership at Blavity'",
+          "Blavity articles carry the byline 'Arielle Poteau'"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "As Deputy Editor at Blavity's 21Ninety, she led lifestyle coverage of beauty, fashion and relationships.",
+          "url": "https://21ninety.com/author/arielle-poteau",
+          "publisher": "21Ninety (Blavity Inc.)",
+          "date": null,
+          "tier": 2,
+          "identity_quote": "Arielle Clay is the Deputy Editor for 21Ninety",
+          "claim_quote": "specializes in lifestyle content specifically beauty, fashion and relationships",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Summit21 2025 Proved Why Black Women Deserve the World",
+          "url": "https://21ninety.com/summit21-house-blavity-fest-2025",
+          "publisher": "21Ninety",
+          "date": "2025",
+          "kind": "article",
+          "identity_quote": "Arielle Clay",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Celebrating the Best Wellness Podcasts Centering Black Women’s Health",
+          "url": "https://21ninety.com/best-wellness-podcasts",
+          "publisher": "21Ninety",
+          "date": null,
+          "kind": "article",
+          "identity_quote": "Arielle Clay",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Little public coverage beyond her own bylines; no TV-station bio found for her reporter years. Articles are pieces she wrote (byline seen only in search summary), not coverage of her. Graduation year from the author bio was left out (implies age). Page fetches were blocked by the session's network policy, so all quotes come from search results; the search tool returns a summary with quoted fragments, so verify each quote on the page."
+    },
+    "5ed08bf9-1332-4546-a2c3-ad43f1987ea1": {
+      "name": "Vic Mensa",
+      "slug": "vic-mensa",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Widely covered public figure; sources name him together with the Orange Tree series, 93 Boyz and Chance the Rapper, all matching the bio"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "He co-organized the first Black Star Line Festival with Chance the Rapper, a free Accra concert that drew more than 50,000 fans in January 2023.",
+          "url": "https://americansongwriter.com/chance-the-rapper-and-vic-mensas-inaugural-black-star-line-festival-draws-more-than-50000-fans/?nb=1",
+          "publisher": "American Songwriter",
+          "date": "2023",
+          "tier": 1,
+          "identity_quote": "Chance the Rapper and Vic Mensa's Inaugural Black Star Line Festival",
+          "claim_quote": "Draws More Than 50,000 Fans",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "His Orange Tree video series took home a Webby in the Social Content Series category for Arts, Culture & Lifestyle.",
+          "url": "https://www.essence.com/entertainment/vic-mensa-webby-awards-dj-set/",
+          "publisher": "Essence",
+          "date": null,
+          "tier": 1,
+          "identity_quote": "Vic Mensa",
+          "claim_quote": "recognized with a Webby Award for his Orange Tree series in the Arts, Culture & Lifestyle, Social Content Series category",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Vic Mensa to expand his ‘Orange Tree’ thoughts with launch of new podcast, ‘The Vic Mensa Show’",
+          "url": "https://thegrio.com/2026/08/11/vic-mensa-vic-mensa-show-podcast/",
+          "publisher": "theGrio",
+          "date": "2026-08-11",
+          "kind": "article",
+          "identity_quote": "Vic Mensa to expand his ‘Orange Tree’ thoughts",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Review: Vic Mensa always has Chicago on his mind as he brings ‘Innanetape’ tour back home",
+          "url": "https://chicago.suntimes.com/music/2026/10/29/review-vic-mensa-innanetape-tour-chicago-show",
+          "publisher": "Chicago Sun-Times",
+          "date": "2026-10-29",
+          "kind": "article",
+          "identity_quote": "Vic Mensa always has Chicago on his mind",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Vic Mensa, Black media empire",
+          "url": "https://www.blackenterprise.com/vic-mensa-media-ownership-black-wealth/",
+          "publisher": "Black Enterprise",
+          "date": null,
+          "kind": "article",
+          "identity_quote": "Vic Mensa",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Webby: Essence calls it a Webby Award, but Revolt describes a People's Voice win for the series; check which before publishing and keep the wording generic ('took home a Webby'). Year not confirmed (likely 2026). The Black Enterprise title shown is the search result's title; check the real headline and date. Skipped 93 Boyz facts because the bio already covers it and I couldn't tie individual claims (IAC award, 'first Black-owned cannabis brand in Illinois') to a specific page. Avoided net-worth/biography sites that appeared in results. Page fetches were blocked, so all quotes come from search results and need checking on the page."
+    },
+    "8db5f67a-159a-453a-808d-483bdbe2e725": {
+      "name": "Steve Stoute",
+      "slug": "steve-stoute",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Sources name him as founder of UnitedMasters and/or Translation, matching title and company"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Variety named him its Music Mogul of the Year in 2025.",
+          "url": "https://variety.com/2025/biz/news/skydance-fcc-paramount-steve-stoute-variety-music-mogul-1236469907",
+          "publisher": "Variety",
+          "date": "2025",
+          "tier": 1,
+          "identity_quote": "UnitedMasters founder Steve Stoute",
+          "claim_quote": "Why Steve Stoute is Variety’s Music Mogul of the Year",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "Advertising Age crowned him Executive of the Year in 2013, back when he was running his agency Translation.",
+          "url": "https://www.globenewswire.com/news-release/2013/01/29/1309353/0/en/Translation-s-Steve-Stoute-Named-Advertising-Age-s-Executive-of-the-Year.html?print=1",
+          "publisher": "Translation via GlobeNewswire (press release)",
+          "date": "2013-01-29",
+          "tier": 2,
+          "identity_quote": "Translation's Steve Stoute",
+          "claim_quote": "named the 2013 Executive of the Year by Advertising Age",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "LISTEN: Skydance Media Offers Olive Branches to FCC; Why Steve Stoute is Variety’s Music Mogul of the Year",
+          "url": "https://variety.com/2025/biz/news/skydance-fcc-paramount-steve-stoute-variety-music-mogul-1236469907",
+          "publisher": "Variety",
+          "date": "2025",
+          "kind": "podcast",
+          "identity_quote": "UnitedMasters founder Steve Stoute",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Steve Stoute on UnitedMasters, a New Deal with Apple Music, Ownership in Hip-Hop, and Why Brands Value Indie Artists",
+          "url": "https://trapital.co/steve-stoute-on-unitedmasters-a-new-deal-with-apple-music-ownership-in-hip-hop-and-why-brands-value-indie-artists/",
+          "publisher": "Trapital",
+          "date": null,
+          "kind": "podcast",
+          "identity_quote": "Steve Stoute on UnitedMasters",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Steve Stoute UnitedMasters interview",
+          "url": "https://www.complex.com/music/a/j-rose/steve-stoute-unitedmasters-interview",
+          "publisher": "Complex",
+          "date": null,
+          "kind": "article",
+          "identity_quote": "steve stoute unitedmasters interview",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Ad Age year: the press release and Wikipedia say 2013 and CB Insights says 2016; I used 2013. The Complex and Trapital pieces had no visible date; check them, and drop them if they're old. The Complex title is reconstructed from the URL slug, so replace it with the real headline. Also seen but not used: AfroTech Future 50 honoree (afrotech.com is the conference's own publisher, so it isn't independent) and a 2025 UnitedMasters Brazil expansion (only a careers-blog source). NPR's 2022 'Steve Stoute on staying one step ahead of the music industry' is a good older interview if needed. Page fetches were blocked; quotes come from search results."
+    },
+    "8dda1503-0c74-4546-bc3a-75a75b485652": {
+      "name": "Chris Lyons",
+      "slug": "chris-lyons",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "a16z's own author page and other sources pair 'Chris Lyons' with a16z and the Cultural Leadership Fund (founded 2018), matching the bio",
+          "Design Better episode title names 'Christopher Lyons' and his move from music to venture capital, matching his a16z background"
+        ]
+      },
+      "website": {
+        "url": "https://chrislyons.substack.com/p/coming-soon",
+        "identity_quote": "Chris Lyons's Newsletter",
+        "quote_seen_in": "search-snippet",
+        "status": "draft"
+      },
+      "facts": [
+        {
+          "text": "Before venture capital, he started out as a music producer working with Jermaine Dupri of Atlanta's So So Def Records.",
+          "url": "https://designbetterpodcast.com/p/christopher-lyons",
+          "publisher": "Design Better podcast",
+          "date": "2025-06-10",
+          "tier": 1,
+          "identity_quote": "Christopher Lyons: From producing music to venture capital",
+          "claim_quote": "Chris started his career as a music producer with Jermaine Dupri, founder of So So Def records in Atlanta",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "text": "He advises the James Beard Foundation and Yuga Labs, bringing food and Web3 into his portfolio of causes.",
+          "url": "https://a16z.com/author/chris-lyons/",
+          "publisher": "Andreessen Horowitz",
+          "date": null,
+          "tier": 2,
+          "identity_quote": "President, Web3 Media at a16z crypto",
+          "claim_quote": "Board of Advisors of Yuga Labs, James Beard Foundation",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Christopher Lyons: From producing music to venture capital, and why EQ beats IQ in building the future",
+          "url": "https://designbetterpodcast.com/p/christopher-lyons",
+          "publisher": "Design Better",
+          "date": "2025-06-10",
+          "kind": "podcast",
+          "identity_quote": "Christopher Lyons: From producing music to venture capital",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "No source found for the title 'President, a16z Halo'; searches found only 'President, Web3 Media at a16z crypto' and General Partner/CLF. One unvetted site (yespress.io, not cited) claims he left a16z in Feb 2026 to start his own fund, which conflicts with the official title, so don't publish it. The jamesbeard.org bio says he sits on the James Beard 'board', while a16z says 'Board of Advisors'; I used a16z's wording ('advises'). Identity for the a16z quote: the 'President, Web3 Media' phrase came from an a16z bio snippet, and the search didn't make clear which a16z URL it was on, so confirm it on the author page. Design Better is a premium episode with only a public preview. Website: a Substack newsletter; I couldn't confirm the a16z link on the page itself, so check it or drop it. a16z.com fetches were blocked."
+    },
+    "d7f0b85e-fec0-4534-86f2-d9d576962e36": {
+      "name": "Jonathan Yeldell",
+      "slug": "jonathan-yeldell",
+      "identity": {
+        "score": "low",
+        "evidence": [
+          "No public source found naming Jonathan Yeldell with AWS or any other identifying detail"
+        ]
+      },
+      "website": null,
+      "facts": [],
+      "articles": [],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Three searches (name alone, name + AWS, surname + AWS solutions architect) returned nothing about him; results were other Jonathans at AWS. Expected for an individual-contributor engineer; leave empty and rely on the official bio and LinkedIn."
+    },
+    "80b7a598-4bb0-4bf6-8180-2d03ae8cabc5": {
+      "name": "Gregory Green",
+      "slug": "gregory-green",
+      "identity": {
+        "score": "medium",
+        "evidence": [
+          "Cloud Foundry Weekly listing describes a Gregory Green with 'over 25 years of diverse experience' who 'specializes in cloud-native data services', which matches the official bio nearly word for word",
+          "Spring (Broadcom-owned) podcast episode covers GemFire/RabbitMQ/data services, his stated specialty, but the page does not name his employer",
+          "Common name; nothing found that ties to a different Gregory Green in this field"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Spring's A Bootiful Podcast billed him as a \"data guru\" in an August 2026 episode spanning GemFire, RabbitMQ Streams and vector search.",
+          "url": "https://spring.io/blog/2026/08/06/a-bootiful-podcast-gregory-green/",
+          "publisher": "Spring (spring.io blog)",
+          "date": "2026-08-06",
+          "tier": 2,
+          "identity_quote": "Tune into this episode with Gregory Green for a deep dive into GemFire, RabbitMQ Streams, Dataflow, and more.",
+          "claim_quote": "Data guru Gregory Green on RabbitMQ, Valkey, Gemfire, Data Flow, and more",
+          "quote_seen_in": "page",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "A Bootiful Podcast: Data guru Gregory Green on RabbitMQ, Valkey, Gemfire, Data Flow, and more",
+          "url": "https://spring.io/blog/2026/08/06/a-bootiful-podcast-gregory-green/",
+          "publisher": "Spring (spring.io blog)",
+          "date": "2026-08-06",
+          "kind": "podcast",
+          "identity_quote": "Tune into this episode with Gregory Green for a deep dive into GemFire, RabbitMQ Streams, Dataflow, and more.",
+          "quote_seen_in": "page",
+          "status": "draft"
+        },
+        {
+          "title": "Cloud Foundry Weekly: Data Services: Gemfire, MySQL, Postgres & Rabbit, Oh My! : Episode 14",
+          "url": "https://de.player.fm/1Bhlewl",
+          "publisher": "Cloud Foundry Weekly (via Player FM)",
+          "date": null,
+          "kind": "podcast",
+          "identity_quote": "Gregory Green is a seasoned software development and architecture expert with over 25 years of diverse experience",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Most hosts were unreachable from this session (only spring.io could be fetched), so other quotes come from search snippets. Leads not used: a VMware Explore 2025 hands-on lab (MODT1795LV, Aug 25, 2025, with Nick Kuhn) listed on blogs.vmware.com/tanzu/dont-miss-these-vmware-tanzu-sessions-at-vmware-explore-2025/ — I had no verbatim quote naming him, so verify on the page before adding. Tanzu blog posts by a Gregory Green (2018, 2023) were not verified as him. The Cloud Foundry Weekly episode's air date is unknown; prefer the canonical show page (share.transistor.fm) if a reviewer can confirm it. Spring is a Broadcom property, so the Spring podcast is tier 2."
+    },
+    "e0337a1c-4327-4456-841f-aeefa171acd5": {
+      "name": "Olukunle Owolabi",
+      "slug": "olukunle-owolabi",
+      "identity": {
+        "score": "low",
+        "evidence": [
+          "No public source found that names Olukunle Owolabi together with Meta or his described work (LLMs, recommender systems, MySQL infra)"
+        ]
+      },
+      "website": null,
+      "facts": [],
+      "articles": [],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Four searches (name + Meta/AI/ML, and the 'Dipo Owolabi' variant suggested by the LinkedIn slug) returned only other people with the surname Owolabi or generic Meta job pages; none were used. Nothing to publish beyond the official bio."
+    },
+    "7e7861c5-9778-4b98-8612-f604c2a4ef88": {
+      "name": "Nicole Murray",
+      "slug": "nicole-murray",
+      "identity": {
+        "score": "low",
+        "evidence": [
+          "No public source found naming Nicole Murray together with NVIDIA DGX Cloud or her prior AWS role"
+        ]
+      },
+      "website": null,
+      "facts": [],
+      "articles": [],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Three searches (NVIDIA DGX Cloud, AWS solutions architect, re:Invent/blog) returned only job postings and other people (e.g. a Sean Murray at AWS, a Nicole Foster at AWS); none used. Common name, so no facts recorded."
+    },
+    "807bff0e-0072-492c-b28f-ae3502229d3f": {
+      "name": "Rani Johnson",
+      "slug": "rani-johnson",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "Workday leadership page and Workday press release name her as Workday CIO",
+          "Multiple trade-press items (TIBCO, SolarWinds, Workday appointments) match the CIO career path in the official bio"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "As a NASA intern she was on a team whose code was deployed on the International Space Station.",
+          "url": "https://www.workday.com/en-us/company/about-workday/leadership/rani-johnson.html",
+          "publisher": "Workday",
+          "date": null,
+          "tier": 2,
+          "identity_quote": "Rani Johnson is chief information officer (CIO) at Workday.",
+          "claim_quote": "was part of a team that had code deployed on the International Space Station",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Workday Names Rani Johnson Chief Information Officer",
+          "url": "https://newsroom.workday.com/2023-03-20-Workday-Names-Rani-Johnson-Chief-Information-Officer",
+          "publisher": "Workday Newsroom",
+          "date": "2023-03-20",
+          "kind": "article",
+          "identity_quote": "Workday Names Rani Johnson Chief Information Officer",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "Could not fetch most pages (newsroom.workday.com, information-age.com, technologymagazine.com, wbcollaborative.org blocked), so quotes are from search snippets. Strong leads needing a verbatim quote before use: (1) Technology Magazine Top 100 Women 2025 ranked her No. 4 as CIO at Workday (https://technologymagazine.com/news/year-in-review-technology-magazines-top-10-women-2025; 2024 list reportedly No. 68) — tier 1, would make a good fact; (2) Information Age (TIBCO appointment) reportedly says she received a NASA award for ISS power-distribution software (https://information-age.com/?p=17040); (3) BreakLine podcast 'Rani Johnson: Go Out and Do Something Wonderful' (https://podcast.app/rani-johnson-go-out-and-do-something-wonderful-e145186078), recorded while she was TIBCO CIO, date unknown. The ISS fact partly overlaps the bio's NASA internship line but adds the space-station detail. Skipped clay.com results (people-search, banned)."
+    },
+    "35768b4f-38c3-4766-ae12-f0972f5018c2": {
+      "name": "Michelle Grover",
+      "slug": "michelle-grover",
+      "identity": {
+        "score": "high",
+        "evidence": [
+          "GeekWire and the Slalom announcement both name Michelle Grover as Slalom's first CTO, matching the official bio",
+          "Same sources tie her to her prior Twilio CIO role, so Twilio-era coverage is the same person"
+        ]
+      },
+      "website": null,
+      "facts": [
+        {
+          "text": "Before becoming Slalom's first CTO, she was the CIO at Twilio, the cloud communications company.",
+          "url": "https://www.geekwire.com/2022/tech-moves-ex-twilio-cio-named-cto-at-slalom-eviation-adds-ceo-docugami-builds-team/",
+          "publisher": "GeekWire",
+          "date": "2022",
+          "tier": 1,
+          "identity_quote": "Michelle Grover was appointed as the first chief technology officer of Slalom",
+          "claim_quote": "ex twilio cio named cto at slalom",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "articles": [
+        {
+          "title": "Tech Moves: Ex-Twilio CIO named CTO at Slalom; Eviation adds CEO; Docugami builds team",
+          "url": "https://www.geekwire.com/2022/tech-moves-ex-twilio-cio-named-cto-at-slalom-eviation-adds-ceo-docugami-builds-team/",
+          "publisher": "GeekWire",
+          "date": "2022",
+          "kind": "article",
+          "identity_quote": "ex twilio cio named cto at slalom",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        },
+        {
+          "title": "Slalom welcomes IT and Engineering leader Michelle Grover as its first Chief Technology Officer",
+          "url": "https://www.globalsecuritymag.fr/Slalom-welcomes-IT-and-Engineering,20220920,130069.html",
+          "publisher": "Global Security Mag",
+          "date": "2022-09-20",
+          "kind": "article",
+          "identity_quote": "Slalom welcomes IT and Engineering leader Michelle Grover as its first Chief Technology Officer",
+          "quote_seen_in": "search-snippet",
+          "status": "draft"
+        }
+      ],
+      "notThisPerson": [],
+      "researchedAt": "2026-11-03",
+      "notes": "No pages could be fetched (geekwire, mediapost, consulting.us, globalsecuritymag, technologymagazine blocked), so all quotes are search snippets. The GeekWire 'claim_quote' and article title are taken from the URL slug/search title (title capitalisation is my reconstruction; check on the page). The identity_quote on the GeekWire fact came from a snippet I could not pin to a single URL with certainty (it appeared in the Slalom-appointment results) — verify on the page. Good leads needing verbatim quotes: Twilio named her its first CIO in 2020 (https://www.mediapost.com/publications/article/354014/twilio-apponts-michelle-grover-as-cio.html); as SVP at SAP Concur she led teams building TripIt and the Concur mobile app; board seats at Apptentive and Onymos; Techtonica advisory board (2020 article); Technology Magazine Top 100 Women in Technology 2024 (https://publication.technologymagazine.com/technology-magazine-top-100-women-in-technology-2024/0155362001710410031/p10). These are all 2020–2024; nothing 2025–2026 found."
+    }
+  }
 }
