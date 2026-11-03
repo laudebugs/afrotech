@@ -32,9 +32,9 @@ Built on November 3:
   production builds and posts the starred ids on load, on every plan change and
   when a new worker takes over. The worker then saves those events' pages and
   `.ics` files.
-- **Updates:** a new worker takes over at once (`skipWaiting`) and drops older
-  caches, including saved event pages, since they point at the old styles.
-  Todo 022 replaces this with a "tap to reload" note.
+- **Updates:** since todo 022, an update waits for "Tap to reload", then drops
+  older caches, including saved event pages, since they point at the old
+  styles.
 - **`Vary: Origin`:** some servers send it, and module scripts carry an
   `Origin` header the precache request didn't, so lookups would miss. Every
   lookup ignores `Vary`. Without that, page scripts failed to load offline.
