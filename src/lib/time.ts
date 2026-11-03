@@ -52,8 +52,10 @@ export const dayKey = (value: string | Date) => dayKeyFmt.format(asDate(value));
 /** Noon on a Houston day ("2026-11-04"), safe to format as that date anywhere. */
 export const dayNoon = (day: string) => `${day}T12:00:00-06:00`;
 
+export const HOUR_MS = 3600_000;
+
 /** Default length of an event with no end time, as in the calendar export. */
-export const DEFAULT_EVENT_MS = 3600_000;
+export const DEFAULT_EVENT_MS = HOUR_MS;
 
 /** When an event ends, in ms: its end time, or an hour after it starts. */
 export const eventEndMs = (start: string, end: string | null | undefined) =>
