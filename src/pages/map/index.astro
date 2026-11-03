@@ -118,6 +118,7 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   import { syncPlan } from "../../scripts/plan-ui";
   import { eventRow } from "../../scripts/event-rows";
   import { currentHere } from "../../lib/here";
+  import { areaName } from "../../lib/area-name";
   import { FEET_PER_METRE, floorPlanTransform, type ControlPoint } from "../../lib/geo";
   import { dayKey, eventEndMs, everyMinute, formatDate, formatRange, previewNow } from "../../lib/time";
   import type { MapArea, MapEvent } from "../../lib/types";
@@ -132,8 +133,7 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   const data: MapData = JSON.parse(document.getElementById("map-data")!.textContent!);
 
   const isLive = (e: MapEvent, t: number) => Date.parse(e.start) <= t && t < eventEndMs(e.start, e.end);
-  /** "320" on the map; "Meeting Room 320" in words. */
-  const placeName = (area: MapArea) => (/^\d+$/.test(area.label) ? `Meeting Room ${area.label}` : area.label);
+  const placeName = areaName;
 
   // --- Pan and zoom -------------------------------------------------------
   const viewport = document.querySelector<HTMLElement>("[data-viewport]")!;
@@ -461,8 +461,9 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
       lastPickedArea = null;
       ({ x, y } = transform.toMap(here));
       radius = here.accuracy * FEET_PER_METRE;
-      // Well outside the drawing: say so rather than draw off the edge.
-      if (x < -430 || x > 490 || y < -70 || y > 1630) {
+      // Off the drawing: say so rather than draw past its edge.
+      const box = document.querySelector<SVGSVGElement>("[data-level] svg")!.viewBox.baseVal;
+      if (x < box.x || x > box.x + box.width || y < box.y || y > box.y + box.height) {
         youNote.textContent = "You're outside the area this map covers. Try the city map, or pick your room.";
         youNote.hidden = false;
         return;
@@ -478,20 +479,16 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
       g.setAttribute("class", "you-marker");
       g.setAttribute("role", "img");
       g.setAttribute("aria-label", "You are here");
-      if (radius) {
-        const ring = document.createElementNS(svgNS, "circle");
-        ring.setAttribute("class", "you-accuracy");
-        ring.setAttribute("cx", String(x));
-        ring.setAttribute("cy", String(y));
-        ring.setAttribute("r", String(radius));
-        g.append(ring);
-      }
-      const dot = document.createElementNS(svgNS, "circle");
-      dot.setAttribute("class", "you-dot");
-      dot.setAttribute("cx", String(x));
-      dot.setAttribute("cy", String(y));
-      dot.setAttribute("r", "14");
-      g.append(dot);
+      const circle = (cls: string, r: number) => {
+        const c = document.createElementNS(svgNS, "circle");
+        c.setAttribute("class", cls);
+        c.setAttribute("cx", String(x));
+        c.setAttribute("cy", String(y));
+        c.setAttribute("r", String(r));
+        g.append(c);
+      };
+      if (radius) circle("you-accuracy", radius);
+      circle("you-dot", 14);
       pins.append(g);
     });
   }
@@ -517,7 +514,7 @@ const json = JSON.stringify(mapData).replace(/</g, "\\u003c");
   } else if (startLevel && hasLevel(startLevel)) {
     showLevel(startLevel);
   }
-  // A room picked earlier (within 15 minutes) shows straight away.
+  // A room picked on another page, still in force, shows straight away.
   setTimeout(drawYou);
 </script>
 

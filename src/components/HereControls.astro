@@ -1,14 +1,13 @@
 ---
 // "Use my location" and "I'm at…", shared by /near/ and the floor plan.
 // The page listens for "here-change" on document to redraw.
-import { floorPlan } from "../lib/floor-plan";
+import { areaName, floorPlan, isPickable } from "../lib/floor-plan";
 
-// Places you can say you're at: rooms, halls and lobbies, not corridors.
-const PICKABLE = new Set(["hall", "stage", "room", "lobby", "balcony", "outside", "hotel"]);
+const PRIVACY = "Your location stays on this device; it's never sent anywhere.";
 const byLevel = new Map<number, { id: string; label: string }[]>();
 for (const [id, area] of Object.entries(floorPlan.areas)) {
-  if (!PICKABLE.has(area.kind)) continue;
-  const label = /^\d+$/.test(area.label) ? `Meeting Room ${area.label}` : area.label;
+  if (!isPickable(area.kind)) continue;
+  const label = areaName(area);
   if (!byLevel.has(area.level)) byLevel.set(area.level, []);
   byLevel.get(area.level)!.push({ id, label });
 }
@@ -17,7 +16,7 @@ const groups = [...byLevel.entries()]
   .map(([level, areas]) => ({ level, areas: areas.sort((a, b) => a.label.localeCompare(b.label, "en", { numeric: true })) }));
 ---
 
-<div class="here" data-here>
+<div class="here" data-here data-privacy={PRIVACY}>
   <div class="row">
     <button type="button" class="button" data-gps aria-pressed="false">Use my location</button>
     <label class="pick">
@@ -36,9 +35,7 @@ const groups = [...byLevel.entries()]
       </select>
     </label>
   </div>
-  <p class="status muted" role="status" data-here-status>
-    Your location stays on this device; it's never sent anywhere.
-  </p>
+  <p class="status muted" role="status" data-here-status>{PRIVACY}</p>
 </div>
 
 <script>
@@ -51,7 +48,8 @@ const groups = [...byLevel.entries()]
     const select = root.querySelector<HTMLSelectElement>("[data-pick]")!;
     const status = root.querySelector<HTMLElement>("[data-here-status]")!;
     const labelOf = (id: string) => select.querySelector<HTMLOptionElement>(`option[value="${id}"]`)?.textContent ?? id;
-    let note = "";
+    // A GPS error, shown until the next change of where you are.
+    let gpsError = "";
 
     function show() {
       const here = currentHere();
@@ -63,7 +61,7 @@ const groups = [...byLevel.entries()]
       } else if (here?.source === "gps") {
         status.textContent = `Using your location (within about ${formatDistance(here.accuracy)}). It stays on this device.`;
       } else {
-        status.textContent = note || "Your location stays on this device; it's never sent anywhere.";
+        status.textContent = gpsError || root.dataset.privacy!;
       }
     }
 
@@ -74,10 +72,14 @@ const groups = [...byLevel.entries()]
       }
       status.textContent = "Finding you…";
       const result = await startGps();
-      note = result === "ok" ? "" : result;
+      gpsError = result.ok ? "" : result.reason;
       show();
     });
-    select.addEventListener("change", () => (select.value ? pickArea(select.value) : clearPick()));
+    select.addEventListener("change", () => {
+      gpsError = "";
+      if (select.value) pickArea(select.value);
+      else clearPick();
+    });
     document.addEventListener("here-change", show);
     show();
   });

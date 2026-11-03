@@ -1,60 +1,33 @@
 ---
 // Near me: what's live or starting within the hour, closest first. Distances
 // use one scale for everything: rooms on the convention center map are turned
-// into latitude/longitude through the floor-plan transform, side events use
-// their looked-up addresses.
+// into latitude/longitude through the floor-plan transform, hotels and parks
+// use where they really are, and side events their looked-up addresses.
 import "../styles/event-rows.css";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HereControls from "../components/HereControls.astro";
 import SourcesFooter from "../components/SourcesFooter.astro";
 import { allEvents, venues } from "../lib/events";
-import { floorPlan } from "../lib/floor-plan";
-import { floorPlanTransform } from "../lib/geo";
+import { areaPlace, floorPlan } from "../lib/floor-plan";
+import type { NearEvent, Place } from "../lib/types";
 import geocodeJson from "../../data/geocode.json";
 
-const transform = floorPlanTransform(floorPlan.controlPoints);
 const geocode = geocodeJson as Record<string, { found: boolean; lat?: number; lng?: number }>;
 
-// Levels only mean something inside the convention center itself; the
-// Marriott, Discovery Green and The Grove sit on the Level 1 drawing as insets.
-const INDOOR_KINDS = new Set(["hall", "stage", "room", "lobby", "balcony", "corridor"]);
-const indoorLevel = (area: { kind: string; level: number }) => (INDOOR_KINDS.has(area.kind) ? area.level : null);
-
-type NearEvent = {
-  id: string;
-  title: string;
-  start: string;
-  end: string | null;
-  place: string;
-  /** Null when the event has no known place (expo areas, lounges, TBA). */
-  lat: number | null;
-  lng: number | null;
-  /** Floor-plan level for rooms in the convention center; null elsewhere. */
-  level: number | null;
-};
 const nearEvents: NearEvent[] = [];
 for (const e of allEvents) {
   if (!e.start) continue;
   const venue = e.locationKey ? venues[e.locationKey] : undefined;
-  const area = venue?.areaId ? floorPlan.areas[venue.areaId] : undefined;
-  let point: { lat: number | null; lng: number | null } = { lat: null, lng: null };
-  let level: number | null = null;
-  if (area) {
-    point = transform.toLatLng(area.center[0]!, area.center[1]!);
-    level = indoorLevel(area);
-  } else if (e.address && geocode[e.address.trim()]?.found) {
-    const g = geocode[e.address.trim()]!;
-    point = { lat: g.lat!, lng: g.lng! };
-  } else if (venue?.level) {
-    level = venue.level; // e.g. expo areas: Level 1, spot unknown
-  }
-  nearEvents.push({ id: e.id, title: e.title, start: e.start, end: e.end, place: e.locationLabel, ...point, level });
+  const geo = e.address ? geocode[e.address.trim()] : undefined;
+  let place: { lat: number | null; lng: number | null; level: number | null } = { lat: null, lng: null, level: null };
+  if (venue?.areaId) place = areaPlace(venue.areaId) ?? place;
+  else if (geo?.found) place = { lat: geo.lat!, lng: geo.lng!, level: null };
+  else if (venue?.level) place.level = venue.level; // e.g. expo areas: Level 1, spot unknown
+  nearEvents.push({ id: e.id, title: e.title, start: e.start, end: e.end, place: e.locationLabel, ...place });
 }
 // Rooms you can pick, as points, so a pick works like a GPS fix.
-const areaPoints = Object.fromEntries(
-  Object.entries(floorPlan.areas).map(([id, a]) => [id, { ...transform.toLatLng(a.center[0]!, a.center[1]!), level: indoorLevel(a) }]),
-);
-const json = JSON.stringify({ nearEvents, areaPoints }).replace(/</g, "\\u003c");
+const areaPlaces: Record<string, Place> = Object.fromEntries(Object.keys(floorPlan.areas).map((id) => [id, areaPlace(id)!]));
+const json = JSON.stringify({ nearEvents, areaPlaces }).replace(/</g, "\\u003c");
 ---
 
 <BaseLayout title="Near me · AfroTech 2026 Planner" active="now">
@@ -74,57 +47,52 @@ const json = JSON.stringify({ nearEvents, areaPoints }).replace(/</g, "\\u003c")
 <script is:inline type="application/json" id="near-data" set:html={json} />
 
 <script>
-  import { currentHere } from "../lib/here";
+  import { herePlace } from "../lib/here";
   import { formatDistance, haversineMetres } from "../lib/geo";
   import { eventEndMs, everyMinute, formatRange, previewNow } from "../lib/time";
   import { eventRow } from "../scripts/event-rows";
   import { syncPlan } from "../scripts/plan-ui";
+  import type { NearEvent, Place } from "../lib/types";
 
-  type NearEvent = { id: string; title: string; start: string; end: string | null; place: string; lat: number | null; lng: number | null; level: number | null };
-  const { nearEvents, areaPoints } = JSON.parse(document.getElementById("near-data")!.textContent!) as {
+  const { nearEvents, areaPlaces } = JSON.parse(document.getElementById("near-data")!.textContent!) as {
     nearEvents: NearEvent[];
-    areaPoints: Record<string, { lat: number; lng: number; level: number | null }>;
+    areaPlaces: Record<string, Place>;
   };
   const HOUR = 3600_000;
   // A change of level costs about as much as walking 30 m (stairs, escalator).
   const LEVEL_PENALTY_M = 30;
+  const events = (n: number) => `${n} ${n === 1 ? "event is" : "events are"}`;
 
   const list = document.querySelector<HTMLElement>("[data-near]")!;
   const summary = document.querySelector<HTMLElement>("[data-summary]")!;
 
   function render() {
-    const here = currentHere();
-    const t = previewNow();
+    const now = previewNow();
     const soon = nearEvents.filter((e) => {
       const start = Date.parse(e.start);
-      return (start <= t && t < eventEndMs(e.start, e.end)) || (t < start && start <= t + HOUR);
+      return (start <= now && now < eventEndMs(e.start, e.end)) || (now < start && start <= now + HOUR);
     });
-    if (!here) {
-      summary.textContent = `${soon.length} events are live or start within the hour. Share your location or pick your room to sort them by distance.`;
-    }
-    const origin = here?.source === "picked" ? areaPoints[here.areaId] : here ? { lat: here.lat, lng: here.lng, level: null } : null;
+    const origin = herePlace((id) => areaPlaces[id]);
 
     const rows = soon
       .map((e) => {
-        if (!origin || e.lat === null || e.lng === null) return { e, d: null as number | null };
+        if (!origin || e.lat === null || e.lng === null) return { e, metres: null as number | null };
         const levelChange = origin.level && e.level ? Math.abs(origin.level - e.level) : 0;
-        return { e, d: haversineMetres(origin, { lat: e.lat, lng: e.lng }) + levelChange * LEVEL_PENALTY_M };
+        return { e, metres: haversineMetres(origin, { lat: e.lat, lng: e.lng }) + levelChange * LEVEL_PENALTY_M };
       })
       // Closest first; events with no known place go last, in time order.
-      .sort((a, b) => (a.d ?? Infinity) - (b.d ?? Infinity) || a.e.start.localeCompare(b.e.start));
+      .sort((a, b) => (a.metres ?? Infinity) - (b.metres ?? Infinity) || a.e.start.localeCompare(b.e.start));
 
-    if (here) {
-      summary.textContent = soon.length
-        ? `${soon.length} events are live or start within the hour, closest first.`
-        : "Nothing is live or starting within the hour.";
-    }
+    summary.textContent = !soon.length
+      ? "Nothing is live or starting within the hour."
+      : origin
+        ? `${events(soon.length)} live or starting within the hour, closest first.`
+        : `${events(soon.length)} live or starting within the hour. Share your location or pick your room to sort them by distance.`;
     list.replaceChildren(
-      ...rows.map(({ e, d }) => {
-        const live = Date.parse(e.start) <= t;
-        const distance = !origin ? null : d === null ? "distance unknown" : d < 15 ? "Here" : formatDistance(d);
-        const where = [distance, e.place, e.level ? `Level ${e.level}` : null]
-          .filter(Boolean)
-          .join(" · ");
+      ...rows.map(({ e, metres }) => {
+        const live = Date.parse(e.start) <= now;
+        const distance = !origin ? null : metres === null ? "distance unknown" : metres < 15 ? "Here" : formatDistance(metres);
+        const where = [distance, e.place, e.level ? `Level ${e.level}` : null].filter(Boolean).join(" · ");
         return eventRow({
           id: e.id,
           title: e.title,

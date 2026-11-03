@@ -24,14 +24,16 @@ Built on November 3:
   so and point to the room picker.
 - **Room picker:** "I'm at…" lists rooms, halls, lobbies and the nearby
   hotels by level. A pick is saved on this device for 15 minutes and beats
-  GPS while it lasts. Both `/near/` and the floor plan have the controls.
+  GPS while it lasts; pages drop it when it runs out, without a reload. Both `/near/` and the floor plan have the controls.
 - **Floor plan:** `src/lib/geo.ts` fits an affine transform through three
-  OSM corners of the GRB. The unused fourth corner lands within a foot of
-  the drawing's corner. GPS draws a dot and accuracy circle on every level,
+  OSM corners of the GRB. OSM's south-east corner, which isn't one of the
+  three, lands within a foot of the drawing's corner. GPS draws a dot and accuracy circle on every level,
   since GPS can't tell floors apart; a pick draws one dot on its level and
   jumps there. Outside the drawing, a note replaces the dot.
 - **Distance:** rooms become latitude/longitude through the same transform,
-  so rooms and side events share one scale (haversine). A change of level
+  so rooms and side events share one scale (haversine). The hotels and parks
+  drawn as insets on Level 1 use their real coordinates
+  (`INSET_LOCATIONS` in `src/lib/floor-plan.ts`), not their inset position. A change of level
   adds 30 m. Events with no known spot (expo areas, lounges, TBA) go last,
   marked "distance unknown".
 
