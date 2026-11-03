@@ -26,7 +26,7 @@ short note on anything that changed from the plan.
 | [003](003-design-tokens-and-layout.md) | Design tokens, base layout and tab bar | 0 | done |
 | [004](004-schedule-pages.md) | Schedule pages with filters and search | 1 | done |
 | [005](005-my-plan.md) | My plan: star, clashes, .ics export, share link | 1 | done |
-| [006](006-now-view.md) | Now view | 1 | todo |
+| [006](006-now-view.md) | Now view | 1 | done |
 | [007](007-trace-floor-plan.md) | Trace GRB floor plan SVGs + venues mapping | 2 | todo |
 | [008](008-interactive-floor-map.md) | Interactive floor map component | 2 | todo |
 | [009](009-city-map.md) | Geocode side events + city map | 2 | todo |
