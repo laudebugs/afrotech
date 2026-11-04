@@ -1107,27 +1107,6 @@
     "research": null
   },
   {
-    "id": "c5609b99-f3d7-4c5a-8ffd-01ce00ff0184",
-    "slug": "darin-florenz",
-    "name": "Darin Florenz",
-    "title": "Director, Segment Marketing",
-    "company": "MassMutual",
-    "brief": "Darin Florenz is Director, Segment Marketing at MassMutual, with more than 30 years of financial services experience.",
-    "bio": "Darin Florenz is Director, Segment Marketing at MassMutual, with more than 30 years of financial services experience. His career has focused on expanding access to the financial knowledge, networks, strategies, and resources that help people and businesses build lasting wealth; particularly within underestimated communities. He led MassMutual's academic research collaboration with Howard University on Black Wealth and designed playbooks to help accelerate the growth of generational wealth. He currently serves as the Vice Chair of the Greater Houston Black Chamber of Commerce.",
-    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2Ft8hbJnRYQV2IMAkyfDy9_headshot-1791580207028.jpg",
-    "links": [
-      {
-        "kind": "linkedin",
-        "label": "LinkedIn",
-        "url": "https://linkedin.com/in/darinflorenz"
-      }
-    ],
-    "sessionIds": [
-      "dbd9d1d3-927a-42f7-96b6-b1cd78233ae5"
-    ],
-    "research": null
-  },
-  {
     "id": "774e8191-9e36-4cb6-87b2-f14acce3caab",
     "slug": "darren-riley",
     "name": "Darren Riley",
@@ -2389,6 +2368,21 @@
     "research": null
   },
   {
+    "id": "565d50bd-b2c7-4bd1-8c77-da60fba5ce2a",
+    "slug": "jalan-blackmon",
+    "name": "Jalan Blackmon",
+    "title": null,
+    "company": null,
+    "brief": null,
+    "bio": null,
+    "photoUrl": null,
+    "links": [],
+    "sessionIds": [
+      "dbd9d1d3-927a-42f7-96b6-b1cd78233ae5"
+    ],
+    "research": null
+  },
+  {
     "id": "0c7aa18c-875d-43f9-a9ce-b8debc15ef01",
     "slug": "james-polk",
     "name": "James Polk",
@@ -2946,27 +2940,6 @@
     "research": null
   },
   {
-    "id": "dbf88b62-c0ea-47bb-8aaa-f797d3b5d2e2",
-    "slug": "keir-gumbs",
-    "name": "Keir Gumbs",
-    "title": "Principal, Chief Legal Officer",
-    "company": "Edward Jones",
-    "brief": "Edward Jones Principal Keir Gumbs is Chief Legal Officer, responsible for leading all associates who provide legal support to the firm and for compliance.",
-    "bio": "Edward Jones Principal Keir Gumbs is Chief Legal Officer, responsible for leading all associates who provide legal support to the firm and for compliance. He joined the firm in 2023 with more than 24 years of experience, having most recently spent the last two years as the Chief Legal Officer for Broadridge Financial Solutions. In that role, he was responsible for overseeing the Legal, Compliance and Physical Security teams.",
-    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FscyUH3LRnaoXUtBVYEzw_headshot-1792606605648.jpg",
-    "links": [
-      {
-        "kind": "linkedin",
-        "label": "LinkedIn",
-        "url": "https://www.linkedin.com/in/keir-gumbs-813668/"
-      }
-    ],
-    "sessionIds": [
-      "5e654f94-4f0f-4987-98e4-136e54dd9f6a"
-    ],
-    "research": null
-  },
-  {
     "id": "3aa2a254-b852-4086-8145-be55ec8ebae3",
     "slug": "keith-azodeh",
     "name": "Keith Azodeh",
@@ -3195,6 +3168,36 @@
     ],
     "sessionIds": [
       "b7595abe-a3c2-44fd-8937-a2599cfe42f4"
+    ],
+    "research": null
+  },
+  {
+    "id": "3d15aafe-203e-4897-9660-8b2954f7deaf",
+    "slug": "krystal-denley-bowen",
+    "name": "Krystal Denley Bowen",
+    "title": "Legal Director, Commercial & Emerging Risks",
+    "company": "Uber",
+    "brief": "Dianna Jones is a Compliance Executive and Board Leader with over 20 years of experience helping organizations navigate complex regulatory, ethical, and commercial challenges across the technology…",
+    "bio": "Dianna Jones is a Compliance Executive and Board Leader with over 20 years of experience helping organizations navigate complex regulatory, ethical, and commercial challenges across the technology and energy sectors. At Uber Technologies, she serves as Legal Director of Commercial & Emerging Risks, translating risk into strategy by driving risk-informed decisions across autonomous vehicle ecosystems, B2B partnerships, and commercial transactions, including M&A, while partnering with business and product leaders.",
+    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FCGgqGsGESzqticfeCihK_headshot-1793770515126.png",
+    "links": [],
+    "sessionIds": [
+      "5e654f94-4f0f-4987-98e4-136e54dd9f6a"
+    ],
+    "research": null
+  },
+  {
+    "id": "fe72f072-24a6-49e4-9b7e-f8045dfe5d51",
+    "slug": "krystal-denley-bowen-2",
+    "name": "Krystal Denley Bowen",
+    "title": "Vice President, Chief Privacy Officer",
+    "company": "Uber",
+    "brief": "Krystal Denley Bowen is Vice President and Chief Privacy Officer at Uber Technologies, Inc., where she leads the global privacy and cybersecurity legal teams and Co-Chairs Uber’s AI Law & Ethics…",
+    "bio": "Krystal Denley Bowen is Vice President and Chief Privacy Officer at Uber Technologies, Inc., where she leads the global privacy and cybersecurity legal teams and Co-Chairs Uber’s AI Law & Ethics Council. A veteran leader at the intersection of privacy, AI, and cybersecurity, Krystal brings decades of experience enabling organizations to innovate responsibly while maintaining customer trust and navigating the evolving global regulatory landscape.",
+    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2Fr71fC2KhSYWoXCCnBZ5c_headshot-1793770359293.jpg",
+    "links": [],
+    "sessionIds": [
+      "5e654f94-4f0f-4987-98e4-136e54dd9f6a"
     ],
     "research": null
   },
@@ -4067,6 +4070,21 @@
     ],
     "sessionIds": [
       "2205cfec-d05d-45a0-8513-edf6e24cd1be"
+    ],
+    "research": null
+  },
+  {
+    "id": "8418bd8e-f827-435d-bdfe-4b84cf9d0d79",
+    "slug": "pia-flanagan",
+    "name": "Pia Flanagan",
+    "title": null,
+    "company": null,
+    "brief": null,
+    "bio": null,
+    "photoUrl": null,
+    "links": [],
+    "sessionIds": [
+      "dbd9d1d3-927a-42f7-96b6-b1cd78233ae5"
     ],
     "research": null
   },
@@ -5267,27 +5285,6 @@
     ],
     "sessionIds": [
       "3dd99491-4972-4f80-a675-bcde5a0037c0"
-    ],
-    "research": null
-  },
-  {
-    "id": "2992cb70-4e87-43f5-8a7d-bbf4b08cdc0b",
-    "slug": "tony-west",
-    "name": "Tony West",
-    "title": "Chief Legal Officer",
-    "company": "Uber",
-    "brief": "Tony West is Senior Vice President, Chief Legal Officer, and Corporate Secretary at Uber, where he leads the company’s global Legal, Compliance and Ethics, and Security functions.",
-    "bio": "Tony West is Senior Vice President, Chief Legal Officer, and Corporate Secretary at Uber, where he leads the company’s global Legal, Compliance and Ethics, and Security functions.",
-    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FyV3iX7dVQynVOHiblrGs_headshot-1792606388096.jpg",
-    "links": [
-      {
-        "kind": "linkedin",
-        "label": "LinkedIn",
-        "url": "https://www.linkedin.com/in/tony-west-4843637b/"
-      }
-    ],
-    "sessionIds": [
-      "5e654f94-4f0f-4987-98e4-136e54dd9f6a"
     ],
     "research": null
   },

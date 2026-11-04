@@ -2365,13 +2365,13 @@
   {
     "id": "e57ac85c-13ff-4058-9b20-aa039189f7ed",
     "kind": "official",
-    "title": "[solidcore] x AfroTech Pop-Up at Discovery Green",
+    "title": "[solidcore] x AfroTech Pop-Up",
     "date": "2026-11-04",
     "start": "2026-11-04T07:30:00-06:00",
     "end": "2026-11-04T08:30:00-06:00",
     "timeLabel": null,
-    "locationKey": "discovery-green",
-    "locationLabel": "Discovery Green",
+    "locationKey": "meeting-room-310",
+    "locationLabel": "Meeting Room 310",
     "address": null,
     "track": "Networking",
     "categories": [],
@@ -6171,6 +6171,35 @@
     ]
   },
   {
+    "id": "e5e82822-52b1-4554-9f61-0a49c5b43911",
+    "kind": "official",
+    "title": "The Future Is For Everyone: Infrastructure, Jobs, and Community, Presented by Meta",
+    "date": "2026-11-05",
+    "start": "2026-11-05T08:00:00-06:00",
+    "end": "2026-11-05T08:30:00-06:00",
+    "timeLabel": null,
+    "locationKey": "exhibit-hall-e-1st-floor",
+    "locationLabel": "Exhibit Hall E (1st Floor)",
+    "address": null,
+    "track": null,
+    "categories": [],
+    "speakers": [],
+    "host": null,
+    "price": null,
+    "access": null,
+    "ticketLevels": [
+      "All Access",
+      "Executive",
+      "Medical"
+    ],
+    "rsvpUrl": null,
+    "founderInvestorPick": false,
+    "description": null,
+    "sources": [
+      "afrotech-official"
+    ]
+  },
+  {
     "id": "78544092-d6a4-42e2-84d6-2c41f6a3842e",
     "kind": "official",
     "title": "Building AI Agents for Enterprise",
@@ -6783,16 +6812,16 @@
     "categories": [],
     "speakers": [
       {
-        "name": "Tony West",
-        "title": "Chief Legal Officer",
+        "name": "Krystal Denley Bowen",
+        "title": "Vice President, Chief Privacy Officer",
         "company": "Uber",
-        "slug": "tony-west"
+        "slug": "krystal-denley-bowen-2"
       },
       {
-        "name": "Keir Gumbs",
-        "title": "Principal, Chief Legal Officer",
-        "company": "Edward Jones",
-        "slug": "keir-gumbs"
+        "name": "Krystal Denley Bowen",
+        "title": "Legal Director, Commercial & Emerging Risks",
+        "company": "Uber",
+        "slug": "krystal-denley-bowen"
       }
     ],
     "host": null,
@@ -8185,16 +8214,22 @@
     "categories": [],
     "speakers": [
       {
-        "name": "Darin Florenz",
-        "title": "Director, Segment Marketing",
-        "company": "MassMutual",
-        "slug": "darin-florenz"
-      },
-      {
         "name": "Achu Akum,",
         "title": "Financial Planner",
         "company": "Vista Wealth Solutions",
         "slug": "achu-akum"
+      },
+      {
+        "name": "Jalan Blackmon",
+        "title": null,
+        "company": null,
+        "slug": "jalan-blackmon"
+      },
+      {
+        "name": "Pia Flanagan",
+        "title": null,
+        "company": null,
+        "slug": "pia-flanagan"
       }
     ],
     "host": null,
