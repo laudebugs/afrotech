@@ -63,3 +63,5 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plans 00
 | [038](038-search-filters.md) | Shared filters (plan 0009) | 5 | done |
 | [039](039-search-speakers-notes.md) | Speakers and notes in search, offline (plan 0009) | 5 | done |
 | [040](040-glass-navigation.md) | Liquid Glass tab bar and page transitions (plan 0010) | 5 | done |
+| [041](041-admin-dashboard.md) | Admin dashboard: access, database totals, the page (plan 0011) | 5 | done |
+| [042](042-admin-traffic.md) | Page traffic from Cloudflare's analytics (plan 0011) | 5 | done |

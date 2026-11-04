@@ -1,5 +1,6 @@
 // The site's only server code (plan 0002). Cloudflare sends /api/* here
 // (`run_worker_first` in wrangler.jsonc); every other request is a static file.
+import { isAdmin, readMetrics, readTraffic, type AdminEnv } from "./admin";
 import { deleteAccount, signIn, signOut, verifyGoogleToken, type AuthEnv } from "./auth";
 import { applyNoteChanges, parseNoteChanges, parseSince, readConflicts, readNotes } from "./notes";
 import { PHOTO_ID, getPhoto, prunePhotos, putPhoto } from "./photos";
@@ -15,7 +16,7 @@ const JSON_HEADERS = {
 export const json = (body: unknown, status = 200, extra: Record<string, string> = {}) =>
   new Response(JSON.stringify(body), { status, headers: { ...JSON_HEADERS, ...extra } });
 
-type Handler = (request: Request, env: AuthEnv, url: URL) => Promise<Response>;
+type Handler = (request: Request, env: AuthEnv & AdminEnv, url: URL) => Promise<Response>;
 
 /**
  * Writes must come from our own pages: a same-origin Origin header and a JSON
@@ -72,6 +73,23 @@ const routes: Record<string, Handler> = {
     if (!user) return json({ error: "sign in first" }, 401);
     await deleteAccount(env, user.id);
     return json({ deleted: true }, 200, { "Set-Cookie": await signOut(env, null) });
+  },
+
+  /** The admin dashboard's totals (plan 0011). Anyone but an admin gets "not found". */
+  "GET /api/admin/metrics": async (request, env) => {
+    if (!(await isAdmin(env, await currentUser(request, env)))) return json({ error: "not found" }, 404);
+    return json(await readMetrics(env));
+  },
+
+  /** Page traffic from Cloudflare's analytics, for the admin dashboard. */
+  "GET /api/admin/traffic": async (request, env) => {
+    if (!(await isAdmin(env, await currentUser(request, env)))) return json({ error: "not found" }, 404);
+    try {
+      return json(await readTraffic(env));
+    } catch (err) {
+      // Show the admin why, so a wrong token or permission is easy to fix.
+      return json({ configured: true, error: err instanceof Error ? err.message : String(err) }, 502);
+    }
   },
 
   "GET /api/plan": async (request, env) => {
@@ -178,4 +196,4 @@ export default {
     // run_worker_first only sends /api/* here, but serve assets for anything else just in case.
     return env.ASSETS.fetch(request);
   },
-} satisfies ExportedHandler<AuthEnv>;
+} satisfies ExportedHandler<AuthEnv & AdminEnv>;
