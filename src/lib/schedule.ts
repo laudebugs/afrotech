@@ -50,3 +50,10 @@ export function isFree(event: ScheduleEvent): boolean {
 export const tracks: string[] = [
   ...new Set(allEvents.map((e) => e.track).filter((t): t is string => Boolean(t))),
 ].sort();
+
+/** Side-event kinds (Networking, Party…), most common first, for the filters. */
+export const sideCategories: string[] = (() => {
+  const counts = new Map<string, number>();
+  for (const e of allEvents) for (const c of e.categories) if (c !== "Other") counts.set(c, (counts.get(c) ?? 0) + 1);
+  return [...counts].sort((a, b) => b[1] - a[1]).map(([c]) => c);
+})();

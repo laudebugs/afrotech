@@ -29,8 +29,11 @@ function where(e: (typeof allEvents)[number]): SearchEvent["where"] {
   return placeOf(e.kind, venue?.kind, Boolean(e.address || e.locationKey), metres, WALKABLE_METRES);
 }
 
+let built: SearchIndex | null = null;
+
+/** Built once per build and shared by the pages that need it. */
 export function buildSearchIndex(): SearchIndex {
-  return {
+  built ??= {
     events: allEvents.map((e) => ({
       id: e.id,
       title: e.title,
@@ -53,4 +56,5 @@ export function buildSearchIndex(): SearchIndex {
     })),
     speakers: speakers.map((s) => ({ slug: s.slug, name: s.name, title: s.title, company: s.company })),
   };
+  return built;
 }
