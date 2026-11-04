@@ -22,24 +22,25 @@ const soon = ev("s", "2026-11-04T14:45:00-06:00");
 const evening = ev("e", "2026-11-04T19:00:00-06:00", { free: true, cats: ["Party"] });
 const late = ev("x", "2026-11-04T23:00:00-06:00");
 const tomorrow = ev("t", "2026-11-05T10:00:00-06:00", { kind: "official", track: "Wealth", where: "grb" });
-const all = [morning, live, soon, evening, late, tomorrow];
+const afterMidnight = ev("a", "2026-11-05T00:30:00-06:00");
+const all = [morning, live, soon, evening, late, tomorrow, afterMidnight];
 
 test("no filters keep everything", () => {
-  assert.deepEqual(keep(all, {}), ["m", "l", "s", "e", "x", "t"]);
+  assert.deepEqual(keep(all, {}), ["m", "l", "s", "e", "x", "t", "a"]);
 });
 
 test("when: now and next hour, today, tonight", () => {
   assert.deepEqual(keep(all, { when: "now" }), ["l", "s"]);
   assert.deepEqual(keep(all, { when: "today" }), ["m", "l", "s", "e", "x"]);
-  assert.deepEqual(keep(all, { when: "tonight" }), ["e", "x"]);
+  assert.deepEqual(keep(all, { when: "tonight" }), ["e", "x", "a"]); // 12:30 AM Thursday is still tonight
 });
 
 test("a day and a time of day", () => {
-  assert.deepEqual(keep(all, { day: "2026-11-05" }), ["t"]);
+  assert.deepEqual(keep(all, { day: "2026-11-05" }), ["t", "a"]);
   assert.deepEqual(keep(all, { time: "morning" }), ["m", "t"]);
   assert.deepEqual(keep(all, { time: "afternoon" }), ["l", "s"]);
   assert.deepEqual(keep(all, { time: "evening" }), ["e"]);
-  assert.deepEqual(keep(all, { time: "late" }), ["x"]);
+  assert.deepEqual(keep(all, { time: "late" }), ["x", "a"]);
 });
 
 test("type, track, kind, free, where and picks", () => {
@@ -66,7 +67,7 @@ test("in my plan, and doesn't clash with it", () => {
   });
   assert.deepEqual(keep(all, { plan: true }, c), ["l"]);
   // "s" starts at 2:45, inside the planned 1:30–3:00; "l" is the planned event itself.
-  assert.deepEqual(keep(all, { noclash: true }, c), ["m", "l", "e", "x", "t"]);
+  assert.deepEqual(keep(all, { noclash: true }, c), ["m", "l", "e", "x", "t", "a"]);
 });
 
 test("filters round-trip through the address, ignoring junk", () => {

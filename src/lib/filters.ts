@@ -113,13 +113,22 @@ export type FilterContext = {
 
 const HOUR = 3600_000;
 
+/** Today from 5 PM, or after midnight before 5 AM (listed under tomorrow). */
+function isTonight(e: FilterEvent, today: string): boolean {
+  const h = startHour(e);
+  if (h === null) return false;
+  if (e.date === today) return h >= 17;
+  const tomorrow = new Date(Date.parse(`${today}T12:00:00Z`) + 24 * HOUR).toISOString().slice(0, 10);
+  return e.date === tomorrow && h < 5;
+}
+
 /** Whether an event passes every filter that's on. */
 export function matches(e: FilterEvent, f: Filters, ctx: FilterContext): boolean {
   const start = e.start ? Date.parse(e.start) : null;
   const end = e.start ? eventEndMs(e.start, e.end) : null;
   if (f.when === "now" && !(start !== null && end! > ctx.now && start <= ctx.now + HOUR)) return false;
   if (f.when === "today" && e.date !== ctx.today) return false;
-  if (f.when === "tonight" && !(e.date === ctx.today && (startHour(e) ?? 0) >= 17)) return false;
+  if (f.when === "tonight" && !isTonight(e, ctx.today)) return false;
   if (f.day && e.date !== f.day) return false;
   if (f.time && timeOfDay(e) !== f.time) return false;
   if (f.kind && e.kind !== f.kind) return false;

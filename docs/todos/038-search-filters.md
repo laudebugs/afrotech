@@ -35,5 +35,9 @@ Built on November 4:
   to "Now and next", since the day is fixed. Their old chips and track
   picker are gone, along with `isFree` row attributes. Rows carry the filter
   data from the search index.
+- **Review fixes:**
+  - "Tonight" includes starts after midnight, before 5 AM.
+  - "Now and next" shows only on today's page.
+  - Chip values split on their first "=" only.
 - **Tested** in a 390 px browser on both pages, including the day links
   keeping filters, Clear all, and starting from a filtered address.

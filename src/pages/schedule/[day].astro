@@ -139,7 +139,12 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     document.querySelectorAll<HTMLAnchorElement>("[data-day-link]").forEach((a) => (a.search = location.search));
   }
 
-  const filters = initFilters({ count: (f) => shownBy(f).length, onChange: apply });
+  const pageDayKey = document.querySelector<HTMLElement>("[data-day]")!.dataset.day;
+  const filters = initFilters({
+    count: (f) => shownBy(f).length,
+    onChange: apply,
+    isToday: pageDayKey === dayKey(new Date(previewNow())),
+  });
   document.querySelector("[data-reset]")!.addEventListener("click", () => filters.set({ ...NO_FILTERS }));
   // Starring changes what "In my plan" and "Doesn't clash" keep.
   document.addEventListener("plan-change", () => apply(filters.get()));

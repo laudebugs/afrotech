@@ -5,7 +5,18 @@ import { NO_FILTERS, activeCount, readFilters, writeFilters, type Filters } from
 
 export type FiltersUi = { get: () => Filters; set: (f: Filters) => void; refreshCount: () => void };
 
-export function initFilters(opts: { count: (f: Filters) => number; onChange: (f: Filters) => void }): FiltersUi {
+/** "cat=A=B" → ["cat", "A=B"]: only the first "=" separates. */
+function split(set: string): [keyof Filters, string] {
+  const i = set.indexOf("=");
+  return [set.slice(0, i) as keyof Filters, set.slice(i + 1)];
+}
+
+export function initFilters(opts: {
+  count: (f: Filters) => number;
+  onChange: (f: Filters) => void;
+  /** A day's page: "Now and next" only makes sense on today's. */
+  isToday?: boolean;
+}): FiltersUi {
   const root = document.querySelector<HTMLElement>("[data-filters]")!;
   const sheet = document.querySelector<HTMLDialogElement>("#filters-sheet")!;
   const chips = [...document.querySelectorAll<HTMLButtonElement>("[data-filters] [data-set], #filters-sheet [data-set]")];
@@ -13,11 +24,15 @@ export function initFilters(opts: { count: (f: Filters) => number; onChange: (f:
   const badge = root.querySelector<HTMLElement>("[data-filter-count]")!;
   const show = document.querySelector<HTMLButtonElement>("[data-show-results]")!;
 
+  if (opts.isToday === false) {
+    document.querySelectorAll<HTMLElement>('[data-set="when=now"]').forEach((c) => c.closest("fieldset, button")!.setAttribute("hidden", ""));
+  }
+
   let state = readFilters(new URLSearchParams(location.search));
 
   function paint() {
     for (const chip of chips) {
-      const [key, value] = chip.dataset.set!.split("=") as [keyof Filters, string];
+      const [key, value] = split(chip.dataset.set!);
       const current = state[key];
       chip.setAttribute("aria-pressed", String(value === "1" ? current === true : current === value));
     }
@@ -42,7 +57,7 @@ export function initFilters(opts: { count: (f: Filters) => number; onChange: (f:
 
   for (const chip of chips) {
     chip.addEventListener("click", () => {
-      const [key, value] = chip.dataset.set!.split("=") as [keyof Filters, string];
+      const [key, value] = split(chip.dataset.set!);
       const on = value === "1" ? state[key] === true : state[key] === value;
       // Tapping a chip that's on turns its filter off; one choice per group.
       set({ ...state, [key]: value === "1" ? !on : on ? "" : value });
