@@ -59,7 +59,8 @@ processor:
    simple tables. Markdown shortcuts work as you type (`## ` makes a heading,
    `- [ ] ` a task), and so do the usual keyboard shortcuts. Undo, redo and
    pasting from other apps come with Tiptap.
-2. **A phone toolbar.** One row of buttons sits above the keyboard while you
+2. **A phone toolbar.** (Since November 4 it stays in place above the note
+   instead of riding above the keyboard; see todo 028.) One row of buttons sits above the keyboard while you
    type, placed with the `visualViewport` API. It holds the common formats
    plus an Insert menu, with every button at least 44 px.
 3. **Insert menu.** It adds the pieces a session note needs: the session's
