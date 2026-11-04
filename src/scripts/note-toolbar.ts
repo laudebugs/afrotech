@@ -6,6 +6,7 @@ import { allNoteEvents, noteEvent } from "../lib/note-events";
 import { formatTime } from "../lib/time";
 import { PHOTO_PREFIX, newPhotoId, savePhoto } from "../lib/photos";
 import { shrinkPhoto } from "../lib/shrink-photo";
+import { keyboardUp } from "./typing";
 
 type PanelKind = "link" | "insert" | "table" | "sessions";
 
@@ -426,27 +427,37 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
   // --- On a phone, ride above the keyboard ---------------------------------
   // While you're typing and the keyboard covers part of the screen, the
   // toolbar fixes itself to the bottom of the visible area, and an open panel
-  // grows upward. A pinch-zoom also shrinks the visible area, so it's ignored.
+  // grows upward within the space left. Moves are batched to animation
+  // frames and done with a transform, so the bar keeps up as iOS scrolls.
   const vv = window.visualViewport;
+  let frame = 0;
   function place() {
-    const zoomed = (vv?.scale ?? 1) > 1.05;
-    const keyboardOpen = vv ? !zoomed && window.innerHeight - vv.height > 120 : false;
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(placeNow);
+  }
+  function placeNow() {
     const typing = editor.isFocused || root.contains(document.activeElement);
-    const floating = typing && keyboardOpen;
-    if (floating && !root.hasAttribute("data-floating")) {
-      // Hold the toolbar's place, so the note doesn't jump up.
-      slot.style.minHeight = `${root.offsetHeight}px`;
-    }
+    const floating = typing && !slot.hidden && keyboardUp() && !!vv;
     root.toggleAttribute("data-floating", floating);
-    if (!floating) slot.style.minHeight = "";
     if (floating && vv) {
+      // Hold the button row's place, so the note doesn't jump up.
+      slot.style.minHeight = `${tools.offsetHeight}px`;
+      // An open panel fits above the keyboard, scrolling inside.
+      panel.style.maxHeight = `${Math.max(120, vv.height - tools.offsetHeight - 16)}px`;
       root.style.left = `${vv.offsetLeft}px`;
       root.style.width = `${vv.width}px`;
-      root.style.top = `${vv.offsetTop + vv.height - root.offsetHeight}px`;
+      root.style.top = "0px";
+      root.style.transform = `translateY(${vv.offsetTop + vv.height - root.offsetHeight}px)`;
+      // Keep the line you're typing clear of the floating bar.
+      editor.view.setProps({ scrollMargin: { top: 5, left: 5, right: 5, bottom: root.offsetHeight + 8 } });
     } else {
-      root.style.left = root.style.width = root.style.top = "";
+      slot.style.minHeight = panel.style.maxHeight = "";
+      root.style.left = root.style.width = root.style.top = root.style.transform = "";
+      editor.view.setProps({ scrollMargin: 5 });
     }
   }
+  // Switching to the Markdown view hides the toolbar's slot.
+  new MutationObserver(place).observe(slot, { attributes: true, attributeFilter: ["hidden"] });
 
   editor.on("transaction", refresh);
   refresh();
