@@ -330,22 +330,24 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     alt.placeholder = "e.g. Slide: three steps to an AI policy";
     alt.maxLength = 200;
     label.append(alt);
-    const add = action("Add photo", () => {
+    // Alt text is required: "Add photo" does nothing until there is some.
+    const add = document.createElement("button");
+    add.type = "button";
+    add.className = "panel-action primary";
+    add.textContent = "Add photo";
+    add.setAttribute("aria-disabled", "true");
+    add.addEventListener("pointerdown", (e) => e.preventDefault());
+    add.addEventListener("click", () => {
       // Brackets would end the Markdown's alt text early.
       const text = alt.value.replace(/[[\]\s]+/g, " ").trim();
+      if (!text) return alt.focus();
       const id = newPhotoId();
       void savePhoto({ id, blob, uploaded: false, addedAt: Date.now() });
       editor.chain().focus().setImage({ src: `photo:${id}`, alt: text }).run();
       URL.revokeObjectURL(preview.src);
-    }, "panel-action primary");
-    add.setAttribute("aria-disabled", "true");
+      closePanel();
+    });
     alt.addEventListener("input", () => add.setAttribute("aria-disabled", String(!alt.value.trim())));
-    // Alt text is required: the button does nothing until there is some.
-    add.addEventListener("click", (e) => {
-      if (alt.value.trim()) return;
-      e.stopImmediatePropagation();
-      alt.focus();
-    }, { capture: true });
     alt.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
