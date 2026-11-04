@@ -39,6 +39,7 @@ async function upload(): Promise<void> {
         await markUploaded(photo.id);
       } else if (res.status === 507) {
         problem = "full";
+        document.dispatchEvent(new CustomEvent("photos-full"));
         return;
       } else if (res.status === 401) {
         return; // signed out elsewhere; notes sync handles it

@@ -46,6 +46,10 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       </div>
       <p class="muted small" data-saved></p>
       <p class="small warn" role="alert" data-save-problem hidden></p>
+      <p class="small warn" role="alert" data-photos-full hidden>
+        Your account's photo space (200 MB) is full, so new photos stay on this device only. Delete notes
+        with photos you no longer need to make room.
+      </p>
       <div class="buttons">
         <button type="submit" class="button primary">Done</button>
         <button type="button" class="button" data-delete hidden>Delete note</button>
@@ -67,6 +71,7 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   import { attachToolbar } from "../../scripts/note-toolbar";
   import { PHOTO_PREFIX, photoUrl } from "../../lib/photos";
   import { fetchPhotoFromAccount } from "../../scripts/photo-fetch";
+  import { photosSyncProblem } from "../../scripts/photos-sync";
 
   const params = new URLSearchParams(location.search);
   const editing = getNote(params.get("id") ?? "");
@@ -103,6 +108,12 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     resolveImage: (src) => photoUrl(src.slice(PHOTO_PREFIX.length), fetchPhotoFromAccount),
     onChange: changed,
   });
+
+  // Uploads stopped because the account's photo space is full.
+  const photosFull = document.querySelector<HTMLElement>("[data-photos-full]")!;
+  const showPhotosFull = () => (photosFull.hidden = photosSyncProblem() !== "full");
+  document.addEventListener("photos-full", showPhotosFull);
+  showPhotosFull();
 
   const toolbar = document.querySelector<HTMLElement>("[data-toolbar]")!;
   attachToolbar({ root: toolbar, editor: body.editor, eventId });
