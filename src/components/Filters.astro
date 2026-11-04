@@ -1,0 +1,228 @@
+---
+// The filters shared by week-wide search and each day's schedule (plan 0009,
+// todo 038): a row of quick chips and a Filters button that opens a sheet
+// with every filter. src/scripts/filters-ui.ts wires it up; the page decides
+// which events match (src/lib/filters.ts) and passes the count back.
+import BottomSheet from "./BottomSheet.astro";
+import { scheduleDays, tracks } from "../lib/schedule";
+import { formatDate } from "../lib/time";
+
+interface Props {
+  /** "week" adds Today, Tonight and the days; "day" is one day's schedule. */
+  scope: "week" | "day";
+  /** Side-event kinds to offer. */
+  cats: string[];
+}
+const { scope, cats } = Astro.props;
+const dayName = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(\d+)$/, " $1");
+
+type Choice = { set: string; label: string };
+const groups: { title: string; choices?: Choice[]; select?: "track" }[] = [
+  {
+    title: "When",
+    choices: [
+      { set: "when=now", label: "Now and next" },
+      ...(scope === "week"
+        ? [
+            { set: "when=today", label: "Today" },
+            { set: "when=tonight", label: "Tonight" },
+          ]
+        : []),
+    ],
+  },
+  ...(scope === "week" ? [{ title: "Day", choices: scheduleDays.map((d) => ({ set: `day=${d}`, label: dayName(d) })) }] : []),
+  {
+    title: "Time of day",
+    choices: [
+      { set: "time=morning", label: "Morning" },
+      { set: "time=afternoon", label: "Afternoon" },
+      { set: "time=evening", label: "Evening" },
+      { set: "time=late", label: "Late night" },
+    ],
+  },
+  {
+    title: "Type",
+    choices: [
+      { set: "kind=official", label: "Official sessions" },
+      { set: "kind=side", label: "Side events" },
+    ],
+  },
+  { title: "Track", select: "track" },
+  { title: "Kind of side event", choices: cats.map((c) => ({ set: `cat=${c}`, label: c })) },
+  {
+    title: "Cost and access",
+    choices: [
+      { set: "free=1", label: "Free" },
+      { set: "access=open", label: "Open to all" },
+      { set: "access=badge", label: "Needs a badge" },
+      { set: "access=rsvp", label: "RSVP or invite" },
+    ],
+  },
+  {
+    title: "Where",
+    choices: [
+      { set: "where=grb", label: "Convention center" },
+      { set: "where=near", label: "Walkable" },
+      { set: "where=city", label: "Across Houston" },
+    ],
+  },
+  {
+    title: "Mine",
+    choices: [
+      { set: "plan=1", label: "In my plan" },
+      { set: "noclash=1", label: "Doesn't clash with my plan" },
+      { set: "picks=1", label: "Founder & investor picks" },
+    ],
+  },
+];
+
+const quick: Choice[] =
+  scope === "week"
+    ? [
+        { set: "when=today", label: "Today" },
+        { set: "when=tonight", label: "Tonight" },
+        { set: "free=1", label: "Free" },
+        { set: "kind=side", label: "Side events" },
+      ]
+    : [
+        { set: "kind=official", label: "Official" },
+        { set: "kind=side", label: "Side events" },
+        { set: "plan=1", label: "My plan" },
+        { set: "free=1", label: "Free" },
+      ];
+---
+
+<div class="filter-bar" data-filters data-scope={scope}>
+  <div class="quick" role="group" aria-label="Quick filters">
+    {quick.map((c) => <button type="button" class="chip" aria-pressed="false" data-set={c.set}>{c.label}</button>)}
+    <button type="button" class="chip open" aria-haspopup="dialog" data-open-filters>
+      Filters<span class="badge" data-filter-count hidden></span>
+    </button>
+  </div>
+
+  <BottomSheet id="filters-sheet" label="Filters">
+    <h2 class="sheet-title">Filters</h2>
+    {
+      groups.map((g) => (
+        <fieldset>
+          <legend>{g.title}</legend>
+          {g.select ? (
+            <select data-track aria-label="Track">
+              <option value="">All tracks</option>
+              {tracks.map((t) => <option value={t}>{t}</option>)}
+            </select>
+          ) : (
+            <div class="choices">
+              {g.choices!.map((c) => (
+                <button type="button" class="chip" aria-pressed="false" data-set={c.set}>
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </fieldset>
+      ))
+    }
+    <div class="sheet-actions">
+      <button type="button" class="button" data-clear-filters>Clear all</button>
+      <button type="button" class="button primary" data-show-results>Show events</button>
+    </div>
+  </BottomSheet>
+</div>
+
+<style>
+  .quick {
+    display: flex;
+    gap: var(--space-2);
+    margin: 0 calc(var(--space-4) * -1);
+    padding: 0 var(--space-4);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .chip {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: var(--tap);
+    padding: 0 var(--space-4);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-sm);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .chip[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+  .open {
+    margin-left: auto;
+    font-weight: 600;
+  }
+  .badge {
+    font-family: var(--font-mono);
+  }
+  .badge:not([hidden])::before {
+    content: "· ";
+  }
+  .sheet-title {
+    margin: 0 0 var(--space-2);
+    font-size: var(--text-lg);
+  }
+  fieldset {
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    border: 0;
+  }
+  legend {
+    margin-bottom: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  select {
+    width: 100%;
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+  }
+  .sheet-actions {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    gap: var(--space-2);
+    padding: var(--space-3) 0;
+    background: var(--surface);
+  }
+  .button {
+    flex: 1;
+    min-height: var(--tap);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .button.primary {
+    flex: 2;
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+</style>

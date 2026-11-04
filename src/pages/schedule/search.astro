@@ -5,6 +5,8 @@
 import "../../styles/event-rows.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
+import Filters from "../../components/Filters.astro";
+import { sideCategories } from "../../lib/schedule";
 ---
 
 <BaseLayout title="Search · Schedule · AfroTech 2026 Planner" active="schedule">
@@ -23,6 +25,7 @@ import Icon from "../../components/Icon.astro";
         data-q
       />
     </form>
+    <div class="filters"><Filters scope="week" cats={sideCategories} /></div>
     <p class="status muted" data-status>Loading the week's events…</p>
     <!-- Read out once typing pauses, not for every letter. -->
     <p class="visually-hidden" aria-live="polite" data-announce-count></p>
@@ -42,10 +45,13 @@ import Icon from "../../components/Icon.astro";
 
 <script>
   import { eventSearch, findEvents, type SearchEvent, type SearchIndex } from "../../lib/search";
+  import { activeCount, matches, type FilterContext, type Filters } from "../../lib/filters";
+  import { initFilters } from "../../scripts/filters-ui";
+  import { readPlan } from "../../lib/plan";
   import { eventRow } from "../../scripts/event-rows";
   import { syncPlan } from "../../scripts/plan-ui";
   import { getItem, setItem } from "../../lib/storage";
-  import { eventEndMs, formatDate, formatRange, previewNow } from "../../lib/time";
+  import { dayKey, eventEndMs, formatDate, formatRange, previewNow } from "../../lib/time";
 
   const RECENT = "afrotech:recent-searches";
   const PAGE = 60;
@@ -145,9 +151,32 @@ import Icon from "../../components/Icon.astro";
   // Letters or digits make a search; "&" on its own doesn't yet.
   const hasWords = (q: string) => /[\p{L}\p{N}]/u.test(q);
 
+  function context(): FilterContext {
+    const now = previewNow();
+    const planned = new Set(readPlan());
+    const plannedSpans = [...planned]
+      .map((id) => byId.get(id))
+      .filter((e): e is SearchEvent => Boolean(e?.start))
+      .map((e) => ({ id: e.id, start: Date.parse(e.start!), end: eventEndMs(e.start!, e.end) }));
+    return { now, today: dayKey(new Date(now)), planned, plannedSpans };
+  }
+
+  /** Events for the words (or all, best-first) that pass the filters. */
+  function select(q: string, f: Filters): SearchEvent[] {
+    if (!ms) return [];
+    const ctx = context();
+    return findEvents(ms, byId, q, ctx.now).filter((e) => matches(e, f, ctx));
+  }
+
+  const filters = initFilters({
+    count: (f) => select(hasWords(input.value) ? input.value : "", f).length,
+    onChange: () => run(),
+  });
+
   let typingTimer = 0;
   function run(commit = false) {
     const q = hasWords(input.value) ? input.value : "";
+    const f = filters.get();
     const url = new URL(location.href);
     if (q.trim()) url.searchParams.set("q", q.trim());
     else url.searchParams.delete("q");
@@ -156,19 +185,22 @@ import Icon from "../../components/Icon.astro";
     results.replaceChildren();
     more.hidden = true;
     if (!ms) return;
-    if (!q.trim()) {
+    if (!q.trim() && activeCount(f) === 0) {
       found = [];
       say(`Search ${byId.size} events across the week by title, speaker, host or place.`);
       return;
     }
-    found = findEvents(ms, byId, q, previewNow());
+    found = select(q, f);
     say(
       found.length
         ? `${found.length} ${found.length === 1 ? "event" : "events"}`
-        : "No events match. Try fewer or shorter words.",
+        : activeCount(f)
+          ? "No events match. Try fewer filters or words."
+          : "No events match. Try fewer or shorter words.",
     );
     render(0);
     clearTimeout(typingTimer);
+    if (!q) return;
     if (commit) remember(q);
     // A pause in typing counts as a finished search.
     else typingTimer = window.setTimeout(() => found.length && remember(q), 1500);
@@ -181,7 +213,12 @@ import Icon from "../../components/Icon.astro";
     run(true);
     input.blur(); // hide the phone keyboard to show the results
   });
-  document.addEventListener("plan-change", () => syncPlan(results));
+  // Starring changes what "In my plan" and "Doesn't clash" keep.
+  document.addEventListener("plan-change", () => {
+    const f = filters.get();
+    if (f.plan || f.noclash) run();
+    else syncPlan(results);
+  });
 
   input.value = new URLSearchParams(location.search).get("q") ?? "";
   showRecent();
@@ -195,6 +232,7 @@ import Icon from "../../components/Icon.astro";
       byId = new Map(index.events.map((e) => [e.id, e]));
       ms = eventSearch(index.events);
       run();
+      filters.refreshCount();
     })
     .catch(() => {
       status.textContent = "Search couldn't load. Check your connection and try again.";
@@ -233,6 +271,9 @@ import Icon from "../../components/Icon.astro";
     font: inherit;
     font-size: var(--text-md);
     outline: none;
+  }
+  .filters {
+    margin-top: var(--space-3);
   }
   .status {
     margin: var(--space-2) 0 0;

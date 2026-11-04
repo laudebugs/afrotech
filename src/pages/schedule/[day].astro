@@ -3,14 +3,15 @@
 import "../../styles/event-detail.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
-import Chip from "../../components/Chip.astro";
+import Filters from "../../components/Filters.astro";
 import Timeline from "../../components/Timeline.astro";
 import TimelineRow from "../../components/TimelineRow.astro";
 import TimeHeader from "../../components/TimeHeader.astro";
 import EventCard from "../../components/EventCard.astro";
 import BottomSheet from "../../components/BottomSheet.astro";
 import SourcesFooter from "../../components/SourcesFooter.astro";
-import { dayLabel, eventsOnDay, groupByHour, isFree, scheduleDays, tracks } from "../../lib/schedule";
+import { dayLabel, eventsOnDay, groupByHour, scheduleDays, sideCategories } from "../../lib/schedule";
+import { buildSearchIndex } from "../../lib/search-index";
 import { formatClock, formatDate } from "../../lib/time";
 
 export function getStaticPaths() {
@@ -19,6 +20,14 @@ export function getStaticPaths() {
 
 const { day } = Astro.params as { day: string };
 const events = eventsOnDay(day);
+// What the shared filters need about each event (plan 0009).
+const filterData = new Map(
+  buildSearchIndex().events.map((e) => [
+    e.id,
+    JSON.stringify({ id: e.id, date: e.date, start: e.start, end: e.end, kind: e.kind, track: e.track,
+      cats: e.cats, free: e.free, access: e.access, where: e.where, pick: e.pick }),
+  ]),
+);
 const groups = groupByHour(events);
 // Noon on the day keeps the date label right in Houston.
 const dateLabel = formatDate(`${day}T12:00:00-06:00`);
@@ -43,29 +52,13 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     </nav>
   </header>
 
-  <div class="filters" role="group" aria-label="Filters" data-day={day}>
-    <div class="chips">
-      <Chip pressed data-kind-filter="all">Everything</Chip>
-      <Chip data-kind-filter="official">Official</Chip>
-      <Chip data-kind-filter="side">Side events</Chip>
-      <Chip data-flag-filter="plan">My plan</Chip>
-      <Chip data-flag-filter="free">Free</Chip>
-      <Chip data-flag-filter="picks">Founder picks</Chip>
-    </div>
-    <div class="fields">
-      <label class="field">
-        <span class="visually-hidden">Track</span>
-        <select data-track-filter>
-          <option value="">All tracks</option>
-          {tracks.map((t) => <option value={t}>{t}</option>)}
-        </select>
-      </label>
-      <!-- Search covers the whole week, on its own page (plan 0009). -->
-      <a class="field search week-search" href="/schedule/search/">
-        <Icon name="search" size={18} />
-        <span>Search the whole week</span>
-      </a>
-    </div>
+  <div class="filters" data-day={day}>
+    <Filters scope="day" cats={sideCategories} />
+    <!-- Search covers the whole week, on its own page (plan 0009). -->
+    <a class="week-search" href="/schedule/search/">
+      <Icon name="search" size={18} />
+      <span>Search the whole week</span>
+    </a>
     <p class="count muted" aria-live="polite" data-count>{events.length} events</p>
   </div>
 
@@ -82,10 +75,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
               data-event-id={event.id}
               data-start={event.start ?? undefined}
               data-end={event.end ?? undefined}
-              data-kind={event.kind}
-              data-track={event.track ?? ""}
-              data-free={isFree(event) ? "1" : undefined}
-              data-pick={event.founderInvestorPick ? "1" : undefined}
+              data-filter={filterData.get(event.id)}
             >
               <EventCard event={event} />
             </TimelineRow>
@@ -110,96 +100,57 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 <script>
   import { readPlan } from "../../lib/plan";
   import { HOUR_MS, dayKey, eventEndMs, previewNow } from "../../lib/time";
-
-  type Flag = "plan" | "free" | "picks";
-  type Filters = { kind: string; plan: boolean; free: boolean; picks: boolean; track: string };
+  import { NO_FILTERS, matches, type FilterContext, type FilterEvent, type Filters } from "../../lib/filters";
+  import { initFilters } from "../../scripts/filters-ui";
 
   const rows = [...document.querySelectorAll<HTMLElement>("[data-row]")];
   const groups = [...document.querySelectorAll<HTMLElement>("[data-group]")];
-  const kindChips = [...document.querySelectorAll<HTMLButtonElement>("[data-kind-filter]")];
-  const flagChips = [...document.querySelectorAll<HTMLButtonElement>("[data-flag-filter]")];
-  const trackSelect = document.querySelector<HTMLSelectElement>("[data-track-filter]")!;
   const count = document.querySelector<HTMLElement>("[data-count]")!;
   const empty = document.querySelector<HTMLElement>("[data-empty]")!;
+  const data = new Map(rows.map((r) => [r, JSON.parse(r.dataset.filter!) as FilterEvent]));
 
   // Links from before week-wide search (?q=…) go on to the search page.
   const oldQuery = new URLSearchParams(location.search).get("q");
   if (oldQuery) location.replace(`/schedule/search/?q=${encodeURIComponent(oldQuery)}`);
 
-  function read(): Filters {
-    const p = new URLSearchParams(location.search);
-    const kind = p.get("kind");
-    return {
-      kind: kind === "official" || kind === "side" ? kind : "all",
-      plan: p.get("plan") === "1",
-      free: p.get("free") === "1",
-      picks: p.get("picks") === "1",
-      track: p.get("track") ?? "",
-    };
+  // Planned events' times come from this page and the plan; events on other
+  // days can't clash with this one's.
+  function context(): FilterContext {
+    const now = previewNow();
+    const planned = new Set(readPlan());
+    const plannedSpans = [...data.values()]
+      .filter((e) => planned.has(e.id) && e.start)
+      .map((e) => ({ id: e.id, start: Date.parse(e.start!), end: eventEndMs(e.start!, e.end) }));
+    return { now, today: dayKey(new Date(now)), planned, plannedSpans };
   }
 
-  function write(f: Filters) {
-    const p = new URLSearchParams();
-    if (f.kind !== "all") p.set("kind", f.kind);
-    if (f.plan) p.set("plan", "1");
-    if (f.free) p.set("free", "1");
-    if (f.picks) p.set("picks", "1");
-    if (f.track) p.set("track", f.track);
-    const query = p.toString() ? `?${p}` : "";
-    history.replaceState(null, "", `${location.pathname}${query}`);
-    // Switching days keeps the filters.
-    document.querySelectorAll<HTMLAnchorElement>("[data-day-link]").forEach((a) => {
-      a.search = query;
-    });
-  }
+  const shownBy = (f: Filters) => {
+    const ctx = context();
+    return rows.filter((r) => matches(data.get(r)!, f, ctx));
+  };
 
   function apply(f: Filters) {
-    kindChips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.kindFilter === f.kind)));
-    flagChips.forEach((c) => c.setAttribute("aria-pressed", String(f[c.dataset.flagFilter as Flag])));
-    trackSelect.value = f.track;
-    const planned = new Set(readPlan());
-    let shown = 0;
-    for (const row of rows) {
-      const d = row.dataset;
-      const visible =
-        (f.kind === "all" || d.kind === f.kind) &&
-        (!f.plan || planned.has(d.eventId!)) &&
-        (!f.free || d.free === "1") &&
-        (!f.picks || d.pick === "1") &&
-        (!f.track || d.track === f.track);
-      row.hidden = !visible;
-      if (visible) shown++;
-    }
+    const keep = new Set(shownBy(f));
+    for (const row of rows) row.hidden = !keep.has(row);
     groups.forEach((g) => (g.hidden = !g.querySelector("[data-row]:not([hidden])")));
-    count.textContent = `${shown} ${shown === 1 ? "event" : "events"}`;
-    empty.hidden = shown > 0;
+    count.textContent = `${keep.size} ${keep.size === 1 ? "event" : "events"}`;
+    empty.hidden = keep.size > 0;
+    // Switching days keeps the filters.
+    document.querySelectorAll<HTMLAnchorElement>("[data-day-link]").forEach((a) => (a.search = location.search));
   }
 
-  function update(change: Partial<Filters>) {
-    const next = { ...read(), ...change };
-    write(next);
-    apply(next);
-  }
+  const pageDayKey = document.querySelector<HTMLElement>("[data-day]")!.dataset.day;
+  const filters = initFilters({
+    count: (f) => shownBy(f).length,
+    onChange: apply,
+    isToday: pageDayKey === dayKey(new Date(previewNow())),
+  });
+  document.querySelector("[data-reset]")!.addEventListener("click", () => filters.set({ ...NO_FILTERS }));
+  // Starring changes what "In my plan" and "Doesn't clash" keep.
+  document.addEventListener("plan-change", () => apply(filters.get()));
 
-  kindChips.forEach((c) => c.addEventListener("click", () => update({ kind: c.dataset.kindFilter! })));
-  flagChips.forEach((c) =>
-    c.addEventListener("click", () => {
-      const key = c.dataset.flagFilter as Flag;
-      update({ [key]: !read()[key] });
-    }),
-  );
-  trackSelect.addEventListener("change", () => update({ track: trackSelect.value }));
-  document.querySelector("[data-reset]")!.addEventListener("click", () =>
-    update({ kind: "all", plan: false, free: false, picks: false, track: "" }),
-  );
-  // Starring or unstarring changes what the My plan filter shows.
-  document.addEventListener("plan-change", () => apply(read()));
-
-  // Read before write() tidies the URL, which drops a ?now= preview time.
   const openedAt = previewNow();
-  const initial = read();
-  write(initial);
-  apply(initial);
+  apply(filters.get());
 
   // On today's page, open at the current hour: the first shown event starting
   // this hour or later (all-day events like registration stay above), else the
@@ -323,22 +274,6 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     gap: var(--space-2);
     margin-top: var(--space-3);
   }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-  .fields {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-  .field {
-    flex: 1 1 160px;
-  }
-  .field.search {
-    flex: 2 1 200px;
-  }
   .week-search {
     display: flex;
     align-items: center;
@@ -354,18 +289,6 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   }
   .week-search:hover {
     border-color: var(--accent);
-  }
-  select,
-  input {
-    width: 100%;
-    min-height: var(--tap);
-    padding: 0 var(--space-3);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--surface);
-    color: var(--ink);
-    font: inherit;
-    font-size: var(--text-md);
   }
   .count {
     margin: 0;
