@@ -25,7 +25,7 @@ Built on November 4.
   transitions often, so test them with `channel: "chromium"`.
 - **Review fixes:**
   - Slides use normal blending, so the pages don't add their colours.
-  - Tab icons and labels stay above the gliding capsule (`view-transition-class: tab-item`).
+  - Tab icons and labels stay above the gliding capsule.
   - The bar's stand-in keeps its blur during transitions.
   - A tap on the tab bar always crossfades, and Back is recognised from a
     short history kept in `sessionStorage`, so Safari, which lacks the
@@ -49,3 +49,25 @@ Built on November 4.
   schedule → event → speaker → Back → Map tab → Back → Schedule tab ran
   push, push, pop, tab, pop and tab. A frame mid-push showed no ghosting.
 - **Not tested:** real iPhones couldn't be tried from here.
+- **Flicker fix (November 4):**
+  - In Chrome, about half of tab changes skipped the page transition, nearly
+    every change into Map among them. The capsule then started its glide on
+    the press and snapped to the new tab. When the transition did run, the
+    capsule moved twice: the press glide, then the transition's spring.
+  - The capsule glide no longer depends on the page transition. On leaving a
+    page, the layout's head script saves where the capsule is, counted in
+    tabs from the bar's corner. The new page's capsule starts from there and
+    finishes the glide, including on Back from the page cache. It's a
+    scripted animation, because Chrome drops CSS transitions that start
+    before a page transition takes over. It waits for the first frame, since
+    laying out Now or Saved can take longer than the glide. It takes its
+    timing from the capsule's CSS transition.
+  - A second tap while the capsule is still gliding in carries on from where
+    the capsule is.
+  - The capsule and the tab labels no longer have their own transition
+    names. They ride with the bar, so nothing swaps mid-transition.
+  - The glide eases without overshoot (340 ms), so it no longer wobbles.
+  - Tested with frame captures and per-frame positions: Now to Map, Saved to
+    Now, Back to Saved, a second tap mid-glide, and the desktop rail all
+    glide continuously, with no jump.
+  - Still to check on a real iPhone.
