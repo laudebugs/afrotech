@@ -19,9 +19,9 @@ The page holds no numbers itself. It asks the Worker for them, and the Worker
 answers only your account:
 
 1. You sign in with Google as usual, on the Saved tab.
-2. The Worker compares the account's email with a secret, `ADMIN_EMAILS`, that
-   you set once in Cloudflare. Keeping it a secret keeps your address out of
-   the repository.
+2. The Worker compares the account's email with `ADMIN_EMAILS`, a variable in
+   `wrangler.jsonc`. On November 4 you chose to keep it there, in the
+   repository, rather than as a Cloudflare secret.
 3. Anyone else, signed in or not, gets "Not found". A signed-out visitor's
    page sends no request at all.
 
@@ -82,10 +82,10 @@ times use Houston time, as everywhere else.
 | 041 | Admin access, `/api/admin/metrics` from the database, and the `/admin/` page |
 | 042 | Page traffic from Cloudflare's analytics on the same page (only if you choose it) |
 
-Todo 041 is useful on its own, and it needs only the `ADMIN_EMAILS` secret.
+Todo 041 is useful on its own, and it needs no setup in Cloudflare.
 
 ## Decided
 
 On November 4 you chose both sources, the database and Cloudflare's traffic,
-with your own Google email as the admin. The dashboard works once you add the
-two secrets, `ADMIN_EMAILS` and `CF_ANALYTICS_TOKEN`, in Cloudflare.
+with your own Google email as the admin, kept in `wrangler.jsonc`. Traffic
+works once you add the secret `CF_ANALYTICS_TOKEN` in Cloudflare.
