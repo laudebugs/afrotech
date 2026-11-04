@@ -62,7 +62,18 @@ Built on November 3:
   since its tools act on the formatted view.
 
 
-**Changed on November 4, at your request:** the toolbar no longer rides above
-the keyboard or pins under the header. It stays in place above the note and
-scrolls with the page, because the pinned and floating versions were jumpy
-on phones. In a long note, scroll up to reach it.
+**Changed on November 4, at your request:** the toolbar no longer pins under
+the header while you scroll; it sits above the note and scrolls with the
+page. While you type on a phone, it still rides just above the keyboard, and
+the tab bar slides out of the way (plan 0010).
+
+Review fixes the same day:
+
+- An open menu fits above the keyboard.
+- Moves are batched per frame and use a transform.
+- The held space is the button row's height.
+- The line being typed stays clear of the bar.
+- Switching to Markdown resets the toolbar.
+- The toolbar and its menus count as typing (`data-keeps-typing`).
+- The bar shares `keyboardUp()` with `src/scripts/typing.ts`, so the two
+  can't disagree.

@@ -6,6 +6,7 @@ import { allNoteEvents, noteEvent } from "../lib/note-events";
 import { formatTime } from "../lib/time";
 import { PHOTO_PREFIX, newPhotoId, savePhoto } from "../lib/photos";
 import { shrinkPhoto } from "../lib/shrink-photo";
+import { keyboardUp } from "./typing";
 
 type PanelKind = "link" | "insert" | "table" | "sessions";
 
@@ -73,6 +74,7 @@ const plain = (text: string) => text.replace(/([\\`*_~[\]<>|#!])/g, "\\$1");
 
 export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId: string }) {
   const { root, editor, eventId } = opts;
+  const slot = root.parentElement!; // keeps the toolbar's space while it floats
   const tools = root.querySelector<HTMLElement>("[data-tools]")!;
   const panel = root.querySelector<HTMLElement>("[data-panel]")!;
 
@@ -161,6 +163,7 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     openFor.setAttribute("aria-expanded", "false");
     openFor = null;
     if (refocus) editor.commands.focus();
+    place();
   }
   function togglePanel(kind: PanelKind, from: HTMLButtonElement) {
     if (openFor === from && kind !== "sessions") return closePanel(true);
@@ -170,6 +173,7 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     from.setAttribute("aria-expanded", "true");
     panel.hidden = false;
     ({ link: linkPanel, insert: insertPanel, table: tablePanel, sessions: sessionPanel })[kind]();
+    place();
   }
   panel.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
@@ -311,6 +315,7 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     status.setAttribute("role", "status");
     status.textContent = "Preparing the photo…";
     panel.append(title("Photo"), status);
+    place();
 
     let blob: Blob;
     try {
@@ -361,6 +366,7 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     status.textContent = `Ready: ${Math.round(blob.size / 1024)} KB.`;
     panel.append(preview, label, row);
     alt.focus();
+    place();
   }
 
   function tablePanel() {
@@ -411,12 +417,54 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
         results.append(li);
       }
       count.textContent = words.length ? `${hits.length || "No"} ${hits.length === 1 ? "session" : "sessions"} found` : "";
+      place();
     };
     input.addEventListener("input", show);
     panel.append(title("Link to a session"), input, count, results);
     input.focus();
   }
 
+  // --- On a phone, ride above the keyboard ---------------------------------
+  // While you're typing and the keyboard covers part of the screen, the
+  // toolbar fixes itself to the bottom of the visible area, and an open panel
+  // grows upward within the space left. Moves are batched to animation
+  // frames and done with a transform, so the bar keeps up as iOS scrolls.
+  const vv = window.visualViewport;
+  let frame = 0;
+  function place() {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(placeNow);
+  }
+  function placeNow() {
+    const typing = editor.isFocused || root.contains(document.activeElement);
+    const floating = typing && !slot.hidden && keyboardUp() && !!vv;
+    root.toggleAttribute("data-floating", floating);
+    if (floating && vv) {
+      // Hold the button row's place, so the note doesn't jump up.
+      slot.style.minHeight = `${tools.offsetHeight}px`;
+      // An open panel fits above the keyboard, scrolling inside.
+      panel.style.maxHeight = `${Math.max(120, vv.height - tools.offsetHeight - 16)}px`;
+      root.style.left = `${vv.offsetLeft}px`;
+      root.style.width = `${vv.width}px`;
+      root.style.top = "0px";
+      root.style.transform = `translateY(${vv.offsetTop + vv.height - root.offsetHeight}px)`;
+      // Keep the line you're typing clear of the floating bar.
+      editor.view.setProps({ scrollMargin: { top: 5, left: 5, right: 5, bottom: root.offsetHeight + 8 } });
+    } else {
+      slot.style.minHeight = panel.style.maxHeight = "";
+      root.style.left = root.style.width = root.style.top = root.style.transform = "";
+      editor.view.setProps({ scrollMargin: 5 });
+    }
+  }
+  // Switching to the Markdown view hides the toolbar's slot.
+  new MutationObserver(place).observe(slot, { attributes: true, attributeFilter: ["hidden"] });
+
   editor.on("transaction", refresh);
   refresh();
+  editor.on("focus", place);
+  // Focus may be moving into the toolbar's panel; check once it lands.
+  editor.on("blur", () => setTimeout(place));
+  root.addEventListener("focusout", () => setTimeout(place));
+  vv?.addEventListener("resize", place);
+  vv?.addEventListener("scroll", place);
 }
