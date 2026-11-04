@@ -44,7 +44,8 @@ pages switch instantly.
 
 ## The tab bar steps aside while you type
 
-On a touch screen, the bar slides down out of the way while you type in a
+On a phone (a touch screen narrower than 1024 px, where the bottom tab bar
+shows), the bar slides down out of the way while you type in a
 text field or the note editor, leaving room for the keyboard and the
 editor's toolbar, and comes back when you finish (`src/scripts/typing.ts`).
 It counts as typing once you tap into a field or the keyboard is up. A field

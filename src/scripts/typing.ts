@@ -18,10 +18,17 @@ function isTextField(el: Element | null): boolean {
 }
 
 const vv = window.visualViewport;
-/** Whether the on-screen keyboard covers part of the page (a pinch-zoom
- *  also shrinks the visible area, so it doesn't count). Shared with the
- *  note editor's toolbar. */
-export const keyboardUp = () => (vv ? (vv.scale ?? 1) < 1.05 && window.innerHeight - vv.height > 120 : false);
+
+/** Phones only: touch screens narrower than the desktop layout. Tablets and
+ *  computers keep the tab bar and a toolbar that stays in place. */
+const PHONE = window.matchMedia("(pointer: coarse) and (max-width: 1023px)");
+export const isPhone = () => PHONE.matches;
+
+/** Whether the on-screen keyboard covers part of a phone's screen (a
+ *  pinch-zoom also shrinks the visible area, so it doesn't count). Shared
+ *  with the note editor's toolbar. */
+export const keyboardUp = () =>
+  isPhone() && vv ? (vv.scale ?? 1) < 1.05 && window.innerHeight - vv.height > 120 : false;
 
 let lastTouch = 0;
 document.addEventListener("pointerdown", () => (lastTouch = Date.now()), true);
@@ -40,7 +47,7 @@ function syncTyping(e?: Event) {
   else if (e?.type === "focusin" && Date.now() - lastTouch < 1000) typing = true;
   if (kb) keyboardSeen = true;
   else if (keyboardSeen) typing = keyboardSeen = false;
-  const on = field && (typing || kb);
+  const on = isPhone() && field && (typing || kb);
   document.documentElement.toggleAttribute("data-typing", on);
 }
 
@@ -48,6 +55,7 @@ document.addEventListener("focusin", syncTyping);
 // Focus may be moving to another field, so check once it lands.
 document.addEventListener("focusout", () => setTimeout(syncTyping));
 vv?.addEventListener("resize", () => syncTyping());
+PHONE.addEventListener("change", () => syncTyping());
 // Back to a page kept in memory: start fresh, keyboard down.
 window.addEventListener("pageshow", () => {
   typing = keyboardSeen = false;
