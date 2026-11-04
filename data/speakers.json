@@ -981,6 +981,7 @@
       }
     ],
     "sessionIds": [
+      "1e129b64-f405-41a9-9db3-bdfd2bb56f36",
       "97eb0488-4665-440a-b296-d1d99309fe0c"
     ],
     "research": null
@@ -4656,27 +4657,6 @@
     "research": null
   },
   {
-    "id": "66508b9d-3ae0-49c8-a0bc-920a147625c3",
-    "slug": "shaireen-west",
-    "name": "Shaireen West",
-    "title": "Manager, Quick Books Advanced",
-    "company": "Intuit",
-    "brief": "Shireen West is a People Manager at Intuit, leading a remote team of Live Assisted Bookkeeping Experts who help small and mid-sized business owners manage their books with professional guidance in…",
-    "bio": "Shireen West is a People Manager at Intuit, leading a remote team of Live Assisted Bookkeeping Experts who help small and mid-sized business owners manage their books with professional guidance in QuickBooks Online. Known for data-driven coaching, tailored career development, and building collaborative, high-performing teams, Shireen has more than 30 years of accounting and bookkeeping experience and holds a B.S. in Accounting from Florida A&M University. She is an Intuit Certified Bookkeeping Professional and QuickBooks ProAdvisor.",
-    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FwldHIMgbSnxuJPYWw27e_headshot-1793154332085.png",
-    "links": [
-      {
-        "kind": "linkedin",
-        "label": "LinkedIn",
-        "url": "https://www.linkedin.com/in/smsessoms/"
-      }
-    ],
-    "sessionIds": [
-      "5562a568-1eed-4a6b-8e60-93e3d36f0ae0"
-    ],
-    "research": null
-  },
-  {
     "id": "439c4089-5fe5-461d-8fa2-7438c71fb5b7",
     "slug": "shalanda-armstrong",
     "name": "Shalanda Armstrong",
@@ -4849,6 +4829,27 @@
     ],
     "sessionIds": [
       "c5413b1d-0d67-4236-bcf7-d42b42abc03d"
+    ],
+    "research": null
+  },
+  {
+    "id": "66508b9d-3ae0-49c8-a0bc-920a147625c3",
+    "slug": "shireen-west",
+    "name": "Shireen West",
+    "title": "Manager, Quick Books Advanced",
+    "company": "Intuit",
+    "brief": "Shireen West is a People Manager at Intuit, leading a remote team of Live Assisted Bookkeeping Experts who help small and mid-sized business owners manage their books with professional guidance in…",
+    "bio": "Shireen West is a People Manager at Intuit, leading a remote team of Live Assisted Bookkeeping Experts who help small and mid-sized business owners manage their books with professional guidance in QuickBooks Online. Known for data-driven coaching, tailored career development, and building collaborative, high-performing teams, Shireen has more than 30 years of accounting and bookkeeping experience and holds a B.S. in Accounting from Florida A&M University. She is an Intuit Certified Bookkeeping Professional and QuickBooks ProAdvisor.",
+    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FwldHIMgbSnxuJPYWw27e_headshot-1793154332085.png",
+    "links": [
+      {
+        "kind": "linkedin",
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/smsessoms/"
+      }
+    ],
+    "sessionIds": [
+      "5562a568-1eed-4a6b-8e60-93e3d36f0ae0"
     ],
     "research": null
   },

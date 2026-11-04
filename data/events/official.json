@@ -4262,7 +4262,7 @@
     ],
     "rsvpUrl": null,
     "founderInvestorPick": false,
-    "description": "Salesforce invites you to dive headfirst into the newest technology with our hands-on bootcamp focused on Building Your Agentic Future. This immersive 4-hour, bring-your-own-laptop session is your launchpad into the Salesforce ecosystem and the latest in artificial intelligence.\nWhether you are new to tech or looking to rapidly expand your skill set, this session is designed to empower you with the knowledge and practical experience needed to thrive in an AI-driven world. During this interactive bootcamp, you’ll learn to:\nDiscover the Salesforce Ecosystem: Learn exactly what Salesforce does and learn how to leverage resources. You'll earn your very first Trailhead badges right in the room!\nExplore Headless 360 & The Future of AI: Dive into the very latest in Salesforce technology by building your own agent through conversation with Headless 360, and get an exclusive look at the current landscape and exciting future of AI at Salesforce.\nThis isn't just about learning; it's about doing. By mastering these foundational AI and Salesforce concepts, you are positioning yourself at the forefront of the tech industry. Our trainers will ensure you leave with actionable next steps for your career growth.\nBring your laptop, bring your ambition, and get ready to build your agentic future! Space is limited, so arrive early and power up!",
+    "description": "Salesforce invites you to dive headfirst into the newest technology with our hands-on bootcamp focused on Building Your Agentic Future. This immersive 4-hour, bring-your-own-laptop session is your launchpad into the Salesforce ecosystem and the latest in artificial intelligence.\nWhether you are new to tech or looking to rapidly expand your skill set, this session is designed to empower you with the knowledge and practical experience needed to thrive in an AI-driven world. During this interactive bootcamp, you’ll learn to:\nDiscover the Salesforce Ecosystem: Learn exactly what Salesforce does and learn how to leverage resources. You'll earn your very first Trailhead badges right in the room!\nExplore Headless 360 & The Future of AI: Dive into the very latest in Salesforce technology by building your own agent through conversation with Headless 360, and get an exclusive look at the current landscape and exciting future of AI at Salesforce.\nThis isn't just about learning; it's about doing. By mastering these foundational AI and Salesforce concepts, you are positioning yourself at the forefront of the tech industry. Our trainers will ensure you leave with actionable next steps for your career growth.\nBring your laptop, bring your ambition, and get ready to build your agentic future! Space is limited, so arrive early and power up!\nRSVP here to save your seat!",
     "sources": [
       "afrotech-official"
     ]
@@ -5290,10 +5290,10 @@
         "slug": "alonzo-weatherby"
       },
       {
-        "name": "Shaireen West",
+        "name": "Shireen West",
         "title": "Manager, Quick Books Advanced",
         "company": "Intuit",
-        "slug": "shaireen-west"
+        "slug": "shireen-west"
       }
     ],
     "host": null,
@@ -5968,6 +5968,31 @@
     ]
   },
   {
+    "id": "0ec7c350-fbff-43fb-a486-a1a53699628d",
+    "kind": "official",
+    "title": "BLK GRVTY: Franchise Nova Cocktail Mixer",
+    "date": "2026-11-04",
+    "start": "2026-11-04T17:00:00-06:00",
+    "end": "2026-11-04T20:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "naming-rights-events",
+    "locationLabel": "Naming Rights Events",
+    "address": null,
+    "track": "Networking",
+    "categories": [],
+    "speakers": [],
+    "host": null,
+    "price": null,
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": null,
+    "founderInvestorPick": false,
+    "description": "Think franchise ownership is out of reach? You may be closer to building wealth than you think. Join BLK GRVTY, an official AfroTech partner, for an evening of cocktails, networking and conversation about building ownership, and learn how Franchise Nova helps turn interest into ownership. Spots are limited, so RSVP early.\nRSVP (registration required): posh.vip/e/blk-grvty-franchise-nova-cocktail-mixer-copy\nQuestions? Email connect@blkgrvty.com.",
+    "sources": [
+      "afrotech-official"
+    ]
+  },
+  {
     "id": "faa9b6ac-294b-4b71-90fb-657a63a6d586",
     "kind": "official",
     "title": "Capital One Networking at AFROTECH™",
@@ -6249,7 +6274,14 @@
     "address": null,
     "track": "Engineering",
     "categories": [],
-    "speakers": [],
+    "speakers": [
+      {
+        "name": "Cliff Worley",
+        "title": "Founder & AI Consultant",
+        "company": "AI Playtime",
+        "slug": "cliff-worley"
+      }
+    ],
     "host": null,
     "price": null,
     "access": null,
@@ -7756,7 +7788,7 @@
     ],
     "rsvpUrl": null,
     "founderInvestorPick": false,
-    "description": "You'd never book a planner just to ask \"is this normal?\" In this room, that's the whole point. 300 people in tech, at your level and the next one up, saying out loud what they're doing with their money and what they're still figuring out. Evol Greaves, Betterment's VP of Engineering, hosts and goes first with his own story: how his thinking about money changed as his career grew, and the questions he still has. Kyle McBrien, CFP, brings the five things he thinks about for everyone. Your questions go in at check-in and get asked for you, no names attached. Then small groups with the planners.",
+    "description": "You'd never book a planner just to ask \"is this normal?\" In this room, that's the whole point. 300 people in tech, at your level and the next one up, saying out loud what they're doing with their money and what they're still figuring out. Evol Greaves, Betterment's VP of Engineering, hosts and goes first with his own story: how his thinking about money changed as his career grew, and the questions he still has. Kyle McBrien, CFP, brings the five things he thinks about for everyone. Your questions go in at check-in and get asked for you, no names attached. Then small groups with the planners.\nRSVP here to save your seat!",
     "sources": [
       "afrotech-official"
     ]
