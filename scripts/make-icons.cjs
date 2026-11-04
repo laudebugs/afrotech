@@ -1,5 +1,5 @@
 // Renders the app icons in public/icons/ from the favicon design in public/favicon.svg:
-// a plum tile with "A26" and plant-like threads behind it.
+// a plum tile with "Afro" and "Tech" on two lines and plant-like threads behind them.
 // Run after changing the design: node scripts/make-icons.cjs "$PWD" (needs Playwright).
 const { chromium } = require('playwright');
 const fs = require('fs');
@@ -33,8 +33,8 @@ const icons = [
       body { display: grid; place-items: center; }
       svg { width: ${size * content}px; height: ${size * content}px; display: block; }
     </style><body>${svg}</body>`);
-    await p.evaluate(() => document.fonts.load('600 33px "IBM Plex Sans"'));
-    const ok = await p.evaluate(() => document.fonts.check('600 33px "IBM Plex Sans"'));
+    await p.evaluate(() => document.fonts.load('600 30px "IBM Plex Sans"'));
+    const ok = await p.evaluate(() => document.fonts.check('600 30px "IBM Plex Sans"'));
     if (!ok) throw new Error('IBM Plex Sans did not load; icons would use a fallback font');
     await p.screenshot({ path: path.join(out, file) });
     await p.close();

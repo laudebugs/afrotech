@@ -35,3 +35,5 @@ Built on November 3:
   source, and `scripts/make-icons.cjs` renders the PNGs from it with Plex
   embedded. The earlier favicon never rendered: its comment held a double
   hyphen ("--accent"), which XML forbids.
+- **Icon text (November 4):** "A26" became "Afro" and "Tech" on two lines,
+  same tile, threads and font.
