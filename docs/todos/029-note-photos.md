@@ -44,26 +44,42 @@ Built on November 3. You created the bucket with
 - **Uploading:** after each successful notes sync, `photos-sync.ts` uploads
   every photo the account doesn't have yet, once its note has no change
   waiting.
+  - **Re-uploads:** a photo no synced note links to loses its "uploaded" mark,
+    because the server has just dropped it. An undo or re-paste then uploads
+    it again.
+  - **Refused uploads:** a photo the Worker refuses as too large or not an
+    image (413 or 415) stays on the device, and isn't retried.
 - **Worker (`worker/photos.ts`, migration `0003_photos.sql`):**
   - **Upload:** `PUT /api/photos/<id>?note=<id>` needs our Origin and the
     session. It takes WebP or JPEG only, checked by the file's first bytes,
-    up to 2 MB, within 200 MB per account. It refuses (409) until the stored
-    note links to the photo, so every stored photo belongs to a note.
+    within 200 MB per account.
+    - **Size:** it stops reading the body past 2 MB, whatever the headers say.
+    - **Linked notes only:** it refuses (409) until the stored note links to
+      the exact `(photo:<id>)`, so every stored photo belongs to a note.
+    - **Order:** the database row is written before the R2 object, and
+      removed if storing the image fails.
+    - **Quota:** two uploads at the same moment can overshoot it slightly.
   - **Download:** `GET /api/photos/<id>` serves a photo to its owner only,
     with `no-store`. The device keeps its own copy, and a browser cache could
     outlive a deletion.
 - **Deleting:** there's no delete route.
-  - **Notes:** after every notes sync, the Worker deletes photos that their
-    stored note no longer links to, because the note was deleted or the photo
-    taken out of it.
+  - **Notes:** after every notes sync, the Worker deletes photos that no
+    live note links to any more, because the note was deleted or the photo
+    taken out of it. A photo another note still links to moves to that note
+    instead. The plan listed a DELETE route; deletion follows the notes, so
+    none is needed.
   - **Delete my data:** removes every object under the account in R2, then the
     rows.
   - **Signing out:** clears the device's photos.
   - **Device sweep:** each page load drops photos no note on the device links
     to. A photo never uploaded keeps a day's grace, in case its note is still
     being written; one the account has goes after an hour.
-- **Full storage:** at 200 MB uploads stop, and the editor says the account's
-  photo space is full and new photos stay on the device.
+- **Full storage:** at 200 MB uploads stop. The editor says the account's
+  photo space is full and new photos stay on the device, and the message
+  stays across pages until an upload succeeds.
+- **Signed out:** the editor's help line says photos stay on this device until
+  you sign in. An expired session clears the device's photos, like signing
+  out does.
 - **Tests:**
   - **Unit:** `npm test` covers photo Markdown surviving the editor, and the
     note page rendering `photo:` images without a `src`.
@@ -72,7 +88,10 @@ Built on November 3. You created the bucket with
     fetching from the account, signed-out GET (401), and deleting the note
     (the photo's row and R2 object removed).
   - **Bad uploads:** no Origin (403), a photo the note doesn't link to (409),
-    HTML posing as an image (415), a bad id (404).
+    an id that's only a prefix of a linked one (409), HTML posing as an image
+    (415), a bad id (404), and a 3 MB chunked upload with no length (413).
+  - **Shared photo:** with one photo in two notes, deleting the first note
+    keeps it, and deleting the second removes it.
 - **Not tested:** Google sign-in on a real phone, and HEIC photos on iPhone.
   Safari should convert HEIC to JPEG when picking a photo, so it still needs a
   check on a real iPhone.

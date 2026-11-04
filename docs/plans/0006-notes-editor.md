@@ -93,7 +93,7 @@ Instead, each photo gets an id, and the note's Markdown points to it as
 |-------|-------|-----|
 | IndexedDB on the device | Every photo you've added or viewed | Holds hundreds of MB, works offline, keeps photos for signed-out users |
 | A private R2 bucket (`afrotech-note-photos`) | Signed-in users' photos, under their account | Built for files; nothing public, and no size limit near ours |
-| The Worker | `PUT` and `GET /api/photos/<id>` and deletion, for the owner's session only | Photos stay private: no public URL exists |
+| The Worker | `PUT` and `GET /api/photos/<id>`, for the owner's session only; deletion follows the notes (todo 029) | Photos stay private: no public URL exists |
 
 Photos upload on their own, after the note's text syncs, and only once. The
 editor and note view show a photo from IndexedDB, then from the Worker, on any

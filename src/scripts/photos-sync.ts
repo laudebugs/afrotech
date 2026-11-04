@@ -4,12 +4,13 @@
 // A photo uploads once its note has synced (no change waiting), because the
 // Worker accepts a photo only when the stored note links to it.
 import { readAllNotes, readNoteChanges } from "../lib/notes";
-import { HAS_PHOTOS, allPhotos, deletePhotos, markUploaded, photoIdsIn } from "../lib/photos";
-import { SIGNED_IN, getItem } from "../lib/storage";
+import { HAS_PHOTOS, allPhotos, deletePhotos, markUploaded, photoIdsIn, savePhoto } from "../lib/photos";
+import { SIGNED_IN, getItem, setItem } from "../lib/storage";
 
-let problem: "full" | null = null;
+/** Set while the account's photo space is full; kept across pages. */
+const FULL = "afrotech:photos-full";
 /** Why photos stopped uploading, when the server said so. */
-export const photosSyncProblem = () => problem;
+export const photosSyncProblem = (): "full" | null => (getItem(FULL) ? "full" : null);
 
 let running: Promise<void> | null = null;
 
@@ -23,8 +24,15 @@ async function upload(): Promise<void> {
   if (!getItem(SIGNED_IN) || !getItem(HAS_PHOTOS)) return;
   const notes = Object.values(readAllNotes()).filter((n) => !n.deleted);
   const waiting = readNoteChanges();
+  const linked = new Set(notes.flatMap((n) => photoIdsIn(n.body)));
   for (const photo of await allPhotos()) {
-    if (photo.uploaded) continue;
+    // Notes just synced, so the server has dropped any photo no note links
+    // to. Forget it was uploaded, so an undo or a re-paste uploads it again.
+    if (photo.uploaded && !linked.has(photo.id)) {
+      await markUploaded(photo.id, false);
+      continue;
+    }
+    if (photo.uploaded || photo.rejected) continue;
     const note = notes.find((n) => waiting[n.id] === undefined && photoIdsIn(n.body).includes(photo.id));
     if (!note) continue; // not saved in a synced note yet
     try {
@@ -35,12 +43,15 @@ async function upload(): Promise<void> {
         body: photo.blob,
       });
       if (res.ok) {
-        problem = null;
+        setItem(FULL, null);
         await markUploaded(photo.id);
       } else if (res.status === 507) {
-        problem = "full";
+        setItem(FULL, "1");
         document.dispatchEvent(new CustomEvent("photos-full"));
         return;
+      } else if (res.status === 413 || res.status === 415) {
+        // Too large, or not an image: retrying can't help. It stays on this device.
+        await savePhoto({ ...photo, rejected: true });
       } else if (res.status === 401) {
         return; // signed out elsewhere; notes sync handles it
       }

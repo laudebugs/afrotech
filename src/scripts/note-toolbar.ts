@@ -4,7 +4,7 @@
 import type { Editor } from "@tiptap/core";
 import { allNoteEvents, noteEvent } from "../lib/note-events";
 import { formatTime } from "../lib/time";
-import { newPhotoId, savePhoto } from "../lib/photos";
+import { PHOTO_PREFIX, newPhotoId, savePhoto } from "../lib/photos";
 import { shrinkPhoto } from "../lib/shrink-photo";
 
 type PanelKind = "link" | "insert" | "table" | "sessions";
@@ -151,8 +151,12 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
   let openFor: HTMLButtonElement | null = null;
   /** Counts panel openings, so an action can tell if it opened another. */
   let opened = 0;
+  /** Cleanup for the open panel, such as freeing a photo preview. */
+  let onClose: (() => void) | null = null;
   function closePanel(refocus = false) {
     if (!openFor) return;
+    onClose?.();
+    onClose = null;
     panel.hidden = true;
     panel.replaceChildren();
     openFor.setAttribute("aria-expanded", "false");
@@ -304,6 +308,7 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     opened++;
     insert.setAttribute("aria-expanded", "true");
     panel.hidden = false;
+    const mine = opened;
     const status = document.createElement("p");
     status.className = "panel-note";
     status.setAttribute("role", "status");
@@ -318,11 +323,12 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
       status.textContent = "This photo couldn't be opened here. Try a JPEG or PNG, or take the photo again.";
       return;
     }
-    if (openFor !== insert) return; // closed while shrinking
+    if (opened !== mine || !openFor) return; // closed (or another panel opened) while shrinking
     const preview = document.createElement("img");
     preview.className = "panel-preview";
     preview.alt = "";
     preview.src = URL.createObjectURL(blob);
+    onClose = () => URL.revokeObjectURL(preview.src);
     const label = document.createElement("label");
     label.className = "panel-label";
     label.textContent = "Describe the photo, for anyone who can't see it";
@@ -343,8 +349,7 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
       if (!text) return alt.focus();
       const id = newPhotoId();
       void savePhoto({ id, blob, uploaded: false, addedAt: Date.now() });
-      editor.chain().focus().setImage({ src: `photo:${id}`, alt: text }).run();
-      URL.revokeObjectURL(preview.src);
+      editor.chain().focus().setImage({ src: `${PHOTO_PREFIX}${id}`, alt: text }).run();
       closePanel();
     });
     alt.addEventListener("input", () => add.setAttribute("aria-disabled", String(!alt.value.trim())));
@@ -356,7 +361,7 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     });
     const row = document.createElement("div");
     row.className = "panel-form";
-    row.append(add, action("Cancel", () => URL.revokeObjectURL(preview.src), "panel-action"));
+    row.append(add, action("Cancel", () => {}, "panel-action"));
     status.textContent = `Ready: ${Math.round(blob.size / 1024)} KB.`;
     panel.append(preview, label, row);
     alt.focus();

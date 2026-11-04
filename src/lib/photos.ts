@@ -9,10 +9,12 @@ export type StoredPhoto = {
   blob: Blob;
   /** True once the account has it, so it needn't upload again. */
   uploaded: boolean;
+  /** Set when the account refused it (too large, not an image): no more tries. */
+  rejected?: boolean;
   addedAt: number; // milliseconds since 1970
 };
 
-import { setItem } from "./storage";
+import { getItem, setItem } from "./storage";
 
 /** Set once this device has stored a photo, so other visitors never open IndexedDB. */
 export const HAS_PHOTOS = "afrotech:has-photos";
@@ -44,9 +46,12 @@ async function request<T>(mode: IDBTransactionMode, make: (store: IDBObjectStore
   if (!d) return undefined;
   return new Promise((resolve) => {
     try {
-      const req = make(d.transaction(STORE, mode).objectStore(STORE));
+      const tx = d.transaction(STORE, mode);
+      const req = make(tx.objectStore(STORE));
       req.onsuccess = () => resolve(req.result);
       req.onerror = () => resolve(undefined);
+      // A transaction can abort (storage full) without the request failing.
+      tx.onabort = () => resolve(undefined);
     } catch {
       resolve(undefined);
     }
@@ -56,9 +61,12 @@ async function request<T>(mode: IDBTransactionMode, make: (store: IDBObjectStore
 /** A new random photo id (letters and digits, as the Worker expects). */
 export const newPhotoId = () => crypto.randomUUID().replace(/-/g, "");
 
-/** The photo ids a note's Markdown links to. */
+/** A photo id: letters, digits, _ and -; the Worker (PHOTO_ID) and note-markdown.ts use the same rule. */
+export const PHOTO_ID_PATTERN = "[\\w-]{8,64}";
+
+/** The photo ids a note's Markdown links to, as ![alt](photo:<id>). */
 export function photoIdsIn(markdown: string): string[] {
-  return [...markdown.matchAll(/\(photo:([\w-]{8,64})\)/g)].map((m) => m[1]!);
+  return [...markdown.matchAll(new RegExp(`\\(${PHOTO_PREFIX}(${PHOTO_ID_PATTERN})\\)`, "g"))].map((m) => m[1]!);
 }
 
 export async function savePhoto(photo: StoredPhoto): Promise<void> {
@@ -78,9 +86,9 @@ export async function allPhotos(): Promise<StoredPhoto[]> {
   return [...byId.values()];
 }
 
-export async function markUploaded(id: string): Promise<void> {
+export async function markUploaded(id: string, uploaded = true): Promise<void> {
   const photo = await readPhoto(id);
-  if (photo) await savePhoto({ ...photo, uploaded: true });
+  if (photo && photo.uploaded !== uploaded) await savePhoto({ ...photo, uploaded });
 }
 
 export async function deletePhotos(ids: string[]): Promise<void> {
@@ -94,6 +102,8 @@ export async function deletePhotos(ids: string[]): Promise<void> {
 /** Signing out: no photo stays on the device. */
 export async function clearPhotos(): Promise<void> {
   memory.clear();
+  if (!getItem(HAS_PHOTOS)) return; // never stored one: leave IndexedDB unopened
+  setItem(HAS_PHOTOS, null);
   for (const id of urls.keys()) revoke(id);
   await request("readwrite", (s) => s.clear());
 }
@@ -107,10 +117,22 @@ function revoke(id: string) {
   urls.delete(id);
 }
 
+const pending = new Map<string, Promise<string | null>>();
+
 /** A URL the page can show, from this device or (signed in) the account; null if neither has it. */
-export async function photoUrl(id: string, fetchFromAccount: (id: string) => Promise<Blob | null>): Promise<string | null> {
+export function photoUrl(id: string, fetchFromAccount: (id: string) => Promise<Blob | null>): Promise<string | null> {
   const known = urls.get(id);
-  if (known) return known;
+  if (known) return Promise.resolve(known);
+  // Two images asking at once share one lookup (and one object URL).
+  let lookup = pending.get(id);
+  if (!lookup) {
+    lookup = findPhoto(id, fetchFromAccount).finally(() => pending.delete(id));
+    pending.set(id, lookup);
+  }
+  return lookup;
+}
+
+async function findPhoto(id: string, fetchFromAccount: (id: string) => Promise<Blob | null>): Promise<string | null> {
   let blob = (await readPhoto(id))?.blob;
   if (!blob) {
     blob = (await fetchFromAccount(id)) ?? undefined;

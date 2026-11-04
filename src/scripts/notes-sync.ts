@@ -19,6 +19,7 @@ import {
 import { SIGNED_IN, getItem as get, setItem as set } from "../lib/storage";
 import { api } from "./api";
 import { sweepPhotos, syncPhotos } from "./photos-sync";
+import { clearPhotos } from "../lib/photos";
 import { accountId, forgetAccount } from "./whoami";
 
 /** The account this device's notes were first merged into. */
@@ -71,6 +72,7 @@ function sessionEnded() {
   set(SIGNED_IN, null);
   forgetAccount();
   clearSyncedNotes();
+  void clearPhotos(); // like signing out: the account's photos leave the device
 }
 
 /** One full sync. Resolves true when every local change reached the server. */
