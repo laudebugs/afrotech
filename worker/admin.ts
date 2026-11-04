@@ -1,5 +1,5 @@
-// The admin dashboard's data (plan 0011). Only accounts whose email is in the
-// ADMIN_EMAILS secret get an answer; everyone else gets "not found".
+// The admin dashboard's data (plan 0011). Only accounts whose email is in
+// ADMIN_EMAILS (wrangler.jsonc) get an answer; everyone else gets "not found".
 //
 // Everything here is a total. Nothing returns a name, an email or a note's
 // text, and the "top" lists keep only sessions that at least MIN_GROUP
@@ -8,8 +8,6 @@ import type { SignedInUser } from "./session";
 import { HOUSTON_OFFSET_MS, houstonDate } from "../src/lib/admin";
 
 export type AdminEnv = Env & {
-  /** Comma-separated emails that may open /admin/ (a secret). */
-  ADMIN_EMAILS?: string;
   /** A Cloudflare API token that can read analytics for the site's zone (a secret). */
   CF_ANALYTICS_TOKEN?: string;
 };

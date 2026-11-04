@@ -15,11 +15,12 @@
   // Public by design: the browser needs it to show Google's sign-in button.
   "vars": {
     "GOOGLE_CLIENT_ID": "316564590500-t9tgifb1fhjool4mhfi6dp93pbug1n0j.apps.googleusercontent.com",
-    // The admin dashboard's traffic (plan 0011) reads Cloudflare's analytics for
-    // this host in this zone. The token (CF_ANALYTICS_TOKEN) and the admin list
-    // (ADMIN_EMAILS) are secrets, set in the Cloudflare dashboard.
-    "ANALYTICS_ZONE": "laudebugs.me",
-    "ANALYTICS_HOST": "afrotech26.laudebugs.me"
+    // Comma-separated Google emails that may open the admin dashboard (plan 0011).
+    "ADMIN_EMAILS": "lbugasu@gmail.com",
+    // The dashboard's traffic reads Cloudflare's analytics for this host in this
+    // zone. Its token, CF_ANALYTICS_TOKEN, is a secret set in the Cloudflare dashboard.
+    "ANALYTICS_HOST": "afrotech26.laudebugs.me",
+    "ANALYTICS_ZONE": "laudebugs.me"
   },
   // At most 10 sign-in attempts per minute from one address.
   "ratelimits": [
