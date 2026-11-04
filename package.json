@@ -39,7 +39,7 @@
     "@tiptap/starter-kit": "^3.32.2",
     "jose": "6.2.12",
     "maplibre-gl": "^6.16.0",
-    "markdown-it": "14.1.0",
+    "markdown-it": "14.3.3",
     "minisearch": "7.2.0"
   }
 }
