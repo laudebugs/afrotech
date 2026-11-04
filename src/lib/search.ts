@@ -3,6 +3,7 @@
 // MiniSearch: prefix matching, small typos forgiven, case and accents ignored,
 // every word required.
 import MiniSearch, { type SearchResult } from "minisearch";
+import { eventEndMs } from "./time.ts";
 
 /** One event, as much as search and the filters need. */
 export type SearchEvent = {
@@ -37,7 +38,9 @@ export const fold = (text: string) => text.normalize("NFD").replace(/\p{M}/gu, "
 const options = {
   processTerm: (term: string) => fold(term),
   searchOptions: {
-    prefix: true,
+    // Word starts count from 4 letters, so "art" means art, not "artificial",
+    // and "ai" means AI, not "aid" or "airport".
+    prefix: (term: string) => term.length >= 4,
     // Short words must be exact; longer ones forgive one or two letters.
     fuzzy: (term: string) => (term.length >= 7 ? 0.25 : term.length >= 5 ? 0.2 : false),
     combineWith: "AND" as const,
@@ -81,8 +84,7 @@ function tier(result: SearchResult): number {
   return 2;
 }
 
-const DEFAULT_MS = 60 * 60_000;
-const endMs = (e: SearchEvent) => (e.end ? Date.parse(e.end) : e.start ? Date.parse(e.start) + DEFAULT_MS : Infinity);
+const endMs = (e: SearchEvent) => (e.start ? eventEndMs(e.start, e.end) : Infinity);
 const startMs = (e: SearchEvent) => (e.start ? Date.parse(e.start) : Date.parse(`${e.date}T23:59:00-06:00`));
 
 /**
@@ -97,7 +99,8 @@ export function findEvents(
   now: number,
 ): SearchEvent[] {
   const ended = (e: SearchEvent) => (endMs(e) <= now ? 1 : 0);
-  const words = query.trim();
+  // Only punctuation ("&" on the way to "R&B") is no search yet.
+  const words = /[\p{L}\p{N}]/u.test(query) ? query.trim() : "";
   if (!words) {
     return [...byId.values()].sort((a, b) => ended(a) - ended(b) || startMs(a) - startMs(b));
   }
@@ -110,5 +113,23 @@ export function findEvents(
 }
 
 export function findSpeakers(ms: MiniSearch<SearchSpeaker>, query: string): string[] {
-  return query.trim() ? ms.search(query.trim()).map((r) => String(r.id)) : [];
+  return /[\p{L}\p{N}]/u.test(query) ? ms.search(query.trim()).map((r) => String(r.id)) : [];
+}
+
+/**
+ * Where an event is, for the Where filter: at the convention center (official
+ * sessions and on-site venues), walkable from it, across Houston, or null
+ * when it has no location at all. An off-site place the geocoder couldn't pin
+ * still counts as across Houston, so the filter never hides it.
+ */
+export function placeOf(
+  kind: SearchEvent["kind"],
+  venueKind: string | undefined,
+  hasLocation: boolean,
+  metresFromCenter: number | null,
+  walkable: number,
+): SearchEvent["where"] {
+  if (kind === "official" || (venueKind && ["grb", "marriott", "outdoor"].includes(venueKind))) return "grb";
+  if (metresFromCenter !== null) return metresFromCenter <= walkable ? "near" : "city";
+  return hasLocation ? "city" : null;
 }

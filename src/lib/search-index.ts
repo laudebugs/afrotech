@@ -6,11 +6,10 @@ import { isFree } from "./schedule";
 import { haversineMetres, type LatLng } from "./geo";
 import geocode from "../../data/geocode.json";
 import floorPlan from "../../data/floor-plan.json";
-import type { SearchEvent, SearchIndex } from "./search";
+import { placeOf, type SearchEvent, type SearchIndex } from "./search";
 
 /** "Walkable" from the convention center (plan 0009). */
 export const WALKABLE_METRES = 1500;
-const ON_SITE = new Set(["grb", "marriott", "outdoor"]);
 
 // The convention center's middle: the average of the floor plan's corners.
 const corners = floorPlan.controlPoints as LatLng[];
@@ -22,10 +21,12 @@ const places = geocode as Record<string, { found?: boolean; lat?: number; lng?: 
 
 function where(e: (typeof allEvents)[number]): SearchEvent["where"] {
   const venue = e.locationKey ? venues[e.locationKey] : undefined;
-  if (e.kind === "official" || (venue && ON_SITE.has(venue.kind))) return "grb";
   const spot = e.address ? places[e.address.trim()] : undefined;
-  if (!spot?.found || spot.lat === undefined || spot.lng === undefined) return null;
-  return haversineMetres(grb, { lat: spot.lat, lng: spot.lng }) <= WALKABLE_METRES ? "near" : "city";
+  const metres =
+    spot?.found && spot.lat !== undefined && spot.lng !== undefined
+      ? haversineMetres(grb, { lat: spot.lat, lng: spot.lng })
+      : null;
+  return placeOf(e.kind, venue?.kind, Boolean(e.address || e.locationKey), metres, WALKABLE_METRES);
 }
 
 export function buildSearchIndex(): SearchIndex {

@@ -22,12 +22,20 @@ Built on November 4:
 - **Where:** each event gets a "where" value. Official and on-site events are
   "grb"; side events within 1.5 km of the convention center's middle are
   "near"; the rest are "city". The middle is taken from the floor plan's
-  corners. 46 side events have no placed address and get null, so the
-  "Where" filter can't place them.
+  corners. An off-site event the geocoder couldn't place counts as "city",
+  so the Where filter never hides it; only the 2 events with no location at
+  all get null.
 - **Matching:** `src/lib/search.ts` uses MiniSearch 7.2.0.
-  - Word starts match, and every word must match.
+  - Word starts match from 4 letters, so "art" means art, not
+    "artificial". Every word must match.
   - Words of 5 or more letters forgive a typo.
   - Case and accents are ignored.
   - Title matches rank first, then speakers and hosts, then the rest; ended
     events go last, then by time.
-- **Tests:** `tests/search.test.ts` has 9 tests.
+- **Review fixes:**
+  - Short words match only whole words.
+  - Punctuation alone counts as no search.
+  - The end-time rule reuses `eventEndMs`.
+  - The where rule (`placeOf`) is tested.
+  - Off-site events without a pin count as "city".
+- **Tests:** `tests/search.test.ts` has 12 tests.
