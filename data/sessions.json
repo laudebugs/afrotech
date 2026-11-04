@@ -3235,7 +3235,7 @@
       }
     ],
     "ticket_levels": "All Access; Executive; Medical; Premiere; Student",
-    "description": "Salesforce invites you to dive headfirst into the newest technology with our hands-on bootcamp focused on Building Your Agentic Future. This immersive 4-hour, bring-your-own-laptop session is your launchpad into the Salesforce ecosystem and the latest in artificial intelligence.\nWhether you are new to tech or looking to rapidly expand your skill set, this session is designed to empower you with the knowledge and practical experience needed to thrive in an AI-driven world. During this interactive bootcamp, you’ll learn to:\nDiscover the Salesforce Ecosystem: Learn exactly what Salesforce does and learn how to leverage resources. You'll earn your very first Trailhead badges right in the room!\nExplore Headless 360 & The Future of AI: Dive into the very latest in Salesforce technology by building your own agent through conversation with Headless 360, and get an exclusive look at the current landscape and exciting future of AI at Salesforce.\nThis isn't just about learning; it's about doing. By mastering these foundational AI and Salesforce concepts, you are positioning yourself at the forefront of the tech industry. Our trainers will ensure you leave with actionable next steps for your career growth.\nBring your laptop, bring your ambition, and get ready to build your agentic future! Space is limited, so arrive early and power up!",
+    "description": "Salesforce invites you to dive headfirst into the newest technology with our hands-on bootcamp focused on Building Your Agentic Future. This immersive 4-hour, bring-your-own-laptop session is your launchpad into the Salesforce ecosystem and the latest in artificial intelligence.\nWhether you are new to tech or looking to rapidly expand your skill set, this session is designed to empower you with the knowledge and practical experience needed to thrive in an AI-driven world. During this interactive bootcamp, you’ll learn to:\nDiscover the Salesforce Ecosystem: Learn exactly what Salesforce does and learn how to leverage resources. You'll earn your very first Trailhead badges right in the room!\nExplore Headless 360 & The Future of AI: Dive into the very latest in Salesforce technology by building your own agent through conversation with Headless 360, and get an exclusive look at the current landscape and exciting future of AI at Salesforce.\nThis isn't just about learning; it's about doing. By mastering these foundational AI and Salesforce concepts, you are positioning yourself at the forefront of the tech industry. Our trainers will ensure you leave with actionable next steps for your career growth.\nBring your laptop, bring your ambition, and get ready to build your agentic future! Space is limited, so arrive early and power up!\nRSVP here to save your seat!",
     "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=1a1d031d-134b-484d-a7a5-d4b93d105828"
   },
   {
@@ -4132,7 +4132,7 @@
     "title": "Scale Smarter: The Tools That Grow With Your Business Presented by Intuit",
     "track": "Artificial Intelligence",
     "location": "Grand Ballroom C",
-    "speakers": "Sonya Sessons (Manager, QuickBooks Live, Intuit); Alonzo Weatherby (Senior Manager, Mid Market, Intuit); Shaireen West (Manager, Quick Books Advanced, Intuit)",
+    "speakers": "Sonya Sessons (Manager, QuickBooks Live, Intuit); Alonzo Weatherby (Senior Manager, Mid Market, Intuit); Shireen West (Manager, Quick Books Advanced, Intuit)",
     "speaker_list": [
       {
         "id": "70ee2342-c07e-4510-89f7-184f60af7e86",
@@ -4160,7 +4160,7 @@
       },
       {
         "id": "66508b9d-3ae0-49c8-a0bc-920a147625c3",
-        "name": "Shaireen West",
+        "name": "Shireen West",
         "title": "Manager, Quick Books Advanced",
         "company": "Intuit",
         "about": "<p>Shireen West is a People Manager at Intuit, leading a remote team of Live Assisted Bookkeeping Experts who help small and mid-sized business owners manage their books with professional guidance in QuickBooks Online.  Known for data-driven coaching, tailored career development, and building collaborative, high-performing teams, Shireen has more than 30 years of accounting and bookkeeping experience and holds a B.S. in Accounting from Florida A&M University. She is an Intuit Certified Bookkeeping Professional and QuickBooks ProAdvisor. </p>",
@@ -4674,6 +4674,20 @@
     "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=76a17097-d373-4e17-b4da-85c57c291ecd"
   },
   {
+    "id": "0ec7c350-fbff-43fb-a486-a1a53699628d",
+    "date": "2026-11-04",
+    "start": "5:00 PM",
+    "end": "8:00 PM",
+    "title": "BLK GRVTY: Franchise Nova Cocktail Mixer",
+    "track": "Networking",
+    "location": "Naming Rights Events",
+    "speakers": "",
+    "speaker_list": [],
+    "ticket_levels": "",
+    "description": "Think franchise ownership is out of reach? You may be closer to building wealth than you think. Join BLK GRVTY, an official AfroTech partner, for an evening of cocktails, networking and conversation about building ownership, and learn how Franchise Nova helps turn interest into ownership. Spots are limited, so RSVP early.\nRSVP (registration required): posh.vip/e/blk-grvty-franchise-nova-cocktail-mixer-copy\nQuestions? Email connect@blkgrvty.com.",
+    "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=0ec7c350-fbff-43fb-a486-a1a53699628d"
+  },
+  {
     "id": "b3efa745-4276-4766-b368-b40150d945d5",
     "date": "2026-11-04",
     "start": "5:00 PM",
@@ -4847,8 +4861,21 @@
     "title": "Expand Your Personal Tech Stack",
     "track": "Engineering",
     "location": "Grand Ballroom C",
-    "speakers": "",
-    "speaker_list": [],
+    "speakers": "Cliff Worley (Founder & AI Consultant, AI Playtime)",
+    "speaker_list": [
+      {
+        "id": "ed414314-2213-405e-8175-3b33574c008b",
+        "name": "Cliff Worley",
+        "title": "Founder & AI Consultant",
+        "company": "AI Playtime",
+        "about": "<p>Cliff Worley is a top-rated AI keynote speaker and growth advisor who trains Fortune 500 companies on AI adoption and helps them navigate the rapidly changing landscape of artificial intelligence. Drawing on five years in venture capital — where he saw early how AI would reshape how companies compete — Cliff delivers strategic insights on AI implementation and, most importantly, shows teams how to use AI tools to 10x their output. He has advised brands including Amazon, Marriott, Airbnb, Capital One, and Skims, and has worked with Fortune 500 companies representing more than $1 trillion in combined revenue.</p>",
+        "image": "https://content-cdn.sessionboard.com/attendee-photo%2FGwDkj2PQP66LNpWbVh2w_headshot-1793292966593.jpg",
+        "linkedin": "https://www.linkedin.com/in/cliffworley/",
+        "twitter": "@fiscalcliffw",
+        "facebook": "",
+        "instagram": ""
+      }
+    ],
     "ticket_levels": "All Access; Executive; Medical; Premiere",
     "description": "Live Workshop identifying your current workflows and which AI tool to use wear to 10x your productivity and output at Work.",
     "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=1e129b64-f405-41a9-9db3-bdfd2bb56f36"
@@ -6075,7 +6102,7 @@
       }
     ],
     "ticket_levels": "All Access; Executive; Medical; Premiere",
-    "description": "You'd never book a planner just to ask \"is this normal?\" In this room, that's the whole point. 300 people in tech, at your level and the next one up, saying out loud what they're doing with their money and what they're still figuring out. Evol Greaves, Betterment's VP of Engineering, hosts and goes first with his own story: how his thinking about money changed as his career grew, and the questions he still has. Kyle McBrien, CFP, brings the five things he thinks about for everyone. Your questions go in at check-in and get asked for you, no names attached. Then small groups with the planners.",
+    "description": "You'd never book a planner just to ask \"is this normal?\" In this room, that's the whole point. 300 people in tech, at your level and the next one up, saying out loud what they're doing with their money and what they're still figuring out. Evol Greaves, Betterment's VP of Engineering, hosts and goes first with his own story: how his thinking about money changed as his career grew, and the questions he still has. Kyle McBrien, CFP, brings the five things he thinks about for everyone. Your questions go in at check-in and get asked for you, no names attached. Then small groups with the planners.\nRSVP here to save your seat!",
     "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=f8ffa8e2-fa5a-4781-9d93-893f7f2933ea"
   },
   {
