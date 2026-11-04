@@ -321,9 +321,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
-    /* Fits between the pinned header and the bottom nav, scrolling inside,
-       so no button ends up behind the nav. */
-    max-height: calc(100dvh - var(--sticky-offset, 0px) - 9rem);
+    /* Never taller than the screen less the header and tab bar, scrolling
+       inside, so its buttons stay reachable. */
+    max-height: calc(100dvh - 9rem);
     overflow-y: auto;
     padding: var(--space-2) 0;
     border-top: 1px solid var(--line);

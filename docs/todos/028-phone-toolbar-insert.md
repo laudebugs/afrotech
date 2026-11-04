@@ -61,3 +61,8 @@ Built on November 3:
 - **Markdown view:** the toolbar hides while the Markdown view is showing,
   since its tools act on the formatted view.
 
+
+**Changed on November 4, at your request:** the toolbar no longer rides above
+the keyboard or pins under the header. It stays in place above the note and
+scrolls with the page, because the pinned and floating versions were jumpy
+on phones. In a long note, scroll up to reach it.

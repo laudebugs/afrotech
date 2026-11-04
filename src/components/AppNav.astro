@@ -45,21 +45,27 @@ const items = [
 <script>
   // Instant response (plan 0010): the moment a finger or mouse goes down on a
   // tab, the capsule glides to it and the tab lights up, while the page loads
-  // behind. A drag or a cancelled press puts it back.
+  // behind. A press that doesn't become a tap on a tab (a drag, a long-press
+  // for the link menu, a release over another tab) puts it back.
   const nav = document.querySelector<HTMLElement>(".app-nav");
   const capsule = nav?.querySelector<HTMLElement>(".capsule");
   let undo: (() => void) | null = null;
+  let settle = 0;
 
   function pressTab(link: HTMLAnchorElement) {
+    undo?.(); // a second press starts from the real current tab
     if (!nav || !capsule || link.getAttribute("aria-current") === "page") return;
     const current = nav.querySelector<HTMLAnchorElement>('a[aria-current="page"]');
     const from = capsule.getBoundingClientRect();
     const to = link.getBoundingClientRect();
     capsule.style.transform = `translate(${to.left - from.left}px, ${to.top - from.top}px)`;
+    nav.dataset.pressing = "";
     link.dataset.pressed = "";
     current?.setAttribute("data-leaving", "");
     undo = () => {
+      clearTimeout(settle);
       capsule.style.transform = "";
+      delete nav.dataset.pressing;
       delete link.dataset.pressed;
       current?.removeAttribute("data-leaving");
       undo = null;
@@ -71,8 +77,19 @@ const items = [
     if (!link || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
     pressTab(link);
   });
-  // A press that turns into a drag or is cancelled doesn't navigate.
+  // Unless a click on the pressed tab follows the release, nothing is opening:
+  // put the bar back.
+  nav?.addEventListener("pointerup", () => {
+    clearTimeout(settle);
+    settle = window.setTimeout(() => undo?.(), 500);
+  });
+  nav?.addEventListener("click", (e) => {
+    const link = (e.target as Element).closest<HTMLAnchorElement>("a[data-pressed]");
+    if (link && !e.defaultPrevented) clearTimeout(settle);
+    else undo?.();
+  });
   nav?.addEventListener("pointercancel", () => undo?.());
+  nav?.addEventListener("contextmenu", () => undo?.());
   nav?.addEventListener("pointerleave", (e) => e.pointerType === "mouse" && undo?.());
   // Back to a page kept in memory: show it as it was.
   window.addEventListener("pageshow", (e) => e.persisted && undo?.());
@@ -162,7 +179,7 @@ const items = [
       transform: scale(0.86);
       transition-duration: 90ms;
     }
-    a[aria-current="page"]:active .capsule:not([style*="translate"]) {
+    .app-nav:not([data-pressing]) a[aria-current="page"]:active .capsule {
       transform: scale(1.06);
       transition-duration: 120ms;
     }
