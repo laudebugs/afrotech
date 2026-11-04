@@ -122,6 +122,10 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   const count = document.querySelector<HTMLElement>("[data-count]")!;
   const empty = document.querySelector<HTMLElement>("[data-empty]")!;
 
+  // Links from before week-wide search (?q=…) go on to the search page.
+  const oldQuery = new URLSearchParams(location.search).get("q");
+  if (oldQuery) location.replace(`/schedule/search/?q=${encodeURIComponent(oldQuery)}`);
+
   function read(): Filters {
     const p = new URLSearchParams(location.search);
     const kind = p.get("kind");

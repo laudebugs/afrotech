@@ -23,7 +23,9 @@ import Icon from "../../components/Icon.astro";
         data-q
       />
     </form>
-    <p class="status muted" aria-live="polite" data-status>Loading the week's events…</p>
+    <p class="status muted" data-status>Loading the week's events…</p>
+    <!-- Read out once typing pauses, not for every letter. -->
+    <p class="visually-hidden" aria-live="polite" data-announce-count></p>
   </header>
 
   <section class="recent" data-recent hidden aria-labelledby="recent-title">
@@ -132,9 +134,20 @@ import Icon from "../../components/Icon.astro";
     syncPlan(results);
   }
 
+  const announce = document.querySelector<HTMLElement>("[data-announce-count]")!;
+  let announceTimer = 0;
+  function say(text: string) {
+    status.textContent = text;
+    clearTimeout(announceTimer);
+    announceTimer = window.setTimeout(() => (announce.textContent = text), 700);
+  }
+
+  // Letters or digits make a search; "&" on its own doesn't yet.
+  const hasWords = (q: string) => /[\p{L}\p{N}]/u.test(q);
+
   let typingTimer = 0;
   function run(commit = false) {
-    const q = input.value;
+    const q = hasWords(input.value) ? input.value : "";
     const url = new URL(location.href);
     if (q.trim()) url.searchParams.set("q", q.trim());
     else url.searchParams.delete("q");
@@ -145,13 +158,15 @@ import Icon from "../../components/Icon.astro";
     if (!ms) return;
     if (!q.trim()) {
       found = [];
-      status.textContent = `Search ${byId.size} events across the week by title, speaker, host or place.`;
+      say(`Search ${byId.size} events across the week by title, speaker, host or place.`);
       return;
     }
     found = findEvents(ms, byId, q, previewNow());
-    status.textContent = found.length
-      ? `${found.length} ${found.length === 1 ? "event" : "events"}`
-      : "No events match. Try fewer or shorter words.";
+    say(
+      found.length
+        ? `${found.length} ${found.length === 1 ? "event" : "events"}`
+        : "No events match. Try fewer or shorter words.",
+    );
     render(0);
     clearTimeout(typingTimer);
     if (commit) remember(q);

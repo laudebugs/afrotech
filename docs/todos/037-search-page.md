@@ -29,6 +29,11 @@ Built on November 4:
   Its day-only text filter is gone, since the week search covers it; the
   chips and the track picker stay until todo 038. `searchText` in
   `src/lib/schedule.ts` was removed with it.
+- **Review fixes:**
+  - Old day links with `?q=` go on to the search page.
+  - Punctuation alone is no search.
+  - Screen readers hear the result count once typing pauses, not on every
+    letter.
 - **Tested** in a 390 px browser:
   - "enterpreneur" finds 18 events and "ai health" finds 22 across 4 days.
   - A shared `?q=` link works, and a star saves to Saved.
