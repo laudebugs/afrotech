@@ -2,6 +2,7 @@
 // (`run_worker_first` in wrangler.jsonc); every other request is a static file.
 import { deleteAccount, signIn, signOut, verifyGoogleToken, type AuthEnv } from "./auth";
 import { applyNoteChanges, parseNoteChanges, parseSince, readConflicts, readNotes } from "./notes";
+import { PHOTO_ID, getPhoto, prunePhotos, putPhoto } from "./photos";
 import { applyChanges, parseChanges, readItems } from "./plan";
 import { COOKIE, currentUser, readCookie } from "./session";
 
@@ -64,7 +65,7 @@ const routes: Record<string, Handler> = {
     return json({ signedIn: false }, 200, { "Set-Cookie": cookie });
   },
 
-  /** "Delete my data": the account, its sessions, its saved stars and its notes. */
+  /** "Delete my data": the account, its sessions, its saved stars, its notes and their photos. */
   "DELETE /api/me": async (request, env, url) => {
     if (!sameOriginJson(request, url)) return json({ error: "forbidden" }, 403);
     const user = await currentUser(request, env);
@@ -121,6 +122,8 @@ const routes: Record<string, Handler> = {
     const changes = parseNoteChanges(body);
     if (typeof changes === "string") return json({ error: changes }, 400);
     if (!(await applyNoteChanges(env, user, changes))) return json({ error: "note limit reached" }, 409);
+    // Photos the stored notes no longer link to go now.
+    await prunePhotos(env, user, changes.map((c) => c.id));
     const echo = new Map(changes.map((c) => [c.id, c]));
     const conflicts = await readConflicts(env, user, echo);
     // A device uploading in several requests asks for the page only on the last.
@@ -130,7 +133,31 @@ const routes: Record<string, Handler> = {
   },
 };
 
+/**
+ * /api/photos/<id>: GET serves a photo to its owner; PUT?note=<id> stores one
+ * (the body is the image). Writes need our own Origin, like every write.
+ */
+async function photoRoute(request: Request, env: AuthEnv, url: URL, id: string): Promise<Response> {
+  if (!PHOTO_ID.test(id)) return json({ error: "not found" }, 404);
+  if (request.method !== "GET" && request.method !== "PUT") return json({ error: "method not allowed" }, 405);
+  if (request.method === "PUT" && request.headers.get("Origin") !== url.origin) return json({ error: "forbidden" }, 403);
+  const user = await currentUser(request, env);
+  if (!user) return json({ error: "sign in first" }, 401);
+  if (request.method === "GET") return (await getPhoto(env, user, id)) ?? json({ error: "not found" }, 404);
+  const result = await putPhoto(env, user, id, url.searchParams.get("note"), request);
+  return json(result.error ? { error: result.error } : { stored: true }, result.status);
+}
+
 async function handleApi(request: Request, env: Env, url: URL): Promise<Response> {
+  const photo = /^\/api\/photos\/([^/]+)$/.exec(url.pathname);
+  if (photo) {
+    try {
+      return await photoRoute(request, env, url, photo[1]!);
+    } catch (err) {
+      console.error("api error", url.pathname, err);
+      return json({ error: "temporarily unavailable" }, 503);
+    }
+  }
   const handler = routes[`${request.method} ${url.pathname}`];
   if (!handler) {
     const known = Object.keys(routes).some((r) => r.endsWith(` ${url.pathname}`));

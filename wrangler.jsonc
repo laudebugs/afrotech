@@ -28,6 +28,8 @@
       "migrations_dir": "worker/migrations"
     }
   ],
+  // Note photos (plan 0006): private, read and written only through /api/photos.
+  "r2_buckets": [{ "binding": "PHOTOS", "bucket_name": "afrotech-note-photos" }],
   // Keep the workers.dev address and branch preview URLs on; setting routes
   // would otherwise switch both off.
   "workers_dev": true,

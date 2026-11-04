@@ -120,3 +120,20 @@
   height: 1.1em;
   accent-color: var(--accent);
 }
+
+/* Photos (plan 0006). One not on this device shows its alt text in a box. */
+.note-prose img.note-photo {
+  display: block;
+  margin: var(--space-2) 0 var(--space-3);
+}
+.note-prose img.note-photo[data-missing] {
+  min-height: 6rem;
+  padding: var(--space-3);
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  font-size: var(--text-sm);
+}
+.note-prose img.ProseMirror-selectednode {
+  outline: 2px solid var(--accent);
+}
+

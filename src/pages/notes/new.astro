@@ -46,13 +46,17 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
       </div>
       <p class="muted small" data-saved></p>
       <p class="small warn" role="alert" data-save-problem hidden></p>
+      <p class="small warn" role="alert" data-photos-full hidden>
+        Your account's photo space (200 MB) is full, so new photos stay on this device only. Delete notes
+        with photos you no longer need to make room.
+      </p>
       <div class="buttons">
         <button type="submit" class="button primary">Done</button>
         <button type="button" class="button" data-delete hidden>Delete note</button>
       </div>
       <p class="muted small">
-        Only you can see your notes. They save on this device as you type; sign in on
-        <a href="/notes/">Saved</a> to keep them on all your devices.
+        Only you can see your notes. They save on this device as you type, photos included; sign in on{" "}
+        <a href="/notes/">Saved</a> to keep them on all your devices. Until you do, photos stay on this device only.
       </p>
     </form>
   </div>
@@ -65,6 +69,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   import { formatTime } from "../../lib/time";
   import { countWords, createNoteEditor } from "../../scripts/note-editor";
   import { attachToolbar } from "../../scripts/note-toolbar";
+  import { PHOTO_PREFIX, photoUrl } from "../../lib/photos";
+  import { fetchPhotoFromAccount } from "../../scripts/photo-fetch";
+  import { photosSyncProblem } from "../../scripts/photos-sync";
 
   const params = new URLSearchParams(location.search);
   const editing = getNote(params.get("id") ?? "");
@@ -98,8 +105,15 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     element: editorBox,
     markdown: editing?.body ?? NOTE_TEMPLATE,
     labelledBy: "note-label",
+    resolveImage: (src) => photoUrl(src.slice(PHOTO_PREFIX.length), fetchPhotoFromAccount),
     onChange: changed,
   });
+
+  // Uploads stopped because the account's photo space is full.
+  const photosFull = document.querySelector<HTMLElement>("[data-photos-full]")!;
+  const showPhotosFull = () => (photosFull.hidden = photosSyncProblem() !== "full");
+  document.addEventListener("photos-full", showPhotosFull);
+  showPhotosFull();
 
   const toolbar = document.querySelector<HTMLElement>("[data-toolbar]")!;
   attachToolbar({ root: toolbar, editor: body.editor, eventId });
@@ -325,7 +339,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     display: flex;
     flex-direction: column;
     gap: var(--space-1);
-    max-height: 50vh;
+    /* Fits between the pinned header and the bottom nav, scrolling inside,
+       so no button ends up behind the nav. */
+    max-height: calc(100dvh - var(--sticky-offset, 0px) - 9rem);
     overflow-y: auto;
     padding: var(--space-2) 0;
     border-top: 1px solid var(--line);
@@ -380,6 +396,28 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     border-color: var(--accent);
     background: var(--accent);
     color: var(--on-accent);
+  }
+  .panel :global(.panel-preview) {
+    max-width: 100%;
+    max-height: 20vh;
+    object-fit: contain;
+    align-self: flex-start;
+    border-radius: var(--radius-sm);
+  }
+  .panel :global(.panel-label) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .panel :global(.panel-note) {
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+  }
+  .panel :global(.panel-action[aria-disabled="true"]) {
+    opacity: 0.5;
   }
   .panel :global(.panel-results) {
     display: flex;
