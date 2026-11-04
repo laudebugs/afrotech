@@ -123,6 +123,13 @@
     "match": "1401, Commerce Street, Downtown, Houston, Harris County, Texas, 77002, United States",
     "rules": 3
   },
+  "1500 E Memorial Loop Dr, Houston, TX 77007, USA": {
+    "found": true,
+    "lat": 29.776329,
+    "lng": -95.436231,
+    "match": "Memorial Park Tennis Center, 1500, East Memorial Loop Drive, Washington Avenue Coalition / Memorial Park, Houston, Harri",
+    "rules": 3
+  },
   "1500 McKinney St, Houston, TX 77010": {
     "found": true,
     "lat": 29.754221,
@@ -640,6 +647,13 @@
     "match": "5219, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
     "rules": 3
   },
+  "5334 Washington Ave, Houston, TX 77007, USA": {
+    "found": true,
+    "lat": 29.77074,
+    "lng": -95.41607,
+    "match": "Clutch Bar, 5334, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, H",
+    "rules": 3
+  },
   "5334 Washington Avenue Houston, TX 77007": {
     "found": true,
     "lat": 29.77074,
@@ -703,6 +717,11 @@
     "match": "606, Dennis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
     "rules": 3
   },
+  "6115 Skyline Drive, C, Houston, TX 77057": {
+    "found": false,
+    "why": "no match in the Houston area",
+    "rules": 3
+  },
   "6115 Skyline Drive, C, Houston, TX 77057, Houston, TX": {
     "found": false,
     "why": "no match in the Houston area",
@@ -750,11 +769,25 @@
     "match": "Almost Famous, 807, West 19th Street, Houston Heights, Houston, Harris County, Texas, 77008, United States",
     "rules": 3
   },
+  "808 Anita Street, Houston, TX 77006": {
+    "found": true,
+    "lat": 29.743684,
+    "lng": -95.377745,
+    "match": "808, Anita Street, Midtown, Houston, Harris County, Texas, 77006, United States",
+    "rules": 3
+  },
   "808 Anita Street, Houston, TX 77006, Houston, TX": {
     "found": true,
     "lat": 29.743684,
     "lng": -95.377745,
     "match": "808, Anita Street, Midtown, Houston, Harris County, Texas, 77006, United States",
+    "rules": 3
+  },
+  "808 Travis Street, #Suite 400, Houston, TX 77002": {
+    "found": true,
+    "lat": 29.7588,
+    "lng": -95.365052,
+    "match": "808, Travis Street, Downtown, Houston, Harris County, Texas, 77002, United States",
     "rules": 3
   },
   "808 Travis Street, #Suite 400, Houston, TX 77002, Houston, TX": {
@@ -769,6 +802,11 @@
     "lat": 29.748974,
     "lng": -95.382986,
     "match": "81, Drew Street, Midtown, Houston, Harris County, Texas, 77006, United States",
+    "rules": 3
+  },
+  "81 Drew St, Houston, TX 77004, USA": {
+    "found": false,
+    "why": "postcode 77006 isn't 77004",
     "rules": 3
   },
   "81 Drew Street Houston, TX 77006": {

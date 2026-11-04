@@ -6,6 +6,7 @@ The sandbox that wrote these can't reach posh.vip, Eventbrite or Luma, so the
 pages below are built to the shapes those sites publish (schema.org Event
 JSON-LD), not saved copies. The refresh Action's first run is the real check.
 """
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -48,6 +49,22 @@ POSH = page("""{"@context":"http://schema.org","@graph":[
    "offers":{"@type":"Offer","price":"20","priceCurrency":"USD"},
    "eventStatus":"https://schema.org/EventCancelled"}]}""")
 
+# posh.vip (Next.js): the Event block is text inside streamed chunks. This
+# mirrors a real posh.vip page's shape, trimmed.
+_LD = (
+    '{"@context":"https://schema.org","@type":"Event","name":"The Green Room",'
+    '"startDate":"2026-11-01T16:00:00-06:00","endDate":"2026-11-01T19:00:00-06:00",'
+    '"location":{"@type":"Place","name":"Sanctuary Eado","address":{"@type":"PostalAddress",'
+    '"streetAddress":"2108 Leeland St, Houston, TX 77003, USA","addressLocality":"","addressRegion":""}},'
+    '"offers":{"@type":"Offer","price":0,"priceCurrency":"USD"},'
+    '"organizer":{"@type":"Organization","name":"Mingle & Muse"}}'
+)
+NEXT_PAGE = (
+    "<html><script>self.__next_f.push([1," + json.dumps('1:"$Sreact.fragment"\n') + "])</script>"
+    "<script>self.__next_f.push([1," + json.dumps("3e:T5a0," + _LD[:120]) + "])</script>"
+    "<script>self.__next_f.push([1," + json.dumps(_LD[120:] + '\n23:["$","script",null,{}]') + "])</script></html>"
+)
+
 
 class ReadEvent(unittest.TestCase):
     def test_eventbrite_shape(self):
@@ -78,6 +95,21 @@ class ReadEvent(unittest.TestCase):
         self.assertEqual(e["address"], "1720 Main St, Houston, TX")
         self.assertEqual(e["price"], "$20")
         self.assertEqual(e["status"], "cancelled")
+
+    def test_posh_next_js_streamed_block(self):
+        e = ee.read_event(NEXT_PAGE)
+        self.assertEqual(e["title"], "The Green Room")
+        self.assertEqual((e["start"], e["end"]), ("2026-11-01T16:00:00-06:00", "2026-11-01T19:00:00-06:00"))
+        self.assertEqual((e["venue"], e["address"]), ("Sanctuary Eado", "2108 Leeland St, Houston, TX 77003, USA"))
+        self.assertEqual((e["price"], e["organizer"]), ("Free", "Mingle & Muse"))
+
+    def test_next_js_block_with_context_not_first_and_a_bad_chunk(self):
+        ld = '{"@type":"Event","location":{"@type":"Place","name":"Spire"},"@context":"https://schema.org",' \
+             '"name":"Late Key","startDate":"2026-11-05T22:00:00-06:00"}'
+        page_ = ("<script>self.__next_f.push([1,\"\\x41 bad\"])</script>"
+                 "<script>self.__next_f.push([1," + json.dumps("3e:T10," + ld) + "])</script>")
+        e = ee.read_event(page_)
+        self.assertEqual((e["title"], e["venue"]), ("Late Key", "Spire"))
 
     def test_no_event_block(self):
         self.assertIsNone(ee.read_event(page('{"@type":"Organization","name":"x"}')))

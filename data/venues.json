@@ -8,6 +8,11 @@
     "kind": "offsite",
     "label": "1401 Commerce St / Buffalo Bayou trail entrance"
   },
+  "1500-e-memorial-loop-dr": {
+    "address": "1500 E Memorial Loop Dr, Houston, TX 77007, USA",
+    "kind": "offsite",
+    "label": "1500 E Memorial Loop Dr"
+  },
   "1954-1st-ave": {
     "address": "1954 1ST AVE",
     "kind": "offsite",
@@ -223,6 +228,11 @@
     "kind": "offsite",
     "label": "Fairfax"
   },
+  "fairfax-cocktail-bar-ride-share-encouraged": {
+    "address": "81 Drew St, Houston, TX 77004, USA",
+    "kind": "offsite",
+    "label": "Fairfax Cocktail Bar (Ride share encouraged)"
+  },
   "fairfax-houston-tx": {
     "address": "81 Drew Street Houston, TX 77006",
     "kind": "offsite",
@@ -308,6 +318,11 @@
     "address": "3300 Kirby Dr Ste 9-A, Houston, TX 77098",
     "kind": "offsite",
     "label": "Haii Keii"
+  },
+  "harold-s": {
+    "address": "5334 Washington Ave, Houston, TX 77007, USA",
+    "kind": "offsite",
+    "label": "Harold's"
   },
   "harold-s-chicken-sports-bar": {
     "address": "5334 Washington Avenue Houston, TX 77007",

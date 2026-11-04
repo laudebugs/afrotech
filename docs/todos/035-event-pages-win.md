@@ -37,3 +37,9 @@ Review fixes:
 
 34 Python tests cover the rules. The first real check against the pages is the refresh
 Action's next run.
+
+posh.vip (November 4): its pages carry the Event block inside Next.js
+streamed data (`self.__next_f`), not a `<script>` tag. `enrich_events.py` now
+reads that too, so 64 of 70 posh pages are checked. Two posh links led to
+renamed events (same day, time and host), which the page rules handle as
+intended.

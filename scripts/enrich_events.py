@@ -53,9 +53,45 @@ TAG = re.compile(r"</?(?:p|br|div|span|b|strong|i|em|u|a|ul|ol|li|h[1-6]|blockqu
 
 # --- Reading a page ---------------------------------------------------------
 
+# Next.js sites such as posh.vip stream their page data in
+# self.__next_f.push([1, "…"]) chunks; the Event block arrives inside them as
+# text rather than as its own <script> tag.
+NEXT_CHUNK = re.compile(r'self\.__next_f\.push\(\[1,"((?:[^"\\]|\\.)*)"\]\)')
+
+
+def next_flight_blocks(page):
+    """schema.org objects carried in a Next.js page's streamed data."""
+    parts = []
+    for chunk in NEXT_CHUNK.findall(page):
+        try:
+            parts.append(json.loads(f'"{chunk}"'))
+        except json.JSONDecodeError:
+            continue  # one odd chunk mustn't hide the others
+    text = "".join(parts)
+    blocks, decoder, at = [], json.JSONDecoder(), 0
+    while (i := text.find('"@context"', at)) >= 0:
+        at = i + 1
+        # The object holding this key opens at one of the "{" before it; try
+        # the nearest few, in case "@context" isn't its first key.
+        start = i
+        for _ in range(20):
+            start = text.rfind("{", 0, start)
+            if start < 0:
+                break
+            try:
+                obj, end = decoder.raw_decode(text, start)
+            except json.JSONDecodeError:
+                continue
+            if end > i and isinstance(obj, dict) and "schema.org" in str(obj.get("@context", "")):
+                blocks.append(obj)
+                break
+    return blocks
+
+
 def json_ld_blocks(page):
-    """Every JSON-LD block on the page that parses."""
-    blocks = []
+    """Every JSON-LD block on the page that parses, including ones inside
+    Next.js streamed data."""
+    blocks = next_flight_blocks(page) if "self.__next_f" in page else []
     for raw in LD_JSON.findall(page):
         text = raw.strip()
         if text.startswith("<!--"):
