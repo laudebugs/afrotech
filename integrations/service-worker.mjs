@@ -6,8 +6,11 @@ import { readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
-/** Pages saved up front (plans 0004, 0005): Now, every day, My plan, the notes pages and the rest of the tabs. */
-const CORE_PAGES = ["/", "/schedule/", "/plan/", "/notes/", "/notes/new/", "/notes/view/", "/speakers/", "/map/", "/offline/"];
+/** Pages saved up front (plans 0004, 0005, 0009): Now, every day, search, My plan, the notes pages and the rest of the tabs. */
+const CORE_PAGES = ["/", "/schedule/", "/schedule/search/", "/plan/", "/notes/", "/notes/new/", "/notes/view/", "/speakers/", "/map/", "/offline/"];
+
+/** Data files saved up front: what week-wide search reads (plan 0009). */
+const CORE_FILES = ["/search-index.json"];
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -42,7 +45,8 @@ export default function serviceWorker() {
           .map((u) => u.replace("index.html", ""));
         const pageFile = (page) => join(out, page, "index.html");
         const pages = [...CORE_PAGES, ...days].filter((p) => files.includes(pageFile(p)));
-        const precache = [...pages, ...assets].sort();
+        const data = CORE_FILES.filter((u) => files.includes(join(out, u)));
+        const precache = [...pages, ...data, ...assets].sort();
 
         const template = await readFile(new URL("../src/sw/sw.template.js", import.meta.url), "utf8");
         // The id changes when the worker's code or any saved file changes, and only then.

@@ -1,7 +1,7 @@
 // Plan 0009: week-wide search matching. Run with `npm test`.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { eventSearch, findEvents, findSpeakers, fold, placeOf, speakerSearch, type SearchEvent } from "../src/lib/search.ts";
+import { eventSearch, findEvents, findNotes, findSpeakers, fold, noteSearch, noteText, placeOf, speakerSearch, type SearchEvent } from "../src/lib/search.ts";
 
 const base: Omit<SearchEvent, "id" | "title" | "start"> = {
   date: "2026-11-04", end: null, kind: "official", track: null, cats: [], price: null, free: false,
@@ -91,4 +91,16 @@ test("placeOf: where an event is", () => {
   assert.equal(placeOf("side", "offsite", true, 5000, 1500), "city");
   assert.equal(placeOf("side", "offsite", true, null, 1500), "city"); // not pinned, still somewhere
   assert.equal(placeOf("side", undefined, false, null, 1500), null);
+});
+
+test("notes: plain text without images, found by title or text", () => {
+  assert.equal(noteText("## Key takeaways\n\n- Ship it ![photo](data:image/png;base64,AAAA) [deck](https://x.co)"),
+    "Key takeaways Ship it deck");
+  const nms = noteSearch([
+    { id: "n1", title: "Takeaways: AI at Work", text: noteText("- Agents need **evaluation**") },
+    { id: "n2", title: "Dinner", text: noteText("Met Ada about funding") },
+  ]);
+  assert.deepEqual(findNotes(nms, "evaluation"), ["n1"]);
+  assert.deepEqual(findNotes(nms, "funding ada"), ["n2"]);
+  assert.deepEqual(findNotes(nms, "#"), []);
 });

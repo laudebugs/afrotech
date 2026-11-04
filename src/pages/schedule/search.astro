@@ -1,6 +1,7 @@
 ---
-// Search the whole week (plan 0009, todo 037): events matched in the browser
-// from /search-index.json, grouped by day. The address holds the words
+// Search the whole week (plan 0009, todos 037–039): events and speakers
+// matched in the browser from /search-index.json, events grouped by day, and
+// your notes, searched on this device only. The address holds the words
 // (?q=…), so back, forward and shared links work.
 import "../../styles/event-rows.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
@@ -39,12 +40,33 @@ import { sideCategories } from "../../lib/schedule";
     <ul data-recent-list></ul>
   </section>
 
+  <section class="extra" data-speakers hidden aria-labelledby="speakers-title">
+    <h2 id="speakers-title">Speakers</h2>
+    <ul class="links" data-speaker-list></ul>
+  </section>
+  <section class="extra" data-notes hidden aria-labelledby="notes-title">
+    <h2 id="notes-title">Your notes</h2>
+    <ul class="links" data-note-list></ul>
+  </section>
+
   <div data-results></div>
   <button type="button" class="button more" data-more hidden>Show more</button>
 </BaseLayout>
 
 <script>
-  import { eventSearch, findEvents, type SearchEvent, type SearchIndex } from "../../lib/search";
+  import {
+    eventSearch,
+    findEvents,
+    findNotes,
+    findSpeakers,
+    noteSearch,
+    noteText,
+    speakerSearch,
+    type SearchEvent,
+    type SearchIndex,
+    type SearchSpeaker,
+  } from "../../lib/search";
+  import { listNotes } from "../../lib/notes";
   import { activeCount, matches, type FilterContext, type Filters } from "../../lib/filters";
   import { initFilters } from "../../scripts/filters-ui";
   import { readPlan } from "../../lib/plan";
@@ -64,6 +86,8 @@ import { sideCategories } from "../../lib/schedule";
   const recentList = document.querySelector<HTMLElement>("[data-recent-list]")!;
 
   let ms: ReturnType<typeof eventSearch> | null = null;
+  let sms: ReturnType<typeof speakerSearch> | null = null;
+  let speakersBySlug = new Map<string, SearchSpeaker>();
   let byId = new Map<string, SearchEvent>();
   let found: SearchEvent[] = [];
   let shown = 0;
@@ -140,6 +164,77 @@ import { sideCategories } from "../../lib/schedule";
     syncPlan(results);
   }
 
+  // --- Speakers and your notes, above the events ------------------------------
+  const SHOW_FIRST = 4;
+  function linkList(
+    section: HTMLElement,
+    items: { href: string; title: string; detail: string }[],
+  ) {
+    const list = section.querySelector("ul")!;
+    section.hidden = items.length === 0;
+    const make = (it: (typeof items)[number]) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = it.href;
+      const strong = document.createElement("strong");
+      strong.textContent = it.title;
+      const span = document.createElement("span");
+      span.className = "muted";
+      span.textContent = it.detail;
+      a.append(strong, span);
+      li.append(a);
+      return li;
+    };
+    list.replaceChildren(...items.slice(0, SHOW_FIRST).map(make));
+    if (items.length > SHOW_FIRST) {
+      const li = document.createElement("li");
+      const all = document.createElement("button");
+      all.type = "button";
+      all.className = "all";
+      all.textContent = `Show all ${items.length}`;
+      all.addEventListener("click", () => list.replaceChildren(...items.map(make)));
+      li.append(all);
+      list.append(li);
+    }
+  }
+
+  function showExtras(q: string) {
+    const speakersSection = document.querySelector<HTMLElement>("[data-speakers]")!;
+    const notesSection = document.querySelector<HTMLElement>("[data-notes]")!;
+    if (!q || !sms) {
+      speakersSection.hidden = notesSection.hidden = true;
+      return;
+    }
+    const people = findSpeakers(sms, q)
+      .map((slug) => speakersBySlug.get(slug)!)
+      .filter(Boolean)
+      .map((sp) => ({
+        href: `/speakers/${sp.slug}/`,
+        title: sp.name,
+        detail: [sp.title, sp.company].filter(Boolean).join(", "),
+      }));
+    linkList(speakersSection, people);
+    // Notes come from this device and are searched here; nothing is sent.
+    const notes = listNotes();
+    const byNote = new Map(notes.map((n) => [n.id, n]));
+    const found = findNotes(
+      noteSearch(notes.map((n) => ({ id: n.id, title: n.title || "Untitled note", text: noteText(n.body) }))),
+      q,
+    );
+    linkList(
+      notesSection,
+      found.map((id) => {
+        const n = byNote.get(id)!;
+        const text = noteText(n.body);
+        return {
+          href: `/notes/view/?id=${encodeURIComponent(id)}`,
+          title: n.title.trim() || "Untitled note",
+          detail: text.length > 90 ? `${text.slice(0, 90)}…` : text,
+        };
+      }),
+    );
+  }
+
   const announce = document.querySelector<HTMLElement>("[data-announce-count]")!;
   let announceTimer = 0;
   function say(text: string) {
@@ -185,6 +280,7 @@ import { sideCategories } from "../../lib/schedule";
     results.replaceChildren();
     more.hidden = true;
     if (!ms) return;
+    showExtras(q.trim());
     if (!q.trim() && activeCount(f) === 0) {
       found = [];
       say(`Search ${byId.size} events across the week by title, speaker, host or place.`);
@@ -213,6 +309,8 @@ import { sideCategories } from "../../lib/schedule";
     run(true);
     input.blur(); // hide the phone keyboard to show the results
   });
+  // Notes synced or edited in another tab show up in the next search.
+  document.addEventListener("notes-change", () => showExtras(hasWords(input.value) ? input.value.trim() : ""));
   // Starring changes what "In my plan" and "Doesn't clash" keep.
   document.addEventListener("plan-change", () => {
     const f = filters.get();
@@ -231,6 +329,8 @@ import { sideCategories } from "../../lib/schedule";
     .then((index) => {
       byId = new Map(index.events.map((e) => [e.id, e]));
       ms = eventSearch(index.events);
+      sms = speakerSearch(index.speakers);
+      speakersBySlug = new Map(index.speakers.map((sp) => [sp.slug, sp]));
       run();
       filters.refreshCount();
     })
@@ -317,6 +417,43 @@ import { sideCategories } from "../../lib/schedule";
     background: none;
     color: var(--accent);
     font-weight: 600;
+  }
+  .extra h2 {
+    margin: var(--space-4) 0 var(--space-2);
+    font-size: var(--text-md);
+  }
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* The lists are filled by the script, outside the page's scoped styles. */
+  .links :global(a) {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-height: var(--tap);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .links :global(.muted) {
+    font-size: var(--text-sm);
+  }
+  .links :global(.all) {
+    min-height: var(--tap);
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
   }
   .more {
     display: flex;

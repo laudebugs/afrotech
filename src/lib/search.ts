@@ -133,3 +133,30 @@ export function placeOf(
   if (metresFromCenter !== null) return metresFromCenter <= walkable ? "near" : "city";
   return hasLocation ? "city" : null;
 }
+
+/** A note as search sees it: the text without Markdown or embedded images. */
+export type SearchNote = { id: string; title: string; text: string };
+
+/** Note Markdown as plain words: images, links' targets and symbols removed. */
+export function noteText(markdown: string): string {
+  return markdown
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ") // images, which may be large data: URLs
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1") // links keep their text
+    .replace(/[#>*_`~|-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function noteSearch(notes: SearchNote[]) {
+  const ms = new MiniSearch<SearchNote>({
+    ...options,
+    fields: ["title", "text"],
+    searchOptions: { ...options.searchOptions, boost: { title: 3 } },
+  });
+  ms.addAll(notes);
+  return ms;
+}
+
+export function findNotes(ms: MiniSearch<SearchNote>, query: string): string[] {
+  return /[\p{L}\p{N}]/u.test(query) ? ms.search(query.trim()).map((r) => String(r.id)) : [];
+}

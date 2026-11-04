@@ -97,6 +97,8 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(cacheFirst(request));
   } else if (url.pathname.startsWith("/event/") && request.mode !== "navigate") {
     event.respondWith(staleWhileRevalidate(event)); // the sheet's fetches and .ics files
+  } else if (url.pathname === "/search-index.json") {
+    event.respondWith(staleWhileRevalidate(event)); // search works offline (plan 0009)
   } else if (request.mode === "navigate" || request.headers.get("accept")?.includes("text/html")) {
     event.respondWith(networkFirst(event));
   }
