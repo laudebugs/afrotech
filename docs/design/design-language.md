@@ -27,7 +27,7 @@ colour passes WCAG AA (a contrast ratio of at least 4.5:1) on both `--bg` and
 | Token | Plum (light) | Plum Night (dark) | Use |
 |-------|--------------|-------------------|-----|
 | `--bg` | `#FAF6F7` | `#161015` | Page background: blush white or plum black |
-| `--surface` | `#FFFFFF` | `#201820` | Cards, sheets, the tab bar and map panels |
+| `--surface` | `#FFFFFF` | `#201820` | Cards, sheets, map panels and the tab bar where glass is off |
 | `--ink` | `#23161D` | `#F4ECEF` | Main text (16:1) |
 | `--muted` | `#66545D` | `#B3A2AB` | Secondary text such as time, room and host (6.5:1) |
 | `--line` | `#ECDFE4` | `#352A32` | Dividers, outlines and the timeline rail |
@@ -70,12 +70,20 @@ line up.
 
 ## Spacing, shape and motion stay small and consistent
 
-- **Spacing:** steps of 4 px: 4, 8, 12, 16, 24, 32 and 48.
+- **Spacing:** steps of 4 px: 4, 8, 12, 16, 24, 32 and 48. The one exception
+  is the floating tab bar's 10 px gap (`--tabbar-gap`), which matches iOS.
 - **Corners:** 6 px on chips and buttons, 8 px on event cards and sheets, square on map shapes.
 - **Touch targets:** at least 44 × 44 px, the "add to my plan" star especially.
-- **Elevation:** flat, apart from one soft shadow under the bottom sheet.
-- **Motion:** 150 ms ease-out for sheets and toggles. The live pulse is the
-  only repeating animation, and all motion stops under `prefers-reduced-motion`.
+- **Elevation:** flat, apart from two things that float: the bottom sheet's soft
+  shadow, and the phone's Liquid Glass tab bar (`--glass-*` tokens: a
+  see-through tint, a bright top edge, a soft shadow). The bar turns solid
+  under `prefers-reduced-transparency`.
+- **Motion:** 150 ms ease-out for sheets and toggles. Navigation moves like an
+  iOS app (plan 0010): tab changes crossfade in 180 ms while the tab capsule
+  glides with a small spring overshoot (420 ms), deeper pages slide in from
+  the right (380 ms), Back slides them out, and a pressed tab springs back.
+  The live pulse is the only repeating animation, and all motion stops under
+  `prefers-reduced-motion`.
 
 ## The Now screen hangs every event on a timeline
 
@@ -101,8 +109,8 @@ Past events collapse above the now marker, and later events continue below it.
 
 ## Layout starts on the phone and widens in two steps
 
-On a phone, the site shows one column with 16 px side margins. A tab bar along
-the bottom holds **Now**, **Schedule**, **Map** and **My plan**, and event
+On a phone, the site shows one column with 16 px side margins. A floating glass
+tab bar near the bottom holds **Now**, **Schedule**, **Map** and **Saved**, and event
 details slide up as a bottom sheet. From 768 px wide, the column grows to a
 maximum of 720 px. From 1024 px, a navigation rail moves to the left, the list
 sits in the middle and a map panel on the right follows the selected event. At

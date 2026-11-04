@@ -43,28 +43,48 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
          paint because pagereveal fires then. -->
     <script is:inline>
       (() => {
-        const KEY = "afrotech:last-path";
-        // Tab pages are depth 0; anything opened from them (an event, a speaker,
-        // a note, search) is deeper.
+        const LAST = "afrotech:last-path";
+        const STACK = "afrotech:nav-stack";
+        const VIA_TAB = "afrotech:via-tab";
+        const get = (k) => { try { return sessionStorage.getItem(k); } catch { return null; } };
+        const set = (k, v) => { try { v === null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch {} };
+        // Tab pages (and Saved's Notes tab) are depth 0; anything opened from
+        // them (an event, a speaker, a note, search) is deeper.
         const depth = (path) =>
-          /^\/(schedule\/(\d{4}-\d{2}-\d{2}\/)?|map\/(city\/)?|plan\/|notes\/|speakers\/)?$/.test(path)
+          /^\/(schedule\/(\d{4}-\d{2}-\d{2}\/)?|map\/(city\/)?|plan\/|notes\/)?$/.test(path)
             ? 0
             : path.split("/").filter(Boolean).length;
-        addEventListener("pageswap", () => {
-          try { sessionStorage.setItem(KEY, location.pathname); } catch {}
-        });
+        // A tap on the tab bar is a tab change, whatever page it starts from.
+        addEventListener("click", (e) => {
+          if (e.target instanceof Element && e.target.closest(".app-nav a")) set(VIA_TAB, "1");
+        }, true);
+        addEventListener("pageswap", () => set(LAST, location.pathname));
         addEventListener("pagereveal", (e) => {
-          let from = null;
-          try { from = sessionStorage.getItem(KEY); } catch {}
-          const types = e.viewTransition && e.viewTransition.types;
-          if (!types || !from || from === location.pathname) return;
-          const a = depth(from), b = depth(location.pathname);
-          // Back and forward in history, where the browser tells us (Chrome).
+          const here = location.pathname;
+          const from = get(LAST);
+          const viaTab = get(VIA_TAB) === "1";
+          set(VIA_TAB, null);
+          let stack = [];
+          try { stack = JSON.parse(get(STACK) || "[]"); } catch {}
+          // Back: where the browser says so (Chrome), or the page before this
+          // one in our own short history (Safari).
           const act = window.navigation && navigation.activation;
-          const back = act && act.navigationType === "traverse" && act.from && act.entry && act.entry.index < act.from.index;
-          if (back) types.add(b === 0 && a === 0 ? "tab" : "pop");
-          else if (b > a || (b > 0 && a === b)) types.add("push"); // deeper, or one detail page to another
-          else types.add(b < a ? "pop" : "tab");
+          const traverseBack = act && act.navigationType === "traverse" && act.from && act.entry && act.entry.index < act.from.index;
+          const stackBack = stack.length > 1 && stack[stack.length - 2] === here;
+          let type;
+          if (!viaTab && (traverseBack || stackBack)) {
+            // Back: slide out, unless it's just from one tab to another.
+            type = depth(here) === 0 && depth(from || "/") === 0 ? "tab" : "pop";
+            if (stackBack) stack.pop();
+          } else {
+            // Forward: a tab (from the bar, or any tab page) crossfades; any
+            // other page pushes in, as in an iOS app.
+            type = viaTab || depth(here) === 0 ? "tab" : "push";
+            if (stack[stack.length - 1] !== here) stack.push(here);
+          }
+          set(STACK, JSON.stringify(stack.slice(-30)));
+          const types = e.viewTransition && e.viewTransition.types;
+          if (types && from && from !== here) types.add(type);
         });
       })();
     </script>
@@ -93,6 +113,7 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
       </p>
     </div>
     <script>
+      import "../scripts/schedule-links";
       import "../scripts/plan-ui";
       import "../scripts/plan-sync";
       import "../scripts/notes-ui";

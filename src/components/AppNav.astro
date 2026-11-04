@@ -28,27 +28,17 @@ const items = [
     items.map((item) => (
       <a href={item.href} aria-current={active === item.id ? "page" : undefined} data-astro-prefetch={item.prefetch}>
         {active === item.id && <span class="capsule" aria-hidden="true" />}
-        <span class="icon"><Icon name={item.icon} /></span>
-        <span>
-          {item.label}
-          {item.id === "plan" && <span class="count" data-plan-count hidden />}
+        <span class="item" style={`view-transition-name: tab-item-${item.id}`}>
+          <span class="icon"><Icon name={item.icon} /></span>
+          <span>
+            {item.label}
+            {item.id === "plan" && <span class="count" data-plan-count hidden />}
+          </span>
         </span>
       </a>
     ))
   }
 </nav>
-
-<!-- During the week, Schedule links straight to today's page: /schedule/
-     redirects there, and a redirect would cancel the page transition. -->
-<script is:inline>
-  (() => {
-    const nav = document.currentScript.previousElementSibling;
-    const days = JSON.parse(nav.dataset.days || "[]");
-    const today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago" }).format(new Date());
-    const link = nav.querySelector('a[href="/schedule/"]');
-    if (link && days.includes(today)) link.href = `/schedule/${today}/`;
-  })();
-</script>
 
 <style>
   .app-nav {
@@ -100,6 +90,13 @@ const items = [
     background: var(--glass-capsule);
     box-shadow: inset 0 1px 0 var(--glass-highlight);
     view-transition-name: tab-capsule;
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    view-transition-class: tab-item;
   }
   .icon {
     display: inline-grid;

@@ -23,4 +23,20 @@ Built on November 4.
   harmless.
 - **Test browser:** Playwright's default headless shell skips cross-document
   transitions often, so test them with `channel: "chromium"`.
+- **Review fixes:**
+  - Slides use normal blending, so the pages don't add their colours.
+  - Tab icons and labels stay above the gliding capsule (`view-transition-class: tab-item`).
+  - The bar's stand-in keeps its blur during transitions.
+  - A tap on the tab bar always crossfades, and Back is recognised from a
+    short history kept in `sessionStorage`, so Safari, which lacks the
+    Navigation API, slides the right way. Forward to any non-tab page pushes.
+  - Every `/schedule/` link (`src/scripts/schedule-links.ts`) goes to today's
+    page when tapped, with today worked out at the tap. The tab keeps
+    prefetching the small `/schedule/` page.
+  - `/speakers/` is no longer treated as a tab.
+  - The design guide covers the glass bar, its 10 px gap and the
+    navigation motion.
+- **Tested** in full headless Chrome, with and without the Navigation API:
+  schedule → event → speaker → Back → Map tab → Back → Schedule tab ran
+  push, push, pop, tab, pop and tab. A frame mid-push showed no ghosting.
 - **Not tested:** real iPhones couldn't be tried from here.

@@ -35,10 +35,11 @@ each change:
 | push | Schedule → an event | The new page slides in from the right over the old one, which drifts left and dims |
 | pop | Back to the schedule | The reverse |
 
-Tab pages count as depth 0, and everything opened from them counts as
-deeper. Where the browser reports history (Chrome), Back is always "pop".
-The Schedule tab links straight to today's page during the week, since the
-redirect at `/schedule/` would cancel the transition. With "Reduce motion" on,
+A tap on the tab bar, or any move to a tab page, is a tab change. Any other
+move forward pushes. Back pops: the browser reports it where it can
+(Chrome), and elsewhere a short history kept for the session recognises it.
+During the week, links to `/schedule/` go straight to today's page, since the
+redirect there would cancel the transition. With "Reduce motion" on,
 pages switch instantly.
 
 ## Not included
