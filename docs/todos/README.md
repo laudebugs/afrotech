@@ -61,4 +61,4 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plans 00
 | [036](036-search-index.md) | Search index and matching (plan 0009) | 5 | done |
 | [037](037-search-page.md) | Week-wide search page (plan 0009) | 5 | done |
 | [038](038-search-filters.md) | Shared filters (plan 0009) | 5 | done |
-| [039](039-search-speakers-notes.md) | Speakers and notes in search, offline (plan 0009) | 5 | todo |
+| [039](039-search-speakers-notes.md) | Speakers and notes in search, offline (plan 0009) | 5 | done |

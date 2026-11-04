@@ -1,6 +1,6 @@
 # Plan 0009: One search box finds any event, speaker or note across the week
 
-**Status:** approved 2026-11-04: search opens from the Schedule tab; events, speakers and notes; typo-tolerant (MiniSearch); all filters · **Created:** 2026-11-04
+**Status:** built 2026-11-04 (todos 036–039): search opens from the Schedule tab; events, speakers and notes; typo-tolerant (MiniSearch); all filters · **Created:** 2026-11-04
 
 Today you can search and filter only one day at a time, on that day's Schedule
 page. To find "the AI panel with the Google speaker" you have to guess the day
