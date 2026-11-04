@@ -185,6 +185,26 @@ const items = [
     }
   }
 
+  /* While you type on a touch screen (src/scripts/typing.ts), the bar slides
+     down out of the way, leaving room for the keyboard and the editor's
+     toolbar. */
+  @media (pointer: coarse) and (max-width: 1023px) {
+    :global(html[data-typing]) .app-nav {
+      transform: translateY(calc(100% + var(--tabbar-gap) + env(safe-area-inset-bottom)));
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+  }
+  @media (pointer: coarse) and (max-width: 1023px) and (prefers-reduced-motion: no-preference) {
+    .app-nav {
+      transition:
+        transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+        opacity 200ms ease-out,
+        visibility 280ms;
+    }
+  }
+
   /* Without see-through effects (or when they're turned off), a solid bar. */
   @media (prefers-reduced-transparency: reduce) {
     .app-nav {

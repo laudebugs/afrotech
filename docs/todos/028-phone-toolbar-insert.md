@@ -62,7 +62,7 @@ Built on November 3:
   since its tools act on the formatted view.
 
 
-**Changed on November 4, at your request:** the toolbar no longer rides above
-the keyboard or pins under the header. It stays in place above the note and
-scrolls with the page, because the pinned and floating versions were jumpy
-on phones. In a long note, scroll up to reach it.
+**Changed on November 4, at your request:** the toolbar no longer pins under
+the header while you scroll; it sits above the note and scrolls with the
+page. While you type on a phone, it still rides just above the keyboard, and
+the tab bar slides out of the way (plan 0010).

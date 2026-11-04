@@ -268,8 +268,9 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
     background: var(--accent);
     color: var(--on-accent);
   }
-  /* The toolbar stays in place above the note, scrolling with the page; it
-     doesn't pin or float, which was jumpy on phones. */
+  /* The toolbar sits above the note and scrolls with the page. While you
+     type on a phone, it rides just above the keyboard instead (note-toolbar.ts),
+     and the slot holds its place. */
   .toolbar-slot {
     position: relative;
     z-index: 6;
@@ -280,6 +281,20 @@ import { MAX_BODY, MAX_TITLE } from "../../lib/notes";
   .toolbar {
     position: relative;
     background: var(--bg);
+  }
+  /* Floating above the keyboard, an open panel sits above the buttons. */
+  .toolbar[data-floating] {
+    position: fixed;
+    z-index: 30;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0 var(--space-2);
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .toolbar[data-floating] .panel {
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
   }
   .tools {
     display: flex;
