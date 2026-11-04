@@ -50,15 +50,15 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
         ))
       }
     </nav>
-  </header>
-
-  <div class="filters" data-day={day}>
-    <Filters scope="day" cats={sideCategories} />
-    <!-- Search covers the whole week, on its own page (plan 0009). -->
+    <!-- Pinned with the header, so search is a tap away while scrolling (plan 0009). -->
     <a class="week-search" href="/schedule/search/">
       <Icon name="search" size={18} />
       <span>Search the whole week</span>
     </a>
+  </header>
+
+  <div class="filters" data-day={day}>
+    <Filters scope="day" cats={sideCategories} />
     <p class="count muted" aria-live="polite" data-count>{events.length} events</p>
   </div>
 
@@ -276,6 +276,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   }
   .week-search {
     display: flex;
+    margin-top: var(--space-2);
     align-items: center;
     gap: var(--space-2);
     min-height: var(--tap);
