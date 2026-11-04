@@ -8,7 +8,7 @@ Give the site's admin a private page with usage totals from the database.
 
 ## Done when
 
-- [x] `GET /api/admin/metrics` answers only accounts whose email is in the `ADMIN_EMAILS` secret; anyone else gets 404
+- [x] `GET /api/admin/metrics` answers only accounts whose email is in `ADMIN_EMAILS` (a var in `wrangler.jsonc`); anyone else gets 404
 - [x] Sign-in keeps an email only when Google marks it verified
 - [x] Totals for accounts, My plan, notes and photos, with per-day counts in Houston time
 - [x] "Top" lists show only sessions shared by at least 3 accounts; no names, emails or note text

@@ -1,5 +1,5 @@
-// The admin dashboard's data (plan 0011). Only accounts whose email is in the
-// ADMIN_EMAILS secret get an answer; everyone else gets "not found".
+// The admin dashboard's data (plan 0011). Only accounts whose email is in
+// ADMIN_EMAILS (wrangler.jsonc) get an answer; everyone else gets "not found".
 //
 // Everything here is a total. Nothing returns a name, an email or a note's
 // text, and the "top" lists keep only sessions that at least MIN_GROUP
