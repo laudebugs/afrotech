@@ -7301,6 +7301,20 @@
     "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=ec0599ba-4aad-4529-94ae-5777614d9a00"
   },
   {
+    "id": "a0652cca-faae-40bc-a842-e23420945d77",
+    "date": "2026-11-05",
+    "start": "6:30 PM",
+    "end": "8:30 PM",
+    "title": "\"Where Innovation Meets Impact\" Reception Presented by NAACP",
+    "track": "Networking",
+    "location": "Naming Rights Events",
+    "speakers": "",
+    "speaker_list": [],
+    "ticket_levels": "",
+    "description": "\"Where Innovation Meets Impact\" Reception, an evening of networking, engaging conversations, and meaningful connections with visionary leaders, innovators, and changemakers at the intersection of technology, philanthropy, and social impact. RSVP Here",
+    "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=a0652cca-faae-40bc-a842-e23420945d77"
+  },
+  {
     "id": "1178334a-c12b-4d1c-8a0f-6aa1dea73044",
     "date": "2026-11-05",
     "start": "8:00 PM",

@@ -103,6 +103,7 @@ const shortDay = (d: string) => formatDate(dayNoon(d)).replace(/,.*?(\d+)$/, " $
   // shared code and hands back the URL.
   import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
   import { readPlan } from "../../lib/plan";
+  import { googleDirections } from "../../lib/directions";
   import { syncPlan } from "../../scripts/plan-ui";
   import { eventRow } from "../../scripts/event-rows";
   import { dayKey, dayNoon, formatDate, formatRange, previewNow } from "../../lib/time";
@@ -280,8 +281,10 @@ const shortDay = (d: string) => formatDate(dayNoon(d)).replace(/,.*?(\d+)$/, " $
     address.textContent = pin.address;
     const directions = document.createElement("a");
     directions.className = "button";
-    directions.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pin.address)}`;
+    directions.href = googleDirections(pin.address);
+    directions.target = "_blank";
     directions.rel = "noopener";
+    directions.dataset.directions = pin.address; // directions.ts opens a maps app on a phone
     directions.textContent = "Directions";
     const ul = document.createElement("ul");
     ul.className = "event-rows";
