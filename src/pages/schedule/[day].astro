@@ -38,7 +38,13 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   <header class="page-head sticky-head">
     <div class="title-row">
       <h1>{dateLabel}</h1>
-      <span class="muted mono">{dayLabel(day)}</span>
+      <div class="title-end">
+        <span class="muted mono">{dayLabel(day)}</span>
+        <!-- In the pinned header, so search is a tap away while scrolling (plan 0009). -->
+        <a class="search-icon" href="/schedule/search/" aria-label="Search the whole week" title="Search the whole week">
+          <Icon name="search" size={22} />
+        </a>
+      </div>
     </div>
 
     <nav class="days" aria-label="Days">
@@ -54,11 +60,6 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
 
   <div class="filters" data-day={day}>
     <Filters scope="day" cats={sideCategories} />
-    <!-- Search covers the whole week, on its own page (plan 0009). -->
-    <a class="week-search" href="/schedule/search/">
-      <Icon name="search" size={18} />
-      <span>Search the whole week</span>
-    </a>
     <p class="count muted" aria-live="polite" data-count>{events.length} events</p>
   </div>
 
@@ -274,21 +275,23 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     gap: var(--space-2);
     margin-top: var(--space-3);
   }
-  .week-search {
+  .title-end {
     display: flex;
     align-items: center;
     gap: var(--space-2);
-    min-height: var(--tap);
-    padding: 0 var(--space-3);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-sm);
-    background: var(--surface);
-    color: var(--muted);
-    font-size: var(--text-md);
-    text-decoration: none;
   }
-  .week-search:hover {
-    border-color: var(--accent);
+  .search-icon {
+    display: inline-grid;
+    place-items: center;
+    width: var(--tap);
+    height: var(--tap);
+    margin: calc(var(--space-2) * -1) calc(var(--space-2) * -1) calc(var(--space-2) * -1) 0;
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+  }
+  .search-icon:hover {
+    background: var(--surface);
+    color: var(--accent);
   }
   .count {
     margin: 0;
