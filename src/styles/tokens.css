@@ -15,6 +15,13 @@
   --warn: #8a5a00;
   --shadow: 0 -4px 24px rgb(35 22 29 / 0.12);
   --backdrop: rgb(35 22 29 / 0.4);
+  /* Liquid Glass tab bar (plan 0010): a see-through tint, a bright top edge
+     and a soft lift; the capsule marks the current tab. */
+  --glass-bg: rgb(255 255 255 / 0.62);
+  --glass-edge: rgb(35 22 29 / 0.08);
+  --glass-highlight: rgb(255 255 255 / 0.85);
+  --glass-shadow: 0 8px 30px rgb(35 22 29 / 0.16), 0 1px 3px rgb(35 22 29 / 0.08);
+  --glass-capsule: rgb(122 46 92 / 0.12);
   color-scheme: light;
 }
 
@@ -30,6 +37,11 @@
   --warn: #e8b04a;
   --shadow: 0 -4px 24px rgb(0 0 0 / 0.5);
   --backdrop: rgb(0 0 0 / 0.6);
+  --glass-bg: rgb(40 30 38 / 0.55);
+  --glass-edge: rgb(0 0 0 / 0.45);
+  --glass-highlight: rgb(255 255 255 / 0.14);
+  --glass-shadow: 0 8px 30px rgb(0 0 0 / 0.5), 0 1px 3px rgb(0 0 0 / 0.4);
+  --glass-capsule: rgb(229 154 196 / 0.16);
   color-scheme: dark;
 }
 
@@ -46,6 +58,11 @@
     --warn: #e8b04a;
     --shadow: 0 -4px 24px rgb(0 0 0 / 0.5);
     --backdrop: rgb(0 0 0 / 0.6);
+    --glass-bg: rgb(40 30 38 / 0.55);
+    --glass-edge: rgb(0 0 0 / 0.45);
+    --glass-highlight: rgb(255 255 255 / 0.14);
+    --glass-shadow: 0 8px 30px rgb(0 0 0 / 0.5), 0 1px 3px rgb(0 0 0 / 0.4);
+    --glass-capsule: rgb(229 154 196 / 0.16);
     color-scheme: dark;
   }
 }
@@ -87,6 +104,8 @@
   --ease: 150ms ease-out;
 
   --tabbar-height: 64px;
+  /* Space between the floating tab bar and the screen's bottom and sides. */
+  --tabbar-gap: 10px;
   --rail-time: 48px;
   --rail-dot: 16px;
 }

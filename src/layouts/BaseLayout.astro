@@ -38,6 +38,36 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
     <link rel="preload" href={plexSans400} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={plexMono500} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
+    <!-- Name each page change for the view transitions in global.css (plan 0010):
+         "tab" between sections, "push" deeper, "pop" back. Runs before first
+         paint because pagereveal fires then. -->
+    <script is:inline>
+      (() => {
+        const KEY = "afrotech:last-path";
+        // Tab pages are depth 0; anything opened from them (an event, a speaker,
+        // a note, search) is deeper.
+        const depth = (path) =>
+          /^\/(schedule\/(\d{4}-\d{2}-\d{2}\/)?|map\/(city\/)?|plan\/|notes\/|speakers\/)?$/.test(path)
+            ? 0
+            : path.split("/").filter(Boolean).length;
+        addEventListener("pageswap", () => {
+          try { sessionStorage.setItem(KEY, location.pathname); } catch {}
+        });
+        addEventListener("pagereveal", (e) => {
+          let from = null;
+          try { from = sessionStorage.getItem(KEY); } catch {}
+          const types = e.viewTransition && e.viewTransition.types;
+          if (!types || !from || from === location.pathname) return;
+          const a = depth(from), b = depth(location.pathname);
+          // Back and forward in history, where the browser tells us (Chrome).
+          const act = window.navigation && navigation.activation;
+          const back = act && act.navigationType === "traverse" && act.from && act.entry && act.entry.index < act.from.index;
+          if (back) types.add(b === 0 && a === 0 ? "tab" : "pop");
+          else if (b > a || (b > 0 && a === b)) types.add("push"); // deeper, or one detail page to another
+          else types.add(b < a ? "pop" : "tab");
+        });
+      })();
+    </script>
     <!-- Apply a saved theme before first paint, so dark mode never flashes light. -->
     <script is:inline>
       try {
@@ -94,14 +124,14 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
   main {
     max-width: 720px;
     margin: 0 auto;
-    padding: 0 var(--space-4) calc(var(--tabbar-height) + env(safe-area-inset-bottom) + var(--space-8));
+    padding: 0 var(--space-4) calc(var(--tabbar-height) + var(--tabbar-gap) + env(safe-area-inset-bottom) + var(--space-8));
   }
   /* Notices sit just above the tab bar (or at the bottom on desktop). */
   .notices {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom));
+    bottom: calc(var(--tabbar-height) + var(--tabbar-gap) + env(safe-area-inset-bottom));
     z-index: 15;
     display: flex;
     flex-direction: column;
