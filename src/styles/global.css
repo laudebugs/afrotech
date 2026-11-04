@@ -154,9 +154,9 @@ html:active-view-transition-type(pop)::view-transition-new(root) {
   from { transform: translateX(-25%); opacity: 0.6; }
 }
 
-/* The tab bar doesn't move or fade; only its capsule does, with a little
-   overshoot, like the glass lens settling. The bar's stand-in keeps the glass
-   blur, and the icons and labels (tab-item) stay above the moving capsule. */
+/* The tab bar doesn't move or fade: the new page's bar shows at once, and its
+   capsule glides on its own (AppNav.astro). The bar's stand-in keeps the
+   glass blur. */
 ::view-transition-group(tab-bar) {
   animation: none;
   z-index: 2;
@@ -169,24 +169,9 @@ html:active-view-transition-type(pop)::view-transition-new(root) {
     backdrop-filter: var(--glass-blur);
   }
 }
-::view-transition-group(*.tab-item) {
-  z-index: 4;
-  animation: none;
-}
-::view-transition-old(*.tab-item) {
-  display: none;
-}
-::view-transition-new(*.tab-item) {
-  animation: none;
-}
 ::view-transition-old(tab-bar) {
   display: none;
 }
 ::view-transition-new(tab-bar) {
   animation: none;
-}
-::view-transition-group(tab-capsule) {
-  z-index: 3;
-  animation-duration: 420ms;
-  animation-timing-function: cubic-bezier(0.34, 1.4, 0.64, 1);
 }

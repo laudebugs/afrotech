@@ -31,7 +31,7 @@ each change:
 
 | Change | Example | Motion |
 |--------|---------|--------|
-| tab | Schedule → Map | A quick crossfade; the bar stays still and its capsule glides to the new tab with a slight overshoot |
+| tab | Schedule → Map | A quick crossfade; the bar stays still and its capsule glides to the new tab in one smooth motion |
 | push | Schedule → an event | The new page slides in from the right over the old one, which drifts left and dims |
 | pop | Back to the schedule | The reverse |
 

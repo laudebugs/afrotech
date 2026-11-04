@@ -61,8 +61,56 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
           const plain = !e.defaultPrevented && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
           if (plain && e.target instanceof Element && e.target.closest(".app-nav a")) set(VIA_TAB, "1");
         });
-        addEventListener("pageswap", () => set(LAST, location.pathname));
+        // The tab capsule's glide carries over from page to page (AppNav.astro):
+        // leaving notes where the capsule is, mid-glide or not, and the next
+        // page starts its capsule there. Positions count in tabs from the
+        // bar's corner, so a bar that moved (keyboard, browser toolbar) doesn't
+        // read as a glide.
+        const CAPSULE = "afrotech:capsule";
+        const spot = (el) => {
+          const bar = el.closest(".app-nav").getBoundingClientRect();
+          const r = el.getBoundingClientRect();
+          return { x: (r.left - bar.left) / r.width, y: (r.top - bar.top) / r.height };
+        };
+        const saveCapsule = () => {
+          const capsule = document.querySelector(".app-nav .capsule");
+          set(CAPSULE, capsule ? JSON.stringify({ ...spot(capsule), at: Date.now() }) : null);
+        };
+        const glideCapsule = () => {
+          let last = null;
+          try { last = JSON.parse(get(CAPSULE) || "null"); } catch {}
+          set(CAPSULE, null);
+          const capsule = document.querySelector(".app-nav .capsule");
+          // A load slower than the glide finishes it on the old page, so an
+          // old note has nothing left to show.
+          if (!last || !capsule || Date.now() - last.at > 1500) return;
+          // The glide's timing is the capsule's own transition; none under Reduce Motion.
+          const style = getComputedStyle(capsule);
+          const duration = parseFloat(style.transitionDuration) * 1000;
+          if (!duration) return;
+          const home = capsule.parentElement.getBoundingClientRect();
+          const here = spot(capsule.parentElement);
+          const dx = (last.x - here.x) * home.width;
+          const dy = (last.y - here.y) * home.height;
+          if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+          // A scripted animation: Chrome drops CSS transitions that start
+          // before a page transition takes over.
+          const glide = capsule.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], {
+            duration,
+            easing: style.transitionTimingFunction,
+          });
+          // Hold it at the start until the first frame is up: laying out a
+          // long page can take longer than the glide itself.
+          glide.pause();
+          requestAnimationFrame(() => requestAnimationFrame(() => glide.play()));
+        };
+        addEventListener("pageswap", () => {
+          set(LAST, location.pathname);
+          saveCapsule();
+        });
+        if (!("onpageswap" in window)) addEventListener("pagehide", saveCapsule);
         addEventListener("pagereveal", (e) => {
+          glideCapsule();
           const here = location.pathname;
           const from = get(LAST);
           const viaTab = get(VIA_TAB) === "1";

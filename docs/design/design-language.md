@@ -80,7 +80,7 @@ line up.
   under `prefers-reduced-transparency`.
 - **Motion:** 150 ms ease-out for sheets and toggles. Navigation moves like an
   iOS app (plan 0010): tab changes crossfade in 180 ms while the tab capsule
-  glides with a small spring overshoot (420 ms), deeper pages slide in from
+  glides to the new tab without overshoot (340 ms), deeper pages slide in from
   the right (380 ms), Back slides them out, and a pressed tab springs back.
   The live pulse is the only repeating animation, and all motion stops under
   `prefers-reduced-motion`.
