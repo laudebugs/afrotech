@@ -42,6 +42,42 @@ const items = [
   }
 </nav>
 
+<script>
+  // Instant response (plan 0010): the moment a finger or mouse goes down on a
+  // tab, the capsule glides to it and the tab lights up, while the page loads
+  // behind. A drag or a cancelled press puts it back.
+  const nav = document.querySelector<HTMLElement>(".app-nav");
+  const capsule = nav?.querySelector<HTMLElement>(".capsule");
+  let undo: (() => void) | null = null;
+
+  function pressTab(link: HTMLAnchorElement) {
+    if (!nav || !capsule || link.getAttribute("aria-current") === "page") return;
+    const current = nav.querySelector<HTMLAnchorElement>('a[aria-current="page"]');
+    const from = capsule.getBoundingClientRect();
+    const to = link.getBoundingClientRect();
+    capsule.style.transform = `translate(${to.left - from.left}px, ${to.top - from.top}px)`;
+    link.dataset.pressed = "";
+    current?.setAttribute("data-leaving", "");
+    undo = () => {
+      capsule.style.transform = "";
+      delete link.dataset.pressed;
+      current?.removeAttribute("data-leaving");
+      undo = null;
+    };
+  }
+
+  nav?.addEventListener("pointerdown", (e) => {
+    const link = (e.target as Element).closest<HTMLAnchorElement>("a");
+    if (!link || e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    pressTab(link);
+  });
+  // A press that turns into a drag or is cancelled doesn't navigate.
+  nav?.addEventListener("pointercancel", () => undo?.());
+  nav?.addEventListener("pointerleave", (e) => e.pointerType === "mouse" && undo?.());
+  // Back to a page kept in memory: show it as it was.
+  window.addEventListener("pageshow", (e) => e.persisted && undo?.());
+</script>
+
 <style>
   .app-nav {
     position: fixed;
@@ -77,10 +113,17 @@ const items = [
     font-weight: 500;
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
+    /* No double-tap zoom wait on the tabs. */
+    touch-action: manipulation;
   }
-  a[aria-current="page"] {
+  a[aria-current="page"],
+  a[data-pressed] {
     color: var(--accent);
     font-weight: 600;
+  }
+  a[aria-current="page"][data-leaving] {
+    color: var(--ink);
+    font-weight: 500;
   }
   /* The lens behind the current tab. */
   .capsule {
@@ -106,16 +149,20 @@ const items = [
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    /* Pressing a tab squeezes it a little; letting go springs it back. */
+    /* Pressing a tab squeezes it a little; letting go springs it back. The
+       capsule glides to a pressed tab with the same spring. */
     .icon,
     .capsule {
       transition: transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .capsule {
+      transition-duration: 320ms;
     }
     a:active .icon {
       transform: scale(0.86);
       transition-duration: 90ms;
     }
-    a:active .capsule {
+    a[aria-current="page"]:active .capsule:not([style*="translate"]) {
       transform: scale(1.06);
       transition-duration: 120ms;
     }

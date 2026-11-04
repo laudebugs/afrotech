@@ -228,27 +228,3 @@ export function watchOtherTabsNotes(): void {
     if (e.key === KEY) document.dispatchEvent(new CustomEvent("notes-change", { detail: { source: "tab" } }));
   });
 }
-
-/** Headings a new note starts with. */
-export const NOTE_TEMPLATE = [
-  "## Key takeaways",
-  "",
-  "- ",
-  "",
-  "## Notable quotes",
-  "",
-  "> ",
-  "",
-  "## Resources and links mentioned",
-  "",
-  "- ",
-  "",
-  "## People to follow up with",
-  "",
-  "- ",
-  "",
-  "## Action items",
-  "",
-  "- [ ] ",
-  "",
-].join("\n");

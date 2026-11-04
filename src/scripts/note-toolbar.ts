@@ -73,7 +73,6 @@ const plain = (text: string) => text.replace(/([\\`*_~[\]<>|#!])/g, "\\$1");
 
 export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId: string }) {
   const { root, editor, eventId } = opts;
-  const slot = root.parentElement!; // keeps the toolbar's space while it floats
   const tools = root.querySelector<HTMLElement>("[data-tools]")!;
   const panel = root.querySelector<HTMLElement>("[data-panel]")!;
 
@@ -162,7 +161,6 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     openFor.setAttribute("aria-expanded", "false");
     openFor = null;
     if (refocus) editor.commands.focus();
-    place();
   }
   function togglePanel(kind: PanelKind, from: HTMLButtonElement) {
     if (openFor === from && kind !== "sessions") return closePanel(true);
@@ -172,7 +170,6 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     from.setAttribute("aria-expanded", "true");
     panel.hidden = false;
     ({ link: linkPanel, insert: insertPanel, table: tablePanel, sessions: sessionPanel })[kind]();
-    place();
   }
   panel.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
@@ -314,7 +311,6 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     status.setAttribute("role", "status");
     status.textContent = "Preparing the photo…";
     panel.append(title("Photo"), status);
-    place();
 
     let blob: Blob;
     try {
@@ -365,7 +361,6 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
     status.textContent = `Ready: ${Math.round(blob.size / 1024)} KB.`;
     panel.append(preview, label, row);
     alt.focus();
-    place();
   }
 
   function tablePanel() {
@@ -416,44 +411,12 @@ export function attachToolbar(opts: { root: HTMLElement; editor: Editor; eventId
         results.append(li);
       }
       count.textContent = words.length ? `${hits.length || "No"} ${hits.length === 1 ? "session" : "sessions"} found` : "";
-      place();
     };
     input.addEventListener("input", show);
     panel.append(title("Link to a session"), input, count, results);
     input.focus();
   }
 
-  // --- On a phone, ride above the keyboard ---------------------------------
-  // While you're typing and the keyboard covers part of the screen, the
-  // toolbar fixes itself to the bottom of the visible area, and an open panel
-  // grows upward. A pinch-zoom also shrinks the visible area, so it's ignored.
-  const vv = window.visualViewport;
-  function place() {
-    const zoomed = (vv?.scale ?? 1) > 1.05;
-    const keyboardOpen = vv ? !zoomed && window.innerHeight - vv.height > 120 : false;
-    const typing = editor.isFocused || root.contains(document.activeElement);
-    const floating = typing && keyboardOpen;
-    if (floating && !root.hasAttribute("data-floating")) {
-      // Hold the toolbar's place, so the note doesn't jump up.
-      slot.style.minHeight = `${root.offsetHeight}px`;
-    }
-    root.toggleAttribute("data-floating", floating);
-    if (!floating) slot.style.minHeight = "";
-    if (floating && vv) {
-      root.style.left = `${vv.offsetLeft}px`;
-      root.style.width = `${vv.width}px`;
-      root.style.top = `${vv.offsetTop + vv.height - root.offsetHeight}px`;
-    } else {
-      root.style.left = root.style.width = root.style.top = "";
-    }
-  }
-
   editor.on("transaction", refresh);
   refresh();
-  editor.on("focus", place);
-  // Focus may be moving into the toolbar's panel; check once it lands.
-  editor.on("blur", () => setTimeout(place));
-  root.addEventListener("focusout", () => setTimeout(place));
-  vv?.addEventListener("resize", place);
-  vv?.addEventListener("scroll", place);
 }

@@ -5,7 +5,6 @@ import assert from "node:assert/strict";
 import { MarkdownManager } from "@tiptap/markdown";
 import { noteExtensions } from "../src/scripts/note-editor.ts";
 import { renderNote } from "../src/scripts/note-markdown.ts";
-import { NOTE_TEMPLATE } from "../src/lib/notes.ts";
 
 const manager = new MarkdownManager({ extensions: noteExtensions() });
 const roundTrip = (markdown: string) => manager.serialize(manager.parse(markdown));
@@ -15,7 +14,12 @@ const html = (markdown: string) =>
   renderNote(markdown).replace(/>\s+</g, "><").replace(/<blockquote><\/blockquote>/g, "").trim();
 
 const SAMPLES: Record<string, string> = {
-  template: NOTE_TEMPLATE,
+  // The headings new notes used to start with (until November 4), still a good mix.
+  template: [
+    "## Key takeaways", "", "- ", "", "## Notable quotes", "", "> ", "",
+    "## Resources and links mentioned", "", "- ", "", "## People to follow up with", "", "- ", "",
+    "## Action items", "", "- [ ] ", "",
+  ].join("\n"),
   "more blocks": [
     "# Top heading",
     "",
