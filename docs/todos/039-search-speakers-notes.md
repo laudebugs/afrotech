@@ -25,6 +25,10 @@ Built on November 4:
 - **Offline:** the service worker saves `/schedule/search/` and
   `/search-index.json` up front. The index is served from the cache and
   refreshed in the background.
+- **Review fixes:**
+  - The notes index is built once and rebuilt only when notes change.
+  - When speakers or notes match but no events do, the status just says
+    "No events match."
 - **Tested** in a 390 px browser. A speaker search found the profile, a note
   search found the note without its photo, and after going offline,
   `/schedule/search/?q=wealth` still found 44 events. Signed out, the page

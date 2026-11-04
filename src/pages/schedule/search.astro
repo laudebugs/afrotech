@@ -198,12 +198,27 @@ import { sideCategories } from "../../lib/schedule";
     }
   }
 
-  function showExtras(q: string) {
+  // Built once, and again only when notes change (notes-change below).
+  let notesCache: { nms: ReturnType<typeof noteSearch>; byNote: Map<string, ReturnType<typeof listNotes>[number]> } | null =
+    null;
+  function notesIndex() {
+    if (!notesCache) {
+      const notes = listNotes();
+      notesCache = {
+        byNote: new Map(notes.map((n) => [n.id, n])),
+        nms: noteSearch(notes.map((n) => ({ id: n.id, title: n.title || "Untitled note", text: noteText(n.body) }))),
+      };
+    }
+    return notesCache;
+  }
+
+  /** Whether speakers or notes were found, for the status line. */
+  function showExtras(q: string): boolean {
     const speakersSection = document.querySelector<HTMLElement>("[data-speakers]")!;
     const notesSection = document.querySelector<HTMLElement>("[data-notes]")!;
     if (!q || !sms) {
       speakersSection.hidden = notesSection.hidden = true;
-      return;
+      return false;
     }
     const people = findSpeakers(sms, q)
       .map((slug) => speakersBySlug.get(slug)!)
@@ -215,12 +230,8 @@ import { sideCategories } from "../../lib/schedule";
       }));
     linkList(speakersSection, people);
     // Notes come from this device and are searched here; nothing is sent.
-    const notes = listNotes();
-    const byNote = new Map(notes.map((n) => [n.id, n]));
-    const found = findNotes(
-      noteSearch(notes.map((n) => ({ id: n.id, title: n.title || "Untitled note", text: noteText(n.body) }))),
-      q,
-    );
+    const { nms, byNote } = notesIndex();
+    const found = findNotes(nms, q);
     linkList(
       notesSection,
       found.map((id) => {
@@ -233,6 +244,7 @@ import { sideCategories } from "../../lib/schedule";
         };
       }),
     );
+    return people.length + found.length > 0;
   }
 
   const announce = document.querySelector<HTMLElement>("[data-announce-count]")!;
@@ -280,7 +292,7 @@ import { sideCategories } from "../../lib/schedule";
     results.replaceChildren();
     more.hidden = true;
     if (!ms) return;
-    showExtras(q.trim());
+    const others = showExtras(q.trim());
     if (!q.trim() && activeCount(f) === 0) {
       found = [];
       say(`Search ${byId.size} events across the week by title, speaker, host or place.`);
@@ -290,9 +302,11 @@ import { sideCategories } from "../../lib/schedule";
     say(
       found.length
         ? `${found.length} ${found.length === 1 ? "event" : "events"}`
-        : activeCount(f)
-          ? "No events match. Try fewer filters or words."
-          : "No events match. Try fewer or shorter words.",
+        : others
+          ? "No events match."
+          : activeCount(f)
+            ? "No events match. Try fewer filters or words."
+            : "No events match. Try fewer or shorter words.",
     );
     render(0);
     clearTimeout(typingTimer);
@@ -310,7 +324,10 @@ import { sideCategories } from "../../lib/schedule";
     input.blur(); // hide the phone keyboard to show the results
   });
   // Notes synced or edited in another tab show up in the next search.
-  document.addEventListener("notes-change", () => showExtras(hasWords(input.value) ? input.value.trim() : ""));
+  document.addEventListener("notes-change", () => {
+    notesCache = null;
+    showExtras(hasWords(input.value) ? input.value.trim() : "");
+  });
   // Starring changes what "In my plan" and "Doesn't clash" keep.
   document.addEventListener("plan-change", () => {
     const f = filters.get();
