@@ -101,3 +101,92 @@ code {
   }
 }
 
+
+/* --- App-like page transitions (plan 0010) ----------------------------------
+   Browsers with cross-document view transitions (Safari 18.2+, Chrome 126+)
+   animate between pages; others switch instantly. The head script in
+   BaseLayout.astro names each navigation: "tab" between sections, "push"
+   going deeper (an event from a list), "pop" coming back. The tab bar stays
+   still and its capsule glides to the new tab. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+/* Tab to tab: a quick crossfade, as in iOS. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+  animation-timing-function: ease-out;
+}
+
+/* Deeper: the new page slides in from the right over the old one, which
+   drifts left and dims. Back: the reverse. Normal blending, so the pages
+   cover each other instead of adding their colours together. */
+html:active-view-transition-type(push, pop)::view-transition-old(root),
+html:active-view-transition-type(push, pop)::view-transition-new(root) {
+  mix-blend-mode: normal;
+}
+html:active-view-transition-type(push)::view-transition-old(root) {
+  animation: 380ms cubic-bezier(0.32, 0.72, 0, 1) both vt-drift-left;
+}
+html:active-view-transition-type(push)::view-transition-new(root) {
+  animation: 380ms cubic-bezier(0.32, 0.72, 0, 1) both vt-slide-in;
+}
+html:active-view-transition-type(pop)::view-transition-old(root) {
+  z-index: 1;
+  animation: 340ms cubic-bezier(0.32, 0.72, 0, 1) both vt-slide-out;
+}
+html:active-view-transition-type(pop)::view-transition-new(root) {
+  animation: 340ms cubic-bezier(0.32, 0.72, 0, 1) both vt-drift-back;
+}
+@keyframes vt-slide-in {
+  from { transform: translateX(100%); }
+}
+@keyframes vt-slide-out {
+  to { transform: translateX(100%); }
+}
+@keyframes vt-drift-left {
+  to { transform: translateX(-25%); opacity: 0.6; }
+}
+@keyframes vt-drift-back {
+  from { transform: translateX(-25%); opacity: 0.6; }
+}
+
+/* The tab bar doesn't move or fade; only its capsule does, with a little
+   overshoot, like the glass lens settling. The bar's stand-in keeps the glass
+   blur, and the icons and labels (tab-item) stay above the moving capsule. */
+::view-transition-group(tab-bar) {
+  animation: none;
+  z-index: 2;
+}
+/* Same conditions as the bar's own glass in AppNav.astro. */
+@media (max-width: 1023px) and (prefers-reduced-transparency: no-preference) {
+  ::view-transition-group(tab-bar) {
+    border-radius: var(--radius-pill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+}
+::view-transition-group(*.tab-item) {
+  z-index: 4;
+  animation: none;
+}
+::view-transition-old(*.tab-item) {
+  display: none;
+}
+::view-transition-new(*.tab-item) {
+  animation: none;
+}
+::view-transition-old(tab-bar) {
+  display: none;
+}
+::view-transition-new(tab-bar) {
+  animation: none;
+}
+::view-transition-group(tab-capsule) {
+  z-index: 3;
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.34, 1.4, 0.64, 1);
+}

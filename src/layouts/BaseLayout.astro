@@ -38,6 +38,62 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
     <link rel="preload" href={plexSans400} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={plexMono500} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
+    <!-- Name each page change for the view transitions in global.css (plan 0010):
+         "tab" between sections, "push" deeper, "pop" back. Runs before first
+         paint because pagereveal fires then. -->
+    <script is:inline>
+      (() => {
+        const LAST = "afrotech:last-path";
+        const STACK = "afrotech:nav-stack";
+        const VIA_TAB = "afrotech:via-tab";
+        const get = (k) => { try { return sessionStorage.getItem(k); } catch { return null; } };
+        const set = (k, v) => { try { v === null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch {} };
+        // Tab pages (and Saved's Notes tab) are depth 0; anything opened from
+        // them (an event, a speaker, a note, search) is deeper.
+        const depth = (path) =>
+          /^\/(schedule\/(\d{4}-\d{2}-\d{2}\/)?|map\/(city\/)?|plan\/|notes\/)?$/.test(path)
+            ? 0
+            : path.split("/").filter(Boolean).length;
+        // A plain tap on the tab bar is a tab change, whatever page it starts
+        // from. Checked as the click finishes, so a cmd-click (new tab) or a
+        // cancelled click leaves no flag behind.
+        addEventListener("click", (e) => {
+          const plain = !e.defaultPrevented && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
+          if (plain && e.target instanceof Element && e.target.closest(".app-nav a")) set(VIA_TAB, "1");
+        });
+        addEventListener("pageswap", () => set(LAST, location.pathname));
+        addEventListener("pagereveal", (e) => {
+          const here = location.pathname;
+          const from = get(LAST);
+          const viaTab = get(VIA_TAB) === "1";
+          set(VIA_TAB, null);
+          let stack = [];
+          try { stack = JSON.parse(get(STACK) || "[]"); } catch {}
+          // Back: where the browser says so (Chrome); without that (Safari),
+          // the page before this one in our own short history.
+          const act = window.navigation && navigation.activation;
+          const back = act
+            ? act.navigationType === "traverse" && !!act.from && !!act.entry && act.entry.index < act.from.index
+            : stack.length > 1 && stack[stack.length - 2] === here;
+          let type;
+          if (act && act.navigationType === "replace" && stack.length) stack.pop();
+          if (!viaTab && back) {
+            // Back: slide out, unless it's just from one tab to another.
+            type = depth(here) === 0 && depth(from || "/") === 0 ? "tab" : "pop";
+            const i = stack.lastIndexOf(here);
+            stack = i >= 0 ? stack.slice(0, i + 1) : [here];
+          } else {
+            // Forward: a tab (from the bar, or any tab page) crossfades; any
+            // other page pushes in, as in an iOS app.
+            type = viaTab || depth(here) === 0 ? "tab" : "push";
+            if (stack[stack.length - 1] !== here) stack.push(here);
+          }
+          set(STACK, JSON.stringify(stack.slice(-30)));
+          const types = e.viewTransition && e.viewTransition.types;
+          if (types && from && from !== here) types.add(type);
+        });
+      })();
+    </script>
     <!-- Apply a saved theme before first paint, so dark mode never flashes light. -->
     <script is:inline>
       try {
@@ -63,6 +119,7 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
       </p>
     </div>
     <script>
+      import "../scripts/schedule-links";
       import "../scripts/plan-ui";
       import "../scripts/plan-sync";
       import "../scripts/notes-ui";
@@ -94,14 +151,14 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
   main {
     max-width: 720px;
     margin: 0 auto;
-    padding: 0 var(--space-4) calc(var(--tabbar-height) + env(safe-area-inset-bottom) + var(--space-8));
+    padding: 0 var(--space-4) calc(var(--tabbar-height) + var(--tabbar-gap) + env(safe-area-inset-bottom) + var(--space-8));
   }
   /* Notices sit just above the tab bar (or at the bottom on desktop). */
   .notices {
     position: fixed;
     left: 0;
     right: 0;
-    bottom: calc(var(--tabbar-height) + env(safe-area-inset-bottom));
+    bottom: calc(var(--tabbar-height) + var(--tabbar-gap) + env(safe-area-inset-bottom));
     z-index: 15;
     display: flex;
     flex-direction: column;
