@@ -8,7 +8,7 @@ import { deleteAllPhotos } from "./photos";
 const GOOGLE_KEYS = createRemoteJWKSet(new URL("https://www.googleapis.com/oauth2/v3/certs"));
 const SESSION_DAYS = 30;
 
-type GoogleClaims = JWTPayload & { email?: string; name?: string; picture?: string };
+type GoogleClaims = JWTPayload & { email?: string; email_verified?: boolean | string; name?: string; picture?: string };
 
 export type AuthEnv = Env & { TEST_JWKS?: string };
 
@@ -33,6 +33,9 @@ function randomToken(): string {
 export async function signIn(env: Env, claims: GoogleClaims) {
   const now = new Date();
   const httpsPicture = claims.picture?.startsWith("https://") ? claims.picture : null;
+  // Only an address Google has verified is kept: the admin dashboard trusts it.
+  const verified = claims.email_verified === true || claims.email_verified === "true";
+  const email = verified ? (claims.email ?? null) : null;
   const user = await env.DB.prepare(
     `INSERT INTO users (id, google_sub, email, name, picture_url, created_at)
      VALUES (?1, ?2, ?3, ?4, ?5, ?6)
@@ -40,7 +43,7 @@ export async function signIn(env: Env, claims: GoogleClaims) {
        SET email = excluded.email, name = excluded.name, picture_url = excluded.picture_url
      RETURNING id, name, picture_url AS pictureUrl`,
   )
-    .bind(crypto.randomUUID(), claims.sub, claims.email ?? null, claims.name ?? null, httpsPicture, now.toISOString())
+    .bind(crypto.randomUUID(), claims.sub, email, claims.name ?? null, httpsPicture, now.toISOString())
     .first<{ id: string; name: string | null; pictureUrl: string | null }>();
   if (!user) throw new Error("could not save the account");
 

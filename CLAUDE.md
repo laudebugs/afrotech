@@ -120,4 +120,8 @@ The build also writes `dist/sw.js` (the offline service worker) from
   visitors send no API requests. Notes are private: only their author sees
   them, they're never in the build or the repo, and signing out removes them
   from the device.
+- **Admin dashboard** (`/admin/`, plan 0011) shows totals only, to emails in
+  the `ADMIN_EMAILS` secret: never names, emails or note text, and "top"
+  lists only for sessions 3+ accounts share. Page views come from
+  Cloudflare's analytics (`CF_ANALYTICS_TOKEN`), never from tracking on the site.
 - **Location** data stays on the device; ask for it only on a user action.

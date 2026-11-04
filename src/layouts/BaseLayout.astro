@@ -12,12 +12,15 @@ interface Props {
   description?: string;
   /** Which tab to highlight. */
   active?: Section;
+  /** Ask search engines to skip the page (the admin dashboard). */
+  noindex?: boolean;
 }
 
 const {
   title,
   description = "Plan your AfroTech 2026 week: the official schedule, community side events and a map of the convention center.",
   active = "none",
+  noindex = false,
 } = Astro.props;
 const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
 ---
@@ -28,6 +31,7 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <!-- Meta tags can't read CSS variables: these copy --bg from tokens.css. -->
     <meta name="theme-color" content="#faf6f7" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#161015" media="(prefers-color-scheme: dark)" />

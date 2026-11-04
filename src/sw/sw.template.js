@@ -92,6 +92,7 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (request.method !== "GET" || url.origin !== self.location.origin) return;
   if (url.pathname.startsWith("/api/")) return; // sign-in and sync handle offline themselves
+  if (url.pathname.startsWith("/admin/")) return; // the admin dashboard is never saved (plan 0011)
 
   if (url.pathname.startsWith("/_astro/")) {
     event.respondWith(cacheFirst(request));
