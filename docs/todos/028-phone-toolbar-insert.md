@@ -77,3 +77,6 @@ Review fixes the same day:
 - The toolbar and its menus count as typing (`data-keeps-typing`).
 - The bar shares `keyboardUp()` with `src/scripts/typing.ts`, so the two
   can't disagree.
+- Both apply only on phones (touch, under 1024 px wide), at your request.
+  Tablets in landscape and computers keep the toolbar in place and the
+  navigation visible.
