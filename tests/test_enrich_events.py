@@ -103,6 +103,14 @@ class ReadEvent(unittest.TestCase):
         self.assertEqual((e["venue"], e["address"]), ("Sanctuary Eado", "2108 Leeland St, Houston, TX 77003, USA"))
         self.assertEqual((e["price"], e["organizer"]), ("Free", "Mingle & Muse"))
 
+    def test_next_js_block_with_context_not_first_and_a_bad_chunk(self):
+        ld = '{"@type":"Event","location":{"@type":"Place","name":"Spire"},"@context":"https://schema.org",' \
+             '"name":"Late Key","startDate":"2026-11-05T22:00:00-06:00"}'
+        page_ = ("<script>self.__next_f.push([1,\"\\x41 bad\"])</script>"
+                 "<script>self.__next_f.push([1," + json.dumps("3e:T10," + ld) + "])</script>")
+        e = ee.read_event(page_)
+        self.assertEqual((e["title"], e["venue"]), ("Late Key", "Spire"))
+
     def test_no_event_block(self):
         self.assertIsNone(ee.read_event(page('{"@type":"Organization","name":"x"}')))
         self.assertIsNone(ee.read_event("<html>no json-ld</html>"))
