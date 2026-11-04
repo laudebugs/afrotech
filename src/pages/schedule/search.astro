@@ -1,0 +1,282 @@
+---
+// Search the whole week (plan 0009, todo 037): events matched in the browser
+// from /search-index.json, grouped by day. The address holds the words
+// (?q=…), so back, forward and shared links work.
+import "../../styles/event-rows.css";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
+---
+
+<BaseLayout title="Search · Schedule · AfroTech 2026 Planner" active="schedule">
+  <header class="page-head sticky-head">
+    <p class="back"><a href="/schedule/">← Schedule</a></p>
+    <form class="box" role="search" data-form>
+      <Icon name="search" size={20} />
+      <label class="visually-hidden" for="q">Search the whole week</label>
+      <input
+        id="q"
+        type="search"
+        enterkeyhint="search"
+        autocomplete="off"
+        placeholder="Events, speakers, hosts, places"
+        autofocus
+        data-q
+      />
+    </form>
+    <p class="status muted" aria-live="polite" data-status>Loading the week's events…</p>
+  </header>
+
+  <section class="recent" data-recent hidden aria-labelledby="recent-title">
+    <div class="recent-head">
+      <h2 id="recent-title">Recent searches</h2>
+      <button type="button" class="link" data-clear-recent>Clear</button>
+    </div>
+    <ul data-recent-list></ul>
+  </section>
+
+  <div data-results></div>
+  <button type="button" class="button more" data-more hidden>Show more</button>
+</BaseLayout>
+
+<script>
+  import { eventSearch, findEvents, type SearchEvent, type SearchIndex } from "../../lib/search";
+  import { eventRow } from "../../scripts/event-rows";
+  import { syncPlan } from "../../scripts/plan-ui";
+  import { getItem, setItem } from "../../lib/storage";
+  import { eventEndMs, formatDate, formatRange, previewNow } from "../../lib/time";
+
+  const RECENT = "afrotech:recent-searches";
+  const PAGE = 60;
+
+  const input = document.querySelector<HTMLInputElement>("[data-q]")!;
+  const status = document.querySelector<HTMLElement>("[data-status]")!;
+  const results = document.querySelector<HTMLElement>("[data-results]")!;
+  const more = document.querySelector<HTMLButtonElement>("[data-more]")!;
+  const recent = document.querySelector<HTMLElement>("[data-recent]")!;
+  const recentList = document.querySelector<HTMLElement>("[data-recent-list]")!;
+
+  let ms: ReturnType<typeof eventSearch> | null = null;
+  let byId = new Map<string, SearchEvent>();
+  let found: SearchEvent[] = [];
+  let shown = 0;
+
+  // --- Recent searches, kept on this device ---------------------------------
+  const readRecent = (): string[] => {
+    try {
+      const list = JSON.parse(getItem(RECENT) ?? "[]");
+      return Array.isArray(list) ? list.filter((x): x is string => typeof x === "string") : [];
+    } catch {
+      return [];
+    }
+  };
+  function remember(q: string) {
+    const words = q.trim();
+    if (words.length < 2) return;
+    const list = [words, ...readRecent().filter((x) => x.toLowerCase() !== words.toLowerCase())].slice(0, 8);
+    setItem(RECENT, JSON.stringify(list));
+  }
+  function showRecent() {
+    const list = readRecent();
+    recent.hidden = input.value.trim() !== "" || list.length === 0;
+    recentList.replaceChildren(
+      ...list.map((q) => {
+        const li = document.createElement("li");
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "recent-item";
+        b.textContent = q;
+        b.addEventListener("click", () => {
+          input.value = q;
+          run(true);
+        });
+        li.append(b);
+        return li;
+      }),
+    );
+  }
+  document.querySelector("[data-clear-recent]")!.addEventListener("click", () => {
+    setItem(RECENT, null);
+    showRecent();
+  });
+
+  // --- Results, grouped by day -----------------------------------------------
+  function when(e: SearchEvent): string {
+    const time = e.start ? formatRange(e.start, e.end) : "Time TBA";
+    return `${time} · ${e.place.split(" · ")[0] || "Place TBA"}`;
+  }
+
+  function render(from: number) {
+    const now = previewNow();
+    const slice = found.slice(from, from + PAGE);
+    // Days in the order their first result appears, so the best matches lead.
+    for (const e of slice) {
+      const key = e.date;
+      let list = results.querySelector<HTMLUListElement>(`ul[data-day="${key}"]`);
+      if (!list) {
+        const section = document.createElement("section");
+        section.className = "day";
+        const h = document.createElement("h2");
+        h.textContent = formatDate(`${key}T12:00:00-06:00`);
+        list = document.createElement("ul");
+        list.className = "event-rows";
+        list.dataset.day = key;
+        section.append(h, list);
+        results.append(section);
+      }
+      const ended = e.start ? eventEndMs(e.start, e.end) <= now : false;
+      const kind = e.kind === "side" ? "Side event" : (e.track ?? "Official session");
+      list.append(eventRow({ id: e.id, title: e.title, before: when(e), after: [ended ? `${kind} · ended` : kind] }));
+    }
+    shown = from + slice.length;
+    more.hidden = shown >= found.length;
+    syncPlan(results);
+  }
+
+  let typingTimer = 0;
+  function run(commit = false) {
+    const q = input.value;
+    const url = new URL(location.href);
+    if (q.trim()) url.searchParams.set("q", q.trim());
+    else url.searchParams.delete("q");
+    history.replaceState(null, "", url);
+    showRecent();
+    results.replaceChildren();
+    more.hidden = true;
+    if (!ms) return;
+    if (!q.trim()) {
+      found = [];
+      status.textContent = `Search ${byId.size} events across the week by title, speaker, host or place.`;
+      return;
+    }
+    found = findEvents(ms, byId, q, previewNow());
+    status.textContent = found.length
+      ? `${found.length} ${found.length === 1 ? "event" : "events"}`
+      : "No events match. Try fewer or shorter words.";
+    render(0);
+    clearTimeout(typingTimer);
+    if (commit) remember(q);
+    // A pause in typing counts as a finished search.
+    else typingTimer = window.setTimeout(() => found.length && remember(q), 1500);
+  }
+
+  more.addEventListener("click", () => render(shown));
+  input.addEventListener("input", () => run());
+  document.querySelector("[data-form]")!.addEventListener("submit", (e) => {
+    e.preventDefault();
+    run(true);
+    input.blur(); // hide the phone keyboard to show the results
+  });
+  document.addEventListener("plan-change", () => syncPlan(results));
+
+  input.value = new URLSearchParams(location.search).get("q") ?? "";
+  showRecent();
+
+  fetch("/search-index.json")
+    .then((res) => {
+      if (!res.ok) throw new Error(String(res.status));
+      return res.json() as Promise<SearchIndex>;
+    })
+    .then((index) => {
+      byId = new Map(index.events.map((e) => [e.id, e]));
+      ms = eventSearch(index.events);
+      run();
+    })
+    .catch(() => {
+      status.textContent = "Search couldn't load. Check your connection and try again.";
+    });
+</script>
+
+<style>
+  .back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .box {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--muted);
+  }
+  .box:focus-within {
+    border-color: var(--accent);
+  }
+  .box input {
+    flex: 1;
+    min-width: 0;
+    min-height: var(--tap);
+    border: 0;
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--text-md);
+    outline: none;
+  }
+  .status {
+    margin: var(--space-2) 0 0;
+    font-size: var(--text-sm);
+  }
+  .recent {
+    margin-top: var(--space-4);
+  }
+  .recent-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .recent h2,
+  :global(.day) h2 {
+    margin: var(--space-4) 0 var(--space-2);
+    font-size: var(--text-md);
+  }
+  .recent ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* Made by the script, so outside the page's scoped styles. */
+  .recent :global(.recent-item),
+  .link {
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    cursor: pointer;
+  }
+  .link {
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .more {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: var(--tap);
+    margin: var(--space-4) 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .more[hidden] {
+    display: none;
+  }
+</style>

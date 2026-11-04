@@ -59,6 +59,6 @@ Phase 4 covers plans 0002 (sign-in) and 0003 (speakers); phase 5 covers plans 00
 | [034](034-merge-event-pages.md) | Merge event pages into events (plan 0008) | 5 | done |
 | [035](035-event-pages-win.md) | Event pages win on name, date, times and location (plan 0008) | 5 | done |
 | [036](036-search-index.md) | Search index and matching (plan 0009) | 5 | done |
-| [037](037-search-page.md) | Week-wide search page (plan 0009) | 5 | todo |
+| [037](037-search-page.md) | Week-wide search page (plan 0009) | 5 | done |
 | [038](038-search-filters.md) | Shared filters (plan 0009) | 5 | todo |
 | [039](039-search-speakers-notes.md) | Speakers and notes in search, offline (plan 0009) | 5 | todo |

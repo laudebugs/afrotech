@@ -46,14 +46,6 @@ export function isFree(event: ScheduleEvent): boolean {
   return /^(free|\$?0(\.00)?)$/i.test(event.price?.trim() ?? "");
 }
 
-/** Lower-case text the search box matches against. */
-export function searchText(event: ScheduleEvent): string {
-  return [event.title, event.host, event.locationLabel, ...event.speakers.map((s) => `${s.name} ${s.company ?? ""}`)]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
-}
-
 /** Official tracks, alphabetical, for the track filter. */
 export const tracks: string[] = [
   ...new Set(allEvents.map((e) => e.track).filter((t): t is string => Boolean(t))),

@@ -2,6 +2,7 @@
 // One day's events on the timeline, with filters and search kept in the URL.
 import "../../styles/event-detail.css";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
 import Chip from "../../components/Chip.astro";
 import Timeline from "../../components/Timeline.astro";
 import TimelineRow from "../../components/TimelineRow.astro";
@@ -9,7 +10,7 @@ import TimeHeader from "../../components/TimeHeader.astro";
 import EventCard from "../../components/EventCard.astro";
 import BottomSheet from "../../components/BottomSheet.astro";
 import SourcesFooter from "../../components/SourcesFooter.astro";
-import { dayLabel, eventsOnDay, groupByHour, isFree, scheduleDays, searchText, tracks } from "../../lib/schedule";
+import { dayLabel, eventsOnDay, groupByHour, isFree, scheduleDays, tracks } from "../../lib/schedule";
 import { formatClock, formatDate } from "../../lib/time";
 
 export function getStaticPaths() {
@@ -59,10 +60,11 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
           {tracks.map((t) => <option value={t}>{t}</option>)}
         </select>
       </label>
-      <label class="field search">
-        <span class="visually-hidden">Search titles, speakers and hosts</span>
-        <input type="search" placeholder="Search titles, speakers, hosts" data-search-filter />
-      </label>
+      <!-- Search covers the whole week, on its own page (plan 0009). -->
+      <a class="field search week-search" href="/schedule/search/">
+        <Icon name="search" size={18} />
+        <span>Search the whole week</span>
+      </a>
     </div>
     <p class="count muted" aria-live="polite" data-count>{events.length} events</p>
   </div>
@@ -84,7 +86,6 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
               data-track={event.track ?? ""}
               data-free={isFree(event) ? "1" : undefined}
               data-pick={event.founderInvestorPick ? "1" : undefined}
-              data-search={searchText(event)}
             >
               <EventCard event={event} />
             </TimelineRow>
@@ -111,14 +112,13 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   import { HOUR_MS, dayKey, eventEndMs, previewNow } from "../../lib/time";
 
   type Flag = "plan" | "free" | "picks";
-  type Filters = { kind: string; plan: boolean; free: boolean; picks: boolean; track: string; q: string };
+  type Filters = { kind: string; plan: boolean; free: boolean; picks: boolean; track: string };
 
   const rows = [...document.querySelectorAll<HTMLElement>("[data-row]")];
   const groups = [...document.querySelectorAll<HTMLElement>("[data-group]")];
   const kindChips = [...document.querySelectorAll<HTMLButtonElement>("[data-kind-filter]")];
   const flagChips = [...document.querySelectorAll<HTMLButtonElement>("[data-flag-filter]")];
   const trackSelect = document.querySelector<HTMLSelectElement>("[data-track-filter]")!;
-  const searchInput = document.querySelector<HTMLInputElement>("[data-search-filter]")!;
   const count = document.querySelector<HTMLElement>("[data-count]")!;
   const empty = document.querySelector<HTMLElement>("[data-empty]")!;
 
@@ -131,7 +131,6 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
       free: p.get("free") === "1",
       picks: p.get("picks") === "1",
       track: p.get("track") ?? "",
-      q: p.get("q") ?? "",
     };
   }
 
@@ -142,7 +141,6 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     if (f.free) p.set("free", "1");
     if (f.picks) p.set("picks", "1");
     if (f.track) p.set("track", f.track);
-    if (f.q) p.set("q", f.q);
     const query = p.toString() ? `?${p}` : "";
     history.replaceState(null, "", `${location.pathname}${query}`);
     // Switching days keeps the filters.
@@ -155,9 +153,6 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     kindChips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.kindFilter === f.kind)));
     flagChips.forEach((c) => c.setAttribute("aria-pressed", String(f[c.dataset.flagFilter as Flag])));
     trackSelect.value = f.track;
-    if (searchInput.value !== f.q) searchInput.value = f.q;
-
-    const words = f.q.toLowerCase().split(/\s+/).filter(Boolean);
     const planned = new Set(readPlan());
     let shown = 0;
     for (const row of rows) {
@@ -167,8 +162,7 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
         (!f.plan || planned.has(d.eventId!)) &&
         (!f.free || d.free === "1") &&
         (!f.picks || d.pick === "1") &&
-        (!f.track || d.track === f.track) &&
-        words.every((w) => d.search!.includes(w));
+        (!f.track || d.track === f.track);
       row.hidden = !visible;
       if (visible) shown++;
     }
@@ -191,9 +185,8 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
     }),
   );
   trackSelect.addEventListener("change", () => update({ track: trackSelect.value }));
-  searchInput.addEventListener("input", () => update({ q: searchInput.value.trim() }));
   document.querySelector("[data-reset]")!.addEventListener("click", () =>
-    update({ kind: "all", plan: false, free: false, picks: false, track: "", q: "" }),
+    update({ kind: "all", plan: false, free: false, picks: false, track: "" }),
   );
   // Starring or unstarring changes what the My plan filter shows.
   document.addEventListener("plan-change", () => apply(read()));
@@ -341,6 +334,22 @@ const shortDay = (d: string) => formatDate(`${d}T12:00:00-06:00`).replace(/,.*?(
   }
   .field.search {
     flex: 2 1 200px;
+  }
+  .week-search {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap);
+    padding: 0 var(--space-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: var(--text-md);
+    text-decoration: none;
+  }
+  .week-search:hover {
+    border-color: var(--accent);
   }
   select,
   input {
