@@ -36,6 +36,15 @@ Built on November 4.
   - `/speakers/` is no longer treated as a tab.
   - The design guide covers the glass bar, its 10 px gap and the
     navigation motion.
+- **Second review fixes:**
+  - Schedule links are pointed at today on load (prefetch then gets the
+    right page) and again at every tap, honouring `?now=`.
+  - Only a plain, uncancelled tap on the bar counts as a tab change.
+  - The session history is used for Back only where the Navigation API is
+    missing, and it follows replaces and the `/schedule/` redirect.
+  - The desktop rail stays solid, and the transition blur follows Reduce
+    Transparency.
+  - The bar uses `--space-1`, `--radius-pill` and `--glass-blur`.
 - **Tested** in full headless Chrome, with and without the Navigation API:
   schedule → event → speaker → Back → Map tab → Back → Schedule tab ran
   push, push, pop, tab, pop and tab. A frame mid-push showed no ghosting.

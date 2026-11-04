@@ -54,10 +54,13 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
           /^\/(schedule\/(\d{4}-\d{2}-\d{2}\/)?|map\/(city\/)?|plan\/|notes\/)?$/.test(path)
             ? 0
             : path.split("/").filter(Boolean).length;
-        // A tap on the tab bar is a tab change, whatever page it starts from.
+        // A plain tap on the tab bar is a tab change, whatever page it starts
+        // from. Checked as the click finishes, so a cmd-click (new tab) or a
+        // cancelled click leaves no flag behind.
         addEventListener("click", (e) => {
-          if (e.target instanceof Element && e.target.closest(".app-nav a")) set(VIA_TAB, "1");
-        }, true);
+          const plain = !e.defaultPrevented && e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
+          if (plain && e.target instanceof Element && e.target.closest(".app-nav a")) set(VIA_TAB, "1");
+        });
         addEventListener("pageswap", () => set(LAST, location.pathname));
         addEventListener("pagereveal", (e) => {
           const here = location.pathname;
@@ -66,16 +69,19 @@ const updatedLabel = `${formatDate(UPDATED_AT)}, ${formatTime(UPDATED_AT)}`;
           set(VIA_TAB, null);
           let stack = [];
           try { stack = JSON.parse(get(STACK) || "[]"); } catch {}
-          // Back: where the browser says so (Chrome), or the page before this
-          // one in our own short history (Safari).
+          // Back: where the browser says so (Chrome); without that (Safari),
+          // the page before this one in our own short history.
           const act = window.navigation && navigation.activation;
-          const traverseBack = act && act.navigationType === "traverse" && act.from && act.entry && act.entry.index < act.from.index;
-          const stackBack = stack.length > 1 && stack[stack.length - 2] === here;
+          const back = act
+            ? act.navigationType === "traverse" && !!act.from && !!act.entry && act.entry.index < act.from.index
+            : stack.length > 1 && stack[stack.length - 2] === here;
           let type;
-          if (!viaTab && (traverseBack || stackBack)) {
+          if (act && act.navigationType === "replace" && stack.length) stack.pop();
+          if (!viaTab && back) {
             // Back: slide out, unless it's just from one tab to another.
             type = depth(here) === 0 && depth(from || "/") === 0 ? "tab" : "pop";
-            if (stackBack) stack.pop();
+            const i = stack.lastIndexOf(here);
+            stack = i >= 0 ? stack.slice(0, i + 1) : [here];
           } else {
             // Forward: a tab (from the bar, or any tab page) crossfades; any
             // other page pushes in, as in an iOS app.

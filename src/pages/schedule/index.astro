@@ -26,7 +26,17 @@ import { formatDate } from "../../lib/time";
 
   const days: string[] = JSON.parse(document.querySelector<HTMLElement>("[data-days]")!.dataset.days!);
   const today = dayKey(new Date());
-  if (days.includes(today)) location.replace(`/schedule/${today}/${location.search}`);
+  if (days.includes(today)) {
+    // This page is replaced, so it leaves the page-transition history too (plan 0010).
+    try {
+      const stack: string[] = JSON.parse(sessionStorage.getItem("afrotech:nav-stack") ?? "[]");
+      if (stack[stack.length - 1] === location.pathname) {
+        stack.pop();
+        sessionStorage.setItem("afrotech:nav-stack", JSON.stringify(stack));
+      }
+    } catch {}
+    location.replace(`/schedule/${today}/${location.search}`);
+  }
 </script>
 
 <style>

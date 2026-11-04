@@ -160,13 +160,13 @@ html:active-view-transition-type(pop)::view-transition-new(root) {
 ::view-transition-group(tab-bar) {
   animation: none;
   z-index: 2;
-  border-radius: 999px;
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  backdrop-filter: blur(20px) saturate(180%);
 }
-@media (min-width: 1024px) {
+/* Same conditions as the bar's own glass in AppNav.astro. */
+@media (max-width: 1023px) and (prefers-reduced-transparency: no-preference) {
   ::view-transition-group(tab-bar) {
-    border-radius: 0;
+    border-radius: var(--radius-pill);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
   }
 }
 ::view-transition-group(*.tab-item) {

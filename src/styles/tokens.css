@@ -106,6 +106,9 @@
   --tabbar-height: 64px;
   /* Space between the floating tab bar and the screen's bottom and sides. */
   --tabbar-gap: 10px;
+  --radius-pill: 999px;
+  /* The tab bar's frosted glass (plan 0010). */
+  --glass-blur: blur(20px) saturate(180%);
   --rail-time: 48px;
   --rail-dot: 16px;
 }
