@@ -259,7 +259,21 @@
     "match": "Hermann Park Golf Course, 2155, North MacGregor Way, Houston, Harris County, Texas, 77004, United States",
     "rules": 3
   },
+  "2200 Main St, Houston, TX 77002, USA": {
+    "found": true,
+    "lat": 29.747953,
+    "lng": -95.372176,
+    "match": "2200, Main Street, Midtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
   "2211 Travis St, Houston, TX 77002, USA": {
+    "found": true,
+    "lat": 29.748332,
+    "lng": -95.37294,
+    "match": "2211, Travis Street, Midtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
+  "2211 Travis Street, Houston, TX 77002": {
     "found": true,
     "lat": 29.748332,
     "lng": -95.37294,
@@ -725,6 +739,13 @@
   "6115 Skyline Drive, C, Houston, TX 77057, Houston, TX": {
     "found": false,
     "why": "no match in the Houston area",
+    "rules": 3
+  },
+  "6840 Almeda Rd, Houston, TX 77030, USA": {
+    "found": true,
+    "lat": 29.704696,
+    "lng": -95.385495,
+    "match": "Home2 Suites, 6840, Almeda Road, Texas Medical Center, Houston, Harris County, Texas, 77030, United States",
     "rules": 3
   },
   "702 West Dallas Street 77019, Houston, TX": {

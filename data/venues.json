@@ -18,6 +18,11 @@
     "kind": "offsite",
     "label": "1954 1ST AVE"
   },
+  "2200-main-st": {
+    "address": "2200 Main St, Houston, TX 77002, USA",
+    "kind": "offsite",
+    "label": "2200 Main St"
+  },
   "3-stories": {
     "address": "2026 Emancipation Ave, Houston, TX 77003",
     "kind": "offsite",
@@ -233,6 +238,11 @@
     "kind": "offsite",
     "label": "Fairfax Cocktail Bar (Ride share encouraged)"
   },
+  "fairfax-cocktail-bar-rideshare-encouraged": {
+    "address": "81 Drew St, Houston, TX 77004, USA",
+    "kind": "offsite",
+    "label": "Fairfax Cocktail Bar (Rideshare encouraged)"
+  },
   "fairfax-houston-tx": {
     "address": "81 Drew Street Houston, TX 77006",
     "kind": "offsite",
@@ -362,6 +372,11 @@
     "address": "5427 Bissonnet St, Suite 200, Houston, TX 77081",
     "kind": "offsite",
     "label": "Hibachi King Houston"
+  },
+  "hilton-garden-inn-houston-medical-center": {
+    "address": "6840 Almeda Rd, Houston, TX 77030, USA",
+    "kind": "offsite",
+    "label": "Hilton Garden Inn Houston Medical Center"
   },
   "hookahs-and-ash": {
     "address": "4715 Main Street Houston TX 77002",
@@ -533,6 +548,11 @@
     "address": "401 franklin st houston tx 77201",
     "kind": "offsite",
     "label": "POST Houston"
+  },
+  "pour-behavior": {
+    "address": "2211 Travis Street, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Pour Behavior"
   },
   "private": {
     "kind": "unplaced",

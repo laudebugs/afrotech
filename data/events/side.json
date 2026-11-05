@@ -1735,8 +1735,8 @@
     "start": "2026-11-04T17:00:00-06:00",
     "end": "2026-11-04T23:00:00-06:00",
     "timeLabel": null,
-    "locationKey": "fairfax-cocktail-bar-ride-share-encouraged",
-    "locationLabel": "Fairfax Cocktail Bar (Ride share encouraged)",
+    "locationKey": "fairfax-cocktail-bar-rideshare-encouraged",
+    "locationLabel": "Fairfax Cocktail Bar (Rideshare encouraged)",
     "address": "81 Drew St, Houston, TX 77004, USA",
     "track": null,
     "categories": [
@@ -2567,9 +2567,9 @@
     "start": "2026-11-04T21:00:00-06:00",
     "end": "2026-11-05T01:00:00-06:00",
     "timeLabel": null,
-    "locationKey": "decorum",
-    "locationLabel": "Decorum",
-    "address": "2211 Travis St, Houston, TX 77002, USA",
+    "locationKey": "2200-main-st",
+    "locationLabel": "2200 Main St",
+    "address": "2200 Main St, Houston, TX 77002, USA",
     "track": null,
     "categories": [
       "Party",
@@ -2585,7 +2585,8 @@
     "description": "Blavity’s all-black evening celebration brings music and after-hours connections to Decorum during AfroTech week.",
     "sources": [
       "google-sheet",
-      "adaptive-foundation"
+      "adaptive-foundation",
+      "event page"
     ]
   },
   {
@@ -3302,9 +3303,9 @@
     "start": "2026-11-05T18:00:00-06:00",
     "end": "2026-11-05T20:30:00-06:00",
     "timeLabel": null,
-    "locationKey": "tbd",
-    "locationLabel": "TBD",
-    "address": "3737 cogdell st",
+    "locationKey": "hilton-garden-inn-houston-medical-center",
+    "locationLabel": "Hilton Garden Inn Houston Medical Center",
+    "address": "6840 Almeda Rd, Houston, TX 77030, USA",
     "track": null,
     "categories": [
       "Workshop"
@@ -3550,6 +3551,35 @@
     ]
   },
   {
+    "id": "side-b11747ba1267",
+    "kind": "side",
+    "title": "JRIPSET: THE 3 FLOOR EXPERIENCE (AFROTECH HOUSTON)",
+    "date": "2026-11-05",
+    "start": "2026-11-05T20:45:00-06:00",
+    "end": "2026-11-06T02:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "styx-stone",
+    "locationLabel": "STYX + STONE",
+    "address": "2400 Brazos St, Houston, TX 77006",
+    "track": null,
+    "categories": [
+      "Party"
+    ],
+    "speakers": [],
+    "host": "JRIPSET",
+    "price": "Paid",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/f/ec223?t=afrotechexcel",
+    "founderInvestorPick": false,
+    "description": "The 3 Floor Experience is is a social party for Afrotech attendees; every floor will have a different vibe. First Floor will be Afrobeats, Amapiano, Dancehall. Second Floor will be R&B, Hip-Hop & Pop. Third Floor will be a networking & vendor rooftop space for gathering.",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
+      "event page"
+    ]
+  },
+  {
     "id": "side-5b9aca1be6f3",
     "kind": "side",
     "title": "A NIGHT OF AMAPIANO - AFROTECH  WEEKEND",
@@ -3602,35 +3632,6 @@
       "afrotech.guide",
       "google-sheet",
       "adaptive-foundation",
-      "event page"
-    ]
-  },
-  {
-    "id": "side-b11747ba1267",
-    "kind": "side",
-    "title": "JRIPSET: THE 3 FLOOR EXPERIENCE (AFROTECH HOUSTON)",
-    "date": "2026-11-05",
-    "start": "2026-11-05T21:00:00-06:00",
-    "end": "2026-11-06T02:00:00-06:00",
-    "timeLabel": null,
-    "locationKey": "styx-stone",
-    "locationLabel": "STYX + STONE",
-    "address": "2400 Brazos St, Houston, TX 77006",
-    "track": null,
-    "categories": [
-      "Party"
-    ],
-    "speakers": [],
-    "host": "JRIPSET",
-    "price": "Paid",
-    "access": null,
-    "ticketLevels": [],
-    "rsvpUrl": "https://posh.vip/f/ec223?t=afrotechexcel",
-    "founderInvestorPick": false,
-    "description": "The 3 Floor Experience is is a social party for Afrotech attendees; every floor will have a different vibe. First Floor will be Afrobeats, Amapiano, Dancehall. Second Floor will be R&B, Hip-Hop & Pop. Third Floor will be a networking & vendor rooftop space for gathering.",
-    "sources": [
-      "afrotech.guide",
-      "google-sheet",
       "event page"
     ]
   },
@@ -4164,9 +4165,9 @@
     "start": "2026-11-06T17:00:00-06:00",
     "end": "2026-11-06T22:00:00-06:00",
     "timeLabel": null,
-    "locationKey": "provar",
-    "locationLabel": "Provaré",
-    "address": "5102 Washington Avenue 77007, Houston, TX",
+    "locationKey": "pour-behavior",
+    "locationLabel": "Pour Behavior",
+    "address": "2211 Travis Street, Houston, TX 77002",
     "track": null,
     "categories": [],
     "speakers": [],
@@ -4408,34 +4409,6 @@
     ]
   },
   {
-    "id": "side-4a418f4cd72c",
-    "kind": "side",
-    "title": "A.Y x FAAJI DJ BATTLE",
-    "date": "2026-11-06",
-    "start": "2026-11-06T21:00:00-06:00",
-    "end": "2026-11-07T14:00:00-06:00",
-    "timeLabel": null,
-    "locationKey": "warehouse-live",
-    "locationLabel": "Warehouse Live",
-    "address": "2600 Travis Street Houston, TX, 77006",
-    "track": null,
-    "categories": [
-      "Party"
-    ],
-    "speakers": [],
-    "host": "Afro Balance x Antics x Afro Heat",
-    "price": "Unknown",
-    "access": null,
-    "ticketLevels": [],
-    "rsvpUrl": "https://wl.eventim.us/event/battle-of-the-djs/706360?afflky=warehouselive&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaAVHZVBleHRuA2FlbQIxMQBwZG9mAmZkaWQWUQxINn3FL4k6ap3oXgRM8pLtphzlAXNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp8u5vOQ-O1PbBmrO6nu7hDf3ChPTOp_wQIFkpXQFU89AF-HcZem1wSMaRDL3_aem_pQf1-TvVY6yxlWhp1RbW7A&utm_id=97760_v0_s00_e0_tv3_a1denngqmjurys",
-    "founderInvestorPick": false,
-    "description": "Battle Of The DJs\nFAAJ vs A.Y.\nEJ Tha DJ, ADE, TBA\n\nFriday November 6, 2026\n\nDoors at 9 PM\n\nStanding Room General Admission\n*Lineup Subject To Change\nAGES: 18+\nNO REFUNDS | ALL SALES FINAL",
-    "sources": [
-      "afrotech.guide",
-      "google-sheet"
-    ]
-  },
-  {
     "id": "side-bef367b4f216",
     "kind": "side",
     "title": "Afro Tech 2k26: Finale Party",
@@ -4458,6 +4431,35 @@
     "description": "The grand Finale Party of Afro Tech 2k26 week!",
     "sources": [
       "adaptive-foundation",
+      "event page"
+    ]
+  },
+  {
+    "id": "side-4a418f4cd72c",
+    "kind": "side",
+    "title": "Battle Of The DJs",
+    "date": "2026-11-06",
+    "start": "2026-11-06T21:00:00-06:00",
+    "end": "2026-11-07T01:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "warehouse-live",
+    "locationLabel": "Warehouse Live",
+    "address": "2600 Travis Street Houston, TX, 77006",
+    "track": null,
+    "categories": [
+      "Party"
+    ],
+    "speakers": [],
+    "host": "Afro Balance x Antics x Afro Heat",
+    "price": "Unknown",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://wl.eventim.us/event/battle-of-the-djs/706360?afflky=warehouselive&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZnRzaAVHZVBleHRuA2FlbQIxMQBwZG9mAmZkaWQWUQxINn3FL4k6ap3oXgRM8pLtphzlAXNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp8u5vOQ-O1PbBmrO6nu7hDf3ChPTOp_wQIFkpXQFU89AF-HcZem1wSMaRDL3_aem_pQf1-TvVY6yxlWhp1RbW7A&utm_id=97760_v0_s00_e0_tv3_a1denngqmjurys",
+    "founderInvestorPick": false,
+    "description": "Battle Of The DJs\nFAAJ vs A.Y.\nEJ Tha DJ, ADE, TBA\n\nFriday November 6, 2026\n\nDoors at 9 PM\n\nStanding Room General Admission\n*Lineup Subject To Change\nAGES: 18+\nNO REFUNDS | ALL SALES FINAL",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
       "event page"
     ]
   },
