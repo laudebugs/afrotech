@@ -6366,12 +6366,6 @@
         "slug": "dr-nicol-turner-lee"
       },
       {
-        "name": "Derrick Johnson",
-        "title": "President and CEO",
-        "company": "NAACP",
-        "slug": "derrick-johnson"
-      },
-      {
         "name": "Ashley Allison",
         "title": "CEO and Founder",
         "company": "Watering Hole Media",
@@ -6382,6 +6376,12 @@
         "title": "Texas’s 18th Congressional District",
         "company": "U.S. House of Representatives",
         "slug": "christian-menefee"
+      },
+      {
+        "name": "Cedric Chaucer Haynes",
+        "title": "Senior Vice President, Policy and Legislative Affairs",
+        "company": "NAACP",
+        "slug": "cedric-chaucer-haynes"
       }
     ],
     "host": null,
@@ -7788,7 +7788,7 @@
     ],
     "rsvpUrl": null,
     "founderInvestorPick": false,
-    "description": "You'd never book a planner just to ask \"is this normal?\" In this room, that's the whole point. 300 people in tech, at your level and the next one up, saying out loud what they're doing with their money and what they're still figuring out. Evol Greaves, Betterment's VP of Engineering, hosts and goes first with his own story: how his thinking about money changed as his career grew, and the questions he still has. Kyle McBrien, CFP, brings the five things he thinks about for everyone. Your questions go in at check-in and get asked for you, no names attached. Then small groups with the planners.\nRSVP here to save your seat!",
+    "description": "You'd never book a planner just to ask \"is this normal?\" In this room, that's the whole point. 300 people in tech, at your level and the next one up, saying out loud what they're doing with their money and what they're still figuring out. Evol Greaves, Betterment's VP of Engineering, hosts and goes first with his own story: how his thinking about money changed as his career grew, and the questions he still has. Kyle McBrien, CFP, brings the five things he thinks about for everyone. Your questions go in at check-in and get asked for you, no names attached. Then small groups with the planners.\nRSVP here to save your seat! https://posh.vip/e/afrotech-conference-live-financial-planning-workshop-whats-everyone-else-doing-with-their-money-presented-by-betterment",
     "sources": [
       "afrotech-official"
     ]
@@ -8252,10 +8252,10 @@
         "slug": "achu-akum"
       },
       {
-        "name": "Jalan Blackmon",
+        "name": "Jalen Blackmon",
         "title": null,
         "company": null,
-        "slug": "jalan-blackmon"
+        "slug": "jalen-blackmon"
       },
       {
         "name": "Pia Flanagan",
@@ -9234,6 +9234,31 @@
     "rsvpUrl": null,
     "founderInvestorPick": false,
     "description": null,
+    "sources": [
+      "afrotech-official"
+    ]
+  },
+  {
+    "id": "623aaf2d-48cd-4626-9195-f94ab9f4d4fe",
+    "kind": "official",
+    "title": "The Salesforce Social @ AfroTech 2026",
+    "date": "2026-11-05",
+    "start": "2026-11-05T18:00:00-06:00",
+    "end": "2026-11-05T22:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "naming-rights-events",
+    "locationLabel": "Naming Rights Events",
+    "address": null,
+    "track": "Networking",
+    "categories": [],
+    "speakers": [],
+    "host": null,
+    "price": null,
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": null,
+    "founderInvestorPick": false,
+    "description": "At Salesforce, we're building an agentic future for all — including you! Join us at the Salesforce Social to hear the latest from top Salesforce executives on how you can build your place in the agentic workforce. Then get ready for an evening built for connection: networking, great food, giveaways and live music from Houston’s own DJ Supastar. Work your way through hands-on interactive demos for a chance to win branded embroidered swag, and discover how Salesforce puts the tools to build your agentic future directly in your hands. Secure your spot now. Space is limited!\nRSVP HERE:\nhttps://salesforcesaloon2026.splashthat.com/",
     "sources": [
       "afrotech-official"
     ]

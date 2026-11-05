@@ -822,6 +822,21 @@
     "research": null
   },
   {
+    "id": "c86a6a45-f78e-4638-8ee0-4340a55bef84",
+    "slug": "cedric-chaucer-haynes",
+    "name": "Cedric Chaucer Haynes",
+    "title": "Senior Vice President, Policy and Legislative Affairs",
+    "company": "NAACP",
+    "brief": "As Senior VP, Policy and Legislative Affairs at the NAACP, Cedric leads efforts to build and maintain an influential voice on federal and state public policy.",
+    "bio": "As Senior VP, Policy and Legislative Affairs at the NAACP, Cedric leads efforts to build and maintain an influential voice on federal and state public policy. He began his policy career via the Congressional Black Caucus Foundation's Emerging Leaders program in 2009, later working with Congressman Bennie G. Thompson, including the House Homeland Security Committee. He has also advised startups and established businesses across entertainment, micro mobility, housing, transportation, and energy. A graduate of Tougaloo College and Mississippi College School of Law, Cedric previously served as Associate VP of Public Affairs for WM Technology.",
+    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FixQRZrEhTcKVIngxQXLo_headshot-1793887786097.jpg",
+    "links": [],
+    "sessionIds": [
+      "fbc7ffe6-4ba0-4d1b-9b4c-a7679df4e999"
+    ],
+    "research": null
+  },
+  {
     "id": "b6faa353-b31a-4a82-953d-fc0efb686d2f",
     "slug": "chantel-greene",
     "name": "Chantel Greene",
@@ -1232,27 +1247,6 @@
     "sessionIds": [
       "98cfb0ab-4af0-4da5-8bbb-27002dde39be",
       "84fa11f1-7c83-4563-8c68-77dec6c06304"
-    ],
-    "research": null
-  },
-  {
-    "id": "b743bfdd-711e-445f-afe4-3303158db9a6",
-    "slug": "derrick-johnson",
-    "name": "Derrick Johnson",
-    "title": "President and CEO",
-    "company": "NAACP",
-    "brief": "Derrick Johnson is the 19th president and CEO of the NAACP, a role he has held since October 2017.",
-    "bio": "Derrick Johnson is the 19th president and CEO of the NAACP, a role he has held since October 2017. Previously, he served as vice chairman of the National Board of Directors and president of the Mississippi State Conference. Under his leadership, the NAACP launched NAACP Capital and the \"We Are Done Dying\" campaign exposing healthcare inequities. He helped secure a Biden executive order eliminating systemic racial barriers in federal policy. A seasoned civil rights advocate, he prioritizes closing the wealth gap for Black entrepreneurs and data-driven voter mobilization. Born in Detroit, he earned his JD from South Texas College of Law.",
-    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FHfhWiPGSJt4NoNEjHqMQ_headshot-1791481118930.jpg",
-    "links": [
-      {
-        "kind": "linkedin",
-        "label": "LinkedIn",
-        "url": "https://www.linkedin.com/in/derrick-johnson-5054a44/"
-      }
-    ],
-    "sessionIds": [
-      "fbc7ffe6-4ba0-4d1b-9b4c-a7679df4e999"
     ],
     "research": null
   },
@@ -2385,13 +2379,13 @@
   },
   {
     "id": "565d50bd-b2c7-4bd1-8c77-da60fba5ce2a",
-    "slug": "jalan-blackmon",
-    "name": "Jalan Blackmon",
+    "slug": "jalen-blackmon",
+    "name": "Jalen Blackmon",
     "title": null,
     "company": null,
     "brief": "As a CFP®, Jalen helps individuals, families, and business owners build, preserve, and transfer generational wealth through practical financial strategies, risk management, and education.",
     "bio": "As a CFP®, Jalen helps individuals, families, and business owners build, preserve, and transfer generational wealth through practical financial strategies, risk management, and education.",
-    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FGdTcBhvtQ3aFgu7cMfr0_headshot-1793773265432.jpg",
+    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FQyilhBkpSuG5OxEPUax4_headshot-1793886462973.jpg",
     "links": [],
     "sessionIds": [
       "dbd9d1d3-927a-42f7-96b6-b1cd78233ae5"
@@ -4082,7 +4076,7 @@
     "company": null,
     "brief": "Head of New Markets at MassMutual, leading growth initiatives focused on expanding access to life insurance for middle-market families.",
     "bio": "Head of New Markets at MassMutual, leading growth initiatives focused on expanding access to life insurance for middle-market families. Her senior leadership experience spans enterprise strategy, legal, governance, and cross-functional execution.",
-    "photoUrl": null,
+    "photoUrl": "https://content-cdn.sessionboard.com/attendee-photo%2FDbQxGnSwTMuZYiPY5OrP_headshot-1793886350742.png",
     "links": [],
     "sessionIds": [
       "dbd9d1d3-927a-42f7-96b6-b1cd78233ae5"

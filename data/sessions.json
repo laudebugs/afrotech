@@ -4927,7 +4927,7 @@
     "title": "Equitable Innovation: Delivering on AI’s Health Equity Potential Presented by Sanofi",
     "track": "Equity, Bias and Clinical Trust",
     "location": "Exhibit Hall E (1st Floor)",
-    "speakers": "Tanisha M. Sullivan (Head, External Engagement & Health Equity Strategy, Sanofi); Dr. Nicol Turner Lee (Director, Center for Technology Innovation (CTI) and Senior Fellow, Governance Studies, Brookings Institute); Derrick Johnson (President and CEO, NAACP); Ashley Allison (CEO and Founder, Watering Hole Media); Christian Menefee (Texas’s 18th Congressional District, U.S. House of Representatives)",
+    "speakers": "Tanisha M. Sullivan (Head, External Engagement & Health Equity Strategy, Sanofi); Dr. Nicol Turner Lee (Director, Center for Technology Innovation (CTI) and Senior Fellow, Governance Studies, Brookings Institute); Ashley Allison (CEO and Founder, Watering Hole Media); Christian Menefee (Texas’s 18th Congressional District, U.S. House of Representatives); Cedric Chaucer Haynes (Senior Vice President, Policy and Legislative Affairs, NAACP)",
     "speaker_list": [
       {
         "id": "6893ca0f-fb08-4ea1-9865-6d10d7b6a005",
@@ -4954,18 +4954,6 @@
         "instagram": ""
       },
       {
-        "id": "b743bfdd-711e-445f-afe4-3303158db9a6",
-        "name": "Derrick Johnson",
-        "title": "President and CEO",
-        "company": "NAACP",
-        "about": "<p>Derrick Johnson is the 19th president and CEO of the NAACP, a role he has held since October 2017. Previously, he served as vice chairman of the National Board of Directors and president of the Mississippi State Conference. Under his leadership, the NAACP launched NAACP Capital and the \"We Are Done Dying\" campaign exposing healthcare inequities. He helped secure a Biden executive order eliminating systemic racial barriers in federal policy. A seasoned civil rights advocate, he prioritizes closing the wealth gap for Black entrepreneurs and data-driven voter mobilization. Born in Detroit, he earned his JD from South Texas College of Law.</p>",
-        "image": "https://content-cdn.sessionboard.com/attendee-photo%2FHfhWiPGSJt4NoNEjHqMQ_headshot-1791481118930.jpg",
-        "linkedin": "https://www.linkedin.com/in/derrick-johnson-5054a44/",
-        "twitter": "",
-        "facebook": "",
-        "instagram": ""
-      },
-      {
         "id": "dae384af-9eb4-4e7f-b897-9ffa09aeef28",
         "name": "Ashley Allison",
         "title": "CEO and Founder",
@@ -4984,6 +4972,18 @@
         "company": "U.S. House of Representatives",
         "about": "<p>Christian Menefee represents Texas’s 18th Congressional District in the U.S. House of Representatives, taking office in February 2026. A Houston native raised by two military parents, he became the youngest and first Black Harris County Attorney in 2020. He was the first in his family to graduate college, attending the University of Texas at San Antonio and Washington University School of Law. His career spans commercial litigation, pro bono advocacy, and public service, including defending voting rights, challenging pollution in Black and Brown communities, and holding businesses accountable for price gouging during disasters.</p>",
         "image": "https://content-cdn.sessionboard.com/attendee-photo%2FLnxvAChDQGqYRLyx85GU_headshot-1792975508739.jpg",
+        "linkedin": "",
+        "twitter": "",
+        "facebook": "",
+        "instagram": ""
+      },
+      {
+        "id": "c86a6a45-f78e-4638-8ee0-4340a55bef84",
+        "name": "Cedric Chaucer Haynes",
+        "title": "Senior Vice President, Policy and Legislative Affairs",
+        "company": "NAACP",
+        "about": "<p>As Senior VP, Policy and Legislative Affairs at the NAACP, Cedric leads efforts to build and maintain an influential voice on federal and state public policy. He began his policy career via the Congressional Black Caucus Foundation's Emerging Leaders program in 2009, later working with Congressman Bennie G. Thompson, including the House Homeland Security Committee. He has also advised startups and established businesses across entertainment, micro mobility, housing, transportation, and energy. A graduate of Tougaloo College and Mississippi College School of Law, Cedric previously served as Associate VP of Public Affairs for WM Technology.</p>",
+        "image": "https://content-cdn.sessionboard.com/attendee-photo%2FixQRZrEhTcKVIngxQXLo_headshot-1793887786097.jpg",
         "linkedin": "",
         "twitter": "",
         "facebook": "",
@@ -6102,7 +6102,7 @@
       }
     ],
     "ticket_levels": "All Access; Executive; Medical; Premiere",
-    "description": "You'd never book a planner just to ask \"is this normal?\" In this room, that's the whole point. 300 people in tech, at your level and the next one up, saying out loud what they're doing with their money and what they're still figuring out. Evol Greaves, Betterment's VP of Engineering, hosts and goes first with his own story: how his thinking about money changed as his career grew, and the questions he still has. Kyle McBrien, CFP, brings the five things he thinks about for everyone. Your questions go in at check-in and get asked for you, no names attached. Then small groups with the planners.\nRSVP here to save your seat!",
+    "description": "You'd never book a planner just to ask \"is this normal?\" In this room, that's the whole point. 300 people in tech, at your level and the next one up, saying out loud what they're doing with their money and what they're still figuring out. Evol Greaves, Betterment's VP of Engineering, hosts and goes first with his own story: how his thinking about money changed as his career grew, and the questions he still has. Kyle McBrien, CFP, brings the five things he thinks about for everyone. Your questions go in at check-in and get asked for you, no names attached. Then small groups with the planners.\nRSVP here to save your seat! https://posh.vip/e/afrotech-conference-live-financial-planning-workshop-whats-everyone-else-doing-with-their-money-presented-by-betterment",
     "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=f8ffa8e2-fa5a-4781-9d93-893f7f2933ea"
   },
   {
@@ -6491,7 +6491,7 @@
     "title": "Vision First. Strategy Second. A Financial Planner's Framework for Turning Income, Equity, and Opportunity Into More Intentional Choices Presented by MassMutual",
     "track": "Wealth",
     "location": "Grand Ballroom A",
-    "speakers": "Achu Akum, (Financial Planner, Vista Wealth Solutions); Jalan Blackmon; Pia Flanagan",
+    "speakers": "Achu Akum, (Financial Planner, Vista Wealth Solutions); Jalen Blackmon; Pia Flanagan",
     "speaker_list": [
       {
         "id": "62b3ec4a-086f-4f89-a38c-7c843cd0da18",
@@ -6507,11 +6507,11 @@
       },
       {
         "id": "565d50bd-b2c7-4bd1-8c77-da60fba5ce2a",
-        "name": "Jalan Blackmon",
+        "name": "Jalen Blackmon",
         "title": "",
         "company": "",
         "about": "<p>As a CFP®, Jalen helps individuals, families, and business owners build, preserve, and transfer generational wealth through practical financial strategies, risk management, and education.</p>",
-        "image": "https://content-cdn.sessionboard.com/attendee-photo%2FGdTcBhvtQ3aFgu7cMfr0_headshot-1793773265432.jpg",
+        "image": "https://content-cdn.sessionboard.com/attendee-photo%2FQyilhBkpSuG5OxEPUax4_headshot-1793886462973.jpg",
         "linkedin": "",
         "twitter": "",
         "facebook": "",
@@ -6523,7 +6523,7 @@
         "title": "",
         "company": "",
         "about": "<p>Head of New Markets at MassMutual, leading growth initiatives focused on expanding access to life insurance for middle-market families. Her senior leadership experience spans enterprise strategy, legal, governance, and cross-functional execution.</p>",
-        "image": "",
+        "image": "https://content-cdn.sessionboard.com/attendee-photo%2FDbQxGnSwTMuZYiPY5OrP_headshot-1793886350742.png",
         "linkedin": "",
         "twitter": "",
         "facebook": "",
@@ -7352,6 +7352,20 @@
     "ticket_levels": "All Access; Executive; Medical; Premiere",
     "description": "Blavity House Party is hosting an unforgettable all-R&B celebration for its second year, paying tribute to its roots with an exciting return to the R&B theme. The event promises a high-energy, soulful sing-along under the stars, bringing together music lovers to indulge in smooth vocals, unforgettable hits, and vibrant community vibes. Attendees can expect an electrifying atmosphere filled with nostalgia, live performances, and collective singing—all designed to honor the essence of classic and contemporary R&B.\nGet your tickets HERE: https://posh.vip/e/afrotech-conference-rb-edition-part-ii",
     "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=ec0599ba-4aad-4529-94ae-5777614d9a00"
+  },
+  {
+    "id": "623aaf2d-48cd-4626-9195-f94ab9f4d4fe",
+    "date": "2026-11-05",
+    "start": "6:00 PM",
+    "end": "10:00 PM",
+    "title": "The Salesforce Social @ AfroTech 2026",
+    "track": "Networking",
+    "location": "Naming Rights Events",
+    "speakers": "",
+    "speaker_list": [],
+    "ticket_levels": "",
+    "description": "At Salesforce, we're building an agentic future for all — including you! Join us at the Salesforce Social to hear the latest from top Salesforce executives on how you can build your place in the agentic workforce. Then get ready for an evening built for connection: networking, great food, giveaways and live music from Houston’s own DJ Supastar. Work your way through hands-on interactive demos for a chance to win branded embroidered swag, and discover how Salesforce puts the tools to build your agentic future directly in your hands. Secure your spot now. Space is limited!\nRSVP HERE:\nhttps://salesforcesaloon2026.splashthat.com/",
+    "calendar_url": "https://afrotechconference.com/api/schedule-calendar?id=623aaf2d-48cd-4626-9195-f94ab9f4d4fe"
   },
   {
     "id": "a0652cca-faae-40bc-a842-e23420945d77",
