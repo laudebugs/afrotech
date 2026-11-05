@@ -218,7 +218,7 @@ put session notes in `notes/` instead.
 | 9:00 AM–5:00 PM | **Expo Hall Hours** |  | Expo Hall |  |
 | 9:30 AM–10:00 AM | **Reducing Maternal Morbidity Through Inclusive Design** | HealthStack/ Medical | HealthStack General Session (Marriott) | Dr. Dineo Khabele (Mitchell & Elaine Yanow Professor and Chair, Department of Obstetrics and Gynecology, WashU Medicine) |
 | 9:30 AM–10:00 AM | **The AI Supercomputer on Your Desk Presented by Connection** | Engineering | Meeting Room 320 | Rod Stokes (Principal Solutions Sales Executive, Connection) |
-| 9:40 AM–10:10 AM | **The Leadership Playbook: Managing & Mentoring Talent in Big Tech Presented by Uber** | Future of Work | Grand Ballroom A | Krystal Denley Bowen (Vice President, Chief Privacy Officer, Uber); Krystal Denley Bowen (Legal Director, Commercial & Emerging Risks, Uber) |
+| 9:40 AM–10:10 AM | **The Leadership Playbook: Managing & Mentoring Talent in Big Tech Presented by Uber** | Future of Work | Grand Ballroom A | Dianna R. Jones (Legal Director, Commercial & Emerging Risks, Uber); Krystal Denley Bowen (Vice President, Chief Privacy Officer, Uber) |
 | 9:40 AM–10:40 AM | **Open Mic: Idea Hour with Brandon Z. Hoff** | Product&Design | Product & Innovation Stage (Exhibit Hall C&D (1st Floor)) | Brandon Z. Hoff (Chief AI Officer, RUDI (Responsible Use of Digital Intelligence)) |
 | 9:45 AM–10:00 AM | **Main Stage Doors Open** |  | Main Stage (Exhibit Hall E 1st Floor) |  |
 | 9:50 AM–10:50 AM | **Assemble your AI team with Buzz Presented by Block** | Engineering | Grand Ballroom C | Lucas Isaza (Product Lead, Block) |
