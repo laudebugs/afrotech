@@ -1,8 +1,67 @@
-# AfroTech 2026 — Events & Notes
+# AfroTech 2026 Planner
 
-Shared tracker for AfroTech Conference 2026 events, with a site for planning your week and taking private notes.
+**Live at [afrotech26.laudebugs.me](https://afrotech26.laudebugs.me)** · November 2–6, 2026 · George R. Brown Convention Center, Houston
 
-**When:** November 2–6, 2026 · **Where:** George R. Brown Convention Center, Houston, TX
+AfroTech 2026 ran 263 official sessions and about 180 community side events
+over five days. The sessions sat on the conference website, while the side
+events were spread across shared spreadsheets and RSVP pages. To plan a day,
+you jumped between them, guessed which room was where, and lost track of what
+you'd starred. This planner merges both into one mobile site, so you can see
+what's on now, build your week, find any room, and keep private notes, even
+on the convention center's patchy Wi-Fi.
+
+<p align="center">
+  <img src="docs/screenshots/now.png" width="200" alt="Now: sessions live and starting within the hour on a timeline">
+  <img src="docs/screenshots/schedule.png" width="200" alt="Schedule: one day's sessions and side events by time">
+  <img src="docs/screenshots/event.png" width="200" alt="An event page with time, place, speakers and your notes">
+  <img src="docs/screenshots/map.png" width="200" alt="Map: the convention center floor plan with live sessions per room">
+</p>
+
+## One place for the whole week, official and unofficial
+
+The site answers the questions people ask most during the conference:
+
+| Question | Where the answer is |
+|----------|---------------------|
+| What's on right now? | **Now** shows live sessions and those starting within the hour on a timeline, and warns when two starred events clash. |
+| What's on Thursday afternoon? | **Schedule** lists each day, official sessions and side events together, with filters for track, type, cost, access and time of day. |
+| Where's that AI panel with the Google speaker? | **Search** covers every event, speaker and your own notes across the week. It forgives typos, and any search can be shared as a link. |
+| Where's Room 320? | **Map** shows a traced floor plan of the convention center, level by level, with live sessions on each room. A city map pins the side events across Houston. |
+| How do I get there? | **Directions** opens Apple Maps, Google Maps or Waze, whichever you choose. |
+
+<p align="center">
+  <img src="docs/screenshots/search.png" width="200" alt="Search across the week, with filter chips">
+  <img src="docs/screenshots/city.png" width="200" alt="City map of side events across Houston">
+  <img src="docs/screenshots/saved.png" width="200" alt="Saved: your plan by day, with clashes marked">
+  <img src="docs/screenshots/note.png" width="200" alt="A private note about a session">
+</p>
+
+## Your plan and notes stay yours
+
+Star any event to add it to **Saved**. Your plan exports to your calendar, and
+a link shares it with a friend. Each session also takes a note: write in
+Markdown, add photos, and tick off follow-ups. Notes are private, and only
+you can read them.
+
+Everything works without an account. Your plan and notes save on your device,
+and the site sends no requests about you. Signing in with Google is optional:
+it syncs your plan and notes across your phone and laptop. **Delete my data**
+removes them from the server at once.
+
+## Built for the convention floor
+
+- **Offline:** a service worker saves the schedule, the maps and your starred events, so the site keeps working when the Wi-Fi drops.
+- **Installable:** add it to your home screen and it opens like an app, with a glass tab bar and iOS-style page transitions.
+- **Fresh:** a GitHub Action re-pulls the official schedule and the community lists every two hours during the week. It also checks each side event against its own page, so names, times and places match what the organiser published.
+- **Readable anywhere:** times are always Houston time, there's a dark mode, and every page fits a phone first.
+
+<p align="center">
+  <img src="docs/screenshots/now-dark.png" width="200" alt="Now in dark mode">
+</p>
+
+The site is an Astro static site on Cloudflare, with a small Worker and a D1
+database for sign-in and sync. The rest of this README covers running and
+deploying it.
 
 ## Website
 
@@ -58,6 +117,7 @@ record and certificate on the first deploy.
 - [Plan: optional Google sign-in](docs/plans/0002-google-sign-in.md) — sync My plan across devices
 - [Plan: speaker profiles](docs/plans/0003-speaker-profiles.md) — bios, sourced fun facts and links
 - [Plan: offline support](docs/plans/0004-offline-support.md) — keep working on dead convention Wi-Fi
+- [Plans 0005–0011](docs/plans/) — private notes, the Saved tab, event pages and maps apps, search, the glass tab bar, the admin dashboard
 - [To-dos](docs/todos/README.md) — tasks, one file each
 - [Design language](docs/design/design-language.md)
 - [Research: interactive SVG floor plan](docs/research/svg-floor-plan.md)
@@ -68,8 +128,8 @@ record and certificate on the first deploy.
 
 | Path | What's in it |
 |------|--------------|
-| [`schedule/official.md`](schedule/official.md) | Full official agenda, by day (259 sessions, Houston time) |
-| [`schedule/side-events.md`](schedule/side-events.md) | About 170 side events (parties, mixers, dinners, workshops) with RSVP links and founder/investor picks |
+| [`schedule/official.md`](schedule/official.md) | Full official agenda, by day (263 sessions, Houston time) |
+| [`schedule/side-events.md`](schedule/side-events.md) | About 180 side events (parties, mixers, dinners, workshops) with RSVP links and founder/investor picks |
 | [`data/sessions.csv`](data/sessions.csv) / [`.json`](data/sessions.json) | Official agenda as data, with descriptions, ticket levels and calendar links |
 | [`data/side-events.csv`](data/side-events.csv) | Side events as data, with addresses and descriptions |
 | [`scripts/`](scripts/) | Re-pull the official agenda and side events |
@@ -77,8 +137,8 @@ record and certificate on the first deploy.
 ## Taking notes
 
 Open any session on the site and tap **Write a note**. Notes save on your
-device as you type, and only you can see them. Sign in with Google on **My
-plan** to keep them on all your devices. **Share** and **Copy Markdown** on a
+device as you type, and only you can see them. Sign in with Google on the
+**Saved** tab to keep them on all your devices. **Share** and **Copy Markdown** on a
 note pass it on.
 
 ## Refreshing the schedules
