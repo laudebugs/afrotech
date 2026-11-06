@@ -2,9 +2,9 @@
 // How speaker profiles are made, and how to change or remove one (plan 0003, todo 021).
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SourcesFooter from "../../components/SourcesFooter.astro";
-import { REPO } from "../../config";
+import { CONTACT_EMAIL } from "../../config";
 
-const issueUrl = `https://github.com/${REPO.owner}/${REPO.repo}/issues/new?template=speaker-change.yml`;
+const mailUrl = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Speaker profile request")}`;
 ---
 
 <BaseLayout title="About speaker profiles · AfroTech 2026 Planner" active="none" description="Where the planner's speaker profiles come from, and how to correct or remove one.">
@@ -39,7 +39,7 @@ const issueUrl = `https://github.com/${REPO.owner}/${REPO.repo}/issues/new?templ
     <h2>Ask for a change or removal</h2>
     <p>
       If something is wrong, or you'd like your profile or a single fact removed,
-      <a href={issueUrl} rel="noopener">open a speaker profile request</a> on GitHub. You don't need to
+      email <a href={mailUrl}>{CONTACT_EMAIL}</a> with a link to your profile. You don't need to
       give a reason for a removal. We act within 48 hours, and the same day during conference week. A removed
       profile stays removed when the schedule refreshes.
     </p>
