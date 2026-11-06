@@ -11,10 +11,10 @@ what's on now, build your week, find any room, and keep private notes, even
 on the convention center's patchy Wi-Fi.
 
 <p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/now-dark.png"><img src="docs/screenshots/now.png" width="200" alt="Now: sessions live and starting within the hour on a timeline"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/schedule-dark.png"><img src="docs/screenshots/schedule.png" width="200" alt="Schedule: one day's sessions and side events by time"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/event-dark.png"><img src="docs/screenshots/event.png" width="200" alt="An event page with time, place, speakers and your notes"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/map-dark.png"><img src="docs/screenshots/map.png" width="200" alt="Map: the convention center floor plan with live sessions per room"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark/now.png"><img src="docs/screenshots/light/now.png" width="200" alt="Now: sessions live and starting within the hour on a timeline"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark/schedule.png"><img src="docs/screenshots/light/schedule.png" width="200" alt="Schedule: one day's sessions and side events by time"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark/event.png"><img src="docs/screenshots/light/event.png" width="200" alt="An event page with time, place, speakers and your notes"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark/map.png"><img src="docs/screenshots/light/map.png" width="200" alt="Map: the convention center floor plan with live sessions per room"></picture>
 </p>
 
 ## One place for the whole week, official and unofficial
@@ -30,10 +30,10 @@ The site answers the questions people ask most during the conference:
 | How do I get there? | **Directions** opens Apple Maps, Google Maps or Waze, whichever you choose. |
 
 <p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/search-dark.png"><img src="docs/screenshots/search.png" width="200" alt="Search across the week, with filter chips"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/city-dark.png"><img src="docs/screenshots/city.png" width="200" alt="City map of side events across Houston"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/saved-dark.png"><img src="docs/screenshots/saved.png" width="200" alt="Saved: your plan by day, with clashes marked"></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/note-dark.png"><img src="docs/screenshots/note.png" width="200" alt="A private note about a session"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark/search.png"><img src="docs/screenshots/light/search.png" width="200" alt="Search across the week, with filter chips"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark/city.png"><img src="docs/screenshots/light/city.png" width="200" alt="City map of side events across Houston"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark/saved.png"><img src="docs/screenshots/light/saved.png" width="200" alt="Saved: your plan by day, with clashes marked"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/dark/note.png"><img src="docs/screenshots/light/note.png" width="200" alt="A private note about a session"></picture>
 </p>
 
 ## Your plan and notes stay yours
