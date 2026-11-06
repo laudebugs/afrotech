@@ -69,6 +69,13 @@
     "match": "1120, Dennis Street, Midtown, Houston, Harris County, Texas, 77004, United States",
     "rules": 3
   },
+  "1120 Naylor, Houston, TX 77002": {
+    "found": true,
+    "lat": 29.769719,
+    "lng": -95.358204,
+    "match": "1120, Naylor Street, Downtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
   "1125 Providence St, Houston, TX 77002, USA": {
     "found": true,
     "lat": 29.767948,
@@ -339,6 +346,13 @@
     "match": "Rich's Houston, 2401, San Jacinto Street, Midtown, Houston, Harris County, Texas, 77002, United States",
     "rules": 3
   },
+  "2401 San Jacinto St, Houston, TX 77002, USA": {
+    "found": true,
+    "lat": 29.7451,
+    "lng": -95.37153,
+    "match": "Rich's Houston, 2401, San Jacinto Street, Midtown, Houston, Harris County, Texas, 77002, United States",
+    "rules": 3
+  },
   "2416 Brazos St Ste 200, Houston, TX 77006": {
     "found": true,
     "lat": 29.749941,
@@ -537,6 +551,13 @@
     "match": "Hotel Saint Augustine, 4110, Loretto Drive, Lancaster Place, Montrose, Houston, Harris County, Texas, 77006, United Stat",
     "rules": 3
   },
+  "4112 Washington Ave": {
+    "found": true,
+    "lat": 29.770169,
+    "lng": -95.40205,
+    "match": "4112, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
+    "rules": 3
+  },
   "4112 Washington Ave Houston, TX 77007 United States": {
     "found": true,
     "lat": 29.770169,
@@ -614,6 +635,11 @@
     "match": "5015, Almeda Road, Museum District, Houston, Harris County, Texas, 77004, United States",
     "rules": 3
   },
+  "5023 Washington Ave Fl 2, Houston, TX 77007, USA": {
+    "found": false,
+    "why": "no match in the Houston area",
+    "rules": 3
+  },
   "505 Main Street, Houston, TX 77002": {
     "found": true,
     "lat": 29.760577,
@@ -649,6 +675,11 @@
     "match": "5102, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
     "rules": 3
   },
+  "5151a Mitchelldale St A-14 Houston, Tx 77092": {
+    "found": false,
+    "why": "no match in the Houston area",
+    "rules": 3
+  },
   "5151a Mitchelldale St A-14, Houston, TX 77092": {
     "found": false,
     "why": "no match in the Houston area",
@@ -659,6 +690,13 @@
     "lat": 29.77036,
     "lng": -95.413688,
     "match": "5219, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, Harris County",
+    "rules": 3
+  },
+  "5334 Washington Ave, Houston": {
+    "found": true,
+    "lat": 29.77074,
+    "lng": -95.41607,
+    "match": "Clutch Bar, 5334, Washington Avenue, Washington Avenue Coalition / Memorial Park, Washington Avenue Corridor, Houston, H",
     "rules": 3
   },
   "5334 Washington Ave, Houston, TX 77007, USA": {
@@ -696,6 +734,13 @@
     "match": "5501, La Branch Street, Museum District, Houston, Harris County, Texas, 77004, United States",
     "rules": 3
   },
+  "5851 westheimer road houston Texas 77057": {
+    "found": true,
+    "lat": 29.737369,
+    "lng": -95.482415,
+    "match": "5851, Westheimer Road, Houston, Harris County, Texas, 77057, United States",
+    "rules": 3
+  },
   "6011 West Orem Drive, Houston, Texas 77085": {
     "found": true,
     "lat": 29.627214,
@@ -711,6 +756,13 @@
     "rules": 3
   },
   "606 Dennis St, Suite 200, Houston, TX": {
+    "found": true,
+    "lat": 29.746606,
+    "lng": -95.37798,
+    "match": "606, Dennis Street, Midtown, Houston, Harris County, Texas, 77006, United States",
+    "rules": 3
+  },
+  "606 Dennis St, ste 200, Houston": {
     "found": true,
     "lat": 29.746606,
     "lng": -95.37798,
@@ -753,6 +805,13 @@
     "lat": 29.757935,
     "lng": -95.375703,
     "match": "Seaside Lounge, 702, West Dallas Street, Fourth Ward, Houston, Harris County, Texas, 77019, United States",
+    "rules": 3
+  },
+  "711 Main Street, #UNIT 501, Houston, TX 77002": {
+    "found": true,
+    "lat": 29.758989,
+    "lng": -95.363192,
+    "match": "711, Main Street, Downtown, Houston, Harris County, Texas, 77002, United States",
     "rules": 3
   },
   "711 Milby St, Houston, TX 77023, USA": {

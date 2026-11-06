@@ -155,6 +155,11 @@
     "label": "Connect Lounge",
     "note": "Inside the convention center; AfroTech hasn't published where."
   },
+  "crybaby": {
+    "address": "1120 Naylor, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Crybaby"
+  },
   "dch": {
     "address": "1203 Cravens Road, Stafford, TX 77477",
     "kind": "offsite",
@@ -190,6 +195,11 @@
     "address": "2310 Elgin Street, Houston, TX 77004",
     "kind": "offsite",
     "label": "Eldorado Ballroom"
+  },
+  "enish": {
+    "address": "5851 westheimer road houston Texas 77057",
+    "kind": "offsite",
+    "label": "Enish"
   },
   "executive-lounge": {
     "approximate": true,
@@ -339,6 +349,11 @@
     "kind": "offsite",
     "label": "Harold’s Chicken Sports Bar"
   },
+  "harolds-chicken-on-washington": {
+    "address": "5334 Washington Ave, Houston",
+    "kind": "offsite",
+    "label": "Harolds Chicken On Washington"
+  },
   "healthstack-general-session-marriott": {
     "approximate": true,
     "areaId": "marriott",
@@ -435,6 +450,10 @@
     "address": "5151a Mitchelldale St A-14, Houston, TX 77092",
     "kind": "offsite",
     "label": "Ilekan Athletics"
+  },
+  "in-rsvp-once-approved": {
+    "kind": "offsite",
+    "label": "In RSVP once approved"
   },
   "insider-lounge": {
     "address": "1001 Avenida de las Americas, Houston, TX 77010",
@@ -854,6 +873,11 @@
     "kind": "offsite",
     "label": "Velvet Taco - Galleria"
   },
+  "victory": {
+    "address": "711 Main Street, #UNIT 501, Houston, TX 77002",
+    "kind": "offsite",
+    "label": "Victory"
+  },
   "virtual": {
     "kind": "offsite",
     "label": "Virtual"
@@ -862,5 +886,10 @@
     "address": "2600 Travis St, Houston, TX 77006, USA",
     "kind": "offsite",
     "label": "Warehouse Live"
+  },
+  "xo-sky": {
+    "address": "5023 Washington Ave Fl 2, Houston, TX 77007, USA",
+    "kind": "offsite",
+    "label": "XO SKY"
   }
 }
