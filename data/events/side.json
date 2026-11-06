@@ -1730,7 +1730,7 @@
   {
     "id": "side-e996826de056",
     "kind": "side",
-    "title": "The Afterglow Social | Giftings from Topicals",
+    "title": "The Afterglow Social",
     "date": "2026-11-04",
     "start": "2026-11-04T17:00:00-06:00",
     "end": "2026-11-04T23:00:00-06:00",
@@ -2165,6 +2165,34 @@
     ]
   },
   {
+    "id": "side-bc7294cf869b",
+    "kind": "side",
+    "title": "Autopay Presents: Hot Seat Adult game night",
+    "date": "2026-11-04",
+    "start": "2026-11-04T19:00:00-06:00",
+    "end": "2026-11-04T23:30:00-06:00",
+    "timeLabel": null,
+    "locationKey": "harolds-chicken-on-washington",
+    "locationLabel": "Harolds Chicken On Washington",
+    "address": "5334 Washington Ave, Houston",
+    "track": null,
+    "categories": [
+      "Networking"
+    ],
+    "speakers": [],
+    "host": "DoubleLar & Harolds Chicken",
+    "price": "Free",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": null,
+    "founderInvestorPick": false,
+    "description": "“Welcome to Harold’s Hot Seat! Tonight we asking the questions everybody wants answers to but nobody wants to ask! We starting off easy, but don’t get too comfortable. The longer you sit in this seat, the HOTTER it gets! Keep it real, don’t get sensitive, and remember — what happens in the Hot Seat might end up in the group chat!”",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet"
+    ]
+  },
+  {
     "id": "side-3d18db4b961b",
     "kind": "side",
     "title": "Black Enterprise x AfroTech Legacy Reception",
@@ -2452,7 +2480,7 @@
   {
     "id": "side-f3b7efcd761d",
     "kind": "side",
-    "title": "Afrocentrik (Afrotech Edition)",
+    "title": "Afrocentrik (Afrotech Edition) AKT",
     "date": "2026-11-04",
     "start": "2026-11-04T21:00:00-06:00",
     "end": "2026-11-05T02:00:00-06:00",
@@ -2501,35 +2529,6 @@
     "description": "Welcome to the Afro-Caribbean explosion of the Afrotech: where Afrobeats meets Dancehall, Jerk chicken meets Jollof, & the diaspora turns up",
     "sources": [
       "adaptive-foundation",
-      "event page"
-    ]
-  },
-  {
-    "id": "side-fbd64f98deaf",
-    "kind": "side",
-    "title": "AFROTECH - FIRSTWEDANCE @ Rich's 11.4 (21+)",
-    "date": "2026-11-04",
-    "start": "2026-11-04T21:00:00-06:00",
-    "end": "2026-11-05T02:00:00-06:00",
-    "timeLabel": null,
-    "locationKey": "rich-s-houston",
-    "locationLabel": "Rich’s Houston",
-    "address": "2401 San Jacinto St",
-    "track": null,
-    "categories": [
-      "Party"
-    ],
-    "speakers": [],
-    "host": "FirstWeDance",
-    "price": "Paid",
-    "access": null,
-    "ticketLevels": [],
-    "rsvpUrl": "https://posh.vip/e/firstwedance-houston-afrotech-114?t=spreadsheet",
-    "founderInvestorPick": false,
-    "description": "FirstWeDance brings its Afro inspired nightlife experience to Wednesday night during AfroTech week. Expect Afrobeats, Amapiano, and a dance floor where culture and community set the rhythm.",
-    "sources": [
-      "afrotech.guide",
-      "google-sheet",
       "event page"
     ]
   },
@@ -2586,6 +2585,64 @@
     "sources": [
       "google-sheet",
       "adaptive-foundation",
+      "event page"
+    ]
+  },
+  {
+    "id": "side-fbd64f98deaf",
+    "kind": "side",
+    "title": "FIRSTWEDANCE HOUSTON @ Rich's(21+)",
+    "date": "2026-11-04",
+    "start": "2026-11-04T21:00:00-06:00",
+    "end": "2026-11-05T02:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "rich-s-houston",
+    "locationLabel": "Rich’s Houston",
+    "address": "2401 San Jacinto St",
+    "track": null,
+    "categories": [
+      "Party"
+    ],
+    "speakers": [],
+    "host": "FirstWeDance",
+    "price": "Paid",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/e/firstwedance-houston-afrotech-114?t=spreadsheet",
+    "founderInvestorPick": false,
+    "description": "FirstWeDance brings its Afro inspired nightlife experience to Wednesday night during AfroTech week. Expect Afrobeats, Amapiano, and a dance floor where culture and community set the rhythm.",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
+      "event page"
+    ]
+  },
+  {
+    "id": "side-d75209824b46",
+    "kind": "side",
+    "title": "OVIMBR! PRESENTS: OVMBRSOUNDS 02 — HOUSTON",
+    "date": "2026-11-04",
+    "start": "2026-11-04T22:00:00-06:00",
+    "end": "2026-11-05T02:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "reset",
+    "locationLabel": "RESET",
+    "address": "606 Dennis St, ste 200, Houston",
+    "track": null,
+    "categories": [
+      "Networking"
+    ],
+    "speakers": [],
+    "host": "VIM x OVMBR",
+    "price": "Paid",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/e/ovimbr-presents-ovmbrsounds-02-houston-1?u=obioraanozie163&_t=mw1huf0p&os=ios&src=event_page",
+    "founderInvestorPick": false,
+    "description": "HOUSTON, WE’RE COMING HOME TO THE SOUTH! 🚀\n\nVIM! × OVMBR bring OVIMBR: AFROTECH EDITION to H-Town! Sounds from across the African diaspora. 🌍\n\n🔊 FLYGERIAN • EJ THE DJ • PROPHECI • VIM! SOUNDSYSTEM\n\n📅 WEDNESDAY, NOVEMBER 4TH\n📍 RESET — 606 DENNIS ST, HOUSTON\n⏰ 10PM–2AM\n\nBRING YOUR DANCING SHOES! YOU MUST DANCE! 🕺🏾💃🏾\n\nWITH LOVE, VIM! × OVMBR ❤️",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
       "event page"
     ]
   },
@@ -2865,7 +2922,7 @@
     "kind": "side",
     "title": "THE AI LEADERSHIP EXCHANGE",
     "date": "2026-11-05",
-    "start": "2026-11-05T13:30:00-06:00",
+    "start": "2026-11-05T13:00:00-06:00",
     "end": "2026-11-05T14:45:00-06:00",
     "timeLabel": null,
     "locationKey": "virtual",
@@ -2885,8 +2942,7 @@
     "description": "Beyond the Algorithm: The People, Leadership & Strategy Behind AI\n\nJoin the Society for AI Management (SAIM) for The AI Leadership Exchange, an engaging gathering of AI leaders, business professionals, and innovators exploring the evolving relationship between artificial intelligence, organizational leadership, and business transformation.\n\nAs AI adoption accelerates across industries, the conversation must move beyond the technology itself to focus on how organizations effectively manage, govern, and lead AI-driven change.\n\nAs part of this experience, attendees will participate in the SAIM AI Management Masterclass: Foundations of AI Management, an introductory learning experience designed to explore the essential principles of AI strategy, responsible adoption, governance, risk management, and workforce transformation. Through expert perspectives, practical insights, and collaborative discussion, participants will gain a stronger understanding of what it takes to manage AI responsibl",
     "sources": [
       "afrotech.guide",
-      "google-sheet",
-      "event page"
+      "google-sheet"
     ]
   },
   {
@@ -2976,6 +3032,34 @@
       "afrotech.guide",
       "google-sheet",
       "adaptive-foundation"
+    ]
+  },
+  {
+    "id": "side-ff6286a14122",
+    "kind": "side",
+    "title": "Consume Responsibly: Pitchin & Pourin'",
+    "date": "2026-11-05",
+    "start": "2026-11-05T17:00:00-06:00",
+    "end": "2026-11-05T20:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "in-rsvp-once-approved",
+    "locationLabel": "In RSVP once approved",
+    "address": null,
+    "track": null,
+    "categories": [
+      "Networking"
+    ],
+    "speakers": [],
+    "host": "Variant, Chimeboard, Screen Skinz",
+    "price": "Free",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://partiful.com/e/TyIYg09hiDOEtP2YXDMA",
+    "founderInvestorPick": false,
+    "description": "AfroTech,\nConsumer happy hour. 🍸\n\nTaking over a speakeasy (location in RSVP once approved) for a night with a handpicked crowd of venture-backed consumer founders, investors, angels & high-signal consumer operators.\n\nExpect curated cocktails, flamethrowers, a little controlled chaos & a room full of people worth knowing 👀",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet"
     ]
   },
   {
@@ -3472,7 +3556,7 @@
     "title": "Off Kampus Part II Featuring Roscoe Dash",
     "date": "2026-11-05",
     "start": "2026-11-05T20:00:00-06:00",
-    "end": null,
+    "end": "2026-11-06T00:00:00-06:00",
     "timeLabel": null,
     "locationKey": "the-encore",
     "locationLabel": "The Encore",
@@ -3489,6 +3573,35 @@
     "rsvpUrl": "https://events.eventnoire.com/e/offkampuspart2/tickets",
     "founderInvestorPick": false,
     "description": "The best event from last year's conference returns for more high energy nostalgic hip hop from our college years, the flyest most popping attendees, and the bottle wars. Featuring a live performance by Roscoe Dash.",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
+      "event page"
+    ]
+  },
+  {
+    "id": "side-0d3a4b3ca9b9",
+    "kind": "side",
+    "title": "Pregame Session: AfroMixer",
+    "date": "2026-11-05",
+    "start": "2026-11-05T20:00:00-06:00",
+    "end": "2026-11-06T00:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "skylab-social",
+    "locationLabel": "Skylab Social",
+    "address": "4112 Washington Ave",
+    "track": null,
+    "categories": [
+      "Social"
+    ],
+    "speakers": [],
+    "host": "Pregame Session",
+    "price": "Paid",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/e/pregame-session-afrotech-night",
+    "founderInvestorPick": false,
+    "description": "Celebrate a week of innovation, ambition, and connection. Join us on Thursday for an exclusive mixer where AFROTECH attendees unwind, network, and vibes.\n\nExperience curated rnb, afrobeats, afrohouse, hiphop, amapiano, and 3-step sounds in an intimate setting designed for founders, investors, engineers, and change-makers. This isn't just a party, it's where deals get discussed, collaborations spark, and the tech community comes together off the main stage.",
     "sources": [
       "afrotech.guide",
       "google-sheet",
@@ -3551,35 +3664,6 @@
     ]
   },
   {
-    "id": "side-b11747ba1267",
-    "kind": "side",
-    "title": "JRIPSET: THE 3 FLOOR EXPERIENCE (AFROTECH HOUSTON)",
-    "date": "2026-11-05",
-    "start": "2026-11-05T20:45:00-06:00",
-    "end": "2026-11-06T02:00:00-06:00",
-    "timeLabel": null,
-    "locationKey": "styx-stone",
-    "locationLabel": "STYX + STONE",
-    "address": "2400 Brazos St, Houston, TX 77006",
-    "track": null,
-    "categories": [
-      "Party"
-    ],
-    "speakers": [],
-    "host": "JRIPSET",
-    "price": "Paid",
-    "access": null,
-    "ticketLevels": [],
-    "rsvpUrl": "https://posh.vip/f/ec223?t=afrotechexcel",
-    "founderInvestorPick": false,
-    "description": "The 3 Floor Experience is is a social party for Afrotech attendees; every floor will have a different vibe. First Floor will be Afrobeats, Amapiano, Dancehall. Second Floor will be R&B, Hip-Hop & Pop. Third Floor will be a networking & vendor rooftop space for gathering.",
-    "sources": [
-      "afrotech.guide",
-      "google-sheet",
-      "event page"
-    ]
-  },
-  {
     "id": "side-5b9aca1be6f3",
     "kind": "side",
     "title": "A NIGHT OF AMAPIANO - AFROTECH  WEEKEND",
@@ -3632,6 +3716,64 @@
       "afrotech.guide",
       "google-sheet",
       "adaptive-foundation",
+      "event page"
+    ]
+  },
+  {
+    "id": "side-b11747ba1267",
+    "kind": "side",
+    "title": "JRIPSET: THE 3 FLOOR EXPERIENCE (AFROTECH HOUSTON)",
+    "date": "2026-11-05",
+    "start": "2026-11-05T21:00:00-06:00",
+    "end": "2026-11-06T02:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "styx-stone",
+    "locationLabel": "STYX + STONE",
+    "address": "2400 Brazos St, Houston, TX 77006",
+    "track": null,
+    "categories": [
+      "Party"
+    ],
+    "speakers": [],
+    "host": "JRIPSET",
+    "price": "Paid",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/f/ec223?t=afrotechexcel",
+    "founderInvestorPick": false,
+    "description": "The 3 Floor Experience is is a social party for Afrotech attendees; every floor will have a different vibe. First Floor will be Afrobeats, Amapiano, Dancehall. Second Floor will be R&B, Hip-Hop & Pop. Third Floor will be a networking & vendor rooftop space for gathering.",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
+      "event page"
+    ]
+  },
+  {
+    "id": "side-14e25a5eef9d",
+    "kind": "side",
+    "title": "KTRLTHEMOMENT: AFROTECH // HTX",
+    "date": "2026-11-05",
+    "start": "2026-11-05T21:00:00-06:00",
+    "end": "2026-11-06T02:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "xo-sky",
+    "locationLabel": "XO SKY",
+    "address": "5023 Washington Ave Fl 2, Houston, TX 77007, USA",
+    "track": null,
+    "categories": [
+      "Party"
+    ],
+    "speakers": [],
+    "host": "KTRLTHEMOMENT/One KTRL Group",
+    "price": "Free",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/e/ktrlthemoment-afrotech-htx",
+    "founderInvestorPick": false,
+    "description": "A curated escape for the culture—sunkissed sounds, beautiful people, and the right energy. The moment is in your KTRL 🧡 \nVIBEZ: HIP HOP // AMAPIANO // R&B // AFROBEATS // REMIXES // OPEN FORMAT\nSOUNDS BY: DJ KELS // DJ DESRICK // DJ YOBI YOBZ",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
       "event page"
     ]
   },
@@ -3748,6 +3890,35 @@
     "sources": [
       "afrotech.guide",
       "google-sheet"
+    ]
+  },
+  {
+    "id": "side-aa448b8479d9",
+    "kind": "side",
+    "title": "'BLACK HAUSE' HOUSTON | THU 11/5",
+    "date": "2026-11-05",
+    "start": "2026-11-05T22:00:00-06:00",
+    "end": "2026-11-06T02:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "rich-s-houston",
+    "locationLabel": "RICH’S HOUSTON",
+    "address": "2401 San Jacinto St, Houston, TX 77002, USA",
+    "track": null,
+    "categories": [
+      "Party"
+    ],
+    "speakers": [],
+    "host": "Forward Society",
+    "price": "Paid",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/f/ea641?t=afrolink",
+    "founderInvestorPick": false,
+    "description": "BLACK HAUSE IS HEADED BACK TO HOUSTON\n\nHouston, consider your Thursday night plans handled.\n\nOn November 5, Black Hause returns to Rich’s Houston for a late-night celebration built around good music, beautiful people and the kind of energy that keeps you on the dance floor longer than you planned.\n\nKnown for creating spaces where house music, Black culture and global sounds meet, Black Hause has continued to build a community that stretches from city to city. Now, the experience is making its way back to Houston at a moment when the city will already be filled with creatives, entrepreneurs and culture shapers from across the country.\n\nAnd while there will be plenty happening around Houston that week, Black Hause is carving out a night of its own.\n\nBlack Hause Houston\n\nThursday, November 5",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
+      "event page"
     ]
   },
   {
@@ -4165,9 +4336,9 @@
     "start": "2026-11-06T17:00:00-06:00",
     "end": "2026-11-06T22:00:00-06:00",
     "timeLabel": null,
-    "locationKey": "pour-behavior",
-    "locationLabel": "Pour Behavior",
-    "address": "2211 Travis Street, Houston, TX 77002",
+    "locationKey": "victory",
+    "locationLabel": "Victory",
+    "address": "711 Main Street, #UNIT 501, Houston, TX 77002",
     "track": null,
     "categories": [],
     "speakers": [],
@@ -4464,6 +4635,35 @@
     ]
   },
   {
+    "id": "side-241961965c7c",
+    "kind": "side",
+    "title": "Feel Good Factory ft. Stonie Blue | Afrotech Edition",
+    "date": "2026-11-06",
+    "start": "2026-11-06T21:00:00-06:00",
+    "end": "2026-11-07T02:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "crybaby",
+    "locationLabel": "Crybaby",
+    "address": "1120 Naylor, Houston, TX 77002",
+    "track": null,
+    "categories": [
+      "Party"
+    ],
+    "speakers": [],
+    "host": "Soul Control",
+    "price": "Free",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/e/feel-good-factory-ft-stonie-blue-afrotech-edition",
+    "founderInvestorPick": false,
+    "description": "Welcome to the Feel Good Factory, where the rhythm is relentless, the energy is contagious, and the dance floor is the destination.\n\nMy Soul To Keep and Exposure join forces for a special AfroTech weekend experience, bringing together house music lovers for a night of movement, connection, and pure feel-good energy.\n\nFeaturing Stonie Blue, DJ Elevated, and DJ Nimbus, three selectors delivering an unforgettable journey through soulful grooves, deep rhythms, and infectious house sounds.\n\nNo distractions. No standing still. Just good people, great music, and a dance floor built for letting go.",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
+      "event page"
+    ]
+  },
+  {
     "id": "side-7486cf44c587",
     "kind": "side",
     "title": "House of Afrobeats !Afrotech Edition Friday Nov 6th at Chapman & Kirby",
@@ -4632,6 +4832,35 @@
     ]
   },
   {
+    "id": "side-c019a1ff659a",
+    "kind": "side",
+    "title": "AfroTech Dance Sweat Sesh🔥: Rhythm & Weights (WEAR PURPLE)",
+    "date": "2026-11-07",
+    "start": "2026-11-07T11:15:00-06:00",
+    "end": "2026-11-07T12:45:00-06:00",
+    "timeLabel": null,
+    "locationKey": "ilekan-athletics",
+    "locationLabel": "Ilekan Athletics",
+    "address": "5151a Mitchelldale St A-14 Houston, Tx 77092",
+    "track": null,
+    "categories": [
+      "Social"
+    ],
+    "speakers": [],
+    "host": "Dance With Chiomzyy",
+    "price": "Paid",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://events.sweatpals.com/bbbc6958",
+    "founderInvestorPick": false,
+    "description": "Burning fat and building strength, all while dancing to your favorite afro tunes? It's the best of 3 worlds!\n\nIt's AfroTech Weekend so we're bringing you something new! Rhythm & Weights is a fun, high-energy dance workout, combining cardio, rhythm, and strength training, letting you workout all while forgetting you're actually working out!\n\nThis is for the girls (and guys🤭) that want to feel like their best selves, fit, toned, and glowing with strength from the inside out ✨\n\nWhat To Bring:\n\n1. -A comfortable workout outfit that lets you move\n2. -A bottle of water (or 2)\n3. -Hand towel (to wipe away that glistening sweat 🤭 also optional)\n4. A sweat sesh buddy (bring a friend!)\n5. Your beautiful self ✨",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet",
+      "event page"
+    ]
+  },
+  {
     "id": "side-54fce6f7de75",
     "kind": "side",
     "title": "Bosses in Bloom Presents The AfroTech Bloom",
@@ -4760,6 +4989,34 @@
     "rsvpUrl": "https://the300.community/register",
     "founderInvestorPick": false,
     "description": "The 300 is a free two-day gathering for Christian creatives: filmmakers, designers, artists, musicians, writers, and photographers. It opens Friday evening, November 6, and continues with a full day on Saturday, November 7, with speakers, worship, prayer, and intentional community for creatives building at the intersection of faith, culture, and craft. This year’s theme is The Call, the first chapter of a four-year journey. If you’re in Houston for AfroTech and your creativity is tied to your calling, this room is for you. Free to attend; registration required.",
+    "sources": [
+      "afrotech.guide",
+      "google-sheet"
+    ]
+  },
+  {
+    "id": "side-68810a464331",
+    "kind": "side",
+    "title": "Continental Sounds Party",
+    "date": "2026-11-07",
+    "start": "2026-11-07T20:00:00-06:00",
+    "end": "2026-11-08T02:00:00-06:00",
+    "timeLabel": null,
+    "locationKey": "enish",
+    "locationLabel": "Enish",
+    "address": "5851 westheimer road houston Texas 77057",
+    "track": null,
+    "categories": [
+      "Networking"
+    ],
+    "speakers": [],
+    "host": "Enish Houston",
+    "price": "Free",
+    "access": null,
+    "ticketLevels": [],
+    "rsvpUrl": "https://posh.vip/e/continental-sounds-party",
+    "founderInvestorPick": false,
+    "description": "Join Jae Murphy at Houston’s newest pan African dining and nightlife destination to close our Afrotech week!",
     "sources": [
       "afrotech.guide",
       "google-sheet"
