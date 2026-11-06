@@ -1,5 +1,11 @@
 # AfroTech 2026 Planner
 
+> [!NOTE]
+> **This project is finished.** AfroTech 2026 ended on November 6, 2026, and
+> this repository is archived. It no longer takes issues or pull requests, and
+> the event data no longer refreshes. The code and data stay here as a record
+> of the week.
+
 **Live at [afrotech26.laudebugs.me](https://afrotech26.laudebugs.me)** · November 2–6, 2026 · George R. Brown Convention Center, Houston
 
 AfroTech 2026 ran 263 official sessions and about 180 community side events
