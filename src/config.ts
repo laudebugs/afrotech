@@ -1,7 +1,8 @@
 // Site-wide settings.
 
-/** The site's GitHub repo; speaker change requests open issues here. */
-export const REPO = { owner: "laudebugs", repo: "afrotech" };
+/** Where questions and speaker change requests go. The GitHub repo is
+ *  archived, so it no longer takes issues. */
+export const CONTACT_EMAIL = "laudebugs@gmail.com";
 
 export const SITE_URL = "https://afrotech26.laudebugs.me";
 

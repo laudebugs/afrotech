@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SourcesFooter from "../../components/SourcesFooter.astro";
+import { CONTACT_EMAIL } from "../../config";
 ---
 
 <BaseLayout title="Privacy · AfroTech 2026 Planner" active="none" description="What the AfroTech 2026 Planner stores, and how to delete it.">
@@ -58,14 +59,14 @@ import SourcesFooter from "../../components/SourcesFooter.astro";
     <h2>Speaker profiles</h2>
     <p>
       Speaker bios, photos and links come from the official AfroTech schedule. Researched facts appear only
-      after review, each with its source. Speakers can ask for changes or removal by opening an issue on
-      <a href="https://github.com/laudebugs/afrotech/issues">GitHub</a>.
+      after review, each with its source. Speakers can ask for changes or removal by emailing
+      <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
     </p>
 
     <h2>Who runs this</h2>
     <p>
       The planner is run by <a href="https://github.com/laudebugs">laudebugs</a>. It isn't affiliated with
-      AfroTech or Blavity. Questions go to <a href="https://github.com/laudebugs/afrotech/issues">GitHub issues</a>.
+      AfroTech or Blavity. For questions or any problem, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
     </p>
   </article>
   <SourcesFooter />
