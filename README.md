@@ -11,10 +11,10 @@ what's on now, build your week, find any room, and keep private notes, even
 on the convention center's patchy Wi-Fi.
 
 <p align="center">
-  <img src="docs/screenshots/now.png" width="200" alt="Now: sessions live and starting within the hour on a timeline">
-  <img src="docs/screenshots/schedule.png" width="200" alt="Schedule: one day's sessions and side events by time">
-  <img src="docs/screenshots/event.png" width="200" alt="An event page with time, place, speakers and your notes">
-  <img src="docs/screenshots/map.png" width="200" alt="Map: the convention center floor plan with live sessions per room">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/now-dark.png"><img src="docs/screenshots/now.png" width="200" alt="Now: sessions live and starting within the hour on a timeline"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/schedule-dark.png"><img src="docs/screenshots/schedule.png" width="200" alt="Schedule: one day's sessions and side events by time"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/event-dark.png"><img src="docs/screenshots/event.png" width="200" alt="An event page with time, place, speakers and your notes"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/map-dark.png"><img src="docs/screenshots/map.png" width="200" alt="Map: the convention center floor plan with live sessions per room"></picture>
 </p>
 
 ## One place for the whole week, official and unofficial
@@ -30,10 +30,10 @@ The site answers the questions people ask most during the conference:
 | How do I get there? | **Directions** opens Apple Maps, Google Maps or Waze, whichever you choose. |
 
 <p align="center">
-  <img src="docs/screenshots/search.png" width="200" alt="Search across the week, with filter chips">
-  <img src="docs/screenshots/city.png" width="200" alt="City map of side events across Houston">
-  <img src="docs/screenshots/saved.png" width="200" alt="Saved: your plan by day, with clashes marked">
-  <img src="docs/screenshots/note.png" width="200" alt="A private note about a session">
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/search-dark.png"><img src="docs/screenshots/search.png" width="200" alt="Search across the week, with filter chips"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/city-dark.png"><img src="docs/screenshots/city.png" width="200" alt="City map of side events across Houston"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/saved-dark.png"><img src="docs/screenshots/saved.png" width="200" alt="Saved: your plan by day, with clashes marked"></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/note-dark.png"><img src="docs/screenshots/note.png" width="200" alt="A private note about a session"></picture>
 </p>
 
 ## Your plan and notes stay yours
@@ -54,10 +54,6 @@ removes them from the server at once.
 - **Installable:** add it to your home screen and it opens like an app, with a glass tab bar and iOS-style page transitions.
 - **Fresh:** a GitHub Action re-pulls the official schedule and the community lists every two hours during the week. It also checks each side event against its own page, so names, times and places match what the organiser published.
 - **Readable anywhere:** times are always Houston time, there's a dark mode, and every page fits a phone first.
-
-<p align="center">
-  <img src="docs/screenshots/now-dark.png" width="200" alt="Now in dark mode">
-</p>
 
 The site is an Astro static site on Cloudflare, with a small Worker and a D1
 database for sign-in and sync. The rest of this README covers running and
